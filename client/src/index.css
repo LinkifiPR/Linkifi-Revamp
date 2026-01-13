@@ -56,54 +56,58 @@
   --font-display: 'Plus Jakarta Sans', sans-serif;
 }
 
-/* LIGHT MODE - FRESH & SLEEK */
+/* LINKIFI BRAND COLORS */
+/* 
+  Primary Purple: #5A4DBF -> 247 48% 52%
+  Light Purple: #A197EC -> 247 65% 76%
+  Dark: #0F0F0F -> 0 0% 6%
+  Slate: #535479 -> 238 19% 40%
+  Pink: #D733A2 -> 319 65% 52%
+*/
+
 :root {
-  /* Pure White Background */
+  /* Clean White Background */
   --background: 0 0% 100%;
-  /* Deep Slate/Navy Foreground for high contrast text */
-  --foreground: 222 47% 11%;
+  
+  /* #0F0F0F - The Linkifi Black */
+  --foreground: 0 0% 6%;
 
-  /* White Cards with subtle separation */
   --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
+  --card-foreground: 0 0% 6%;
 
-  /* Popovers same as cards */
   --popover: 0 0% 100%;
-  --popover-foreground: 222 47% 11%;
+  --popover-foreground: 0 0% 6%;
 
-  /* PRIMARY: Vibrant Royal Blue / Indigo - Trustworthy but Modern */
-  --primary: 221 83% 53%;
-  --primary-foreground: 210 40% 98%;
+  /* #5A4DBF - Linkifi Primary Purple */
+  --primary: 247 48% 52%;
+  --primary-foreground: 0 0% 100%;
 
-  /* SECONDARY: Very light cool gray for subtle buttons */
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 222 47% 11.2%;
+  /* #A197EC - Linkifi Light Purple (used for secondary/soft accents) */
+  --secondary: 247 65% 96%; /* Much lighter version for backgrounds */
+  --secondary-foreground: 247 48% 52%;
 
-  /* MUTED: For secondary text */
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
+  --muted: 240 5% 96%;
+  --muted-foreground: 238 19% 40%; /* #535479 Linkifi Slate */
 
-  /* ACCENT: Light Indigo wash for hover states */
-  --accent: 210 40% 96.1%;
-  --accent-foreground: 222 47% 11.2%;
+  /* #A197EC - Accent */
+  --accent: 247 65% 96%;
+  --accent-foreground: 247 48% 52%;
 
-  /* DESTRUCTIVE: Standard Red */
   --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
+  --destructive-foreground: 0 0% 98%;
 
-  /* BORDER: Very subtle gray */
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 221 83% 53%;
+  --border: 240 5% 92%;
+  --input: 240 5% 92%;
+  --ring: 247 48% 52%;
 
-  --radius: 0.75rem;
+  --radius: 0.5rem;
 
-  /* Chart Colors */
-  --chart-1: 221 83% 53%;
-  --chart-2: 173 58% 39%;
-  --chart-3: 197 37% 24%;
-  --chart-4: 43 74% 66%;
-  --chart-5: 27 87% 67%;
+  /* #D733A2 - Linkifi Pink for Chart/Highlights */
+  --chart-1: 247 48% 52%; /* Primary Purple */
+  --chart-2: 319 65% 52%; /* Pink Accent */
+  --chart-3: 238 19% 40%; /* Slate */
+  --chart-4: 247 65% 76%; /* Light Purple */
+  --chart-5: 0 0% 6%;     /* Dark */
 
   /* Sidebar */
   --sidebar: 0 0% 98%;
@@ -117,39 +121,40 @@
 }
 
 .dark {
-  --background: 222 47% 11%;
-  --foreground: 210 40% 98%;
+  /* Using #0F0F0F as base dark background */
+  --background: 0 0% 6%;
+  --foreground: 0 0% 100%;
 
-  --card: 222 47% 11%;
-  --card-foreground: 210 40% 98%;
+  --card: 0 0% 6%;
+  --card-foreground: 0 0% 100%;
 
-  --popover: 222 47% 11%;
-  --popover-foreground: 210 40% 98%;
+  --popover: 0 0% 6%;
+  --popover-foreground: 0 0% 100%;
 
-  --primary: 217.2 91.2% 59.8%;
-  --primary-foreground: 222 47.4% 11.2%;
+  --primary: 247 65% 76%; /* Light Purple for dark mode contrast */
+  --primary-foreground: 0 0% 6%;
 
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
+  --secondary: 240 4% 16%;
+  --secondary-foreground: 0 0% 100%;
 
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
+  --muted: 240 4% 16%;
+  --muted-foreground: 240 5% 65%;
 
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
+  --accent: 240 4% 16%;
+  --accent-foreground: 0 0% 100%;
 
   --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
+  --destructive-foreground: 0 0% 100%;
 
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 212.7 26.8% 83.9%;
+  --border: 240 4% 16%;
+  --input: 240 4% 16%;
+  --ring: 247 65% 76%;
   
-  --chart-1: 220 70% 50%;
-  --chart-2: 160 60% 45%;
-  --chart-3: 30 80% 55%;
-  --chart-4: 280 65% 60%;
-  --chart-5: 340 75% 55%;
+  --chart-1: 247 65% 76%;
+  --chart-2: 319 65% 60%;
+  --chart-3: 238 19% 50%;
+  --chart-4: 247 48% 60%;
+  --chart-5: 0 0% 80%;
 
   --sidebar: 240 5.9% 10%;
   --sidebar-foreground: 240 4.8% 95.9%;
@@ -173,21 +178,30 @@
   }
 }
 
-/* Custom Utilities for the Fresh Look */
+/* Custom Utilities */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
   
   .glass {
-    @apply bg-white/80 backdrop-blur-md border-b border-white/20;
+    @apply bg-white/90 backdrop-blur-md border-b border-gray-100;
   }
   
   .glass-card {
-    @apply bg-white/60 backdrop-blur-sm border border-white/40 shadow-sm;
+    @apply bg-white border border-gray-100 shadow-sm;
   }
   
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-linear-to-r from-primary to-purple-600;
+  .text-gradient-purple {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[hsl(247,48%,52%)] to-[hsl(319,65%,52%)];
+  }
+
+  .bg-gradient-mesh {
+    background-color: #ffffff;
+    background-image: 
+        radial-gradient(at 0% 0%, hsla(247, 48%, 92%, 1) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, hsla(319, 65%, 95%, 1) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, hsla(247, 48%, 92%, 1) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, hsla(319, 65%, 95%, 1) 0px, transparent 50%);
   }
 }
