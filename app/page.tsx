@@ -7,14 +7,12 @@ import { motion } from "framer-motion";
 import {
   ArrowRight,
   CheckCircle2,
-  BarChart3,
-  Shield,
-  Zap,
   Menu,
   X,
   TrendingUp,
-  Newspaper,
   Users,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { useState } from "react";
 import {
@@ -26,6 +24,8 @@ import {
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [pricingTab, setPricingTab] = useState<"monthly" | "onetime">("monthly");
+  const [testimonialIndex, setTestimonialIndex] = useState(0);
 
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
@@ -41,10 +41,110 @@ export default function Home() {
     },
   };
 
+  const testimonials = [
+    {
+      quote: "I've been working with Linkifi for close to 4 months now; Chris and his team have been one of the few services in the world that have been able to consistently get me high-level PR links without charging extortionate rates.",
+      name: "Charles Floate",
+      website: "charlesfloate.com",
+      image: "/testimonials/charles.webp",
+    },
+    {
+      quote: "I've now used Linkifi for multiple projects and I will most definitely return with new projects in the future. Not only is the outcome excellent, but the process of working with Linkifi is excellent. I strongly recommend if you want press mentions and links via PR-Requests. I've yet to meet anyone who is as good at working with this sort of link-building.",
+      name: "Jon Dykstra",
+      website: "fatstacksblog.com",
+      image: "/testimonials/jon.webp",
+    },
+    {
+      quote: "Linkifi masters the art of acquiring impressive, white-hat PR links fast, even for new sites. It's the first link-building service I've endorsed in four years, thanks to their exceptional results and quick turnaround.",
+      name: "Mike Futia",
+      website: "stupidsimpleseo.co",
+      image: "/testimonials/mike.webp",
+    },
+  ];
+
+  const monthlyPricing = [
+    {
+      links: "10-LINKS",
+      period: "6 MONTHLY PAYMENTS",
+      price: "$1,375",
+      perLink: "$825 per link",
+      deliveryNote: "*Max delivery time 12 months.",
+      checkoutUrl: "https://linkifi.thrivecart.com/linkifi-10-links-monthly/",
+      popular: false,
+    },
+    {
+      links: "20-LINKS",
+      period: "6 MONTHLY PAYMENTS",
+      price: "$2,667",
+      perLink: "$800 per link",
+      deliveryNote: "*Max delivery time 18 months.",
+      checkoutUrl: "https://linkifi.thrivecart.com/linkifi-20-links-monthly/",
+      popular: true,
+    },
+    {
+      links: "50-LINKS",
+      period: "12 MONTHLY PAYMENTS",
+      price: "$3,125",
+      perLink: "$750 per link",
+      deliveryNote: "*Max delivery time 24 months.",
+      checkoutUrl: "https://linkifi.thrivecart.com/linkifi-50-links-monthly/",
+      popular: false,
+    },
+  ];
+
+  const onetimePricing = [
+    {
+      links: "5-LINKS",
+      period: "ONE-TIME PAYMENT",
+      price: "$4,250",
+      perLink: "$850 per link",
+      deliveryNote: "*Max delivery time 12 months.",
+      checkoutUrl: "https://linkifi.thrivecart.com/linkifi-5-links/",
+      popular: false,
+    },
+    {
+      links: "10-LINKS",
+      period: "ONE-TIME PAYMENT",
+      price: "$8,250",
+      perLink: "$825 per link",
+      deliveryNote: "*Max delivery time 12 months.",
+      checkoutUrl: "https://linkifi.thrivecart.com/linkifi-10-links/",
+      popular: true,
+    },
+    {
+      links: "20-LINKS",
+      period: "ONE-TIME PAYMENT",
+      price: "$16,000",
+      perLink: "$800 per link",
+      deliveryNote: "*Max delivery time 18 months.",
+      checkoutUrl: "https://linkifi.thrivecart.com/linkifi-20-links/",
+      popular: false,
+    },
+    {
+      links: "50-LINKS",
+      period: "ONE-TIME PAYMENT",
+      price: "$37,500",
+      perLink: "$750 per link",
+      deliveryNote: "*Max delivery time 24 months. Payment Plan Available.",
+      checkoutUrl: "https://linkifi.thrivecart.com/linkifi-50-links/",
+      popular: false,
+    },
+  ];
+
+  const currentPricing = pricingTab === "monthly" ? monthlyPricing : onetimePricing;
+
+  const nextTestimonial = () => {
+    setTestimonialIndex((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const prevTestimonial = () => {
+    setTestimonialIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
+
   return (
-    <div className="min-h-screen bg-background font-sans overflow-x-hidden selection:bg-[#5A4DBF]/20 selection:text-[#5A4DBF]">
+    <div className="min-h-screen bg-white font-sans overflow-x-hidden selection:bg-[#5A4DBF]/20 selection:text-[#5A4DBF]">
       {/* Navbar */}
-      <nav className="fixed w-full z-50 glass top-0 transition-all duration-300">
+      <nav className="fixed w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 top-0 transition-all duration-300">
         <div className="container mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Image
@@ -59,48 +159,51 @@ export default function Home() {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
-            <a
-              href="#expert-quote"
+            <Link
+              href="/expert-quote"
               className="text-sm font-medium text-[#535479] hover:text-[#5A4DBF] transition-colors"
             >
               Expert Quote
-            </a>
-            <a
-              href="#digital-pr"
+            </Link>
+            <Link
+              href="/digital-pr"
               className="text-sm font-medium text-[#535479] hover:text-[#5A4DBF] transition-colors"
             >
               Digital PR
-            </a>
+            </Link>
             <a
-              href="#pricing"
+              href="#Pricing"
               className="text-sm font-medium text-[#535479] hover:text-[#5A4DBF] transition-colors"
             >
               Pricing
             </a>
-            <a
-              href="#case-studies"
+            <Link
+              href="/case-studies"
               className="text-sm font-medium text-[#535479] hover:text-[#5A4DBF] transition-colors"
             >
               Case Studies
-            </a>
-            <a
-              href="#blog"
+            </Link>
+            <Link
+              href="/blog"
               className="text-sm font-medium text-[#535479] hover:text-[#5A4DBF] transition-colors"
             >
               Blog
-            </a>
+            </Link>
           </div>
 
           <div className="hidden md:flex items-center gap-4">
-            <Button className="bg-[#5A4DBF] hover:bg-[#483d99] text-white shadow-lg shadow-[#5A4DBF]/20 transition-all duration-300 hover:scale-105 rounded-full px-6">
-              Contact Us
-            </Button>
+            <Link href="/contact-us">
+              <Button className="bg-[#5A4DBF] hover:bg-[#483d99] text-white shadow-lg shadow-[#5A4DBF]/20 transition-all duration-300 hover:scale-105 rounded-full px-6">
+                Contact
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Toggle */}
           <button
             className="md:hidden p-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            data-testid="button-mobile-menu"
           >
             {isMenuOpen ? (
               <X className="text-[#0F0F0F]" />
@@ -118,18 +221,26 @@ export default function Home() {
             className="md:hidden bg-white border-b border-gray-100"
           >
             <div className="px-6 py-4 flex flex-col gap-4">
-              <a href="#" className="text-[#535479] font-medium py-2">
+              <Link href="/expert-quote" className="text-[#535479] font-medium py-2">
+                Expert Quote
+              </Link>
+              <Link href="/digital-pr" className="text-[#535479] font-medium py-2">
                 Digital PR
-              </a>
-              <a href="#" className="text-[#535479] font-medium py-2">
+              </Link>
+              <a href="#Pricing" className="text-[#535479] font-medium py-2">
                 Pricing
               </a>
-              <a href="#" className="text-[#535479] font-medium py-2">
+              <Link href="/case-studies" className="text-[#535479] font-medium py-2">
                 Case Studies
-              </a>
-              <Button className="w-full bg-[#5A4DBF] text-white rounded-full">
-                Contact Us
-              </Button>
+              </Link>
+              <Link href="/blog" className="text-[#535479] font-medium py-2">
+                Blog
+              </Link>
+              <Link href="/contact-us">
+                <Button className="w-full bg-[#5A4DBF] text-white rounded-full">
+                  Contact
+                </Button>
+              </Link>
             </div>
           </motion.div>
         )}
@@ -137,7 +248,7 @@ export default function Home() {
 
       <main className="pt-32">
         {/* Hero Section */}
-        <section className="container mx-auto px-6 mb-24 lg:mb-32">
+        <section className="container mx-auto px-6 mb-16 lg:mb-24">
           <motion.div
             initial="initial"
             animate="animate"
@@ -179,20 +290,26 @@ export default function Home() {
                 variants={fadeIn}
                 className="flex flex-col sm:flex-row items-center gap-4 mb-12"
               >
-                <Button
-                  size="lg"
-                  className="h-14 px-8 rounded-full text-lg bg-[#5A4DBF] hover:bg-[#483d99] text-white shadow-xl shadow-[#5A4DBF]/20 transition-all hover:scale-105 w-full sm:w-auto font-bold"
-                >
-                  Get Started
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="h-14 px-8 rounded-full text-lg border-gray-200 text-[#535479] hover:text-[#5A4DBF] hover:bg-purple-50 w-full sm:w-auto font-medium"
-                >
-                  View Case Studies
-                </Button>
+                <a href="#Pricing">
+                  <Button
+                    size="lg"
+                    className="h-14 px-8 rounded-full text-lg bg-[#5A4DBF] hover:bg-[#483d99] text-white shadow-xl shadow-[#5A4DBF]/20 transition-all hover:scale-105 w-full sm:w-auto font-bold"
+                    data-testid="button-hero-get-started"
+                  >
+                    Get Started
+                    <ArrowRight className="ml-2 w-5 h-5" />
+                  </Button>
+                </a>
+                <Link href="/case-studies">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="h-14 px-8 rounded-full text-lg border-gray-200 text-[#535479] hover:text-[#5A4DBF] hover:bg-purple-50 w-full sm:w-auto font-medium"
+                    data-testid="button-hero-case-studies"
+                  >
+                    View Case Studies
+                  </Button>
+                </Link>
               </motion.div>
 
               <motion.div
@@ -268,7 +385,7 @@ export default function Home() {
                         width={24}
                         height={24}
                         className="w-6 h-6 object-contain"
-                        alt="L"
+                        alt="Linkifi"
                       />
                     </div>
                   </div>
@@ -305,158 +422,272 @@ export default function Home() {
                 </motion.div>
               </div>
 
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-mesh rounded-full blur-3xl opacity-50 z-0"></div>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-r from-[#5A4DBF]/10 to-[#D733A2]/10 rounded-full blur-3xl opacity-50 z-0"></div>
             </motion.div>
           </motion.div>
         </section>
 
-        {/* The Best Links Are Earned Section */}
-        <section className="py-20 bg-gray-50 mb-24 relative overflow-hidden">
-          <div
-            className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none"
-            style={{
-              backgroundImage: "radial-gradient(#A197EC 1px, transparent 1px)",
-              backgroundSize: "30px 30px",
-            }}
-          ></div>
+        {/* Client Logos Section */}
+        <section className="py-12 mb-20">
+          <div className="container mx-auto px-6">
+            <p className="text-center text-sm text-[#535479] uppercase tracking-wider font-semibold mb-8">
+              We work with brands focused on growth
+            </p>
+            <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60 grayscale">
+              <span className="text-lg font-bold text-gray-500">VirtualSt</span>
+              <span className="text-lg font-bold text-gray-500">Wealth of Geeks</span>
+              <span className="text-lg font-bold text-gray-500">SweatBlock</span>
+              <span className="text-lg font-bold text-gray-500">Rudis Wrestling</span>
+              <span className="text-lg font-bold text-gray-500">Netify</span>
+              <span className="text-lg font-bold text-gray-500">Therapy Offices</span>
+            </div>
+          </div>
+        </section>
 
+        {/* The Best Links Are Earned Section */}
+        <section className="py-20 bg-[#0F0F0F] mb-24 relative overflow-hidden">
           <div className="container mx-auto px-6 relative z-10">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="text-3xl md:text-5xl font-display font-bold text-[#0F0F0F] mb-6">
-                The best Links are earned.
-              </h2>
-              <p className="text-lg text-[#535479] leading-relaxed">
-                With our digital PR campaigns, we control the narrative and
-                directly pitch stories to journalists. Each campaign is
-                meticulously designed for maximum exposure on some of the
-                world&apos;s largest publications.
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              {/* Left Content */}
+              <div>
+                <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-6">
+                  The best Links are earned.
+                </h2>
+                <p className="text-lg text-gray-300 leading-relaxed mb-8">
+                  With our digital PR campaigns, we control the narrative and
+                  directly pitch stories to journalists. Each campaign is
+                  meticulously designed for maximum exposure on some of the
+                  world&apos;s largest publications. When a campaign goes viral, it
+                  sends signals to Google into overdrive, allowing your brand, SEO,
+                  and digital business to fully benefit from digital PR executed
+                  properly!
+                </p>
+              </div>
+
+              {/* Right - Chat Interface */}
+              <div className="relative">
+                <div className="space-y-4">
+                  {/* Client message */}
+                  <div className="flex gap-4 items-start">
+                    <div className="bg-white p-4 rounded-2xl rounded-tl-none max-w-[85%] text-sm text-[#0F0F0F]">
+                      <p>Hey, just checking in — how&apos;s the campaign coming along?</p>
+                    </div>
+                    <span className="text-xs text-gray-400 mt-2">Client</span>
+                  </div>
+
+                  {/* Linkifi message */}
+                  <div className="flex gap-4 items-start justify-end">
+                    <span className="text-xs text-gray-400 mt-2">Linkifi</span>
+                    <div className="bg-[#5A4DBF] p-4 rounded-2xl rounded-tr-none max-w-[85%] text-sm text-white">
+                      <p className="mb-4">
+                        The campaign is going great. Some big links already! Take a look.
+                      </p>
+                      <div className="flex flex-wrap gap-3">
+                        <span className="bg-white/20 px-3 py-1.5 rounded text-xs font-medium">Yahoo!</span>
+                        <span className="bg-white/20 px-3 py-1.5 rounded text-xs font-medium">NY Times</span>
+                        <span className="bg-white/20 px-3 py-1.5 rounded text-xs font-medium">Forbes</span>
+                        <span className="bg-white/20 px-3 py-1.5 rounded text-xs font-medium">HuffPost</span>
+                        <span className="bg-white/20 px-3 py-1.5 rounded text-xs font-medium">ZDNet</span>
+                        <span className="bg-white/20 px-3 py-1.5 rounded text-xs font-medium">Healthline</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Client reaction */}
+                  <div className="flex gap-4 items-start">
+                    <div className="bg-white p-4 rounded-2xl rounded-tl-none max-w-[85%] text-sm text-[#0F0F0F]">
+                      <p className="text-2xl">😲🥳🥳🥳</p>
+                    </div>
+                    <span className="text-xs text-gray-400 mt-2">Client</span>
+                  </div>
+                </div>
+
+                {/* Jon Dykstra Quote */}
+                <div className="mt-8 bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
+                  <p className="text-white text-sm italic mb-4">
+                    &quot;I&apos;ve yet to meet anyone who is as good with this sort of link-building...&quot;
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-gray-600 rounded-full"></div>
+                    <div>
+                      <p className="text-white font-semibold text-sm">Jon Dykstra</p>
+                      <p className="text-gray-400 text-xs">fatstacksblog.com</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Strategic Strike Section */}
+        <section className="container mx-auto px-6 mb-24">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-[#0F0F0F] mb-6">
+              Where others scatter links — we strategically strike.
+            </h2>
+            <p className="text-lg text-[#535479] leading-relaxed mb-8">
+              In a landscape where strategic precision is key, we focus on digital PR, the only
+              white-hat method left for boosting SERP visibility. Each link is carefully placed
+              in the correct publication for maximum impact, not just scattered. We enhance your
+              digital authority through meticulously chosen, impactful links, ensuring a stronger,
+              more authoritative presence in search engine results.
+            </p>
+            <a
+              href="#howitworks"
+              className="inline-flex items-center gap-2 text-[#5A4DBF] font-semibold hover:underline"
+            >
+              See how it works
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+
+          {/* Publication logos marquee */}
+          <div className="mt-16 overflow-hidden">
+            <div className="flex gap-16 items-center justify-center opacity-40 grayscale">
+              <span className="text-2xl font-bold text-gray-400">AP</span>
+              <span className="text-2xl font-bold text-gray-400 font-serif">Forbes</span>
+              <span className="text-2xl font-bold text-gray-400">Yahoo!</span>
+              <span className="text-2xl font-bold text-gray-400 font-serif italic">NYT</span>
+              <span className="text-2xl font-bold text-gray-400">Reuters</span>
+            </div>
+          </div>
+        </section>
+
+        {/* Testimonials Section */}
+        <section className="bg-gray-50 py-24 mb-24">
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-4">
+              <p className="text-sm text-[#5A4DBF] uppercase tracking-wider font-semibold mb-2">
+                Your secret weapon in digital PR
               </p>
+              <h2 className="text-3xl md:text-5xl font-display font-bold text-[#0F0F0F]">
+                But don&apos;t just take <br />our word for it.
+              </h2>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-6 text-[#5A4DBF]">
-                  <Newspaper className="w-6 h-6" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Strategic Placement</h3>
-                <p className="text-[#535479]">
-                  Where others scatter links, we strategically strike. We focus
-                  on digital PR, placing links in publications that matter.
+            <div className="max-w-4xl mx-auto mt-16">
+              <div className="bg-white p-10 md:p-16 rounded-3xl shadow-xl border border-gray-100 relative">
+                <p className="text-xl md:text-2xl text-[#535479] mb-8 leading-relaxed italic">
+                  &quot;{testimonials[testimonialIndex].quote}&quot;
                 </p>
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-gray-200 rounded-full overflow-hidden">
+                    <div className="w-full h-full bg-gradient-to-br from-[#5A4DBF] to-[#D733A2]"></div>
+                  </div>
+                  <div>
+                    <p className="font-bold text-[#0F0F0F] text-lg">{testimonials[testimonialIndex].name}</p>
+                    <p className="text-[#5A4DBF]">{testimonials[testimonialIndex].website}</p>
+                  </div>
+                </div>
+
+                {/* Navigation arrows */}
+                <div className="absolute right-8 bottom-8 flex gap-2">
+                  <button
+                    onClick={prevTestimonial}
+                    className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors"
+                    data-testid="button-prev-testimonial"
+                  >
+                    <ChevronLeft className="w-5 h-5 text-[#535479]" />
+                  </button>
+                  <button
+                    onClick={nextTestimonial}
+                    className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors"
+                    data-testid="button-next-testimonial"
+                  >
+                    <ChevronRight className="w-5 h-5 text-[#535479]" />
+                  </button>
+                </div>
               </div>
-              <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-6 text-[#D733A2]">
-                  <TrendingUp className="w-6 h-6" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Viral Campaigns</h3>
-                <p className="text-[#535479]">
-                  When a campaign goes viral, it sends signals to Google into
-                  overdrive, boosting your authority significantly.
-                </p>
-              </div>
-              <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6 text-blue-600">
-                  <Shield className="w-6 h-6" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">White-Hat Only</h3>
-                <p className="text-[#535479]">
-                  We focus on digital PR, the only true white-hat method left
-                  for sustainable SERP visibility and brand growth.
-                </p>
+
+              {/* Dots indicator */}
+              <div className="flex justify-center gap-2 mt-6">
+                {testimonials.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setTestimonialIndex(index)}
+                    className={`w-2 h-2 rounded-full transition-colors ${
+                      index === testimonialIndex ? "bg-[#5A4DBF]" : "bg-gray-300"
+                    }`}
+                    data-testid={`button-testimonial-dot-${index}`}
+                  />
+                ))}
               </div>
             </div>
           </div>
         </section>
 
         {/* How it Works */}
-        <section className="container mx-auto px-6 mb-32">
-          <div className="flex flex-col md:flex-row items-center gap-16">
-            <div className="md:w-1/2">
-              <h2 className="text-3xl md:text-5xl font-display font-bold text-[#0F0F0F] mb-8">
-                So, how exactly does this work?
-              </h2>
+        <section id="howitworks" className="container mx-auto px-6 mb-32">
+          <div className="text-center mb-4">
+            <p className="text-sm text-[#5A4DBF] uppercase tracking-wider font-semibold mb-2">
+              Our stress-free process
+            </p>
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-[#0F0F0F]">
+              So, how exactly <br />does this work?
+            </h2>
+          </div>
 
-              <div className="space-y-8">
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-full bg-[#5A4DBF] text-white flex items-center justify-center font-bold shrink-0">
-                    1
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">
-                      You choose your package
-                    </h3>
-                    <p className="text-[#535479]">
-                      We help you determine how many links you need and from
-                      which kind of publications. We piece together a strategy
-                      that makes sense.
-                    </p>
-                  </div>
+          <div className="grid lg:grid-cols-2 gap-16 items-center mt-16">
+            {/* Left - Bag illustration placeholder */}
+            <div className="bg-gradient-to-br from-[#5A4DBF]/10 to-[#D733A2]/10 rounded-3xl p-12 flex items-center justify-center min-h-[400px]">
+              <div className="text-center">
+                <div className="w-32 h-32 mx-auto bg-[#5A4DBF]/20 rounded-3xl flex items-center justify-center mb-4">
+                  <span className="text-6xl">📦</span>
                 </div>
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-full bg-[#5A4DBF] text-white flex items-center justify-center font-bold shrink-0">
-                    2
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">
-                      We pitch journalists
-                    </h3>
-                    <p className="text-[#535479]">
-                      Based on your goals, we craft a digital PR strategy. By
-                      staying ahead of trends and expertly pitching to
-                      journalists, we position you as the expert.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-full bg-[#5A4DBF] text-white flex items-center justify-center font-bold shrink-0">
-                    3
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">
-                      We monitor & report
-                    </h3>
-                    <p className="text-[#535479]">
-                      Every link we secure is instantly added to your report in
-                      real-time. Get ready to fill your "featured in" section!
-                    </p>
-                  </div>
-                </div>
+                <p className="text-[#535479] font-medium">Your link building package</p>
               </div>
             </div>
-            <div className="md:w-1/2 bg-[#5A4DBF]/5 rounded-3xl p-8 border border-[#5A4DBF]/10">
-              <div className="space-y-4">
-                <div className="bg-white p-4 rounded-xl shadow-sm flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                    <span className="font-medium text-[#0F0F0F]">
-                      Pitch Sent: TechCrunch
-                    </span>
-                  </div>
-                  <span className="text-xs bg-gray-100 px-2 py-1 rounded text-gray-500">
-                    10:42 AM
-                  </span>
+
+            {/* Right - Steps */}
+            <div className="space-y-12">
+              <div className="flex gap-6">
+                <div className="w-14 h-14 rounded-2xl bg-[#5A4DBF] text-white flex items-center justify-center shrink-0">
+                  <span className="text-2xl">📦</span>
                 </div>
-                <div className="bg-white p-4 rounded-xl shadow-sm flex items-center justify-between border-l-4 border-green-500">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                    <span className="font-medium text-[#0F0F0F]">
-                      Link Secured: Forbes
-                    </span>
-                  </div>
-                  <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">
-                    Live
-                  </span>
+                <div>
+                  <h3 className="text-xl font-bold mb-3 text-[#0F0F0F]">
+                    You choose your package.
+                  </h3>
+                  <p className="text-[#535479] leading-relaxed">
+                    It all begins with strategy. What&apos;s your ultimate goal? Are you aiming for
+                    brand awareness or a boost in organic traffic? Determining how many links you
+                    need to build and from which kind of publications is crucial. We piece together
+                    a strategy that makes sense and sets you on the path to achieving your objectives.
+                  </p>
                 </div>
-                <div className="bg-white p-4 rounded-xl shadow-sm flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
-                    <span className="font-medium text-[#0F0F0F]">
-                      Drafting: Industry Report
-                    </span>
-                  </div>
-                  <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded">
-                    In Progress
-                  </span>
+              </div>
+
+              <div className="flex gap-6">
+                <div className="w-14 h-14 rounded-2xl bg-[#5A4DBF] text-white flex items-center justify-center shrink-0">
+                  <span className="text-2xl">✉️</span>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-3 text-[#0F0F0F]">
+                    We pitch journalists.
+                  </h3>
+                  <p className="text-[#535479] leading-relaxed">
+                    Based on your goals, we craft a digital PR strategy that amplifies your marketing
+                    efforts, delivering campaigns with measurable impact. By staying ahead of trends
+                    and expertly pitching to journalists, we position you as the go-to expert, ensuring
+                    your voice is heard in all the right places.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex gap-6">
+                <div className="w-14 h-14 rounded-2xl bg-[#5A4DBF] text-white flex items-center justify-center shrink-0">
+                  <span className="text-2xl">📊</span>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-3 text-[#0F0F0F]">
+                    We monitor pitches and report to you.
+                  </h3>
+                  <p className="text-[#535479] leading-relaxed">
+                    Every link we secure is instantly added to your report in real-time – exciting,
+                    isn&apos;t it? Get ready to make room on your homepage&apos;s press-badge section,
+                    because we&apos;re about to fill it with all the juicy links we land for you!
+                  </p>
                 </div>
               </div>
             </div>
@@ -464,205 +695,212 @@ export default function Home() {
         </section>
 
         {/* Pricing Section */}
-        <section id="pricing" className="container mx-auto px-6 mb-32">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-[#0F0F0F] mb-4">
-              Simple Pricing.
-            </h2>
-            <p className="text-[#535479]">
-              Choose the package that fits your growth goals.
+        <section id="Pricing" className="container mx-auto px-6 mb-32">
+          <div className="text-center mb-12">
+            <p className="text-sm text-[#5A4DBF] uppercase tracking-wider font-semibold mb-2">
+              Choose what&apos;s best for you
             </p>
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-[#0F0F0F] mb-8">
+              Simple pricing.
+            </h2>
+
+            {/* Pricing Toggle */}
+            <div className="inline-flex bg-gray-100 rounded-full p-1">
+              <button
+                onClick={() => setPricingTab("monthly")}
+                className={`px-6 py-2 rounded-full text-sm font-semibold transition-all ${
+                  pricingTab === "monthly"
+                    ? "bg-[#5A4DBF] text-white"
+                    : "text-[#535479] hover:text-[#0F0F0F]"
+                }`}
+                data-testid="button-pricing-monthly"
+              >
+                MONTHLY
+              </button>
+              <button
+                onClick={() => setPricingTab("onetime")}
+                className={`px-6 py-2 rounded-full text-sm font-semibold transition-all ${
+                  pricingTab === "onetime"
+                    ? "bg-[#5A4DBF] text-white"
+                    : "text-[#535479] hover:text-[#0F0F0F]"
+                }`}
+                data-testid="button-pricing-onetime"
+              >
+                ONE-TIME
+              </button>
+            </div>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {/* 10 Links */}
-            <div className="p-8 rounded-3xl bg-white border border-gray-100 shadow-lg hover:shadow-xl transition-shadow flex flex-col">
-              <h3 className="text-2xl font-bold text-[#0F0F0F] mb-2">
-                10-LINKS
-              </h3>
-              <p className="text-sm text-[#535479] mb-6 uppercase tracking-wider font-semibold">
-                6 Monthly Payments
-              </p>
+          <div className={`grid gap-8 max-w-7xl mx-auto ${currentPricing.length === 4 ? 'md:grid-cols-2 lg:grid-cols-4' : 'lg:grid-cols-3 max-w-6xl'}`}>
+            {currentPricing.map((plan, index) => (
+              <div
+                key={index}
+                className={`p-8 rounded-3xl flex flex-col relative ${
+                  plan.popular
+                    ? "bg-[#0F0F0F] text-white shadow-2xl transform lg:-translate-y-4"
+                    : "bg-white border border-gray-200 shadow-lg"
+                }`}
+              >
+                {plan.popular && (
+                  <div className="absolute top-0 right-0 bg-[#D733A2] text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl rounded-tr-3xl uppercase">
+                    Most Popular
+                  </div>
+                )}
 
-              <div className="mb-8">
-                <span className="text-4xl font-bold text-[#0F0F0F]">
-                  $1,375
-                </span>
-                <span className="text-[#535479]">/mo</span>
-                <p className="text-sm text-[#535479] mt-2">$825 per link</p>
+                <h3 className={`text-2xl font-bold mb-1 ${plan.popular ? "text-white" : "text-[#0F0F0F]"}`}>
+                  {plan.links}
+                </h3>
+                <p className={`text-sm mb-6 uppercase tracking-wider font-semibold ${plan.popular ? "text-gray-400" : "text-[#535479]"}`}>
+                  {plan.period}
+                </p>
+
+                <div className="space-y-3 mb-8 flex-1">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className={`w-5 h-5 ${plan.popular ? "text-[#D733A2]" : "text-[#5A4DBF]"}`} />
+                    <span>DR 40 - 95 PR Links</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className={`w-5 h-5 ${plan.popular ? "text-[#D733A2]" : "text-[#5A4DBF]"}`} />
+                    <span>Guaranteed Average DR 70+</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className={`w-5 h-5 ${plan.popular ? "text-[#D733A2]" : "text-[#5A4DBF]"}`} />
+                    <span>US & UK News Publications</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className={`w-5 h-5 ${plan.popular ? "text-[#D733A2]" : "text-[#5A4DBF]"}`} />
+                    <span>Real-Time Reporting</span>
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <p className={`text-xs mb-1 ${plan.popular ? "text-gray-400" : "text-[#535479]"}`}>only</p>
+                  <p className="text-4xl font-bold">
+                    {plan.price}
+                    {pricingTab === "monthly" && <span className={`text-lg font-normal ${plan.popular ? "text-gray-400" : "text-[#535479]"}`}>/m</span>}
+                  </p>
+                  <p className={`text-sm mt-1 ${plan.popular ? "text-gray-400" : "text-[#535479]"}`}>
+                    {plan.perLink}
+                  </p>
+                </div>
+
+                <a href={plan.checkoutUrl} target="_blank" rel="noopener noreferrer">
+                  <Button
+                    className={`w-full rounded-full h-12 font-bold ${
+                      plan.popular
+                        ? "bg-[#D733A2] hover:bg-[#b02a85] text-white"
+                        : "bg-[#5A4DBF] hover:bg-[#483d99] text-white"
+                    }`}
+                    data-testid={`button-get-started-${plan.links.toLowerCase()}`}
+                  >
+                    Get started
+                  </Button>
+                </a>
+
+                <p className={`text-xs mt-4 text-center ${plan.popular ? "text-gray-500" : "text-[#9aa0b0]"}`}>
+                  {plan.deliveryNote}
+                </p>
               </div>
-
-              <div className="space-y-4 mb-8 flex-1">
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#5A4DBF]" />
-                  <span className="text-[#0F0F0F]">DR 40 - 95 PR Links</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#5A4DBF]" />
-                  <span className="text-[#0F0F0F]">
-                    Guaranteed Average DR 70+
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#5A4DBF]" />
-                  <span className="text-[#0F0F0F]">
-                    US & UK News Publications
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#5A4DBF]" />
-                  <span className="text-[#0F0F0F]">Real-Time Reporting</span>
-                </div>
-              </div>
-
-              <Button className="w-full bg-[#5A4DBF] hover:bg-[#483d99] text-white rounded-full h-12 font-bold">
-                Get Started
-              </Button>
-            </div>
-
-            {/* 20 Links - Popular */}
-            <div className="p-8 rounded-3xl bg-[#0F0F0F] text-white shadow-2xl relative flex flex-col transform md:-translate-y-4">
-              <div className="absolute top-0 right-0 bg-[#D733A2] text-white text-xs font-bold px-3 py-1 rounded-bl-xl rounded-tr-3xl uppercase">
-                Most Popular
-              </div>
-
-              <h3 className="text-2xl font-bold mb-2">20-LINKS</h3>
-              <p className="text-sm text-gray-400 mb-6 uppercase tracking-wider font-semibold">
-                6 Monthly Payments
-              </p>
-
-              <div className="mb-8">
-                <span className="text-4xl font-bold">$2,667</span>
-                <span className="text-gray-400">/mo</span>
-                <p className="text-sm text-gray-400 mt-2">$800 per link</p>
-              </div>
-
-              <div className="space-y-4 mb-8 flex-1">
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#D733A2]" />
-                  <span>DR 40 - 95 PR Links</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#D733A2]" />
-                  <span>Guaranteed Average DR 70+</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#D733A2]" />
-                  <span>US & UK News Publications</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#D733A2]" />
-                  <span>Real-Time Reporting</span>
-                </div>
-              </div>
-
-              <Button className="w-full bg-[#D733A2] hover:bg-[#b02a85] text-white rounded-full h-12 font-bold">
-                Get Started
-              </Button>
-            </div>
-
-            {/* 50 Links */}
-            <div className="p-8 rounded-3xl bg-white border border-gray-100 shadow-lg hover:shadow-xl transition-shadow flex flex-col">
-              <h3 className="text-2xl font-bold text-[#0F0F0F] mb-2">
-                50-LINKS
-              </h3>
-              <p className="text-sm text-[#535479] mb-6 uppercase tracking-wider font-semibold">
-                12 Monthly Payments
-              </p>
-
-              <div className="mb-8">
-                <span className="text-4xl font-bold text-[#0F0F0F]">
-                  $3,125
-                </span>
-                <span className="text-[#535479]">/mo</span>
-                <p className="text-sm text-[#535479] mt-2">$750 per link</p>
-              </div>
-
-              <div className="space-y-4 mb-8 flex-1">
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#5A4DBF]" />
-                  <span className="text-[#0F0F0F]">DR 40 - 95 PR Links</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#5A4DBF]" />
-                  <span className="text-[#0F0F0F]">
-                    Guaranteed Average DR 70+
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#5A4DBF]" />
-                  <span className="text-[#0F0F0F]">
-                    US & UK News Publications
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#5A4DBF]" />
-                  <span className="text-[#0F0F0F]">Real-Time Reporting</span>
-                </div>
-              </div>
-
-              <Button className="w-full bg-[#5A4DBF] hover:bg-[#483d99] text-white rounded-full h-12 font-bold">
-                Get Started
-              </Button>
-            </div>
+            ))}
           </div>
         </section>
 
-        {/* Testimonials */}
-        <section className="bg-gray-50 py-24">
-          <div className="container mx-auto px-6">
-            <h2 className="text-3xl font-display font-bold text-center mb-16">
-              But don&apos;t just take our word for it.
+        {/* FAQ Section */}
+        <section className="container mx-auto px-6 mb-32">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-[#0F0F0F] text-center mb-12">
+              Frequently Asked Questions
             </h2>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-white p-10 rounded-2xl shadow-sm border border-gray-100">
-                <p className="text-lg text-[#535479] mb-6 italic">
-                  &quot;I&apos;ve been working with Linkifi for close to 4 months
-                  now; Chris and his team have been one of the few services in
-                  the world that have been able to consistently get me
-                  high-level PR links without charging extortionate rates.&quot;
-                </p>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gray-200 rounded-full overflow-hidden">
-                    <Image
-                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop"
-                      alt="Charles"
-                      width={48}
-                      height={48}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <p className="font-bold text-[#0F0F0F]">Charles Floate</p>
-                    <p className="text-sm text-[#5A4DBF]">charlesfloate.com</p>
-                  </div>
-                </div>
-              </div>
+            <Accordion type="single" collapsible className="space-y-4">
+              <AccordionItem value="item-1" className="bg-white border border-gray-200 rounded-2xl px-6">
+                <AccordionTrigger className="text-left font-semibold text-[#0F0F0F]">
+                  What kind of publications do you get links from?
+                </AccordionTrigger>
+                <AccordionContent className="text-[#535479]">
+                  We secure links from high-authority US and UK news publications with Domain Ratings
+                  ranging from DR 40 to DR 95. This includes major outlets like Forbes, TechCrunch,
+                  HuffPost, Yahoo, The New York Times, ZDNet, Healthline, and many more tier-1 publications.
+                </AccordionContent>
+              </AccordionItem>
 
-              <div className="bg-white p-10 rounded-2xl shadow-sm border border-gray-100">
-                <p className="text-lg text-[#535479] mb-6 italic">
-                  &quot;Linkifi masters the art of acquiring impressive,
-                  white-hat PR links fast, even for new sites. It&apos;s the
-                  first link-building service I&apos;ve endorsed in four years,
-                  thanks to their exceptional results.&quot;
-                </p>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gray-200 rounded-full overflow-hidden">
-                    <Image
-                      src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop"
-                      alt="Mike"
-                      width={48}
-                      height={48}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <p className="font-bold text-[#0F0F0F]">Mike Futia</p>
-                    <p className="text-sm text-[#5A4DBF]">stupidsimpleseo.co</p>
-                  </div>
-                </div>
-              </div>
+              <AccordionItem value="item-2" className="bg-white border border-gray-200 rounded-2xl px-6">
+                <AccordionTrigger className="text-left font-semibold text-[#0F0F0F]">
+                  How long does it take to get links?
+                </AccordionTrigger>
+                <AccordionContent className="text-[#535479]">
+                  Delivery times vary based on your package. For smaller packages (5-10 links), expect
+                  delivery within 12 months. Larger packages (20-50 links) may take 18-24 months. We
+                  provide real-time reporting so you can track every link as it goes live.
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-3" className="bg-white border border-gray-200 rounded-2xl px-6">
+                <AccordionTrigger className="text-left font-semibold text-[#0F0F0F]">
+                  What is the average DR of links you provide?
+                </AccordionTrigger>
+                <AccordionContent className="text-[#535479]">
+                  We guarantee an average Domain Rating of DR 70+ across all packages. Many of our
+                  placements are in DR 80-95 publications, ensuring you get high-authority backlinks
+                  that significantly impact your SEO.
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-4" className="bg-white border border-gray-200 rounded-2xl px-6">
+                <AccordionTrigger className="text-left font-semibold text-[#0F0F0F]">
+                  Are these links white-hat and safe?
+                </AccordionTrigger>
+                <AccordionContent className="text-[#535479]">
+                  Absolutely. We exclusively use digital PR methods, which is the only truly white-hat
+                  approach to link building. We pitch real stories to real journalists who choose to
+                  feature your brand. These are genuine editorial placements, not paid links or PBNs.
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-5" className="bg-white border border-gray-200 rounded-2xl px-6">
+                <AccordionTrigger className="text-left font-semibold text-[#0F0F0F]">
+                  Do you offer payment plans?
+                </AccordionTrigger>
+                <AccordionContent className="text-[#535479]">
+                  Yes! We offer 6-month payment plans for our 10 and 20 link packages, and 12-month
+                  payment plans for our 50-link package. You can also choose one-time payment options
+                  if you prefer.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="bg-[#0F0F0F] py-24">
+          <div className="container mx-auto px-6 text-center">
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-6">
+              Ready to build powerful links?
+            </h2>
+            <p className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
+              Join the brands that trust Linkifi to deliver exceptional PR link building results.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="#Pricing">
+                <Button
+                  size="lg"
+                  className="h-14 px-8 rounded-full text-lg bg-[#5A4DBF] hover:bg-[#483d99] text-white font-bold"
+                  data-testid="button-cta-get-started"
+                >
+                  Get Started
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </a>
+              <Link href="/contact-us">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="h-14 px-8 rounded-full text-lg border-gray-600 text-white hover:bg-white/10"
+                  data-testid="button-cta-contact"
+                >
+                  Contact Us
+                </Button>
+              </Link>
             </div>
           </div>
         </section>
@@ -682,8 +920,7 @@ export default function Home() {
                   />
                 </div>
                 <p className="text-[#535479] mb-6">
-                  Building the most powerful links on the planet through Digital
-                  PR.
+                  Building the most powerful links on the planet through Digital PR.
                 </p>
               </div>
 
@@ -691,28 +928,14 @@ export default function Home() {
                 <h4 className="font-bold text-[#0F0F0F] mb-6">Services</h4>
                 <ul className="space-y-4 text-[#535479]">
                   <li>
-                    <a
-                      href="#"
-                      className="hover:text-[#5A4DBF] transition-colors"
-                    >
-                      Digital PR
-                    </a>
+                    <Link href="/expert-quote" className="hover:text-[#5A4DBF] transition-colors">
+                      Expert Quote Link Building
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      href="#"
-                      className="hover:text-[#5A4DBF] transition-colors"
-                    >
-                      Link Building
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="hover:text-[#5A4DBF] transition-colors"
-                    >
-                      Strategy
-                    </a>
+                    <Link href="/digital-pr" className="hover:text-[#5A4DBF] transition-colors">
+                      Digital PR Campaigns
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -721,28 +944,19 @@ export default function Home() {
                 <h4 className="font-bold text-[#0F0F0F] mb-6">Company</h4>
                 <ul className="space-y-4 text-[#535479]">
                   <li>
-                    <a
-                      href="#"
-                      className="hover:text-[#5A4DBF] transition-colors"
-                    >
-                      About Us
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="hover:text-[#5A4DBF] transition-colors"
-                    >
+                    <Link href="/case-studies" className="hover:text-[#5A4DBF] transition-colors">
                       Case Studies
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      href="#"
-                      className="hover:text-[#5A4DBF] transition-colors"
-                    >
-                      Contact
-                    </a>
+                    <Link href="/blog" className="hover:text-[#5A4DBF] transition-colors">
+                      Blog
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/contact-us" className="hover:text-[#5A4DBF] transition-colors">
+                      Contact Us
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -751,27 +965,21 @@ export default function Home() {
                 <h4 className="font-bold text-[#0F0F0F] mb-6">Legal</h4>
                 <ul className="space-y-4 text-[#535479]">
                   <li>
-                    <a
-                      href="#"
-                      className="hover:text-[#5A4DBF] transition-colors"
-                    >
+                    <Link href="/privacy" className="hover:text-[#5A4DBF] transition-colors">
                       Privacy Policy
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      href="#"
-                      className="hover:text-[#5A4DBF] transition-colors"
-                    >
+                    <Link href="/terms" className="hover:text-[#5A4DBF] transition-colors">
                       Terms of Service
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
             </div>
 
             <div className="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center text-[#9aa0b0] text-sm">
-              <p>© 2026 Linkifi. All rights reserved.</p>
+              <p>© 2024 Linkifi. All rights reserved.</p>
             </div>
           </div>
         </footer>
