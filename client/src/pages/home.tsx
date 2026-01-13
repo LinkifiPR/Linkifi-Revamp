@@ -4,19 +4,17 @@ import { motion } from "framer-motion";
 import { 
   ArrowRight, 
   CheckCircle2, 
-  Globe, 
   BarChart3, 
   Shield, 
   Zap, 
   Menu, 
   X,
-  Layout,
-  Instagram,
-  Twitter,
-  Linkedin,
-  Youtube,
-  Palette,
-  Share2
+  TrendingUp,
+  Newspaper,
+  MessageCircle,
+  Search,
+  Users,
+  Award
 } from "lucide-react";
 import { useState } from "react";
 import {
@@ -46,11 +44,10 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background font-sans overflow-x-hidden selection:bg-[#5A4DBF]/20 selection:text-[#5A4DBF]">
-      {/* Navbar - Clean White with Linkifi Logo */}
+      {/* Navbar */}
       <nav className="fixed w-full z-50 glass top-0 transition-all duration-300">
         <div className="container mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            {/* Logo Image */}
             <img 
               src={logoUrl} 
               alt="Linkifi" 
@@ -60,15 +57,16 @@ export default function Home() {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
-            <a href="#features" className="text-sm font-medium text-[#535479] hover:text-[#5A4DBF] transition-colors">Features</a>
+            <a href="#expert-quote" className="text-sm font-medium text-[#535479] hover:text-[#5A4DBF] transition-colors">Expert Quote</a>
+            <a href="#digital-pr" className="text-sm font-medium text-[#535479] hover:text-[#5A4DBF] transition-colors">Digital PR</a>
             <a href="#pricing" className="text-sm font-medium text-[#535479] hover:text-[#5A4DBF] transition-colors">Pricing</a>
+            <a href="#case-studies" className="text-sm font-medium text-[#535479] hover:text-[#5A4DBF] transition-colors">Case Studies</a>
             <a href="#blog" className="text-sm font-medium text-[#535479] hover:text-[#5A4DBF] transition-colors">Blog</a>
           </div>
 
           <div className="hidden md:flex items-center gap-4">
-            <Button variant="ghost" className="text-[#0F0F0F] hover:text-[#5A4DBF] hover:bg-purple-50 font-medium">Log in</Button>
             <Button className="bg-[#5A4DBF] hover:bg-[#483d99] text-white shadow-lg shadow-[#5A4DBF]/20 transition-all duration-300 hover:scale-105 rounded-full px-6">
-              Sign Up Free
+              Contact Us
             </Button>
           </div>
 
@@ -86,17 +84,17 @@ export default function Home() {
             className="md:hidden bg-white border-b border-gray-100"
           >
             <div className="px-6 py-4 flex flex-col gap-4">
-              <a href="#" className="text-[#535479] font-medium py-2">Features</a>
+              <a href="#" className="text-[#535479] font-medium py-2">Digital PR</a>
               <a href="#" className="text-[#535479] font-medium py-2">Pricing</a>
-              <a href="#" className="text-[#535479] font-medium py-2">Log in</a>
-              <Button className="w-full bg-[#5A4DBF] text-white rounded-full">Sign Up Free</Button>
+              <a href="#" className="text-[#535479] font-medium py-2">Case Studies</a>
+              <Button className="w-full bg-[#5A4DBF] text-white rounded-full">Contact Us</Button>
             </div>
           </motion.div>
         )}
       </nav>
 
       <main className="pt-32">
-        {/* Hero Section - Split Layout */}
+        {/* Hero Section */}
         <section className="container mx-auto px-6 mb-24 lg:mb-32">
           <motion.div 
             initial="initial"
@@ -112,7 +110,7 @@ export default function Home() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#5A4DBF] opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-[#5A4DBF]"></span>
                   </span>
-                  The #1 Link in Bio Tool
+                  Building the Most Powerful Links on the Planet
                 </span>
               </motion.div>
               
@@ -120,207 +118,378 @@ export default function Home() {
                 variants={fadeIn}
                 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-[#0F0F0F] leading-[1.1] mb-6 tracking-tight"
               >
-                Everything you are. <br/>
-                <span className="text-gradient-purple">In one simple link.</span>
+                Effortless PR <br/>
+                <span className="text-gradient-purple">Link Building</span>, <br/>
+                Exceptional Results.
               </motion.h1>
               
               <motion.p 
                 variants={fadeIn}
                 className="text-lg md:text-xl text-[#535479] mb-8 leading-relaxed max-w-lg"
               >
-                Join 25M+ people using Linkifi for their link in bio. One link to help you share everything you create, curate and sell from your Instagram, TikTok, Twitter, YouTube and other social media profiles.
+                We control the narrative and directly pitch stories to journalists. 
+                Get your brand featured on the world's largest publications to supercharge your SEO.
               </motion.p>
               
               <motion.div 
                 variants={fadeIn}
                 className="flex flex-col sm:flex-row items-center gap-4 mb-12"
               >
-                <div className="relative w-full sm:w-auto flex-1 max-w-sm">
-                   <div className="flex items-center bg-white border border-gray-200 rounded-full px-4 h-14 shadow-sm focus-within:ring-2 focus-within:ring-[#5A4DBF] transition-all">
-                      <span className="text-gray-400 font-medium whitespace-nowrap">linkifi.io/</span>
-                      <input 
-                        type="text" 
-                        placeholder="yourname" 
-                        className="w-full bg-transparent border-none focus:outline-none text-[#0F0F0F] font-medium ml-1 placeholder:text-gray-300"
-                      />
-                   </div>
-                </div>
-                <Button size="lg" className="h-14 px-8 rounded-full text-lg bg-[#D733A2] hover:bg-[#b02a85] text-white shadow-xl shadow-[#D733A2]/20 transition-all hover:scale-105 w-full sm:w-auto font-bold">
-                  Claim your Linkifi
+                <Button size="lg" className="h-14 px-8 rounded-full text-lg bg-[#5A4DBF] hover:bg-[#483d99] text-white shadow-xl shadow-[#5A4DBF]/20 transition-all hover:scale-105 w-full sm:w-auto font-bold">
+                  Get Started
+                  <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
+                <Button variant="outline" size="lg" className="h-14 px-8 rounded-full text-lg border-gray-200 text-[#535479] hover:text-[#5A4DBF] hover:bg-purple-50 w-full sm:w-auto font-medium">
+                  View Case Studies
+                </Button>
+              </motion.div>
+              
+              <motion.div variants={fadeIn} className="flex flex-wrap gap-8 items-center grayscale opacity-60">
+                 {/* Simplified Text Logos for "Trusted By" */}
+                 <span className="text-xl font-bold text-gray-400 font-serif">Forbes</span>
+                 <span className="text-xl font-bold text-gray-400 font-sans tracking-tight">TechCrunch</span>
+                 <span className="text-xl font-bold text-gray-400 font-mono">WIRED</span>
+                 <span className="text-xl font-bold text-gray-400 font-serif italic">The New York Times</span>
               </motion.div>
             </div>
 
-            {/* Right Graphic - Mobile Mockups */}
-            <motion.div variants={fadeIn} className="relative mx-auto lg:mr-0">
-               {/* Decorative blobs */}
-               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-mesh rounded-full blur-3xl opacity-60 z-0"></div>
-               
-               {/* Phone Mockup Wrapper */}
-               <div className="relative z-10 flex gap-6 justify-center lg:justify-end perspective-1000">
-                  {/* Phone 1 (Behind) */}
-                  <div className="w-64 h-[500px] bg-[#F3F4F6] rounded-[2.5rem] border-8 border-white shadow-2xl rotate-[-6deg] translate-y-12 hidden md:block overflow-hidden relative">
-                    <div className="absolute top-0 w-full h-full bg-white flex flex-col items-center pt-12 px-4">
-                        <div className="w-20 h-20 bg-gray-200 rounded-full mb-4"></div>
-                        <div className="w-32 h-4 bg-gray-200 rounded mb-2"></div>
-                        <div className="w-24 h-3 bg-gray-100 rounded mb-6"></div>
-                        <div className="w-full space-y-3">
-                           <div className="h-12 bg-gray-100 rounded-lg w-full"></div>
-                           <div className="h-12 bg-gray-100 rounded-lg w-full"></div>
-                           <div className="h-12 bg-gray-100 rounded-lg w-full"></div>
-                        </div>
-                    </div>
-                  </div>
-
-                  {/* Phone 2 (Main) */}
-                  <div className="w-72 h-[580px] bg-[#0F0F0F] rounded-[3rem] border-8 border-[#0F0F0F] shadow-2xl relative overflow-hidden">
-                      {/* Screen Content */}
-                      <div className="w-full h-full bg-white overflow-hidden flex flex-col items-center pt-14 px-6 relative">
-                          <div className="absolute top-0 left-0 w-full h-32 bg-[#5A4DBF]"></div>
-                          
-                          <div className="w-24 h-24 bg-white p-1 rounded-full relative z-10 mb-3 shadow-lg">
-                             <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop" alt="User" className="w-full h-full rounded-full object-cover" />
+            {/* Right Graphic - Abstract Representation of PR/Links */}
+            <motion.div variants={fadeIn} className="relative mx-auto lg:mr-0 w-full max-w-md lg:max-w-full">
+               <div className="relative z-10 p-6 bg-white rounded-3xl shadow-2xl border border-gray-100">
+                  {/* Chat Interface Mockup */}
+                  <div className="space-y-6">
+                      <div className="flex gap-4 items-start">
+                          <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
+                              <Users className="w-5 h-5 text-gray-500" />
                           </div>
-                          
-                          <h3 className="text-xl font-bold text-[#0F0F0F] relative z-10">Sarah Creator</h3>
-                          <p className="text-sm text-[#535479] mb-6 relative z-10">Digital Artist & Designer</p>
-                          
-                          <div className="w-full space-y-4 relative z-10">
-                              <div className="h-14 bg-[#F3F4F6] hover:bg-[#E5E7EB] rounded-full flex items-center justify-between px-6 cursor-pointer transition-colors border border-gray-100">
-                                 <span className="font-medium text-[#0F0F0F]">Latest YouTube Video</span>
-                                 <Youtube className="w-5 h-5 text-red-500" />
-                              </div>
-                              <div className="h-14 bg-[#F3F4F6] hover:bg-[#E5E7EB] rounded-full flex items-center justify-between px-6 cursor-pointer transition-colors border border-gray-100">
-                                 <span className="font-medium text-[#0F0F0F]">My Portfolio</span>
-                                 <Palette className="w-5 h-5 text-[#5A4DBF]" />
-                              </div>
-                              <div className="h-14 bg-[#F3F4F6] hover:bg-[#E5E7EB] rounded-full flex items-center justify-between px-6 cursor-pointer transition-colors border border-gray-100">
-                                 <span className="font-medium text-[#0F0F0F]">Follow on Twitter</span>
-                                 <Twitter className="w-5 h-5 text-blue-400" />
-                              </div>
-                              <div className="h-14 bg-[#D733A2] text-white rounded-full flex items-center justify-center px-6 cursor-pointer shadow-lg shadow-[#D733A2]/20">
-                                 <span className="font-bold">Subscribe to Newsletter</span>
+                          <div className="bg-gray-50 p-4 rounded-2xl rounded-tl-none max-w-[85%] text-sm text-[#535479]">
+                              <p>Hey, just checking in — how's the campaign coming along?</p>
+                          </div>
+                      </div>
+
+                      <div className="flex gap-4 items-start justify-end">
+                          <div className="bg-[#5A4DBF] p-4 rounded-2xl rounded-tr-none max-w-[85%] text-sm text-white shadow-lg shadow-[#5A4DBF]/20">
+                              <p className="mb-3">The campaign is going great. Some big links already! Take a look at these placements:</p>
+                              <div className="grid grid-cols-2 gap-2">
+                                  <div className="bg-white/10 p-2 rounded flex items-center gap-2">
+                                      <div className="w-4 h-4 bg-white/20 rounded-full"></div>
+                                      <span className="text-xs font-medium">nytimes.com</span>
+                                  </div>
+                                  <div className="bg-white/10 p-2 rounded flex items-center gap-2">
+                                      <div className="w-4 h-4 bg-white/20 rounded-full"></div>
+                                      <span className="text-xs font-medium">forbes.com</span>
+                                  </div>
+                                  <div className="bg-white/10 p-2 rounded flex items-center gap-2">
+                                      <div className="w-4 h-4 bg-white/20 rounded-full"></div>
+                                      <span className="text-xs font-medium">healthline.com</span>
+                                  </div>
+                                  <div className="bg-white/10 p-2 rounded flex items-center gap-2">
+                                      <div className="w-4 h-4 bg-white/20 rounded-full"></div>
+                                      <span className="text-xs font-medium">zdnet.com</span>
+                                  </div>
                               </div>
                           </div>
+                          <div className="w-10 h-10 rounded-full bg-[#5A4DBF]/10 flex items-center justify-center shrink-0">
+                              <img src={logoUrl} className="w-6 h-6 object-contain" alt="L" />
+                          </div>
+                      </div>
 
-                          <div className="mt-auto mb-8 flex gap-4 text-[#535479]">
-                             <Instagram className="w-5 h-5 hover:text-[#D733A2]" />
-                             <Twitter className="w-5 h-5 hover:text-blue-400" />
-                             <Linkedin className="w-5 h-5 hover:text-blue-700" />
+                      <div className="flex gap-4 items-start">
+                          <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
+                              <Users className="w-5 h-5 text-gray-500" />
+                          </div>
+                          <div className="bg-gray-50 p-4 rounded-2xl rounded-tl-none max-w-[85%] text-sm text-[#535479]">
+                              <p className="text-2xl mb-1">😲🥳🥳🥳</p>
+                              <p>I've yet to meet anyone who is as good with this sort of link-building...</p>
                           </div>
                       </div>
                   </div>
+                  
+                  {/* Floating Stats */}
+                  <motion.div 
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.5 }}
+                    className="absolute -right-8 top-1/2 bg-white p-4 rounded-xl shadow-xl border border-gray-100 flex items-center gap-3"
+                  >
+                      <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                          <TrendingUp className="w-5 h-5 text-green-600" />
+                      </div>
+                      <div>
+                          <p className="text-xs text-gray-400 font-semibold uppercase">Organic Traffic</p>
+                          <p className="text-lg font-bold text-[#0F0F0F]">+245%</p>
+                      </div>
+                  </motion.div>
                </div>
+               
+               {/* Background Glow */}
+               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-mesh rounded-full blur-3xl opacity-50 z-0"></div>
             </motion.div>
           </motion.div>
         </section>
 
-        {/* Social Proof / Brands */}
-        <section className="py-10 bg-gray-50 mb-24">
-            <div className="container mx-auto px-6 text-center">
-                <p className="text-sm font-semibold text-[#535479] mb-8 uppercase tracking-widest">Trusted by 25M+ Creators & Brands</p>
-                <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20 grayscale opacity-60 mix-blend-multiply">
-                    {/* Placeholder Brand Logos */}
-                    <div className="text-xl font-bold font-display text-[#0F0F0F]">Shopify</div>
-                    <div className="text-xl font-bold font-display text-[#0F0F0F]">Substack</div>
-                    <div className="text-xl font-bold font-display text-[#0F0F0F]">Square</div>
-                    <div className="text-xl font-bold font-display text-[#0F0F0F]">Patreon</div>
-                    <div className="text-xl font-bold font-display text-[#0F0F0F]">Twitch</div>
+        {/* The Best Links Are Earned Section */}
+        <section className="py-20 bg-gray-50 mb-24 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none" 
+                 style={{ backgroundImage: 'radial-gradient(#A197EC 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
+            
+            <div className="container mx-auto px-6 relative z-10">
+                <div className="text-center max-w-3xl mx-auto mb-16">
+                    <h2 className="text-3xl md:text-5xl font-display font-bold text-[#0F0F0F] mb-6">The best Links are earned.</h2>
+                    <p className="text-lg text-[#535479] leading-relaxed">
+                        With our digital PR campaigns, we control the narrative and directly pitch stories to journalists. 
+                        Each campaign is meticulously designed for maximum exposure on some of the world's largest publications.
+                    </p>
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-8">
+                    <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                        <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-6 text-[#5A4DBF]">
+                            <Newspaper className="w-6 h-6" />
+                        </div>
+                        <h3 className="text-xl font-bold mb-3">Strategic Placement</h3>
+                        <p className="text-[#535479]">Where others scatter links, we strategically strike. We focus on digital PR, placing links in publications that matter.</p>
+                    </div>
+                    <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                        <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-6 text-[#D733A2]">
+                            <TrendingUp className="w-6 h-6" />
+                        </div>
+                        <h3 className="text-xl font-bold mb-3">Viral Campaigns</h3>
+                        <p className="text-[#535479]">When a campaign goes viral, it sends signals to Google into overdrive, boosting your authority significantly.</p>
+                    </div>
+                    <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                        <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6 text-blue-600">
+                            <Shield className="w-6 h-6" />
+                        </div>
+                        <h3 className="text-xl font-bold mb-3">White-Hat Only</h3>
+                        <p className="text-[#535479]">We focus on digital PR, the only true white-hat method left for sustainable SERP visibility and brand growth.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        {/* Feature Highlights */}
-        <section id="features" className="container mx-auto px-6 mb-32">
-            <div className="grid md:grid-cols-3 gap-12">
-                <motion.div 
-                    whileHover={{ y: -5 }}
-                    className="group"
-                >
-                    <div className="w-14 h-14 rounded-2xl bg-[#5A4DBF]/10 flex items-center justify-center mb-6 text-[#5A4DBF] group-hover:bg-[#5A4DBF] group-hover:text-white transition-colors duration-300">
-                        <Share2 className="w-7 h-7" />
+        {/* How it Works */}
+        <section className="container mx-auto px-6 mb-32">
+            <div className="flex flex-col md:flex-row items-center gap-16">
+                <div className="md:w-1/2">
+                    <h2 className="text-3xl md:text-5xl font-display font-bold text-[#0F0F0F] mb-8">So, how exactly does this work?</h2>
+                    
+                    <div className="space-y-8">
+                        <div className="flex gap-4">
+                            <div className="w-10 h-10 rounded-full bg-[#5A4DBF] text-white flex items-center justify-center font-bold shrink-0">1</div>
+                            <div>
+                                <h3 className="text-xl font-bold mb-2">You choose your package</h3>
+                                <p className="text-[#535479]">We help you determine how many links you need and from which kind of publications. We piece together a strategy that makes sense.</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-4">
+                            <div className="w-10 h-10 rounded-full bg-[#5A4DBF] text-white flex items-center justify-center font-bold shrink-0">2</div>
+                            <div>
+                                <h3 className="text-xl font-bold mb-2">We pitch journalists</h3>
+                                <p className="text-[#535479]">Based on your goals, we craft a digital PR strategy. By staying ahead of trends and expertly pitching to journalists, we position you as the expert.</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-4">
+                            <div className="w-10 h-10 rounded-full bg-[#5A4DBF] text-white flex items-center justify-center font-bold shrink-0">3</div>
+                            <div>
+                                <h3 className="text-xl font-bold mb-2">We monitor & report</h3>
+                                <p className="text-[#535479]">Every link we secure is instantly added to your report in real-time. Get ready to fill your "featured in" section!</p>
+                            </div>
+                        </div>
                     </div>
-                    <h3 className="text-2xl font-display font-bold text-[#0F0F0F] mb-3">Share it anywhere</h3>
-                    <p className="text-[#535479] leading-relaxed">
-                        Take your Linkifi wherever your audience is, to help them discover all your important content.
-                    </p>
-                </motion.div>
-
-                <motion.div 
-                    whileHover={{ y: -5 }}
-                    className="group"
-                >
-                    <div className="w-14 h-14 rounded-2xl bg-[#D733A2]/10 flex items-center justify-center mb-6 text-[#D733A2] group-hover:bg-[#D733A2] group-hover:text-white transition-colors duration-300">
-                        <Layout className="w-7 h-7" />
+                </div>
+                <div className="md:w-1/2 bg-[#5A4DBF]/5 rounded-3xl p-8 border border-[#5A4DBF]/10">
+                    {/* Abstract Process Graphic */}
+                    <div className="space-y-4">
+                        <div className="bg-white p-4 rounded-xl shadow-sm flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                                <span className="font-medium text-[#0F0F0F]">Pitch Sent: TechCrunch</span>
+                            </div>
+                            <span className="text-xs bg-gray-100 px-2 py-1 rounded text-gray-500">10:42 AM</span>
+                        </div>
+                        <div className="bg-white p-4 rounded-xl shadow-sm flex items-center justify-between border-l-4 border-green-500">
+                            <div className="flex items-center gap-3">
+                                <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                                <span className="font-medium text-[#0F0F0F]">Link Secured: Forbes</span>
+                            </div>
+                            <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Live</span>
+                        </div>
+                        <div className="bg-white p-4 rounded-xl shadow-sm flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
+                                <span className="font-medium text-[#0F0F0F]">Drafting: Industry Report</span>
+                            </div>
+                            <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded">In Progress</span>
+                        </div>
                     </div>
-                    <h3 className="text-2xl font-display font-bold text-[#0F0F0F] mb-3">Easy to customize</h3>
-                    <p className="text-[#535479] leading-relaxed">
-                        Design your Linkifi to match your brand and style. No coding needed, just drag and drop.
-                    </p>
-                </motion.div>
-
-                <motion.div 
-                    whileHover={{ y: -5 }}
-                    className="group"
-                >
-                    <div className="w-14 h-14 rounded-2xl bg-[#A197EC]/20 flex items-center justify-center mb-6 text-[#5A4DBF] group-hover:bg-[#5A4DBF] group-hover:text-white transition-colors duration-300">
-                        <BarChart3 className="w-7 h-7" />
-                    </div>
-                    <h3 className="text-2xl font-display font-bold text-[#0F0F0F] mb-3">Analyze your audience</h3>
-                    <p className="text-[#535479] leading-relaxed">
-                        Track your engagement over time, monitor revenue and learn what’s converting your audience.
-                    </p>
-                </motion.div>
+                </div>
             </div>
         </section>
 
-        {/* Big Value Prop Section */}
-        <section className="bg-[#5A4DBF] py-24 text-white relative overflow-hidden mb-32">
-             <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#D733A2] rounded-full blur-[128px] opacity-30 -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
-             
-             <div className="container mx-auto px-6 relative z-10 text-center">
-                 <h2 className="text-3xl md:text-5xl font-display font-bold mb-8">
-                     Analyze your audience and keep <br/> your followers engaged.
-                 </h2>
-                 <p className="text-[#A197EC] text-lg md:text-xl max-w-2xl mx-auto mb-12">
-                     Track your engagement over time, monitor revenue and learn what’s converting your audience. Make informed updates on the fly to keep them coming back.
-                 </p>
-                 <Button size="lg" className="h-14 px-8 rounded-full text-lg bg-white text-[#5A4DBF] hover:bg-gray-100 font-bold">
-                    Get Started for Free
-                 </Button>
-             </div>
+        {/* Pricing Section */}
+        <section id="pricing" className="container mx-auto px-6 mb-32">
+            <div className="text-center mb-16">
+                <h2 className="text-3xl md:text-5xl font-display font-bold text-[#0F0F0F] mb-4">Simple Pricing.</h2>
+                <p className="text-[#535479]">Choose the package that fits your growth goals.</p>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                {/* 10 Links */}
+                <div className="p-8 rounded-3xl bg-white border border-gray-100 shadow-lg hover:shadow-xl transition-shadow flex flex-col">
+                    <h3 className="text-2xl font-bold text-[#0F0F0F] mb-2">10-LINKS</h3>
+                    <p className="text-sm text-[#535479] mb-6 uppercase tracking-wider font-semibold">6 Monthly Payments</p>
+                    
+                    <div className="mb-8">
+                        <span className="text-4xl font-bold text-[#0F0F0F]">$1,375</span>
+                        <span className="text-[#535479]">/mo</span>
+                        <p className="text-sm text-[#535479] mt-2">$825 per link</p>
+                    </div>
+
+                    <div className="space-y-4 mb-8 flex-1">
+                        <div className="flex items-center gap-3">
+                            <CheckCircle2 className="w-5 h-5 text-[#5A4DBF]" />
+                            <span className="text-[#0F0F0F]">DR 40 - 95 PR Links</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <CheckCircle2 className="w-5 h-5 text-[#5A4DBF]" />
+                            <span className="text-[#0F0F0F]">Guaranteed Average DR 70+</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <CheckCircle2 className="w-5 h-5 text-[#5A4DBF]" />
+                            <span className="text-[#0F0F0F]">US & UK News Publications</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <CheckCircle2 className="w-5 h-5 text-[#5A4DBF]" />
+                            <span className="text-[#0F0F0F]">Real-Time Reporting</span>
+                        </div>
+                    </div>
+
+                    <Button className="w-full bg-[#5A4DBF] hover:bg-[#483d99] text-white rounded-full h-12 font-bold">
+                        Get Started
+                    </Button>
+                </div>
+
+                {/* 20 Links - Popular */}
+                <div className="p-8 rounded-3xl bg-[#0F0F0F] text-white shadow-2xl relative flex flex-col transform md:-translate-y-4">
+                    <div className="absolute top-0 right-0 bg-[#D733A2] text-white text-xs font-bold px-3 py-1 rounded-bl-xl rounded-tr-3xl uppercase">
+                        Most Popular
+                    </div>
+                    
+                    <h3 className="text-2xl font-bold mb-2">20-LINKS</h3>
+                    <p className="text-sm text-gray-400 mb-6 uppercase tracking-wider font-semibold">6 Monthly Payments</p>
+                    
+                    <div className="mb-8">
+                        <span className="text-4xl font-bold">$2,667</span>
+                        <span className="text-gray-400">/mo</span>
+                        <p className="text-sm text-gray-400 mt-2">$800 per link</p>
+                    </div>
+
+                    <div className="space-y-4 mb-8 flex-1">
+                        <div className="flex items-center gap-3">
+                            <CheckCircle2 className="w-5 h-5 text-[#D733A2]" />
+                            <span>DR 40 - 95 PR Links</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <CheckCircle2 className="w-5 h-5 text-[#D733A2]" />
+                            <span>Guaranteed Average DR 70+</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <CheckCircle2 className="w-5 h-5 text-[#D733A2]" />
+                            <span>US & UK News Publications</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <CheckCircle2 className="w-5 h-5 text-[#D733A2]" />
+                            <span>Real-Time Reporting</span>
+                        </div>
+                    </div>
+
+                    <Button className="w-full bg-[#D733A2] hover:bg-[#b02a85] text-white rounded-full h-12 font-bold">
+                        Get Started
+                    </Button>
+                </div>
+
+                {/* 50 Links */}
+                <div className="p-8 rounded-3xl bg-white border border-gray-100 shadow-lg hover:shadow-xl transition-shadow flex flex-col">
+                    <h3 className="text-2xl font-bold text-[#0F0F0F] mb-2">50-LINKS</h3>
+                    <p className="text-sm text-[#535479] mb-6 uppercase tracking-wider font-semibold">12 Monthly Payments</p>
+                    
+                    <div className="mb-8">
+                        <span className="text-4xl font-bold text-[#0F0F0F]">$3,125</span>
+                        <span className="text-[#535479]">/mo</span>
+                        <p className="text-sm text-[#535479] mt-2">$750 per link</p>
+                    </div>
+
+                    <div className="space-y-4 mb-8 flex-1">
+                        <div className="flex items-center gap-3">
+                            <CheckCircle2 className="w-5 h-5 text-[#5A4DBF]" />
+                            <span className="text-[#0F0F0F]">DR 40 - 95 PR Links</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <CheckCircle2 className="w-5 h-5 text-[#5A4DBF]" />
+                            <span className="text-[#0F0F0F]">Guaranteed Average DR 70+</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <CheckCircle2 className="w-5 h-5 text-[#5A4DBF]" />
+                            <span className="text-[#0F0F0F]">US & UK News Publications</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <CheckCircle2 className="w-5 h-5 text-[#5A4DBF]" />
+                            <span className="text-[#0F0F0F]">Real-Time Reporting</span>
+                        </div>
+                    </div>
+
+                    <Button className="w-full bg-[#5A4DBF] hover:bg-[#483d99] text-white rounded-full h-12 font-bold">
+                        Get Started
+                    </Button>
+                </div>
+            </div>
         </section>
 
-        {/* FAQ Section */}
-        <section className="container mx-auto px-6 mb-32 max-w-3xl">
-            <h2 className="text-3xl font-display font-bold text-[#0F0F0F] mb-10 text-center">Frequently Asked Questions</h2>
-            <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="item-1">
-                    <AccordionTrigger className="text-lg font-medium text-[#0F0F0F]">How much does Linkifi cost?</AccordionTrigger>
-                    <AccordionContent className="text-[#535479] text-lg leading-relaxed">
-                        Linkifi has a free plan with unlimited links and standard themes. Our Pro plan ($6/month) unlocks custom domains, advanced analytics, and premium themes.
-                    </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-2">
-                    <AccordionTrigger className="text-lg font-medium text-[#0F0F0F]">Can I use my own domain name?</AccordionTrigger>
-                    <AccordionContent className="text-[#535479] text-lg leading-relaxed">
-                        Yes! With Linkifi Pro, you can connect your own domain (e.g., links.yourbrand.com) instead of using linkifi.io/yourname.
-                    </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-3">
-                    <AccordionTrigger className="text-lg font-medium text-[#0F0F0F]">Is it safe?</AccordionTrigger>
-                    <AccordionContent className="text-[#535479] text-lg leading-relaxed">
-                        Security is our top priority. Linkifi is trusted by millions of users and uses industry-standard encryption to protect your data.
-                    </AccordionContent>
-                </AccordionItem>
-            </Accordion>
+        {/* Testimonials */}
+        <section className="bg-gray-50 py-24">
+            <div className="container mx-auto px-6">
+                <h2 className="text-3xl font-display font-bold text-center mb-16">But don't just take our word for it.</h2>
+                
+                <div className="grid md:grid-cols-2 gap-8">
+                    <div className="bg-white p-10 rounded-2xl shadow-sm border border-gray-100">
+                        <p className="text-lg text-[#535479] mb-6 italic">
+                            "I've been working with Linkifi for close to 4 months now; Chris and his team have been one of the few services in the world that have been able to consistently get me high-level PR links without charging extortionate rates."
+                        </p>
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-gray-200 rounded-full overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" alt="Charles" className="w-full h-full object-cover" />
+                            </div>
+                            <div>
+                                <p className="font-bold text-[#0F0F0F]">Charles Floate</p>
+                                <p className="text-sm text-[#5A4DBF]">charlesfloate.com</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="bg-white p-10 rounded-2xl shadow-sm border border-gray-100">
+                        <p className="text-lg text-[#535479] mb-6 italic">
+                            "Linkifi masters the art of acquiring impressive, white-hat PR links fast, even for new sites. It's the first link-building service I've endorsed in four years, thanks to their exceptional results."
+                        </p>
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-gray-200 rounded-full overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop" alt="Mike" className="w-full h-full object-cover" />
+                            </div>
+                            <div>
+                                <p className="font-bold text-[#0F0F0F]">Mike Futia</p>
+                                <p className="text-sm text-[#5A4DBF]">stupidsimpleseo.co</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         {/* Footer */}
         <footer className="border-t border-gray-100 bg-white pt-20 pb-10">
             <div className="container mx-auto px-6">
-                <div className="grid md:grid-cols-5 gap-12 mb-16">
-                    <div className="col-span-1 md:col-span-2">
+                <div className="grid md:grid-cols-4 gap-12 mb-16">
+                    <div className="col-span-1 md:col-span-1">
                         <div className="flex items-center gap-2 mb-6">
                             <img 
                               src={logoUrl} 
@@ -328,47 +497,40 @@ export default function Home() {
                               className="h-8 w-auto object-contain"
                             />
                         </div>
-                        <p className="text-[#535479] mb-6 max-w-sm">
-                            The simple, beautiful way to link to everything you create.
+                        <p className="text-[#535479] mb-6">
+                            Building the most powerful links on the planet through Digital PR.
                         </p>
+                    </div>
+                    
+                    <div>
+                        <h4 className="font-bold text-[#0F0F0F] mb-6">Services</h4>
+                        <ul className="space-y-4 text-[#535479]">
+                            <li><a href="#" className="hover:text-[#5A4DBF] transition-colors">Digital PR</a></li>
+                            <li><a href="#" className="hover:text-[#5A4DBF] transition-colors">Link Building</a></li>
+                            <li><a href="#" className="hover:text-[#5A4DBF] transition-colors">Strategy</a></li>
+                        </ul>
                     </div>
                     
                     <div>
                         <h4 className="font-bold text-[#0F0F0F] mb-6">Company</h4>
                         <ul className="space-y-4 text-[#535479]">
-                            <li><a href="#" className="hover:text-[#5A4DBF] transition-colors">The Linkifi Blog</a></li>
-                            <li><a href="#" className="hover:text-[#5A4DBF] transition-colors">Engineering Blog</a></li>
-                            <li><a href="#" className="hover:text-[#5A4DBF] transition-colors">Marketplace</a></li>
-                            <li><a href="#" className="hover:text-[#5A4DBF] transition-colors">What's New</a></li>
+                            <li><a href="#" className="hover:text-[#5A4DBF] transition-colors">About Us</a></li>
+                            <li><a href="#" className="hover:text-[#5A4DBF] transition-colors">Case Studies</a></li>
+                            <li><a href="#" className="hover:text-[#5A4DBF] transition-colors">Contact</a></li>
                         </ul>
                     </div>
                     
                     <div>
-                        <h4 className="font-bold text-[#0F0F0F] mb-6">Community</h4>
+                        <h4 className="font-bold text-[#0F0F0F] mb-6">Legal</h4>
                         <ul className="space-y-4 text-[#535479]">
-                            <li><a href="#" className="hover:text-[#5A4DBF] transition-colors">Linkifi for Enterprise</a></li>
-                            <li><a href="#" className="hover:text-[#5A4DBF] transition-colors">Creators</a></li>
-                            <li><a href="#" className="hover:text-[#5A4DBF] transition-colors">Charities</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div>
-                        <h4 className="font-bold text-[#0F0F0F] mb-6">Support</h4>
-                        <ul className="space-y-4 text-[#535479]">
-                            <li><a href="#" className="hover:text-[#5A4DBF] transition-colors">Help Topics</a></li>
-                            <li><a href="#" className="hover:text-[#5A4DBF] transition-colors">Getting Started</a></li>
-                            <li><a href="#" className="hover:text-[#5A4DBF] transition-colors">Features</a></li>
+                            <li><a href="#" className="hover:text-[#5A4DBF] transition-colors">Privacy Policy</a></li>
+                            <li><a href="#" className="hover:text-[#5A4DBF] transition-colors">Terms of Service</a></li>
                         </ul>
                     </div>
                 </div>
                 
                 <div className="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center text-[#9aa0b0] text-sm">
-                    <p>© 2026 Linkifi Inc. All rights reserved.</p>
-                    <div className="flex gap-6 mt-4 md:mt-0">
-                        <a href="#" className="hover:text-[#5A4DBF] transition-colors">Privacy Policy</a>
-                        <a href="#" className="hover:text-[#5A4DBF] transition-colors">Terms of Use</a>
-                        <a href="#" className="hover:text-[#5A4DBF] transition-colors">Cookie Notice</a>
-                    </div>
+                    <p>© 2026 Linkifi. All rights reserved.</p>
                 </div>
             </div>
         </footer>
