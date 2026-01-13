@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans, Caveat } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -10,6 +10,11 @@ const inter = Inter({
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-plus-jakarta",
+});
+
+const caveat = Caveat({
+  subsets: ["latin"],
+  variable: "--font-caveat",
 });
 
 export const metadata: Metadata = {
@@ -76,7 +81,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${plusJakarta.variable} font-sans antialiased`}
+        className={`${inter.variable} ${plusJakarta.variable} ${caveat.variable} font-sans antialiased`}
       >
         {children}
       </body>

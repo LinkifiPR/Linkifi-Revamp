@@ -82,4 +82,57 @@
         radial-gradient(at 100% 100%, hsla(247, 48%, 92%, 1) 0px, transparent 50%),
         radial-gradient(at 0% 100%, hsla(319, 65%, 95%, 1) 0px, transparent 50%);
   }
+
+  .font-handwritten {
+    font-family: 'Caveat', cursive;
+  }
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-scroll-left {
+  animation: scroll-left 25s linear infinite;
+}
+
+.animate-wiggle {
+  animation: wiggle 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.logo-stylized {
+  filter: brightness(0) invert(0);
+  transition: all 0.3s ease;
+}
+
+.logo-stylized:hover {
+  filter: brightness(0) invert(0) drop-shadow(0 0 8px rgba(215, 51, 162, 0.6));
+  transform: scale(1.1);
 }

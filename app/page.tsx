@@ -428,19 +428,114 @@ export default function Home() {
         </section>
 
         {/* Client Logos Section */}
-        <section className="py-12 mb-20">
-          <div className="container mx-auto px-6">
-            <p className="text-center text-sm text-[#535479] uppercase tracking-wider font-semibold mb-8">
-              We work with brands focused on growth
-            </p>
-            <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60 grayscale">
-              <span className="text-lg font-bold text-gray-500">VirtualSt</span>
-              <span className="text-lg font-bold text-gray-500">Wealth of Geeks</span>
-              <span className="text-lg font-bold text-gray-500">SweatBlock</span>
-              <span className="text-lg font-bold text-gray-500">Rudis Wrestling</span>
-              <span className="text-lg font-bold text-gray-500">Netify</span>
-              <span className="text-lg font-bold text-gray-500">Therapy Offices</span>
+        <section className="py-16 mb-20 overflow-hidden">
+          <div className="container mx-auto px-6 mb-10">
+            {/* Handwritten text with wavy arrow */}
+            <div className="flex flex-col items-center justify-center relative">
+              <p 
+                className="text-2xl md:text-3xl text-[#0F0F0F] font-[family-name:var(--font-caveat)] animate-wiggle"
+                style={{ fontFamily: 'var(--font-caveat), cursive' }}
+              >
+                We work with brands focused on growth
+              </p>
+              {/* Wavy Arrow SVG */}
+              <svg 
+                className="w-24 h-12 mt-2 text-[#D733A2] animate-float" 
+                viewBox="0 0 100 50" 
+                fill="none"
+              >
+                <path 
+                  d="M10 25 Q 25 10, 40 25 T 70 25 T 90 25" 
+                  stroke="currentColor" 
+                  strokeWidth="3" 
+                  strokeLinecap="round"
+                  fill="none"
+                />
+                <path 
+                  d="M80 20 L 90 25 L 80 30" 
+                  stroke="currentColor" 
+                  strokeWidth="3" 
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  fill="none"
+                />
+              </svg>
             </div>
+          </div>
+
+          {/* Infinite scrolling logos */}
+          <div className="relative w-full">
+            <div className="flex animate-scroll-left hover:[animation-play-state:paused]">
+              {/* First set of logos */}
+              {[...Array(2)].map((_, setIndex) => (
+                <div key={setIndex} className="flex items-center gap-16 px-8 shrink-0">
+                  <div className="group relative">
+                    <Image
+                      src="/logos/virtualst.webp"
+                      alt="VirtualStaging.com"
+                      width={180}
+                      height={50}
+                      className="h-10 md:h-12 w-auto object-contain logo-stylized"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#D733A2]/0 via-[#D733A2]/20 to-[#D733A2]/0 opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
+                  </div>
+                  <div className="group relative">
+                    <Image
+                      src="/logos/wealthofgeeks.webp"
+                      alt="Wealth of Geeks"
+                      width={200}
+                      height={50}
+                      className="h-8 md:h-10 w-auto object-contain logo-stylized"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#D733A2]/0 via-[#D733A2]/20 to-[#D733A2]/0 opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
+                  </div>
+                  <div className="group relative">
+                    <Image
+                      src="/logos/sweatblock.webp"
+                      alt="SweatBlock"
+                      width={160}
+                      height={50}
+                      className="h-8 md:h-10 w-auto object-contain logo-stylized"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#D733A2]/0 via-[#D733A2]/20 to-[#D733A2]/0 opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
+                  </div>
+                  <div className="group relative">
+                    <Image
+                      src="/logos/rudis.webp"
+                      alt="Rudis Wrestling"
+                      width={140}
+                      height={50}
+                      className="h-10 md:h-12 w-auto object-contain logo-stylized"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#D733A2]/0 via-[#D733A2]/20 to-[#D733A2]/0 opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
+                  </div>
+                  <div className="group relative">
+                    <Image
+                      src="/logos/netify.webp"
+                      alt="Netify"
+                      width={120}
+                      height={50}
+                      className="h-10 md:h-12 w-auto object-contain logo-stylized"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#D733A2]/0 via-[#D733A2]/20 to-[#D733A2]/0 opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
+                  </div>
+                  <div className="group relative">
+                    <Image
+                      src="/logos/therapyrooms.webp"
+                      alt="US Therapy Rooms"
+                      width={200}
+                      height={50}
+                      className="h-8 md:h-10 w-auto object-contain logo-stylized"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#D733A2]/0 via-[#D733A2]/20 to-[#D733A2]/0 opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Gradient fade edges */}
+            <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+            <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
           </div>
         </section>
 
