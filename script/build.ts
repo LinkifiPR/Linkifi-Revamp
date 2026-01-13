@@ -1,64 +1,72 @@
-import { build as esbuild } from "esbuild";
-import { build as viteBuild } from "vite";
-import { rm, readFile } from "fs/promises";
-
-// server deps to bundle to reduce openat(2) syscalls
-// which helps cold start times
-const allowlist = [
-  "@google/generative-ai",
-  "axios",
-  "connect-pg-simple",
-  "cors",
-  "date-fns",
-  "drizzle-orm",
-  "drizzle-zod",
-  "express",
-  "express-rate-limit",
-  "express-session",
-  "jsonwebtoken",
-  "memorystore",
-  "multer",
-  "nanoid",
-  "nodemailer",
-  "openai",
-  "passport",
-  "passport-local",
-  "pg",
-  "stripe",
-  "uuid",
-  "ws",
-  "xlsx",
-  "zod",
-  "zod-validation-error",
-];
+import { spawn } from "child_process";
+import { rm, mkdir, writeFile } from "fs/promises";
 
 async function buildAll() {
-  await rm("dist", { recursive: true, force: true });
+  console.log("Building Next.js application...");
+  
+  // Run next build
+  await new Promise<void>((resolve, reject) => {
+    const nextBuild = spawn("npx", ["next", "build"], {
+      cwd: process.cwd(),
+      stdio: "inherit",
+      env: { ...process.env },
+    });
 
-  console.log("building client...");
-  await viteBuild();
+    nextBuild.on("error", (err) => {
+      reject(new Error(`Failed to build Next.js: ${err.message}`));
+    });
 
-  console.log("building server...");
-  const pkg = JSON.parse(await readFile("package.json", "utf-8"));
-  const allDeps = [
-    ...Object.keys(pkg.dependencies || {}),
-    ...Object.keys(pkg.devDependencies || {}),
-  ];
-  const externals = allDeps.filter((dep) => !allowlist.includes(dep));
-
-  await esbuild({
-    entryPoints: ["server/index.ts"],
-    platform: "node",
-    bundle: true,
-    format: "cjs",
-    outfile: "dist/index.cjs",
-    define: {
-      "process.env.NODE_ENV": '"production"',
-    },
-    minify: true,
-    external: externals,
-    logLevel: "info",
+    nextBuild.on("close", (code) => {
+      if (code === 0) {
+        resolve();
+      } else {
+        reject(new Error(`Next.js build failed with code ${code}`));
+      }
+    });
   });
+
+  console.log("Next.js build complete!");
+
+  // Create dist folder with a simple entry point that starts next
+  await rm("dist", { recursive: true, force: true });
+  await mkdir("dist", { recursive: true });
+  
+  // Create a simple CJS entry point that spawns next start
+  const entryPoint = `
+const { spawn } = require("child_process");
+
+const port = process.env.PORT || "5000";
+
+console.log("Starting Next.js production server on port " + port + "...");
+
+const nextProcess = spawn("npx", ["next", "start", "-p", port, "-H", "0.0.0.0"], {
+  cwd: process.cwd(),
+  stdio: "inherit",
+  env: { ...process.env },
+});
+
+nextProcess.on("error", (err) => {
+  console.error("Failed to start Next.js:", err.message);
+  process.exit(1);
+});
+
+nextProcess.on("close", (code) => {
+  console.log("Next.js process exited with code", code);
+  process.exit(code || 0);
+});
+
+process.on("SIGINT", () => {
+  nextProcess.kill("SIGINT");
+});
+
+process.on("SIGTERM", () => {
+  nextProcess.kill("SIGTERM");
+});
+`.trim();
+
+  await writeFile("dist/index.cjs", entryPoint);
+  
+  console.log("Build complete! Run 'npm run start' to start the production server.");
 }
 
 buildAll().catch((err) => {

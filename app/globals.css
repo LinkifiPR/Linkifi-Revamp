@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 6%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 6%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 6%;
+    --primary: 247 48% 52%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 247 65% 96%;
+    --secondary-foreground: 247 48% 52%;
+    --muted: 240 5% 96%;
+    --muted-foreground: 238 19% 40%;
+    --accent: 247 65% 96%;
+    --accent-foreground: 247 48% 52%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5% 92%;
+    --input: 240 5% 92%;
+    --ring: 247 48% 52%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 6%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 6%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 247 65% 76%;
+    --primary-foreground: 0 0% 6%;
+    --secondary: 240 4% 16%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 240 4% 16%;
+    --muted-foreground: 240 5% 65%;
+    --accent: 240 4% 16%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 4% 16%;
+    --input: 240 4% 16%;
+    --ring: 247 65% 76%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .glass {
+    @apply bg-white/90 backdrop-blur-md border-b border-gray-100;
+  }
+  
+  .text-gradient-purple {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#5A4DBF] to-[#D733A2];
+  }
+
+  .bg-gradient-mesh {
+    background-color: #ffffff;
+    background-image: 
+        radial-gradient(at 0% 0%, hsla(247, 48%, 92%, 1) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, hsla(319, 65%, 95%, 1) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, hsla(247, 48%, 92%, 1) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, hsla(319, 65%, 95%, 1) 0px, transparent 50%);
+  }
+}
