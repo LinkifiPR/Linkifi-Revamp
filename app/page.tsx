@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import {
   ArrowRight,
   CheckCircle2,
@@ -12,7 +12,7 @@ import {
   TrendingUp,
   Users,
 } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -23,6 +23,7 @@ import {
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [pricingTab, setPricingTab] = useState<"monthly" | "onetime">("monthly");
+  const strategicSectionRef = useRef<HTMLElement | null>(null);
 
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
@@ -37,6 +38,15 @@ export default function Home() {
       },
     },
   };
+
+  const { scrollYProgress: strategicScrollProgress } = useScroll({
+    target: strategicSectionRef,
+    offset: ["start end", "end start"],
+  });
+  const strategicLogosParallax = useSpring(
+    useTransform(strategicScrollProgress, [0, 1], [16, -16]),
+    { stiffness: 90, damping: 22, mass: 0.35 },
+  );
 
   const featuredPublications = [
     {
@@ -586,7 +596,7 @@ export default function Home() {
         </section>
 
         {/* Strategic Strike Section */}
-        <section className="container mx-auto px-6 mb-24">
+        <section ref={strategicSectionRef} className="container mx-auto px-6 mb-24">
           <div className="mx-auto max-w-5xl rounded-3xl bg-[#08090D] border border-[#1A1B22] px-8 py-10 md:px-12 md:py-12 shadow-[0_24px_80px_rgba(15,15,15,0.35)]">
             <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
               <div>
@@ -609,20 +619,23 @@ export default function Home() {
                 </a>
               </div>
 
-              <div className="flex justify-center lg:justify-end">
-                <div className="space-y-3 md:space-y-4 text-white/95 text-center lg:text-left">
+              <div className="flex justify-center">
+                <motion.div
+                  style={{ y: strategicLogosParallax }}
+                  className="space-y-3 md:space-y-4 text-white/95 w-full max-w-md flex flex-col items-center"
+                >
                   {featuredPublications.map((publication) => (
-                    <div key={publication.src} className="flex justify-center lg:justify-start">
+                    <div key={publication.src} className="flex justify-center w-full">
                       <Image
                         src={publication.src}
                         alt={publication.alt}
                         width={publication.width}
                         height={publication.height}
-                        className={`${publication.className} opacity-95`}
+                        className={`${publication.className} publication-logo`}
                       />
                     </div>
                   ))}
-                </div>
+                </motion.div>
               </div>
             </div>
           </div>
