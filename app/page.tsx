@@ -106,6 +106,36 @@ export default function Home() {
       className: "h-8 md:h-9 w-auto",
     },
   ];
+  const heroPublications = [
+    {
+      src: "/publication-logos/forbes.png",
+      alt: "Forbes",
+      width: 280,
+      height: 90,
+      className: "h-6 md:h-7 w-auto",
+    },
+    {
+      src: "/publication-logos/healthline.png",
+      alt: "healthline",
+      width: 360,
+      height: 70,
+      className: "h-6 md:h-7 w-auto",
+    },
+    {
+      src: "/publication-logos/bbc.svg",
+      alt: "BBC",
+      width: 112,
+      height: 40,
+      className: "h-5 md:h-6 w-auto",
+    },
+    {
+      src: "/publication-logos/guardian.png",
+      alt: "The Guardian",
+      width: 320,
+      height: 95,
+      className: "h-7 md:h-8 w-auto",
+    },
+  ];
 
   const featuredTestimonials = [
     {
@@ -370,20 +400,19 @@ export default function Home() {
 
               <motion.div
                 variants={fadeIn}
-                className="flex flex-wrap gap-8 items-center grayscale opacity-60"
+                className="flex flex-wrap items-center gap-x-8 gap-y-4"
               >
-                <span className="text-xl font-bold text-gray-400 font-serif">
-                  Forbes
-                </span>
-                <span className="text-xl font-bold text-gray-400 font-sans tracking-tight">
-                  TechCrunch
-                </span>
-                <span className="text-xl font-bold text-gray-400 font-mono">
-                  WIRED
-                </span>
-                <span className="text-xl font-bold text-gray-400 font-serif italic">
-                  The New York Times
-                </span>
+                {heroPublications.map((publication, index) => (
+                  <Image
+                    key={publication.alt}
+                    src={publication.src}
+                    alt={publication.alt}
+                    width={publication.width}
+                    height={publication.height}
+                    className={`${publication.className} hero-publication-logo hero-publication-pulse`}
+                    style={{ animationDelay: `${index * 0.35}s` }}
+                  />
+                ))}
               </motion.div>
             </div>
 
