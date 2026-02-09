@@ -50,31 +50,31 @@ export default function Home() {
 
   const featuredPublications = [
     {
-      src: "/publication-logos/nytimes.svg",
+      src: "/publication-logos/nytimes.png",
       alt: "The New York Times",
-      width: 440,
-      height: 82,
+      width: 520,
+      height: 90,
       className: "h-9 md:h-10 w-auto",
     },
     {
-      src: "/publication-logos/forbes.svg",
+      src: "/publication-logos/forbes.png",
       alt: "Forbes",
-      width: 260,
-      height: 86,
+      width: 280,
+      height: 90,
       className: "h-11 md:h-12 w-auto",
     },
     {
-      src: "/publication-logos/guardian.svg",
+      src: "/publication-logos/guardian.png",
       alt: "The Guardian",
-      width: 290,
-      height: 70,
+      width: 320,
+      height: 95,
       className: "h-8 md:h-9 w-auto",
     },
     {
-      src: "/publication-logos/healthline.svg",
+      src: "/publication-logos/healthline.png",
       alt: "healthline",
-      width: 250,
-      height: 64,
+      width: 360,
+      height: 70,
       className: "h-8 md:h-9 w-auto",
     },
     {
@@ -85,10 +85,10 @@ export default function Home() {
       className: "h-7 md:h-8 w-auto",
     },
     {
-      src: "/publication-logos/hubspot.svg",
+      src: "/publication-logos/hubspot.png",
       alt: "HubSpot",
-      width: 240,
-      height: 68,
+      width: 260,
+      height: 72,
       className: "h-8 md:h-9 w-auto",
     },
     {
@@ -99,10 +99,10 @@ export default function Home() {
       className: "h-7 md:h-8 w-auto",
     },
     {
-      src: "/publication-logos/menshealth.svg",
+      src: "/publication-logos/menshealth.png",
       alt: "MensHealth",
-      width: 240,
-      height: 70,
+      width: 320,
+      height: 82,
       className: "h-8 md:h-9 w-auto",
     },
   ];

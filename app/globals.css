@@ -138,8 +138,7 @@
 }
 
 .publication-logo {
-  filter: brightness(0) saturate(100%) invert(100%);
-  opacity: 0.96;
+  opacity: 0.98;
   transition: transform 0.25s ease, opacity 0.25s ease;
   transform-origin: center;
 }
@@ -147,4 +146,8 @@
 .publication-logo:hover {
   opacity: 1;
   transform: scale(1.02);
+}
+
+img[src$=".svg"].publication-logo {
+  filter: brightness(0) invert(1);
 }
