@@ -143,16 +143,20 @@ export default function Home() {
         "I've been working with Linkifi for close to 4 months now; Chris and his team have been one of the few services in the world that have consistently got me high-level PR links without charging extortionate rates.",
       name: "Charles Floate",
       website: "charlesfloate.com",
-      avatar: "CF",
+      avatarSrc: "/testimonial-charles-floate.jpeg",
+      avatarAlt: "Charles Floate",
       gradient: "from-[#5A4DBF] to-[#6B7CFF]",
+      tone: "violet",
     },
     {
       quote:
         "Not only is the outcome excellent, but the process of working with Linkifi is excellent. I've yet to meet anyone who is as good at working with this sort of link-building.",
       name: "Jon Dykstra",
       website: "fatstacksblog.com",
-      avatar: "JD",
+      avatarSrc: "/testimonial-jon-dykstra.webp",
+      avatarAlt: "Jon Dykstra",
       gradient: "from-[#D733A2] to-[#F25DA4]",
+      tone: "pink",
     },
   ];
 
@@ -686,7 +690,7 @@ export default function Home() {
               {featuredTestimonials.map((testimonial) => (
                 <article
                   key={testimonial.name}
-                  className={`relative overflow-hidden rounded-2xl p-8 md:p-10 text-white bg-gradient-to-r ${testimonial.gradient} shadow-xl`}
+                  className={`testimonial-card ${testimonial.tone === "violet" ? "testimonial-card-violet" : "testimonial-card-pink"} relative overflow-hidden rounded-2xl p-8 md:p-10 text-white bg-gradient-to-r ${testimonial.gradient}`}
                 >
                   <div className="absolute -right-6 -top-6 w-24 h-24 rounded-full bg-white/10" />
                   <div className="absolute right-5 top-2 text-6xl text-white/25 font-serif">
@@ -695,8 +699,14 @@ export default function Home() {
 
                   <div className="relative">
                     <div className="flex items-center gap-4 mb-6">
-                      <div className="w-14 h-14 rounded-xl bg-white/20 border border-white/35 flex items-center justify-center font-bold">
-                        {testimonial.avatar}
+                      <div className="relative w-16 h-16 rounded-full overflow-hidden border border-white/55 shadow-[0_0_0_2px_rgba(255,255,255,0.18),0_8px_18px_rgba(0,0,0,0.28)]">
+                        <Image
+                          src={testimonial.avatarSrc}
+                          alt={testimonial.avatarAlt}
+                          fill
+                          sizes="64px"
+                          className="object-cover"
+                        />
                       </div>
                       <div>
                         <p className="font-bold text-xl leading-tight">{testimonial.name}</p>
