@@ -39,14 +39,62 @@ export default function Home() {
   };
 
   const featuredPublications = [
-    { name: "The New York Times", className: "font-serif text-4xl" },
-    { name: "Forbes", className: "font-serif text-5xl font-semibold" },
-    { name: "The Guardian", className: "font-serif text-4xl" },
-    { name: "healthline", className: "text-4xl font-semibold lowercase" },
-    { name: "BBC", className: "font-mono text-4xl tracking-[0.2em]" },
-    { name: "HubSpot", className: "text-4xl font-semibold" },
-    { name: "ELLE", className: "font-serif text-4xl tracking-[0.4em]" },
-    { name: "MensHealth", className: "font-serif text-4xl" },
+    {
+      src: "/publication-logos/nytimes.svg",
+      alt: "The New York Times",
+      width: 440,
+      height: 82,
+      className: "h-9 md:h-10 w-auto",
+    },
+    {
+      src: "/publication-logos/forbes.svg",
+      alt: "Forbes",
+      width: 260,
+      height: 86,
+      className: "h-11 md:h-12 w-auto",
+    },
+    {
+      src: "/publication-logos/guardian.svg",
+      alt: "The Guardian",
+      width: 290,
+      height: 70,
+      className: "h-8 md:h-9 w-auto",
+    },
+    {
+      src: "/publication-logos/healthline.svg",
+      alt: "healthline",
+      width: 250,
+      height: 64,
+      className: "h-8 md:h-9 w-auto",
+    },
+    {
+      src: "/publication-logos/bbc.svg",
+      alt: "BBC",
+      width: 112,
+      height: 40,
+      className: "h-7 md:h-8 w-auto",
+    },
+    {
+      src: "/publication-logos/hubspot.svg",
+      alt: "HubSpot",
+      width: 240,
+      height: 68,
+      className: "h-8 md:h-9 w-auto",
+    },
+    {
+      src: "/publication-logos/elle.svg",
+      alt: "ELLE",
+      width: 130,
+      height: 52,
+      className: "h-7 md:h-8 w-auto",
+    },
+    {
+      src: "/publication-logos/menshealth.svg",
+      alt: "MensHealth",
+      width: 240,
+      height: 70,
+      className: "h-8 md:h-9 w-auto",
+    },
   ];
 
   const featuredTestimonials = [
@@ -562,11 +610,17 @@ export default function Home() {
               </div>
 
               <div className="flex justify-center lg:justify-end">
-                <div className="space-y-4 text-white/95 text-center lg:text-left">
+                <div className="space-y-3 md:space-y-4 text-white/95 text-center lg:text-left">
                   {featuredPublications.map((publication) => (
-                    <p key={publication.name} className={publication.className}>
-                      {publication.name}
-                    </p>
+                    <div key={publication.src} className="flex justify-center lg:justify-start">
+                      <Image
+                        src={publication.src}
+                        alt={publication.alt}
+                        width={publication.width}
+                        height={publication.height}
+                        className={`${publication.className} opacity-95`}
+                      />
+                    </div>
                   ))}
                 </div>
               </div>

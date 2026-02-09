@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="90" viewBox="0 0 260 90" fill="none">
+  <rect x="1.5" y="1.5" width="77" height="77" stroke="#FFFFFF" stroke-width="3"/>
+  <rect x="91.5" y="1.5" width="77" height="77" stroke="#FFFFFF" stroke-width="3"/>
+  <rect x="181.5" y="1.5" width="77" height="77" stroke="#FFFFFF" stroke-width="3"/>
+  <text x="24" y="58" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="50" font-weight="700">B</text>
+  <text x="114" y="58" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="50" font-weight="700">B</text>
+  <text x="204" y="58" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="50" font-weight="700">C</text>
+</svg>
