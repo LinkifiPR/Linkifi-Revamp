@@ -11,8 +11,6 @@ import {
   X,
   TrendingUp,
   Users,
-  ChevronLeft,
-  ChevronRight,
 } from "lucide-react";
 import { useState } from "react";
 import {
@@ -25,7 +23,6 @@ import {
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [pricingTab, setPricingTab] = useState<"monthly" | "onetime">("monthly");
-  const [testimonialIndex, setTestimonialIndex] = useState(0);
 
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
@@ -41,24 +38,33 @@ export default function Home() {
     },
   };
 
-  const testimonials = [
+  const featuredPublications = [
+    { name: "The New York Times", className: "font-serif text-4xl" },
+    { name: "Forbes", className: "font-serif text-5xl font-semibold" },
+    { name: "The Guardian", className: "font-serif text-4xl" },
+    { name: "healthline", className: "text-4xl font-semibold lowercase" },
+    { name: "BBC", className: "font-mono text-4xl tracking-[0.2em]" },
+    { name: "HubSpot", className: "text-4xl font-semibold" },
+    { name: "ELLE", className: "font-serif text-4xl tracking-[0.4em]" },
+    { name: "MensHealth", className: "font-serif text-4xl" },
+  ];
+
+  const featuredTestimonials = [
     {
-      quote: "I've been working with Linkifi for close to 4 months now; Chris and his team have been one of the few services in the world that have been able to consistently get me high-level PR links without charging extortionate rates.",
+      quote:
+        "I've been working with Linkifi for close to 4 months now; Chris and his team have been one of the few services in the world that have consistently got me high-level PR links without charging extortionate rates.",
       name: "Charles Floate",
       website: "charlesfloate.com",
-      image: "/testimonials/charles.webp",
+      avatar: "CF",
+      gradient: "from-[#5A4DBF] to-[#6B7CFF]",
     },
     {
-      quote: "I've now used Linkifi for multiple projects and I will most definitely return with new projects in the future. Not only is the outcome excellent, but the process of working with Linkifi is excellent. I strongly recommend if you want press mentions and links via PR-Requests. I've yet to meet anyone who is as good at working with this sort of link-building.",
+      quote:
+        "Not only is the outcome excellent, but the process of working with Linkifi is excellent. I've yet to meet anyone who is as good at working with this sort of link-building.",
       name: "Jon Dykstra",
       website: "fatstacksblog.com",
-      image: "/testimonials/jon.webp",
-    },
-    {
-      quote: "Linkifi masters the art of acquiring impressive, white-hat PR links fast, even for new sites. It's the first link-building service I've endorsed in four years, thanks to their exceptional results and quick turnaround.",
-      name: "Mike Futia",
-      website: "stupidsimpleseo.co",
-      image: "/testimonials/mike.webp",
+      avatar: "JD",
+      gradient: "from-[#D733A2] to-[#F25DA4]",
     },
   ];
 
@@ -132,14 +138,6 @@ export default function Home() {
   ];
 
   const currentPricing = pricingTab === "monthly" ? monthlyPricing : onetimePricing;
-
-  const nextTestimonial = () => {
-    setTestimonialIndex((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const prevTestimonial = () => {
-    setTestimonialIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
 
   return (
     <div className="min-h-screen bg-white font-sans overflow-x-hidden selection:bg-[#5A4DBF]/20 selection:text-[#5A4DBF]">
@@ -539,175 +537,88 @@ export default function Home() {
           </div>
         </section>
 
-        {/* The Best Links Are Earned Section */}
-        <section className="py-20 bg-[#0F0F0F] mb-24 relative overflow-hidden">
-          <div className="container mx-auto px-6 relative z-10">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-              {/* Left Content */}
-              <div>
-                <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-6">
-                  The best Links are earned.
-                </h2>
-                <p className="text-lg text-gray-300 leading-relaxed mb-8">
-                  With our digital PR campaigns, we control the narrative and
-                  directly pitch stories to journalists. Each campaign is
-                  meticulously designed for maximum exposure on some of the
-                  world&apos;s largest publications. When a campaign goes viral, it
-                  sends signals to Google into overdrive, allowing your brand, SEO,
-                  and digital business to fully benefit from digital PR executed
-                  properly!
-                </p>
-              </div>
-
-              {/* Right - Chat Interface */}
-              <div className="relative">
-                <div className="space-y-4">
-                  {/* Client message */}
-                  <div className="flex gap-4 items-start">
-                    <div className="bg-white p-4 rounded-2xl rounded-tl-none max-w-[85%] text-sm text-[#0F0F0F]">
-                      <p>Hey, just checking in — how&apos;s the campaign coming along?</p>
-                    </div>
-                    <span className="text-xs text-gray-400 mt-2">Client</span>
-                  </div>
-
-                  {/* Linkifi message */}
-                  <div className="flex gap-4 items-start justify-end">
-                    <span className="text-xs text-gray-400 mt-2">Linkifi</span>
-                    <div className="bg-[#5A4DBF] p-4 rounded-2xl rounded-tr-none max-w-[85%] text-sm text-white">
-                      <p className="mb-4">
-                        The campaign is going great. Some big links already! Take a look.
-                      </p>
-                      <div className="flex flex-wrap gap-3">
-                        <span className="bg-white/20 px-3 py-1.5 rounded text-xs font-medium">Yahoo!</span>
-                        <span className="bg-white/20 px-3 py-1.5 rounded text-xs font-medium">NY Times</span>
-                        <span className="bg-white/20 px-3 py-1.5 rounded text-xs font-medium">Forbes</span>
-                        <span className="bg-white/20 px-3 py-1.5 rounded text-xs font-medium">HuffPost</span>
-                        <span className="bg-white/20 px-3 py-1.5 rounded text-xs font-medium">ZDNet</span>
-                        <span className="bg-white/20 px-3 py-1.5 rounded text-xs font-medium">Healthline</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Client reaction */}
-                  <div className="flex gap-4 items-start">
-                    <div className="bg-white p-4 rounded-2xl rounded-tl-none max-w-[85%] text-sm text-[#0F0F0F]">
-                      <p className="text-2xl">😲🥳🥳🥳</p>
-                    </div>
-                    <span className="text-xs text-gray-400 mt-2">Client</span>
-                  </div>
-                </div>
-
-                {/* Jon Dykstra Quote */}
-                <div className="mt-8 bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
-                  <p className="text-white text-sm italic mb-4">
-                    &quot;I&apos;ve yet to meet anyone who is as good with this sort of link-building...&quot;
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gray-600 rounded-full"></div>
-                    <div>
-                      <p className="text-white font-semibold text-sm">Jon Dykstra</p>
-                      <p className="text-gray-400 text-xs">fatstacksblog.com</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Strategic Strike Section */}
         <section className="container mx-auto px-6 mb-24">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-[#0F0F0F] mb-6">
-              Where others scatter links — we strategically strike.
-            </h2>
-            <p className="text-lg text-[#535479] leading-relaxed mb-8">
-              In a landscape where strategic precision is key, we focus on digital PR, the only
-              white-hat method left for boosting SERP visibility. Each link is carefully placed
-              in the correct publication for maximum impact, not just scattered. We enhance your
-              digital authority through meticulously chosen, impactful links, ensuring a stronger,
-              more authoritative presence in search engine results.
-            </p>
-            <a
-              href="#howitworks"
-              className="inline-flex items-center gap-2 text-[#5A4DBF] font-semibold hover:underline"
-            >
-              See how it works
-              <ArrowRight className="w-4 h-4" />
-            </a>
-          </div>
+          <div className="mx-auto max-w-5xl rounded-3xl bg-[#08090D] border border-[#1A1B22] px-8 py-10 md:px-12 md:py-12 shadow-[0_24px_80px_rgba(15,15,15,0.35)]">
+            <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
+              <div>
+                <h2 className="text-3xl md:text-5xl font-display font-bold text-white leading-tight mb-6">
+                  Where others scatter <br /> links — we strategically{" "}
+                  <span className="text-gradient-purple">strike.</span>
+                </h2>
+                <p className="text-base md:text-lg text-gray-300 leading-relaxed mb-8 max-w-2xl">
+                  In a landscape where strategic precision is key, we focus on digital PR, the only
+                  white-hat method left for boosting SERP visibility. Each link is carefully placed
+                  in the right publication for maximum impact, not just scattered.
+                </p>
+                <a href="#howitworks">
+                  <Button
+                    className="bg-[#D733A2] hover:bg-[#b22a85] text-white rounded-lg px-6 h-11 font-semibold"
+                    data-testid="button-see-how-it-works"
+                  >
+                    See how it works
+                  </Button>
+                </a>
+              </div>
 
-          {/* Publication logos marquee */}
-          <div className="mt-16 overflow-hidden">
-            <div className="flex gap-16 items-center justify-center opacity-40 grayscale">
-              <span className="text-2xl font-bold text-gray-400">AP</span>
-              <span className="text-2xl font-bold text-gray-400 font-serif">Forbes</span>
-              <span className="text-2xl font-bold text-gray-400">Yahoo!</span>
-              <span className="text-2xl font-bold text-gray-400 font-serif italic">NYT</span>
-              <span className="text-2xl font-bold text-gray-400">Reuters</span>
+              <div className="flex justify-center lg:justify-end">
+                <div className="space-y-4 text-white/95 text-center lg:text-left">
+                  {featuredPublications.map((publication) => (
+                    <p key={publication.name} className={publication.className}>
+                      {publication.name}
+                    </p>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
         {/* Testimonials Section */}
-        <section className="bg-gray-50 py-24 mb-24">
+        <section className="pb-24 mb-24">
           <div className="container mx-auto px-6">
-            <div className="text-center mb-4">
-              <p className="text-sm text-[#5A4DBF] uppercase tracking-wider font-semibold mb-2">
-                Your secret weapon in digital PR
+            <div className="text-center mb-12">
+              <p className="inline-flex items-center rounded-full bg-[#F8E4F0] text-[#D733A2] px-4 py-1.5 text-sm font-semibold mb-4">
+                Trusted by Industry Leaders
               </p>
               <h2 className="text-3xl md:text-5xl font-display font-bold text-[#0F0F0F]">
-                But don&apos;t just take <br />our word for it.
+                What our clients say
               </h2>
             </div>
 
-            <div className="max-w-4xl mx-auto mt-16">
-              <div className="bg-white p-10 md:p-16 rounded-3xl shadow-xl border border-gray-100 relative">
-                <p className="text-xl md:text-2xl text-[#535479] mb-8 leading-relaxed italic">
-                  &quot;{testimonials[testimonialIndex].quote}&quot;
-                </p>
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-gray-200 rounded-full overflow-hidden">
-                    <div className="w-full h-full bg-gradient-to-br from-[#5A4DBF] to-[#D733A2]"></div>
+            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+              {featuredTestimonials.map((testimonial) => (
+                <article
+                  key={testimonial.name}
+                  className={`relative overflow-hidden rounded-2xl p-8 md:p-10 text-white bg-gradient-to-r ${testimonial.gradient} shadow-xl`}
+                >
+                  <div className="absolute -right-6 -top-6 w-24 h-24 rounded-full bg-white/10" />
+                  <div className="absolute right-5 top-2 text-6xl text-white/25 font-serif">
+                    &quot;
                   </div>
-                  <div>
-                    <p className="font-bold text-[#0F0F0F] text-lg">{testimonials[testimonialIndex].name}</p>
-                    <p className="text-[#5A4DBF]">{testimonials[testimonialIndex].website}</p>
+
+                  <div className="relative">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="w-14 h-14 rounded-xl bg-white/20 border border-white/35 flex items-center justify-center font-bold">
+                        {testimonial.avatar}
+                      </div>
+                      <div>
+                        <p className="font-bold text-xl leading-tight">{testimonial.name}</p>
+                        <p className="text-white/85 text-sm">{testimonial.website}</p>
+                      </div>
+                    </div>
+
+                    <p className="text-white/95 leading-relaxed mb-6">
+                      &quot;{testimonial.quote}&quot;
+                    </p>
+
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="tracking-[0.2em] text-[#FFD76A]">★★★★★</span>
+                      <span className="text-white/85">Verified Client</span>
+                    </div>
                   </div>
-                </div>
-
-                {/* Navigation arrows */}
-                <div className="absolute right-8 bottom-8 flex gap-2">
-                  <button
-                    onClick={prevTestimonial}
-                    className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors"
-                    data-testid="button-prev-testimonial"
-                  >
-                    <ChevronLeft className="w-5 h-5 text-[#535479]" />
-                  </button>
-                  <button
-                    onClick={nextTestimonial}
-                    className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors"
-                    data-testid="button-next-testimonial"
-                  >
-                    <ChevronRight className="w-5 h-5 text-[#535479]" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Dots indicator */}
-              <div className="flex justify-center gap-2 mt-6">
-                {testimonials.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setTestimonialIndex(index)}
-                    className={`w-2 h-2 rounded-full transition-colors ${
-                      index === testimonialIndex ? "bg-[#5A4DBF]" : "bg-gray-300"
-                    }`}
-                    data-testid={`button-testimonial-dot-${index}`}
-                  />
-                ))}
-              </div>
+                </article>
+              ))}
             </div>
           </div>
         </section>
