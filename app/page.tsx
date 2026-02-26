@@ -135,6 +135,34 @@ export default function Home() {
       height: 95,
       className: "h-7 md:h-8 w-auto",
     },
+    {
+      src: "/publication-logos/nytimes.png",
+      alt: "The New York Times",
+      width: 520,
+      height: 90,
+      className: "h-6 md:h-7 w-auto",
+    },
+    {
+      src: "/publication-logos/hubspot.svg",
+      alt: "HubSpot",
+      width: 260,
+      height: 72,
+      className: "h-6 md:h-7 w-auto",
+    },
+    {
+      src: "/publication-logos/menshealth.png",
+      alt: "Men's Health",
+      width: 320,
+      height: 82,
+      className: "h-6 md:h-7 w-auto",
+    },
+    {
+      src: "/publication-logos/elle.svg",
+      alt: "ELLE",
+      width: 130,
+      height: 52,
+      className: "h-5 md:h-6 w-auto",
+    },
   ];
 
   const featuredTestimonials = [
@@ -402,22 +430,6 @@ export default function Home() {
                 </Link>
               </motion.div>
 
-              <motion.div
-                variants={fadeIn}
-                className="flex flex-wrap items-center gap-x-8 gap-y-4"
-              >
-                {heroPublications.map((publication, index) => (
-                  <Image
-                    key={publication.alt}
-                    src={publication.src}
-                    alt={publication.alt}
-                    width={publication.width}
-                    height={publication.height}
-                    className={`${publication.className} hero-publication-logo hero-publication-pulse`}
-                    style={{ animationDelay: `${index * 0.35}s` }}
-                  />
-                ))}
-              </motion.div>
             </div>
 
             {/* Right Graphic - Chat Interface */}
@@ -512,6 +524,26 @@ export default function Home() {
               </div>
 
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-r from-[#5A4DBF]/10 to-[#D733A2]/10 rounded-full blur-3xl opacity-50 z-0"></div>
+            </motion.div>
+
+            <motion.div variants={fadeIn} className="lg:col-span-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 items-center justify-items-center gap-x-6 md:gap-x-8 gap-y-5 lg:gap-y-4">
+                {heroPublications.map((publication, index) => (
+                  <div
+                    key={publication.alt}
+                    className="w-full min-w-0 flex items-center justify-center"
+                  >
+                    <Image
+                      src={publication.src}
+                      alt={publication.alt}
+                      width={publication.width}
+                      height={publication.height}
+                      className={`${publication.className} max-w-full hero-publication-logo hero-publication-pulse`}
+                      style={{ animationDelay: `${index * 0.3}s` }}
+                    />
+                  </div>
+                ))}
+              </div>
             </motion.div>
           </motion.div>
         </section>
