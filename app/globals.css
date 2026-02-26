@@ -1051,7 +1051,13 @@ img[src$=".svg"].publication-logo {
 
 @container (min-width: 28rem) {
   .offer-tags-row {
-    min-height: 4.9rem;
+    min-height: 5.9rem;
+  }
+}
+
+@container (min-width: 56rem) {
+  .offer-tags-row {
+    min-height: auto;
   }
 }
 
