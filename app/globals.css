@@ -935,17 +935,20 @@ img[src$=".svg"].publication-logo {
 .offer-card-title {
   margin-top: 0.45rem;
   font-size: clamp(1.7rem, 2.65vw, 2.2rem);
-  line-height: 1.08;
+  line-height: 1.14;
   color: white;
   font-weight: 800;
   letter-spacing: -0.02em;
   text-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+  display: inline-block;
+  padding-bottom: 0.12em;
 }
 
 .offer-card-seo .offer-card-title {
   background: linear-gradient(180deg, #ffffff 0%, #efe6ff 62%, #ffd7fa 100%);
   -webkit-background-clip: text;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
 }
 
@@ -953,6 +956,7 @@ img[src$=".svg"].publication-logo {
   background: linear-gradient(180deg, #ffffff 0%, #ebefff 58%, #d8ecff 100%);
   -webkit-background-clip: text;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
 }
 
@@ -1065,15 +1069,15 @@ img[src$=".svg"].publication-logo {
 }
 
 /* Side-by-side package cards: force a clean single tag row and smaller pills */
-@container (min-width: 30rem) and (max-width: 56rem) {
-  .offer-tags-row {
+@media (min-width: 1280px) {
+  .offer-card .offer-tags-row {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 0.45rem;
     min-height: auto;
   }
 
-  .offer-tag {
+  .offer-card .offer-tag {
     min-width: 0;
     padding: 0.34rem 0.38rem;
     font-size: 0.64rem;
