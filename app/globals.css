@@ -832,6 +832,30 @@ img[src$=".svg"].publication-logo {
     0 12px 28px rgba(0, 0, 0, 0.24);
 }
 
+.offer-header-graph {
+  width: 1.05rem;
+  height: 1.05rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.14rem;
+}
+
+.offer-header-graph span {
+  display: block;
+  width: 0.16rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(17, 16, 24, 0.95), rgba(35, 28, 55, 0.75));
+  box-shadow: 0 0 8px rgba(17, 16, 24, 0.15);
+  transform-origin: bottom;
+  animation: offer-bars-pulse 2.2s ease-in-out infinite;
+}
+
+.offer-header-graph span:nth-child(1) { height: 42%; animation-delay: 0s; }
+.offer-header-graph span:nth-child(2) { height: 64%; animation-delay: 0.12s; }
+.offer-header-graph span:nth-child(3) { height: 88%; animation-delay: 0.24s; }
+.offer-header-graph span:nth-child(4) { height: 100%; animation-delay: 0.36s; }
+
 .offer-heading-shell {
   position: relative;
   overflow: hidden;
@@ -973,6 +997,17 @@ img[src$=".svg"].publication-logo {
   animation: offer-badge-dot-pulse 3.4s ease-in-out infinite;
 }
 
+.offer-chip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.95rem;
+  height: 0.95rem;
+  color: rgba(255, 255, 255, 0.98);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.24));
+  animation: offer-badge-dot-pulse 3.4s ease-in-out infinite;
+}
+
 .offer-chip-seo {
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 186, 247, 0.18));
@@ -993,6 +1028,10 @@ img[src$=".svg"].publication-logo {
     0 0 22px rgba(129, 204, 255, 0.12);
 }
 
+.offer-chip-authority::before {
+  display: none;
+}
+
 .offer-tag {
   display: inline-flex;
   align-items: center;
@@ -1004,6 +1043,16 @@ img[src$=".svg"].publication-logo {
   font-size: 0.78rem;
   line-height: 1;
   backdrop-filter: blur(8px);
+}
+
+.offer-tags-row {
+  align-content: flex-start;
+}
+
+@container (min-width: 28rem) {
+  .offer-tags-row {
+    min-height: 4.9rem;
+  }
 }
 
 .offer-bullet {
@@ -1446,6 +1495,8 @@ img[src$=".svg"].publication-logo {
   .offer-orb,
   .offer-chip,
   .offer-chip::before,
+  .offer-chip-icon,
+  .offer-header-graph span,
   .offer-glint,
   .offer-mini-row,
   .offer-graph-bars span,

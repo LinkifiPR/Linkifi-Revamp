@@ -7,16 +7,12 @@ import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import {
   ArrowRight,
   BarChart3,
-  Bot,
   Boxes,
   CheckCircle2,
-  Globe2,
   Menu,
   Megaphone,
-  Newspaper,
-  Search,
-  ShieldCheck,
   Sparkles,
+  Trophy,
   X,
   TrendingUp,
   Users,
@@ -1099,7 +1095,12 @@ export default function Home() {
                           }`}
                         >
                           {offer.tone === "seo" ? (
-                            <Search className="h-5 w-5 text-[#111018]" />
+                            <div className="offer-header-graph" aria-hidden="true">
+                              <span />
+                              <span />
+                              <span />
+                              <span />
+                            </div>
                           ) : (
                             <Sparkles className="h-5 w-5 text-[#111018]" />
                           )}
@@ -1118,6 +1119,11 @@ export default function Home() {
                           offer.tone === "seo" ? "offer-chip-seo" : "offer-chip-authority"
                         }`}
                       >
+                        {offer.tone === "authority" ? (
+                          <span className="offer-chip-icon" aria-hidden="true">
+                            <Trophy className="h-3.5 w-3.5" />
+                          </span>
+                        ) : null}
                         {offer.badge}
                       </div>
                     </div>
@@ -1126,7 +1132,7 @@ export default function Home() {
                       {offer.description}
                     </p>
 
-                    <div className="mt-5 flex flex-wrap gap-2.5">
+                    <div className="offer-tags-row mt-5 flex flex-wrap gap-2.5">
                       {offer.tags.map((tag) => (
                         <span key={tag} className="offer-tag">
                           {tag}
@@ -1145,105 +1151,7 @@ export default function Home() {
                       ))}
                     </div>
 
-                    <div className="offer-bottom-grid mt-7 grid gap-4 items-stretch">
-                      <div className="offer-mini-panel relative overflow-hidden rounded-2xl p-4">
-                        <div className="offer-glint absolute inset-0" />
-                        <div className="relative z-10">
-                          <div className="offer-mini-panel-header flex items-center gap-2 text-white/80 text-xs uppercase tracking-[0.18em] font-semibold mb-3">
-                            {offer.tone === "seo" ? (
-                              <Globe2 className="h-3.5 w-3.5" />
-                            ) : (
-                              <ShieldCheck className="h-3.5 w-3.5" />
-                            )}
-                            <span className="offer-mini-panel-title">{offer.miniTitle}</span>
-                          </div>
-                          <div className="space-y-2.5">
-                            {offer.miniRows.map((row, rowIndex) => (
-                              <div
-                                key={row.label}
-                                className={`offer-mini-row ${"value" in row ? "offer-mini-row-has-value" : ""}`}
-                                style={{ animationDelay: `${rowIndex * 0.15}s` }}
-                              >
-                                <div className="flex items-center gap-2 min-w-0">
-                                  {offer.tone === "seo" ? (
-                                    <Newspaper className="h-3.5 w-3.5 text-white/70 shrink-0" />
-                                  ) : (
-                                    <Bot className="h-3.5 w-3.5 text-white/70 shrink-0" />
-                                  )}
-                                  <span className="offer-mini-row-label text-white/80 text-xs">{row.label}</span>
-                                </div>
-                                {"value" in row ? (
-                                  <div className="offer-mini-row-valueWrap flex items-center gap-1.5 shrink-0">
-                                    <span className="text-white/55 text-xs">→</span>
-                                    <span className="offer-mini-value">{row.value}</span>
-                                  </div>
-                                ) : null}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-
-                      <div
-                        className={`offer-outcome-pill ${
-                          offer.tone === "seo"
-                            ? "offer-outcome-pill-seo"
-                            : "offer-outcome-pill-authority"
-                        } flex flex-col rounded-2xl p-4`}
-                      >
-                        <div
-                          className={`offer-outcome-graphic ${
-                            offer.tone === "seo"
-                              ? "offer-outcome-graphic-seo"
-                              : "offer-outcome-graphic-authority"
-                          }`}
-                        >
-                          {offer.tone === "seo" ? (
-                            <>
-                              <div className="offer-graph-bars">
-                                <span />
-                                <span />
-                                <span />
-                                <span />
-                              </div>
-                              <div className="offer-graph-pill">
-                                <Search className="h-3.5 w-3.5" />
-                                <span>Authority Signals</span>
-                              </div>
-                              <div className="offer-graph-orbit">
-                                <TrendingUp className="h-4 w-4" />
-                              </div>
-                            </>
-                          ) : (
-                            <>
-                              <div className="offer-signal-core">
-                                <ShieldCheck className="h-5 w-5" />
-                              </div>
-                              <div className="offer-signal-node offer-signal-node-a">
-                                <Globe2 className="h-3.5 w-3.5" />
-                              </div>
-                              <div className="offer-signal-node offer-signal-node-b">
-                                <Bot className="h-3.5 w-3.5" />
-                              </div>
-                              <div className="offer-signal-node offer-signal-node-c">
-                                <Sparkles className="h-3.5 w-3.5" />
-                              </div>
-                              <div className="offer-signal-beam offer-signal-beam-a" />
-                              <div className="offer-signal-beam offer-signal-beam-b" />
-                              <div className="offer-signal-beam offer-signal-beam-c" />
-                            </>
-                          )}
-                        </div>
-                        <p className="offer-outcome-title text-white font-display font-bold text-lg leading-snug mt-3">
-                          {offer.outcomeTitle}
-                        </p>
-                        <p className="offer-outcome-subtext mt-3 text-white/75 text-xs leading-relaxed">
-                          {offer.outcomeSubtext}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-auto pt-6 flex justify-center">
+                    <div className="mt-auto pt-7 flex justify-center">
                       <Link href="/contact-us" className="w-full sm:w-auto">
                         <Button
                           className={`offer-cta h-12 rounded-full px-6 font-semibold w-full sm:min-w-[220px] justify-center ${
