@@ -852,11 +852,11 @@ export default function Home() {
                         You choose your package.
                       </h3>
                       <p className="text-[#2A2733] md:text-lg leading-relaxed">
-                        It all begins with strategy. What&apos;s your ultimate goal? Are you aiming
-                        for brand awareness or a boost in organic traffic? Determining how many
-                        links you need to build and from which kind of publications is crucial. We
-                        piece together a strategy that makes sense and sets you on the path to
-                        achieving your objectives.
+                        It starts with strategy. Are you aiming for a pure SEO play built on the
+                        most authoritative links available, or do you want a broader Authority PR
+                        approach that strengthens brand credibility and expands visibility across
+                        search, media, and AI platforms? We design a plan around that decision so
+                        every placement supports your bigger commercial goals.
                       </p>
                     </div>
                   </div>
