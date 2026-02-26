@@ -789,11 +789,14 @@ export default function Home() {
                   viewport={{ once: true, amount: 0.2 }}
                   className="order-1"
                 >
-                  <div className="how-panel-gradient how-panel-float relative min-h-[320px] md:min-h-[380px] rounded-[30px] md:rounded-[36px] p-6 md:p-10 shadow-[0_30px_60px_rgba(90,77,191,0.15)]">
+                  <div className="how-panel-gradient how-panel-rim how-panel-float relative min-h-[320px] md:min-h-[380px] rounded-[30px] md:rounded-[36px] p-6 md:p-10 shadow-[0_30px_60px_rgba(90,77,191,0.15)]">
                     <div className="how-panel-glow absolute inset-0 rounded-[inherit]" />
+                    <div className="how-panel-grain absolute inset-0 rounded-[inherit]" />
                     <div className="absolute left-6 right-6 top-1/2 h-24 -translate-y-1/2 rounded-2xl bg-white/20 blur-sm" />
                     <div className="absolute left-8 top-10 h-20 w-20 rounded-full bg-white/20 blur-xl how-orb-drift" />
                     <div className="absolute right-10 bottom-12 h-16 w-16 rounded-full bg-[#F2B4FF]/35 blur-xl how-orb-drift-delayed" />
+                    <span className="how-twinkle absolute right-16 top-20 h-2.5 w-2.5 rounded-full bg-white/80" />
+                    <span className="how-twinkle how-twinkle-delayed absolute left-16 bottom-20 h-2 w-2 rounded-full bg-white/70" />
 
                     <motion.div
                       animate={{ y: [0, -6, 0] }}
@@ -817,8 +820,18 @@ export default function Home() {
                           />
                         </svg>
 
-                        <div className="relative mx-auto mt-8 h-40 w-36 md:h-44 md:w-40">
-                          <div className="absolute inset-x-4 bottom-2 h-5 rounded-full bg-black/15 blur-xl" />
+                        <motion.div
+                          animate={{ rotate: [0, -1.4, 1.1, -0.7, 0], y: [0, -1, 0] }}
+                          transition={{
+                            duration: 5.8,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            times: [0, 0.22, 0.48, 0.74, 1],
+                          }}
+                          style={{ transformOrigin: "50% 88%" }}
+                          className="relative mx-auto mt-8 h-40 w-36 md:h-44 md:w-40"
+                        >
+                          <div className="how-bag-shadow absolute inset-x-4 bottom-2 h-5 rounded-full bg-black/15 blur-xl" />
                           <div className="absolute inset-x-2 bottom-0 top-7 rounded-[12px] bg-white border border-[#E8E8F2] shadow-[0_10px_24px_rgba(15,15,15,0.08)]" />
                           <div className="absolute left-1/2 top-0 h-10 w-16 -translate-x-1/2 rounded-t-full border-[3px] border-[#9D4EED] border-b-0" />
                           <div className="absolute inset-x-0 top-[58px] flex justify-center">
@@ -830,7 +843,7 @@ export default function Home() {
                               className="h-6 w-auto object-contain opacity-95"
                             />
                           </div>
-                        </div>
+                        </motion.div>
                       </div>
                     </motion.div>
                   </div>
@@ -896,15 +909,16 @@ export default function Home() {
                   viewport={{ once: true, amount: 0.2 }}
                   className="order-1 lg:order-2"
                 >
-                  <div className="how-panel-gradient how-panel-float-delayed relative min-h-[320px] md:min-h-[360px] rounded-[30px] md:rounded-[36px] p-6 md:p-8 shadow-[0_30px_60px_rgba(90,77,191,0.15)]">
+                  <div className="how-panel-gradient how-panel-rim how-panel-float-delayed relative min-h-[320px] md:min-h-[360px] rounded-[30px] md:rounded-[36px] p-6 md:p-8 shadow-[0_30px_60px_rgba(90,77,191,0.15)]">
                     <div className="how-panel-glow absolute inset-0 rounded-[inherit]" />
+                    <div className="how-panel-grain absolute inset-0 rounded-[inherit]" />
                     <div className="absolute right-10 top-10 h-14 w-14 rounded-full bg-white/20 blur-xl how-orb-drift" />
                     <div className="absolute left-8 bottom-8 h-20 w-20 rounded-full bg-[#F9A8FF]/25 blur-xl how-orb-drift-delayed" />
 
                     <motion.div
                       animate={{ y: [0, -4, 0] }}
                       transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
-                      className="relative z-10 ml-auto max-w-[84%] rounded-[16px] bg-white px-4 py-4 md:px-5 md:py-4 text-[#5A6178] shadow-[0_10px_28px_rgba(20,20,35,0.12)]"
+                      className="how-chat-bubble-white relative z-10 ml-auto max-w-[84%] rounded-[16px] bg-white px-4 py-4 md:px-5 md:py-4 text-[#5A6178] shadow-[0_10px_28px_rgba(20,20,35,0.12)]"
                     >
                       <div className="absolute -right-1.5 top-8 h-4 w-4 rotate-45 rounded-[3px] bg-white" />
                       <p className="text-sm md:text-base leading-relaxed">
@@ -916,9 +930,17 @@ export default function Home() {
                     <motion.div
                       animate={{ y: [0, 4, 0] }}
                       transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut", delay: 0.35 }}
-                      className="relative z-10 mt-6 max-w-[86%] rounded-[18px] bg-[#07070B] px-4 py-4 md:px-5 md:py-5 text-white shadow-[0_14px_32px_rgba(0,0,0,0.35)]"
+                      className="how-chat-bubble-dark relative z-10 mt-6 max-w-[86%] rounded-[18px] bg-[#07070B] px-4 py-4 md:px-5 md:py-5 text-white shadow-[0_14px_32px_rgba(0,0,0,0.35)]"
                     >
                       <div className="absolute -left-1.5 top-12 h-4 w-4 rotate-45 rounded-[3px] bg-[#07070B]" />
+                      <div className="mb-3 flex items-center gap-1.5">
+                        <span className="how-typing-dot h-1.5 w-1.5 rounded-full bg-white/55" />
+                        <span className="how-typing-dot h-1.5 w-1.5 rounded-full bg-white/55" style={{ animationDelay: "0.15s" }} />
+                        <span className="how-typing-dot h-1.5 w-1.5 rounded-full bg-white/55" style={{ animationDelay: "0.3s" }} />
+                        <span className="ml-2 text-[10px] uppercase tracking-[0.22em] text-white/45">
+                          Draft Pitch
+                        </span>
+                      </div>
                       <p className="text-base md:text-lg leading-snug mb-4">
                         We&apos;re currently putting a whitepaper together on this exact subject.
                         Might be worth a chat. Take a look.
@@ -948,8 +970,9 @@ export default function Home() {
                   viewport={{ once: true, amount: 0.2 }}
                   className="order-1"
                 >
-                  <div className="how-panel-gradient how-panel-float relative min-h-[330px] md:min-h-[380px] rounded-[30px] md:rounded-[36px] p-6 md:p-8 shadow-[0_30px_60px_rgba(90,77,191,0.15)]">
+                  <div className="how-panel-gradient how-panel-rim how-panel-float relative min-h-[330px] md:min-h-[380px] rounded-[30px] md:rounded-[36px] p-6 md:p-8 shadow-[0_30px_60px_rgba(90,77,191,0.15)]">
                     <div className="how-panel-glow absolute inset-0 rounded-[inherit]" />
+                    <div className="how-panel-grain absolute inset-0 rounded-[inherit]" />
                     <div className="absolute left-12 top-10 h-16 w-16 rounded-full bg-white/20 blur-xl how-orb-drift-delayed" />
                     <div className="absolute right-8 bottom-14 h-20 w-20 rounded-full bg-[#F497FF]/25 blur-xl how-orb-drift" />
 
@@ -971,7 +994,7 @@ export default function Home() {
                         </div>
                       </div>
 
-                      <div className="rounded-xl border border-[#D8D3FB] bg-[#F4F2FF] p-3 space-y-2.5">
+                      <div className="relative overflow-hidden rounded-xl border border-[#D8D3FB] bg-[#F4F2FF] p-3 space-y-2.5">
                         <div className="how-report-row">
                           <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white">
                             <CheckCircle2 className="h-3.5 w-3.5 text-[#D733A2]" />
@@ -1010,6 +1033,7 @@ export default function Home() {
                             ACCEPTED
                           </span>
                         </div>
+                        <div className="how-report-scan absolute inset-x-2 top-2 h-8 rounded-lg" />
                       </div>
                     </motion.div>
                   </div>
