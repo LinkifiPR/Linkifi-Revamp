@@ -201,50 +201,50 @@ export default function Home() {
       key: "seo",
       title: "SEO Digital PR",
       eyebrow: "Performance-Led Package",
-      badge: "Best for Rankings",
+      badge: "Best for Google Rankings",
       description:
-        "Built for brands who want a pure SEO outcome: authoritative editorial links placed with relevance, intent, and target pages in mind to compound organic growth.",
-      tags: ["SERP-led strategy", "Authority links", "Topical relevance", "Page mapping"],
+        "We identify credible experts and position them strategically around the right topics. We secure editorially earned quotes in major publications where links cannot be bought. This builds algorithmic authority, stronger E-E-A-T signals, and direct SEO impact.",
+      tags: ["Editorially earned", "Major publications", "E-E-A-T signals", "Direct SEO impact"],
       bullets: [
-        "Campaign angles built around commercial search opportunities",
-        "Placements mapped to priority URLs and topical clusters",
-        "Relevance + authority controls to protect link quality",
-        "Reporting focused on SEO outcomes, not vanity metrics",
+        "Expert positioning strategy",
+        "Inbound media request monitoring",
+        "Tier-one publication placements",
+        "Algorithmic authority link signals",
       ],
-      miniTitle: "SEO Campaign Architecture",
+      miniTitle: "Campaign Framework",
       miniRows: [
-        ["Target pages", "Mapped"],
-        ["Keyword clusters", "Prioritised"],
-        ["Authority filter", "High"],
+        { label: "Expert positioning" },
+        { label: "Request monitoring" },
+        { label: "Tier-one placements" },
       ],
-      outcomeLabel: "Primary outcome",
-      outcomeValue: "Rankings + Organic Traffic",
-      footerNote: "Ideal when SEO performance is the main KPI.",
+      outcomeTitle: "World-Class Backlinks",
+      outcomeSubtext: "Editorial links built to drive rankings.",
+      ctaLabel: "Buy Now",
       tone: "seo",
     },
     {
       key: "authority",
       title: "Authority PR",
       eyebrow: "Brand Authority Package",
-      badge: "Best for Brand Lift",
+      badge: "Best for Visibility",
       description:
-        "Designed for brands who want broader authority signals: stronger credibility, larger media visibility, and expanded discoverability across search, media, and AI surfaces.",
-      tags: ["Brand credibility", "Media visibility", "AI discoverability", "Narrative PR"],
+        "Authority PR is broader than SEO links alone. It is narrative driven and built to strengthen brand authority, credibility, and media presence. It expands visibility across search and AI platforms while reinforcing commercial trust.",
+      tags: ["Brand authority", "Media presence", "Search visibility", "AI visibility"],
       bullets: [
-        "Narrative-led campaign strategy and expert positioning",
-        "Coverage designed to strengthen brand trust and authority",
-        "Signals that support search, media, and AI platform visibility",
-        "Reporting that tracks momentum across authority touchpoints",
+        "Founder media positioning",
+        "Bylined features and profiles",
+        "Podcasts and speaking placements",
+        "Authority narrative campaigns",
       ],
-      miniTitle: "Authority Signal Stack",
+      miniTitle: "Authority Signals Built",
       miniRows: [
-        ["Press mentions", "Expanded"],
-        ["Brand trust", "Strengthened"],
-        ["AI visibility", "Compounding"],
+        { label: "Media credibility", value: "Expanded" },
+        { label: "Brand authority", value: "Elevated" },
+        { label: "AI visibility", value: "Compounding" },
       ],
-      outcomeLabel: "Primary outcome",
-      outcomeValue: "Credibility + Market Visibility",
-      footerNote: "Ideal when you want authority beyond a pure SEO play.",
+      outcomeTitle: "Credibility + Market Authority",
+      outcomeSubtext: "Builds reputation, visibility, and influence over time.",
+      ctaLabel: "Discuss Authority PR",
       tone: "authority",
     },
   ] as const;
@@ -1063,16 +1063,12 @@ export default function Home() {
             <div className="pointer-events-none absolute bottom-0 left-1/3 h-52 w-52 rounded-full bg-[#F14EC4]/10 blur-3xl" />
 
             <div className="relative z-10 text-center mb-10 md:mb-12">
-              <p className="text-sm text-[#5A4DBF] uppercase tracking-wider font-semibold mb-2">
-                Choose what&apos;s best for you
-              </p>
               <h2 className="text-3xl md:text-5xl font-display font-bold text-[#0F0F0F] mb-4">
-                Two packages. Two outcomes.
+                Our Packages
               </h2>
               <p className="max-w-3xl mx-auto text-[#535479] md:text-lg leading-relaxed">
-                Same execution quality, different strategic objective. Pick the lane that best
-                matches what you need right now: a pure SEO digital PR engine, or a broader
-                authority PR play that compounds trust and visibility across channels.
+                Choose SEO Digital PR for ranking-focused performance, or Authority PR for broader
+                authority and visibility across search and AI platforms.
               </p>
             </div>
 
@@ -1152,9 +1148,9 @@ export default function Home() {
                             <span>{offer.miniTitle}</span>
                           </div>
                           <div className="space-y-2.5">
-                            {offer.miniRows.map(([label, value], rowIndex) => (
+                            {offer.miniRows.map((row, rowIndex) => (
                               <div
-                                key={label}
+                                key={row.label}
                                 className="offer-mini-row"
                                 style={{ animationDelay: `${rowIndex * 0.15}s` }}
                               >
@@ -1164,26 +1160,27 @@ export default function Home() {
                                   ) : (
                                     <Bot className="h-3.5 w-3.5 text-white/70 shrink-0" />
                                   )}
-                                  <span className="truncate text-white/80 text-xs">{label}</span>
+                                  <span className="truncate text-white/80 text-xs">{row.label}</span>
                                 </div>
-                                <span className="offer-mini-value">{value}</span>
+                                {row.value ? (
+                                  <div className="flex items-center gap-1.5 shrink-0">
+                                    <span className="text-white/55 text-xs">→</span>
+                                    <span className="offer-mini-value">{row.value}</span>
+                                  </div>
+                                ) : null}
                               </div>
                             ))}
                           </div>
                         </div>
                       </div>
 
-                      <div className="offer-outcome-pill flex flex-col justify-between rounded-2xl p-4 min-w-[180px]">
-                        <p className="text-[11px] uppercase tracking-[0.18em] text-white/65 font-semibold">
-                          {offer.outcomeLabel}
-                        </p>
+                      <div className="offer-outcome-pill flex flex-col rounded-2xl p-4 min-w-[180px]">
                         <p className="text-white font-display font-bold text-lg leading-snug mt-3">
-                          {offer.outcomeValue}
+                          {offer.outcomeTitle}
                         </p>
-                        <div className="mt-3 flex items-center gap-2 text-white/70 text-xs">
-                          <TrendingUp className="h-3.5 w-3.5" />
-                          <span>Custom scope available</span>
-                        </div>
+                        <p className="mt-3 text-white/75 text-xs leading-relaxed">
+                          {offer.outcomeSubtext}
+                        </p>
                       </div>
                     </div>
 
@@ -1197,13 +1194,10 @@ export default function Home() {
                           }`}
                           data-testid={`button-package-${offer.key}`}
                         >
-                          {offer.tone === "seo" ? "Discuss SEO Digital PR" : "Discuss Authority PR"}
+                          {offer.ctaLabel}
                           <ArrowRight className="ml-2 h-4 w-4" />
                         </Button>
                       </Link>
-                      <p className="text-xs md:text-sm text-white/70 leading-relaxed">
-                        {offer.footerNote}
-                      </p>
                     </div>
                   </div>
                 </motion.article>
