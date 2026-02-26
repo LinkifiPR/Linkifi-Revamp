@@ -1056,7 +1056,7 @@ export default function Home() {
         </section>
 
         {/* Pricing Section */}
-        <section id="Pricing" className="container mx-auto px-6 mb-32">
+        <section id="Pricing" className="container mx-auto px-6 mb-32 scroll-mt-28 md:scroll-mt-32">
           <div className="offer-showcase-shell relative overflow-hidden rounded-[34px] md:rounded-[42px] px-6 py-10 md:px-10 md:py-14">
             <div className="pointer-events-none absolute -left-14 top-8 h-48 w-48 rounded-full bg-[#A566FF]/18 blur-3xl" />
             <div className="pointer-events-none absolute right-0 top-0 h-56 w-56 rounded-full bg-[#5A4DBF]/12 blur-3xl" />
@@ -1072,7 +1072,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="relative z-10 grid lg:grid-cols-2 gap-8">
+            <div className="relative z-10 grid xl:grid-cols-2 gap-8">
               {packageOffers.map((offer, index) => (
                 <motion.article
                   key={offer.key}
@@ -1091,7 +1091,7 @@ export default function Home() {
                   <div className="offer-orb offer-orb-delayed absolute left-6 bottom-8 h-20 w-20 rounded-full blur-2xl" />
 
                   <div className="relative z-10 h-full flex flex-col">
-                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-6">
+                    <div className="offer-card-header flex flex-col gap-3 mb-6">
                       <div className="offer-heading-shell flex items-start gap-3 md:gap-4">
                         <div
                           className={`offer-icon-shell ${
@@ -1145,7 +1145,7 @@ export default function Home() {
                       ))}
                     </div>
 
-                    <div className="offer-bottom-grid mt-7 grid md:grid-cols-2 gap-4 items-stretch">
+                    <div className="offer-bottom-grid mt-7 grid gap-4 items-stretch">
                       <div className="offer-mini-panel relative overflow-hidden rounded-2xl p-4">
                         <div className="offer-glint absolute inset-0" />
                         <div className="relative z-10">
@@ -1161,7 +1161,7 @@ export default function Home() {
                             {offer.miniRows.map((row, rowIndex) => (
                               <div
                                 key={row.label}
-                                className="offer-mini-row"
+                                className={`offer-mini-row ${"value" in row ? "offer-mini-row-has-value" : ""}`}
                                 style={{ animationDelay: `${rowIndex * 0.15}s` }}
                               >
                                 <div className="flex items-center gap-2 min-w-0">
@@ -1170,10 +1170,10 @@ export default function Home() {
                                   ) : (
                                     <Bot className="h-3.5 w-3.5 text-white/70 shrink-0" />
                                   )}
-                                  <span className="truncate text-white/80 text-xs">{row.label}</span>
+                                  <span className="offer-mini-row-label text-white/80 text-xs">{row.label}</span>
                                 </div>
                                 {"value" in row ? (
-                                  <div className="flex items-center gap-1.5 shrink-0">
+                                  <div className="offer-mini-row-valueWrap flex items-center gap-1.5 shrink-0">
                                     <span className="text-white/55 text-xs">→</span>
                                     <span className="offer-mini-value">{row.value}</span>
                                   </div>

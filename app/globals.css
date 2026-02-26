@@ -728,6 +728,7 @@ img[src$=".svg"].publication-logo {
 .offer-card {
   position: relative;
   isolation: isolate;
+  container-type: inline-size;
   color: white;
   overflow: hidden;
 }
@@ -954,6 +955,13 @@ img[src$=".svg"].publication-logo {
     0 12px 24px rgba(8, 8, 18, 0.16);
 }
 
+.offer-card-header .offer-chip {
+  align-self: flex-start;
+  max-width: 100%;
+  white-space: normal;
+  text-align: left;
+}
+
 .offer-chip::before {
   content: "";
   width: 0.42rem;
@@ -1088,6 +1096,22 @@ img[src$=".svg"].publication-logo {
   animation: none;
 }
 
+.offer-mini-row-label {
+  white-space: normal;
+  line-height: 1.25;
+}
+
+.offer-mini-row-has-value {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  row-gap: 0.35rem;
+}
+
+.offer-mini-row-has-value .offer-mini-row-valueWrap {
+  justify-self: start;
+  padding-left: 1.45rem;
+}
+
 .offer-mini-panel-header {
   padding-bottom: 0.35rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -1156,11 +1180,23 @@ img[src$=".svg"].publication-logo {
 
 .offer-bottom-grid {
   align-items: stretch;
+  grid-template-columns: 1fr;
 }
 
-@media (min-width: 768px) {
+@container (min-width: 50rem) {
   .offer-bottom-grid {
     grid-template-columns: 1.08fr 0.92fr;
+  }
+
+  .offer-mini-row-has-value {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    row-gap: 0;
+  }
+
+  .offer-mini-row-has-value .offer-mini-row-valueWrap {
+    justify-self: end;
+    padding-left: 0;
   }
 }
 
@@ -1326,6 +1362,28 @@ img[src$=".svg"].publication-logo {
   line-height: 1.15;
   letter-spacing: -0.015em;
   text-wrap: balance;
+}
+
+@container (max-width: 49.99rem) {
+  .offer-heading-shell {
+    padding: 0.6rem 0.75rem;
+  }
+
+  .offer-card-title {
+    font-size: clamp(1.55rem, 6.4cqw, 2rem);
+    line-height: 1.02;
+  }
+
+  .offer-chip {
+    padding: 0.62rem 0.88rem;
+    font-size: 0.69rem;
+    letter-spacing: 0.14em;
+  }
+
+  .offer-tag {
+    font-size: 0.73rem;
+    padding: 0.4rem 0.65rem;
+  }
 }
 
 .offer-card-seo .offer-outcome-title {
