@@ -1082,7 +1082,7 @@ export default function Home() {
                   viewport={{ once: true, amount: 0.2 }}
                   className={`offer-card offer-card-rim ${
                     offer.tone === "seo" ? "offer-card-seo" : "offer-card-authority"
-                  } relative overflow-hidden rounded-[28px] md:rounded-[32px] p-6 md:p-8`}
+                  } relative overflow-hidden rounded-[28px] md:rounded-[32px] p-6 md:p-8 h-full`}
                   style={{ animationDelay: `${index * 0.45}s` }}
                 >
                   <div className="offer-card-glow absolute inset-0 rounded-[inherit]" />
@@ -1090,10 +1090,14 @@ export default function Home() {
                   <div className="offer-orb absolute -right-8 top-6 h-24 w-24 rounded-full blur-2xl" />
                   <div className="offer-orb offer-orb-delayed absolute left-6 bottom-8 h-20 w-20 rounded-full blur-2xl" />
 
-                  <div className="relative z-10">
-                    <div className="flex items-start justify-between gap-4 mb-6">
-                      <div className="flex items-start gap-3">
-                        <div className="offer-icon-shell">
+                  <div className="relative z-10 h-full flex flex-col">
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-6">
+                      <div className="offer-heading-shell flex items-start gap-3 md:gap-4">
+                        <div
+                          className={`offer-icon-shell ${
+                            offer.tone === "seo" ? "offer-icon-shell-seo" : "offer-icon-shell-authority"
+                          }`}
+                        >
                           {offer.tone === "seo" ? (
                             <Search className="h-5 w-5 text-[#111018]" />
                           ) : (
@@ -1101,15 +1105,21 @@ export default function Home() {
                           )}
                         </div>
                         <div>
-                          <p className="text-xs uppercase tracking-[0.18em] text-white/75 font-semibold">
+                          <p className="offer-eyebrow">
                             {offer.eyebrow}
                           </p>
-                          <h3 className="text-2xl md:text-3xl font-display font-bold text-white leading-tight mt-1">
+                          <h3 className="offer-card-title">
                             {offer.title}
                           </h3>
                         </div>
                       </div>
-                      <div className="offer-chip">{offer.badge}</div>
+                      <div
+                        className={`offer-chip ${
+                          offer.tone === "seo" ? "offer-chip-seo" : "offer-chip-authority"
+                        }`}
+                      >
+                        {offer.badge}
+                      </div>
                     </div>
 
                     <p className="text-white/90 leading-relaxed md:text-[1rem]">
@@ -1135,7 +1145,7 @@ export default function Home() {
                       ))}
                     </div>
 
-                    <div className="mt-7 grid md:grid-cols-[1fr_auto] gap-4 items-stretch">
+                    <div className="offer-bottom-grid mt-7 grid md:grid-cols-2 gap-4 items-stretch">
                       <div className="offer-mini-panel relative overflow-hidden rounded-2xl p-4">
                         <div className="offer-glint absolute inset-0" />
                         <div className="relative z-10">
@@ -1174,7 +1184,56 @@ export default function Home() {
                         </div>
                       </div>
 
-                      <div className="offer-outcome-pill flex flex-col rounded-2xl p-4 min-w-[180px]">
+                      <div
+                        className={`offer-outcome-pill ${
+                          offer.tone === "seo"
+                            ? "offer-outcome-pill-seo"
+                            : "offer-outcome-pill-authority"
+                        } flex flex-col rounded-2xl p-4`}
+                      >
+                        <div
+                          className={`offer-outcome-graphic ${
+                            offer.tone === "seo"
+                              ? "offer-outcome-graphic-seo"
+                              : "offer-outcome-graphic-authority"
+                          }`}
+                        >
+                          {offer.tone === "seo" ? (
+                            <>
+                              <div className="offer-graph-bars">
+                                <span />
+                                <span />
+                                <span />
+                                <span />
+                              </div>
+                              <div className="offer-graph-pill">
+                                <Search className="h-3.5 w-3.5" />
+                                <span>Authority Signals</span>
+                              </div>
+                              <div className="offer-graph-orbit">
+                                <TrendingUp className="h-4 w-4" />
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="offer-signal-core">
+                                <ShieldCheck className="h-5 w-5" />
+                              </div>
+                              <div className="offer-signal-node offer-signal-node-a">
+                                <Globe2 className="h-3.5 w-3.5" />
+                              </div>
+                              <div className="offer-signal-node offer-signal-node-b">
+                                <Bot className="h-3.5 w-3.5" />
+                              </div>
+                              <div className="offer-signal-node offer-signal-node-c">
+                                <Sparkles className="h-3.5 w-3.5" />
+                              </div>
+                              <div className="offer-signal-beam offer-signal-beam-a" />
+                              <div className="offer-signal-beam offer-signal-beam-b" />
+                              <div className="offer-signal-beam offer-signal-beam-c" />
+                            </>
+                          )}
+                        </div>
                         <p className="text-white font-display font-bold text-lg leading-snug mt-3">
                           {offer.outcomeTitle}
                         </p>
@@ -1184,10 +1243,10 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <div className="mt-7 flex flex-col sm:flex-row sm:items-center gap-3">
-                      <Link href="/contact-us">
+                    <div className="mt-auto pt-6 flex justify-center">
+                      <Link href="/contact-us" className="w-full sm:w-auto">
                         <Button
-                          className={`h-12 rounded-full px-6 font-semibold ${
+                          className={`offer-cta h-12 rounded-full px-6 font-semibold w-full sm:min-w-[220px] justify-center ${
                             offer.tone === "seo"
                               ? "bg-white text-[#3E32A8] hover:bg-white/90"
                               : "bg-[#0F0F0F] text-white hover:bg-black"
