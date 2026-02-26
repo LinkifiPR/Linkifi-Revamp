@@ -1149,13 +1149,13 @@ export default function Home() {
                       <div className="offer-mini-panel relative overflow-hidden rounded-2xl p-4">
                         <div className="offer-glint absolute inset-0" />
                         <div className="relative z-10">
-                          <div className="flex items-center gap-2 text-white/80 text-xs uppercase tracking-[0.18em] font-semibold mb-3">
+                          <div className="offer-mini-panel-header flex items-center gap-2 text-white/80 text-xs uppercase tracking-[0.18em] font-semibold mb-3">
                             {offer.tone === "seo" ? (
                               <Globe2 className="h-3.5 w-3.5" />
                             ) : (
                               <ShieldCheck className="h-3.5 w-3.5" />
                             )}
-                            <span>{offer.miniTitle}</span>
+                            <span className="offer-mini-panel-title">{offer.miniTitle}</span>
                           </div>
                           <div className="space-y-2.5">
                             {offer.miniRows.map((row, rowIndex) => (
@@ -1234,10 +1234,10 @@ export default function Home() {
                             </>
                           )}
                         </div>
-                        <p className="text-white font-display font-bold text-lg leading-snug mt-3">
+                        <p className="offer-outcome-title text-white font-display font-bold text-lg leading-snug mt-3">
                           {offer.outcomeTitle}
                         </p>
-                        <p className="mt-3 text-white/75 text-xs leading-relaxed">
+                        <p className="offer-outcome-subtext mt-3 text-white/75 text-xs leading-relaxed">
                           {offer.outcomeSubtext}
                         </p>
                       </div>
