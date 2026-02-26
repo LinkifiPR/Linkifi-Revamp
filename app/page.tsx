@@ -1162,7 +1162,7 @@ export default function Home() {
                                   )}
                                   <span className="truncate text-white/80 text-xs">{row.label}</span>
                                 </div>
-                                {row.value ? (
+                                {"value" in row ? (
                                   <div className="flex items-center gap-1.5 shrink-0">
                                     <span className="text-white/55 text-xs">→</span>
                                     <span className="offer-mini-value">{row.value}</span>
