@@ -6,8 +6,11 @@ import { Button } from "@/components/ui/button";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import {
   ArrowRight,
+  BarChart3,
+  Boxes,
   CheckCircle2,
   Menu,
+  Megaphone,
   X,
   TrendingUp,
   Users,
@@ -763,76 +766,279 @@ export default function Home() {
 
         {/* How it Works */}
         <section id="howitworks" className="container mx-auto px-6 mb-32">
-          <div className="text-center mb-4">
-            <p className="text-sm text-[#5A4DBF] uppercase tracking-wider font-semibold mb-2">
-              Our stress-free process
-            </p>
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-[#0F0F0F]">
-              So, how exactly <br />does this work?
-            </h2>
-          </div>
+          <div className="relative overflow-hidden rounded-[34px] md:rounded-[44px] bg-[#F2EFF9] px-6 py-10 md:px-10 md:py-14 lg:px-14 lg:py-16">
+            <div className="pointer-events-none absolute -left-20 top-10 h-52 w-52 rounded-full bg-[#B65BFF]/18 blur-3xl" />
+            <div className="pointer-events-none absolute right-0 top-1/3 h-64 w-64 rounded-full bg-[#5A4DBF]/14 blur-3xl" />
+            <div className="pointer-events-none absolute left-1/4 bottom-8 h-56 w-56 rounded-full bg-[#F04CB7]/12 blur-3xl" />
 
-          <div className="grid lg:grid-cols-2 gap-16 items-center mt-16">
-            {/* Left - Bag illustration placeholder */}
-            <div className="bg-gradient-to-br from-[#5A4DBF]/10 to-[#D733A2]/10 rounded-3xl p-12 flex items-center justify-center min-h-[400px]">
-              <div className="text-center">
-                <div className="w-32 h-32 mx-auto bg-[#5A4DBF]/20 rounded-3xl flex items-center justify-center mb-4">
-                  <span className="text-6xl">📦</span>
-                </div>
-                <p className="text-[#535479] font-medium">Your link building package</p>
-              </div>
+            <div className="text-center mb-10 md:mb-14 relative z-10">
+              <p className="text-sm text-[#5A4DBF] uppercase tracking-wider font-semibold mb-2">
+                Our stress-free process
+              </p>
+              <h2 className="text-3xl md:text-5xl font-display font-bold text-[#0F0F0F]">
+                So, how exactly <br />does this work?
+              </h2>
             </div>
 
-            {/* Right - Steps */}
-            <div className="space-y-12">
-              <div className="flex gap-6">
-                <div className="w-14 h-14 rounded-2xl bg-[#5A4DBF] text-white flex items-center justify-center shrink-0">
-                  <span className="text-2xl">📦</span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold mb-3 text-[#0F0F0F]">
-                    You choose your package.
-                  </h3>
-                  <p className="text-[#535479] leading-relaxed">
-                    It all begins with strategy. What&apos;s your ultimate goal? Are you aiming for
-                    brand awareness or a boost in organic traffic? Determining how many links you
-                    need to build and from which kind of publications is crucial. We piece together
-                    a strategy that makes sense and sets you on the path to achieving your objectives.
-                  </p>
-                </div>
+            <div className="relative z-10 space-y-10 md:space-y-14 lg:space-y-16">
+              <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-8 lg:gap-14 items-center">
+                <motion.div
+                  variants={fadeIn}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true, amount: 0.2 }}
+                  className="order-1"
+                >
+                  <div className="how-panel-gradient how-panel-float relative min-h-[320px] md:min-h-[380px] rounded-[30px] md:rounded-[36px] p-6 md:p-10 shadow-[0_30px_60px_rgba(90,77,191,0.15)]">
+                    <div className="how-panel-glow absolute inset-0 rounded-[inherit]" />
+                    <div className="absolute left-6 right-6 top-1/2 h-24 -translate-y-1/2 rounded-2xl bg-white/20 blur-sm" />
+                    <div className="absolute left-8 top-10 h-20 w-20 rounded-full bg-white/20 blur-xl how-orb-drift" />
+                    <div className="absolute right-10 bottom-12 h-16 w-16 rounded-full bg-[#F2B4FF]/35 blur-xl how-orb-drift-delayed" />
+
+                    <motion.div
+                      animate={{ y: [0, -6, 0] }}
+                      transition={{ duration: 5.6, repeat: Infinity, ease: "easeInOut" }}
+                      className="relative z-10 mx-auto flex h-full items-center justify-center"
+                    >
+                      <div className="relative w-full max-w-[255px] md:max-w-[290px] rounded-[20px] md:rounded-[22px] bg-white p-6 md:p-7 shadow-[0_18px_40px_rgba(15,15,15,0.14)]">
+                        <div className="how-sheen absolute inset-0 rounded-[inherit]" />
+                        <svg
+                          className="absolute left-1/2 top-3 h-16 w-20 -translate-x-1/2 text-[#9D4EED]"
+                          viewBox="0 0 80 60"
+                          fill="none"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M44 6c8 0 13 9 8 16-4 6 0 11 5 14 8 5 4 18-7 16-8-1-12-8-19-4-8 5-19-3-18-13 1-8 8-12 14-11 5 0 8-3 8-8 0-6 4-10 9-10Z"
+                            stroke="currentColor"
+                            strokeWidth="2.4"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+
+                        <div className="relative mx-auto mt-8 h-40 w-36 md:h-44 md:w-40">
+                          <div className="absolute inset-x-4 bottom-2 h-5 rounded-full bg-black/15 blur-xl" />
+                          <div className="absolute inset-x-2 bottom-0 top-7 rounded-[12px] bg-white border border-[#E8E8F2] shadow-[0_10px_24px_rgba(15,15,15,0.08)]" />
+                          <div className="absolute left-1/2 top-0 h-10 w-16 -translate-x-1/2 rounded-t-full border-[3px] border-[#9D4EED] border-b-0" />
+                          <div className="absolute inset-x-0 top-[58px] flex justify-center">
+                            <Image
+                              src="/logo.png"
+                              alt="Linkifi"
+                              width={86}
+                              height={26}
+                              className="h-6 w-auto object-contain opacity-95"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  variants={fadeIn}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true, amount: 0.2 }}
+                  className="order-2 max-w-xl"
+                >
+                  <div className="flex gap-4 md:gap-5">
+                    <div className="how-step-icon">
+                      <Boxes className="h-5 w-5 text-[#17131F]" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl md:text-4xl font-display font-bold text-[#0F0F0F] leading-tight mb-3">
+                        You choose your package.
+                      </h3>
+                      <p className="text-[#2A2733] md:text-lg leading-relaxed">
+                        It all begins with strategy. What&apos;s your ultimate goal? Are you aiming
+                        for brand awareness or a boost in organic traffic? Determining how many
+                        links you need to build and from which kind of publications is crucial. We
+                        piece together a strategy that makes sense and sets you on the path to
+                        achieving your objectives.
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
               </div>
 
-              <div className="flex gap-6">
-                <div className="w-14 h-14 rounded-2xl bg-[#5A4DBF] text-white flex items-center justify-center shrink-0">
-                  <span className="text-2xl">✉️</span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold mb-3 text-[#0F0F0F]">
-                    We pitch journalists.
-                  </h3>
-                  <p className="text-[#535479] leading-relaxed">
-                    Based on your goals, we craft a digital PR strategy that amplifies your marketing
-                    efforts, delivering campaigns with measurable impact. By staying ahead of trends
-                    and expertly pitching to journalists, we position you as the go-to expert, ensuring
-                    your voice is heard in all the right places.
-                  </p>
-                </div>
+              <div className="grid lg:grid-cols-[0.95fr_1.05fr] gap-8 lg:gap-14 items-center">
+                <motion.div
+                  variants={fadeIn}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true, amount: 0.2 }}
+                  className="order-2 lg:order-1 max-w-xl"
+                >
+                  <div className="flex gap-4 md:gap-5">
+                    <div className="how-step-icon">
+                      <Megaphone className="h-5 w-5 text-[#17131F]" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl md:text-4xl font-display font-bold text-[#0F0F0F] leading-tight mb-3">
+                        We pitch journalists.
+                      </h3>
+                      <p className="text-[#2A2733] md:text-lg leading-relaxed">
+                        Based on your goals, we craft a digital PR strategy that amplifies your
+                        marketing efforts, delivering campaigns with measurable impact. By staying
+                        ahead of trends and expertly pitching to journalists, we position you as the
+                        go-to expert, ensuring your voice is heard in all the right places.
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  variants={fadeIn}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true, amount: 0.2 }}
+                  className="order-1 lg:order-2"
+                >
+                  <div className="how-panel-gradient how-panel-float-delayed relative min-h-[320px] md:min-h-[360px] rounded-[30px] md:rounded-[36px] p-6 md:p-8 shadow-[0_30px_60px_rgba(90,77,191,0.15)]">
+                    <div className="how-panel-glow absolute inset-0 rounded-[inherit]" />
+                    <div className="absolute right-10 top-10 h-14 w-14 rounded-full bg-white/20 blur-xl how-orb-drift" />
+                    <div className="absolute left-8 bottom-8 h-20 w-20 rounded-full bg-[#F9A8FF]/25 blur-xl how-orb-drift-delayed" />
+
+                    <motion.div
+                      animate={{ y: [0, -4, 0] }}
+                      transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
+                      className="relative z-10 ml-auto max-w-[84%] rounded-[16px] bg-white px-4 py-4 md:px-5 md:py-4 text-[#5A6178] shadow-[0_10px_28px_rgba(20,20,35,0.12)]"
+                    >
+                      <div className="absolute -right-1.5 top-8 h-4 w-4 rotate-45 rounded-[3px] bg-white" />
+                      <p className="text-sm md:text-base leading-relaxed">
+                        I would like to speak to CEOs in fintech regarding resilient business models
+                        when it comes to rising delinquency.
+                      </p>
+                    </motion.div>
+
+                    <motion.div
+                      animate={{ y: [0, 4, 0] }}
+                      transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut", delay: 0.35 }}
+                      className="relative z-10 mt-6 max-w-[86%] rounded-[18px] bg-[#07070B] px-4 py-4 md:px-5 md:py-5 text-white shadow-[0_14px_32px_rgba(0,0,0,0.35)]"
+                    >
+                      <div className="absolute -left-1.5 top-12 h-4 w-4 rotate-45 rounded-[3px] bg-[#07070B]" />
+                      <p className="text-base md:text-lg leading-snug mb-4">
+                        We&apos;re currently putting a whitepaper together on this exact subject.
+                        Might be worth a chat. Take a look.
+                      </p>
+
+                      <div className="relative rounded-xl bg-white p-3 text-[#0F0F0F] shadow-inner">
+                        <div className="how-sheen absolute inset-0 rounded-xl" />
+                        <p className="text-[9px] md:text-[10px] font-semibold text-center tracking-wide">
+                          Fintech Resilience in Small Business Lending
+                        </p>
+                        <div className="mt-2 space-y-1.5">
+                          <div className="h-2 rounded-full bg-gray-200" />
+                          <div className="h-2 w-5/6 rounded-full bg-gray-200" />
+                          <div className="h-2 w-3/4 rounded-full bg-gray-200" />
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                </motion.div>
               </div>
 
-              <div className="flex gap-6">
-                <div className="w-14 h-14 rounded-2xl bg-[#5A4DBF] text-white flex items-center justify-center shrink-0">
-                  <span className="text-2xl">📊</span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold mb-3 text-[#0F0F0F]">
-                    We monitor pitches and report to you.
-                  </h3>
-                  <p className="text-[#535479] leading-relaxed">
-                    Every link we secure is instantly added to your report in real-time – exciting,
-                    isn&apos;t it? Get ready to make room on your homepage&apos;s press-badge section,
-                    because we&apos;re about to fill it with all the juicy links we land for you!
-                  </p>
-                </div>
+              <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-8 lg:gap-14 items-center">
+                <motion.div
+                  variants={fadeIn}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true, amount: 0.2 }}
+                  className="order-1"
+                >
+                  <div className="how-panel-gradient how-panel-float relative min-h-[330px] md:min-h-[380px] rounded-[30px] md:rounded-[36px] p-6 md:p-8 shadow-[0_30px_60px_rgba(90,77,191,0.15)]">
+                    <div className="how-panel-glow absolute inset-0 rounded-[inherit]" />
+                    <div className="absolute left-12 top-10 h-16 w-16 rounded-full bg-white/20 blur-xl how-orb-drift-delayed" />
+                    <div className="absolute right-8 bottom-14 h-20 w-20 rounded-full bg-[#F497FF]/25 blur-xl how-orb-drift" />
+
+                    <motion.div
+                      animate={{ y: [0, -5, 0] }}
+                      transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+                      className="relative z-10 mx-auto mt-10 w-full max-w-[370px] rounded-2xl bg-white p-4 md:p-5 shadow-[0_16px_36px_rgba(20,20,35,0.14)]"
+                    >
+                      <div className="how-sheen absolute inset-0 rounded-2xl" />
+                      <div className="mb-4 flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className="h-2.5 w-2.5 rounded-full bg-[#FF6F61]" />
+                          <span className="h-2.5 w-2.5 rounded-full bg-[#F8C74A]" />
+                          <span className="h-2.5 w-2.5 rounded-full bg-[#60D394]" />
+                        </div>
+                        <div className="space-y-1">
+                          <span className="block h-1 w-4 rounded-full bg-[#8B82F2]" />
+                          <span className="block h-1 w-4 rounded-full bg-[#8B82F2]" />
+                        </div>
+                      </div>
+
+                      <div className="rounded-xl border border-[#D8D3FB] bg-[#F4F2FF] p-3 space-y-2.5">
+                        <div className="how-report-row">
+                          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white">
+                            <CheckCircle2 className="h-3.5 w-3.5 text-[#D733A2]" />
+                          </span>
+                          <span className="text-[10px] font-semibold text-[#5A4DBF]">Fintech</span>
+                          <span className="truncate text-[10px] text-[#6A6E84]">
+                            HuffPost — Resilient Business Models
+                          </span>
+                          <span className="how-soft-pulse text-[10px] font-bold text-[#5A4DBF]">
+                            ACCEPTED
+                          </span>
+                        </div>
+
+                        <div className="how-report-row">
+                          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white">
+                            <CheckCircle2 className="h-3.5 w-3.5 text-[#D733A2]" />
+                          </span>
+                          <span className="text-[10px] font-semibold text-[#5A4DBF]">Motoring</span>
+                          <span className="truncate text-[10px] text-[#6A6E84]">
+                            New York Times — EV &amp; second-hand market
+                          </span>
+                          <span className="how-soft-pulse text-[10px] font-bold text-[#5A4DBF]">
+                            ACCEPTED
+                          </span>
+                        </div>
+
+                        <div className="how-report-row">
+                          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white">
+                            <CheckCircle2 className="h-3.5 w-3.5 text-[#D733A2]" />
+                          </span>
+                          <span className="text-[10px] font-semibold text-[#5A4DBF]">Health</span>
+                          <span className="truncate text-[10px] text-[#6A6E84]">
+                            Healthline — Healthy Sleep New Research
+                          </span>
+                          <span className="how-soft-pulse text-[10px] font-bold text-[#5A4DBF]">
+                            ACCEPTED
+                          </span>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  variants={fadeIn}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true, amount: 0.2 }}
+                  className="order-2 max-w-xl"
+                >
+                  <div className="flex gap-4 md:gap-5">
+                    <div className="how-step-icon">
+                      <BarChart3 className="h-5 w-5 text-[#17131F]" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl md:text-4xl font-display font-bold text-[#0F0F0F] leading-tight mb-3">
+                        We monitor pitches and report to you.
+                      </h3>
+                      <p className="text-[#2A2733] md:text-lg leading-relaxed">
+                        Every link we secure is instantly added to your report in real-time -
+                        exciting, isn&apos;t it? Get ready to make room on your homepage&apos;s
+                        press-badge section, because we&apos;re about to fill it with all the juicy
+                        links we land for you!
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
               </div>
             </div>
           </div>
