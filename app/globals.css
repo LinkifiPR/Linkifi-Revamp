@@ -587,6 +587,288 @@ img[src$=".svg"].publication-logo {
   animation-delay: 1.1s;
 }
 
+@keyframes offer-gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes offer-rim-breathe {
+  0% {
+    box-shadow:
+      0 24px 50px rgba(55, 41, 123, 0.18),
+      0 0 0 1px rgba(255, 255, 255, 0.14),
+      0 0 24px rgba(180, 126, 255, 0.12);
+  }
+  50% {
+    box-shadow:
+      0 32px 64px rgba(55, 41, 123, 0.24),
+      0 0 0 1px rgba(255, 255, 255, 0.22),
+      0 0 42px rgba(233, 109, 202, 0.18);
+  }
+  100% {
+    box-shadow:
+      0 24px 50px rgba(55, 41, 123, 0.18),
+      0 0 0 1px rgba(255, 255, 255, 0.14),
+      0 0 24px rgba(180, 126, 255, 0.12);
+  }
+}
+
+@keyframes offer-float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes offer-orb-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate3d(10px, -8px, 0) scale(1.08);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.55;
+  }
+}
+
+@keyframes offer-glint {
+  0% {
+    background-position: 220% 0;
+  }
+  100% {
+    background-position: -120% 0;
+  }
+}
+
+.offer-showcase-shell {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(171, 132, 255, 0.08), transparent 40%),
+    radial-gradient(circle at 90% 22%, rgba(90, 77, 191, 0.08), transparent 42%),
+    radial-gradient(circle at 46% 100%, rgba(241, 78, 196, 0.05), transparent 45%),
+    linear-gradient(180deg, #fbfaff 0%, #f6f2ff 100%);
+  border: 1px solid rgba(141, 129, 216, 0.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 22px 45px rgba(90, 77, 191, 0.07);
+}
+
+.offer-card {
+  position: relative;
+  isolation: isolate;
+  color: white;
+  overflow: hidden;
+}
+
+.offer-card-seo {
+  background:
+    radial-gradient(circle at 15% 18%, rgba(255, 255, 255, 0.2), transparent 38%),
+    radial-gradient(circle at 82% 82%, rgba(255, 161, 248, 0.18), transparent 48%),
+    linear-gradient(135deg, #4332c8 0%, #6d49f2 48%, #8c42f0 100%);
+  background-size: 100% 100%, 100% 100%, 180% 180%;
+}
+
+.offer-card-authority {
+  background:
+    radial-gradient(circle at 18% 20%, rgba(255, 255, 255, 0.16), transparent 40%),
+    radial-gradient(circle at 82% 80%, rgba(129, 204, 255, 0.14), transparent 52%),
+    linear-gradient(135deg, #15151f 0%, #2c245f 40%, #7a39bf 100%);
+  background-size: 100% 100%, 100% 100%, 180% 180%;
+}
+
+.offer-card-rim {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  animation: offer-rim-breathe 5.8s ease-in-out infinite;
+}
+
+.offer-card-seo.offer-card-rim {
+  animation:
+    offer-rim-breathe 5.8s ease-in-out infinite,
+    offer-gradient-shift 12s ease-in-out infinite;
+}
+
+.offer-card-authority.offer-card-rim {
+  animation:
+    offer-rim-breathe 5.8s ease-in-out infinite,
+    offer-gradient-shift 13s ease-in-out infinite;
+}
+
+.offer-card::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.offer-card-glow {
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 24% 22%, rgba(255, 255, 255, 0.14), transparent 42%),
+    radial-gradient(circle at 75% 28%, rgba(255, 255, 255, 0.08), transparent 48%),
+    radial-gradient(circle at 60% 92%, rgba(255, 255, 255, 0.06), transparent 52%);
+}
+
+.offer-card-grain {
+  pointer-events: none;
+  opacity: 0.08;
+  background-image:
+    radial-gradient(circle at 15% 22%, rgba(255, 255, 255, 0.9) 0 1px, transparent 1.4px),
+    radial-gradient(circle at 62% 44%, rgba(255, 255, 255, 0.7) 0 1px, transparent 1.3px),
+    radial-gradient(circle at 82% 72%, rgba(255, 255, 255, 0.6) 0 1px, transparent 1.2px);
+  background-size: 20px 20px, 26px 26px, 18px 18px;
+}
+
+.offer-orb {
+  background: rgba(255, 255, 255, 0.22);
+  animation: offer-orb-drift 6.6s ease-in-out infinite;
+}
+
+.offer-orb-delayed {
+  background: rgba(255, 157, 240, 0.22);
+  animation-delay: 0.8s;
+}
+
+.offer-icon-shell {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.55) 35%, rgba(255, 255, 255, 0.12) 70%, transparent 100%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08));
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 12px 24px rgba(0, 0, 0, 0.14);
+}
+
+.offer-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.7rem;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(8px);
+  animation: offer-float 5.5s ease-in-out infinite;
+}
+
+.offer-tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.45rem 0.75rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.78rem;
+  line-height: 1;
+  backdrop-filter: blur(8px);
+}
+
+.offer-bullet {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.65rem;
+  align-items: start;
+  padding: 0.72rem 0.8rem;
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.offer-bullet-icon {
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.95);
+  margin-top: 0.1rem;
+}
+
+.offer-mini-panel {
+  background: rgba(9, 10, 18, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.offer-glint {
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.14) 50%,
+    transparent 62%
+  );
+  background-size: 220% 100%;
+  background-position: 220% 0;
+  animation: offer-glint 8.5s linear infinite;
+}
+
+.offer-mini-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.65rem;
+  align-items: center;
+  border-radius: 0.8rem;
+  padding: 0.55rem 0.6rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  animation: offer-float 6.2s ease-in-out infinite;
+}
+
+.offer-mini-value {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.22rem 0.5rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: white;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.offer-outcome-pill {
+  background:
+    radial-gradient(circle at 22% 24%, rgba(255, 255, 255, 0.14), transparent 42%),
+    rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .how-panel-gradient,
   .how-panel-rim,
@@ -605,7 +887,14 @@ img[src$=".svg"].publication-logo {
   .how-chat-bubble-dark::after,
   .how-typing-dot,
   .how-report-scan,
-  .how-twinkle {
+  .how-twinkle,
+  .offer-card-seo,
+  .offer-card-authority,
+  .offer-card-rim,
+  .offer-orb,
+  .offer-chip,
+  .offer-glint,
+  .offer-mini-row {
     animation: none !important;
   }
 }

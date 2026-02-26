@@ -7,10 +7,16 @@ import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import {
   ArrowRight,
   BarChart3,
+  Bot,
   Boxes,
   CheckCircle2,
+  Globe2,
   Menu,
   Megaphone,
+  Newspaper,
+  Search,
+  ShieldCheck,
+  Sparkles,
   X,
   TrendingUp,
   Users,
@@ -25,7 +31,6 @@ import {
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [pricingTab, setPricingTab] = useState<"monthly" | "onetime">("monthly");
   const strategicSectionRef = useRef<HTMLElement | null>(null);
 
   const fadeIn = {
@@ -191,76 +196,58 @@ export default function Home() {
     },
   ];
 
-  const monthlyPricing = [
+  const packageOffers = [
     {
-      links: "10-LINKS",
-      period: "6 MONTHLY PAYMENTS",
-      price: "$1,375",
-      perLink: "$825 per link",
-      deliveryNote: "*Max delivery time 12 months.",
-      checkoutUrl: "https://linkifi.thrivecart.com/linkifi-10-links-monthly/",
-      popular: false,
+      key: "seo",
+      title: "SEO Digital PR",
+      eyebrow: "Performance-Led Package",
+      badge: "Best for Rankings",
+      description:
+        "Built for brands who want a pure SEO outcome: authoritative editorial links placed with relevance, intent, and target pages in mind to compound organic growth.",
+      tags: ["SERP-led strategy", "Authority links", "Topical relevance", "Page mapping"],
+      bullets: [
+        "Campaign angles built around commercial search opportunities",
+        "Placements mapped to priority URLs and topical clusters",
+        "Relevance + authority controls to protect link quality",
+        "Reporting focused on SEO outcomes, not vanity metrics",
+      ],
+      miniTitle: "SEO Campaign Architecture",
+      miniRows: [
+        ["Target pages", "Mapped"],
+        ["Keyword clusters", "Prioritised"],
+        ["Authority filter", "High"],
+      ],
+      outcomeLabel: "Primary outcome",
+      outcomeValue: "Rankings + Organic Traffic",
+      footerNote: "Ideal when SEO performance is the main KPI.",
+      tone: "seo",
     },
     {
-      links: "20-LINKS",
-      period: "6 MONTHLY PAYMENTS",
-      price: "$2,667",
-      perLink: "$800 per link",
-      deliveryNote: "*Max delivery time 18 months.",
-      checkoutUrl: "https://linkifi.thrivecart.com/linkifi-20-links-monthly/",
-      popular: true,
+      key: "authority",
+      title: "Authority PR",
+      eyebrow: "Brand Authority Package",
+      badge: "Best for Brand Lift",
+      description:
+        "Designed for brands who want broader authority signals: stronger credibility, larger media visibility, and expanded discoverability across search, media, and AI surfaces.",
+      tags: ["Brand credibility", "Media visibility", "AI discoverability", "Narrative PR"],
+      bullets: [
+        "Narrative-led campaign strategy and expert positioning",
+        "Coverage designed to strengthen brand trust and authority",
+        "Signals that support search, media, and AI platform visibility",
+        "Reporting that tracks momentum across authority touchpoints",
+      ],
+      miniTitle: "Authority Signal Stack",
+      miniRows: [
+        ["Press mentions", "Expanded"],
+        ["Brand trust", "Strengthened"],
+        ["AI visibility", "Compounding"],
+      ],
+      outcomeLabel: "Primary outcome",
+      outcomeValue: "Credibility + Market Visibility",
+      footerNote: "Ideal when you want authority beyond a pure SEO play.",
+      tone: "authority",
     },
-    {
-      links: "50-LINKS",
-      period: "12 MONTHLY PAYMENTS",
-      price: "$3,125",
-      perLink: "$750 per link",
-      deliveryNote: "*Max delivery time 24 months.",
-      checkoutUrl: "https://linkifi.thrivecart.com/linkifi-50-links-monthly/",
-      popular: false,
-    },
-  ];
-
-  const onetimePricing = [
-    {
-      links: "5-LINKS",
-      period: "ONE-TIME PAYMENT",
-      price: "$4,250",
-      perLink: "$850 per link",
-      deliveryNote: "*Max delivery time 12 months.",
-      checkoutUrl: "https://linkifi.thrivecart.com/linkifi-5-links/",
-      popular: false,
-    },
-    {
-      links: "10-LINKS",
-      period: "ONE-TIME PAYMENT",
-      price: "$8,250",
-      perLink: "$825 per link",
-      deliveryNote: "*Max delivery time 12 months.",
-      checkoutUrl: "https://linkifi.thrivecart.com/linkifi-10-links/",
-      popular: true,
-    },
-    {
-      links: "20-LINKS",
-      period: "ONE-TIME PAYMENT",
-      price: "$16,000",
-      perLink: "$800 per link",
-      deliveryNote: "*Max delivery time 18 months.",
-      checkoutUrl: "https://linkifi.thrivecart.com/linkifi-20-links/",
-      popular: false,
-    },
-    {
-      links: "50-LINKS",
-      period: "ONE-TIME PAYMENT",
-      price: "$37,500",
-      perLink: "$750 per link",
-      deliveryNote: "*Max delivery time 24 months. Payment Plan Available.",
-      checkoutUrl: "https://linkifi.thrivecart.com/linkifi-50-links/",
-      popular: false,
-    },
-  ];
-
-  const currentPricing = pricingTab === "monthly" ? monthlyPricing : onetimePricing;
+  ] as const;
 
   return (
     <div className="min-h-screen bg-white font-sans overflow-x-hidden selection:bg-[#5A4DBF]/20 selection:text-[#5A4DBF]">
@@ -1070,112 +1057,158 @@ export default function Home() {
 
         {/* Pricing Section */}
         <section id="Pricing" className="container mx-auto px-6 mb-32">
-          <div className="text-center mb-12">
-            <p className="text-sm text-[#5A4DBF] uppercase tracking-wider font-semibold mb-2">
-              Choose what&apos;s best for you
-            </p>
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-[#0F0F0F] mb-8">
-              Simple pricing.
-            </h2>
+          <div className="offer-showcase-shell relative overflow-hidden rounded-[34px] md:rounded-[42px] px-6 py-10 md:px-10 md:py-14">
+            <div className="pointer-events-none absolute -left-14 top-8 h-48 w-48 rounded-full bg-[#A566FF]/18 blur-3xl" />
+            <div className="pointer-events-none absolute right-0 top-0 h-56 w-56 rounded-full bg-[#5A4DBF]/12 blur-3xl" />
+            <div className="pointer-events-none absolute bottom-0 left-1/3 h-52 w-52 rounded-full bg-[#F14EC4]/10 blur-3xl" />
 
-            {/* Pricing Toggle */}
-            <div className="inline-flex bg-gray-100 rounded-full p-1">
-              <button
-                onClick={() => setPricingTab("monthly")}
-                className={`px-6 py-2 rounded-full text-sm font-semibold transition-all ${
-                  pricingTab === "monthly"
-                    ? "bg-[#5A4DBF] text-white"
-                    : "text-[#535479] hover:text-[#0F0F0F]"
-                }`}
-                data-testid="button-pricing-monthly"
-              >
-                MONTHLY
-              </button>
-              <button
-                onClick={() => setPricingTab("onetime")}
-                className={`px-6 py-2 rounded-full text-sm font-semibold transition-all ${
-                  pricingTab === "onetime"
-                    ? "bg-[#5A4DBF] text-white"
-                    : "text-[#535479] hover:text-[#0F0F0F]"
-                }`}
-                data-testid="button-pricing-onetime"
-              >
-                ONE-TIME
-              </button>
+            <div className="relative z-10 text-center mb-10 md:mb-12">
+              <p className="text-sm text-[#5A4DBF] uppercase tracking-wider font-semibold mb-2">
+                Choose what&apos;s best for you
+              </p>
+              <h2 className="text-3xl md:text-5xl font-display font-bold text-[#0F0F0F] mb-4">
+                Two packages. Two outcomes.
+              </h2>
+              <p className="max-w-3xl mx-auto text-[#535479] md:text-lg leading-relaxed">
+                Same execution quality, different strategic objective. Pick the lane that best
+                matches what you need right now: a pure SEO digital PR engine, or a broader
+                authority PR play that compounds trust and visibility across channels.
+              </p>
             </div>
-          </div>
 
-          <div className={`grid gap-8 max-w-7xl mx-auto ${currentPricing.length === 4 ? 'md:grid-cols-2 lg:grid-cols-4' : 'lg:grid-cols-3 max-w-6xl'}`}>
-            {currentPricing.map((plan, index) => (
-              <div
-                key={index}
-                className={`p-8 rounded-3xl flex flex-col relative ${
-                  plan.popular
-                    ? "bg-[#0F0F0F] text-white shadow-2xl transform lg:-translate-y-4"
-                    : "bg-white border border-gray-200 shadow-lg"
-                }`}
-              >
-                {plan.popular && (
-                  <div className="absolute top-0 right-0 bg-[#D733A2] text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl rounded-tr-3xl uppercase">
-                    Most Popular
+            <div className="relative z-10 grid lg:grid-cols-2 gap-8">
+              {packageOffers.map((offer, index) => (
+                <motion.article
+                  key={offer.key}
+                  variants={fadeIn}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true, amount: 0.2 }}
+                  className={`offer-card offer-card-rim ${
+                    offer.tone === "seo" ? "offer-card-seo" : "offer-card-authority"
+                  } relative overflow-hidden rounded-[28px] md:rounded-[32px] p-6 md:p-8`}
+                  style={{ animationDelay: `${index * 0.45}s` }}
+                >
+                  <div className="offer-card-glow absolute inset-0 rounded-[inherit]" />
+                  <div className="offer-card-grain absolute inset-0 rounded-[inherit]" />
+                  <div className="offer-orb absolute -right-8 top-6 h-24 w-24 rounded-full blur-2xl" />
+                  <div className="offer-orb offer-orb-delayed absolute left-6 bottom-8 h-20 w-20 rounded-full blur-2xl" />
+
+                  <div className="relative z-10">
+                    <div className="flex items-start justify-between gap-4 mb-6">
+                      <div className="flex items-start gap-3">
+                        <div className="offer-icon-shell">
+                          {offer.tone === "seo" ? (
+                            <Search className="h-5 w-5 text-[#111018]" />
+                          ) : (
+                            <Sparkles className="h-5 w-5 text-[#111018]" />
+                          )}
+                        </div>
+                        <div>
+                          <p className="text-xs uppercase tracking-[0.18em] text-white/75 font-semibold">
+                            {offer.eyebrow}
+                          </p>
+                          <h3 className="text-2xl md:text-3xl font-display font-bold text-white leading-tight mt-1">
+                            {offer.title}
+                          </h3>
+                        </div>
+                      </div>
+                      <div className="offer-chip">{offer.badge}</div>
+                    </div>
+
+                    <p className="text-white/90 leading-relaxed md:text-[1rem]">
+                      {offer.description}
+                    </p>
+
+                    <div className="mt-5 flex flex-wrap gap-2.5">
+                      {offer.tags.map((tag) => (
+                        <span key={tag} className="offer-tag">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="mt-6 grid gap-3">
+                      {offer.bullets.map((bullet) => (
+                        <div key={bullet} className="offer-bullet">
+                          <span className="offer-bullet-icon">
+                            <CheckCircle2 className="h-3.5 w-3.5" />
+                          </span>
+                          <span className="text-sm md:text-[15px] text-white/95">{bullet}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-7 grid md:grid-cols-[1fr_auto] gap-4 items-stretch">
+                      <div className="offer-mini-panel relative overflow-hidden rounded-2xl p-4">
+                        <div className="offer-glint absolute inset-0" />
+                        <div className="relative z-10">
+                          <div className="flex items-center gap-2 text-white/80 text-xs uppercase tracking-[0.18em] font-semibold mb-3">
+                            {offer.tone === "seo" ? (
+                              <Globe2 className="h-3.5 w-3.5" />
+                            ) : (
+                              <ShieldCheck className="h-3.5 w-3.5" />
+                            )}
+                            <span>{offer.miniTitle}</span>
+                          </div>
+                          <div className="space-y-2.5">
+                            {offer.miniRows.map(([label, value], rowIndex) => (
+                              <div
+                                key={label}
+                                className="offer-mini-row"
+                                style={{ animationDelay: `${rowIndex * 0.15}s` }}
+                              >
+                                <div className="flex items-center gap-2 min-w-0">
+                                  {offer.tone === "seo" ? (
+                                    <Newspaper className="h-3.5 w-3.5 text-white/70 shrink-0" />
+                                  ) : (
+                                    <Bot className="h-3.5 w-3.5 text-white/70 shrink-0" />
+                                  )}
+                                  <span className="truncate text-white/80 text-xs">{label}</span>
+                                </div>
+                                <span className="offer-mini-value">{value}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="offer-outcome-pill flex flex-col justify-between rounded-2xl p-4 min-w-[180px]">
+                        <p className="text-[11px] uppercase tracking-[0.18em] text-white/65 font-semibold">
+                          {offer.outcomeLabel}
+                        </p>
+                        <p className="text-white font-display font-bold text-lg leading-snug mt-3">
+                          {offer.outcomeValue}
+                        </p>
+                        <div className="mt-3 flex items-center gap-2 text-white/70 text-xs">
+                          <TrendingUp className="h-3.5 w-3.5" />
+                          <span>Custom scope available</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-7 flex flex-col sm:flex-row sm:items-center gap-3">
+                      <Link href="/contact-us">
+                        <Button
+                          className={`h-12 rounded-full px-6 font-semibold ${
+                            offer.tone === "seo"
+                              ? "bg-white text-[#3E32A8] hover:bg-white/90"
+                              : "bg-[#0F0F0F] text-white hover:bg-black"
+                          }`}
+                          data-testid={`button-package-${offer.key}`}
+                        >
+                          {offer.tone === "seo" ? "Discuss SEO Digital PR" : "Discuss Authority PR"}
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Button>
+                      </Link>
+                      <p className="text-xs md:text-sm text-white/70 leading-relaxed">
+                        {offer.footerNote}
+                      </p>
+                    </div>
                   </div>
-                )}
-
-                <h3 className={`text-2xl font-bold mb-1 ${plan.popular ? "text-white" : "text-[#0F0F0F]"}`}>
-                  {plan.links}
-                </h3>
-                <p className={`text-sm mb-6 uppercase tracking-wider font-semibold ${plan.popular ? "text-gray-400" : "text-[#535479]"}`}>
-                  {plan.period}
-                </p>
-
-                <div className="space-y-3 mb-8 flex-1">
-                  <div className="flex items-center gap-3">
-                    <CheckCircle2 className={`w-5 h-5 ${plan.popular ? "text-[#D733A2]" : "text-[#5A4DBF]"}`} />
-                    <span>DR 40 - 95 PR Links</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle2 className={`w-5 h-5 ${plan.popular ? "text-[#D733A2]" : "text-[#5A4DBF]"}`} />
-                    <span>Guaranteed Average DR 70+</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle2 className={`w-5 h-5 ${plan.popular ? "text-[#D733A2]" : "text-[#5A4DBF]"}`} />
-                    <span>US & UK News Publications</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle2 className={`w-5 h-5 ${plan.popular ? "text-[#D733A2]" : "text-[#5A4DBF]"}`} />
-                    <span>Real-Time Reporting</span>
-                  </div>
-                </div>
-
-                <div className="mb-6">
-                  <p className={`text-xs mb-1 ${plan.popular ? "text-gray-400" : "text-[#535479]"}`}>only</p>
-                  <p className="text-4xl font-bold">
-                    {plan.price}
-                    {pricingTab === "monthly" && <span className={`text-lg font-normal ${plan.popular ? "text-gray-400" : "text-[#535479]"}`}>/m</span>}
-                  </p>
-                  <p className={`text-sm mt-1 ${plan.popular ? "text-gray-400" : "text-[#535479]"}`}>
-                    {plan.perLink}
-                  </p>
-                </div>
-
-                <a href={plan.checkoutUrl} target="_blank" rel="noopener noreferrer">
-                  <Button
-                    className={`w-full rounded-full h-12 font-bold ${
-                      plan.popular
-                        ? "bg-[#D733A2] hover:bg-[#b02a85] text-white"
-                        : "bg-[#5A4DBF] hover:bg-[#483d99] text-white"
-                    }`}
-                    data-testid={`button-get-started-${plan.links.toLowerCase()}`}
-                  >
-                    Get started
-                  </Button>
-                </a>
-
-                <p className={`text-xs mt-4 text-center ${plan.popular ? "text-gray-500" : "text-[#9aa0b0]"}`}>
-                  {plan.deliveryNote}
-                </p>
-              </div>
-            ))}
+                </motion.article>
+              ))}
+            </div>
           </div>
         </section>
 
