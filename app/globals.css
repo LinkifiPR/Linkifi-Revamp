@@ -1056,6 +1056,10 @@ img[src$=".svg"].publication-logo {
   align-content: flex-start;
 }
 
+.offer-description {
+  margin: 0;
+}
+
 @container (min-width: 28rem) {
   .offer-tags-row {
     min-height: 5.9rem;
@@ -1070,6 +1074,10 @@ img[src$=".svg"].publication-logo {
 
 /* Side-by-side package cards: force a clean single tag row and smaller pills */
 @media (min-width: 1280px) {
+  .offer-card .offer-description-authority {
+    padding-bottom: 1.6rem;
+  }
+
   .offer-card .offer-tags-row {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));

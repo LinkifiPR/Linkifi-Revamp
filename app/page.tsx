@@ -1128,7 +1128,11 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <p className="text-white/90 leading-relaxed md:text-[1rem]">
+                    <p
+                      className={`offer-description text-white/90 leading-relaxed md:text-[1rem] ${
+                        offer.tone === "authority" ? "offer-description-authority" : ""
+                      }`}
+                    >
                       {offer.description}
                     </p>
 
