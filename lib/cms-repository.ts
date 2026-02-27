@@ -21,6 +21,7 @@ type CmsEntryRow = {
   title: string;
   slug: string;
   excerpt: string;
+  body_html: string;
   content: unknown;
   featured_image_url: string;
   featured_image_alt: string;
@@ -86,6 +87,7 @@ async function ensureSchema(): Promise<void> {
             title TEXT NOT NULL,
             slug TEXT NOT NULL,
             excerpt TEXT NOT NULL DEFAULT '',
+            body_html TEXT NOT NULL DEFAULT '',
             content JSONB NOT NULL DEFAULT '[]'::jsonb,
             featured_image_url TEXT NOT NULL DEFAULT '',
             featured_image_alt TEXT NOT NULL DEFAULT '',
@@ -103,6 +105,11 @@ async function ensureSchema(): Promise<void> {
         await client.query(`
           CREATE INDEX IF NOT EXISTS cms_entries_type_status_published_idx
           ON cms_entries (type, status, published_at DESC);
+        `);
+
+        await client.query(`
+          ALTER TABLE cms_entries
+          ADD COLUMN IF NOT EXISTS body_html TEXT NOT NULL DEFAULT '';
         `);
 
         await client.query(`
@@ -147,6 +154,7 @@ function mapEntryRow(row: CmsEntryRow): CmsEntry {
     title: row.title,
     slug: row.slug,
     excerpt: row.excerpt,
+    bodyHtml: row.body_html ?? "",
     content: blocksParsed.success ? blocksParsed.data : [],
     featuredImageUrl: row.featured_image_url,
     featuredImageAlt: row.featured_image_alt,
@@ -210,6 +218,7 @@ function buildPatchInput(current: CmsEntry, patch: CmsEntryPatch): CmsEntryInput
     title: patch.title ?? current.title,
     slug: patch.slug ?? current.slug,
     excerpt: patch.excerpt ?? current.excerpt,
+    bodyHtml: patch.bodyHtml ?? current.bodyHtml,
     content: patch.content ?? current.content,
     featuredImageUrl: patch.featuredImageUrl ?? current.featuredImageUrl,
     featuredImageAlt: patch.featuredImageAlt ?? current.featuredImageAlt,
@@ -260,7 +269,7 @@ export async function listCmsEntries(rawQuery: unknown = {}): Promise<CmsEntryLi
   values.push(offset);
 
   const sql = `
-    SELECT id, type, status, title, slug, excerpt, content, featured_image_url, featured_image_alt,
+    SELECT id, type, status, title, slug, excerpt, body_html, content, featured_image_url, featured_image_alt,
            seo_title, seo_description, canonical_url, noindex, published_at, created_at, updated_at
     FROM cms_entries
     ${whereSql}
@@ -277,7 +286,7 @@ export async function getCmsEntryById(id: string): Promise<CmsEntry | null> {
   await ensureSchema();
   const result = await getPool().query<CmsEntryRow>(
     `
-    SELECT id, type, status, title, slug, excerpt, content, featured_image_url, featured_image_alt,
+    SELECT id, type, status, title, slug, excerpt, body_html, content, featured_image_url, featured_image_alt,
            seo_title, seo_description, canonical_url, noindex, published_at, created_at, updated_at
     FROM cms_entries
     WHERE id = $1
@@ -300,7 +309,7 @@ export async function getCmsEntryBySlug(
 
   const result = await getPool().query<CmsEntryRow>(
     `
-    SELECT id, type, status, title, slug, excerpt, content, featured_image_url, featured_image_alt,
+    SELECT id, type, status, title, slug, excerpt, body_html, content, featured_image_url, featured_image_alt,
            seo_title, seo_description, canonical_url, noindex, published_at, created_at, updated_at
     FROM cms_entries
     WHERE type = $1 AND slug = $2
@@ -323,12 +332,12 @@ export async function createCmsEntry(rawInput: unknown): Promise<CmsEntry> {
     const result = await getPool().query<CmsEntryRow>(
       `
       INSERT INTO cms_entries (
-        id, type, status, title, slug, excerpt, content, featured_image_url, featured_image_alt,
+        id, type, status, title, slug, excerpt, body_html, content, featured_image_url, featured_image_alt,
         seo_title, seo_description, canonical_url, noindex, published_at, created_at, updated_at
       ) VALUES (
-        $1, $2, $3, $4, $5, $6, $7::jsonb, $8, $9, $10, $11, $12, $13, $14, NOW(), NOW()
+        $1, $2, $3, $4, $5, $6, $7, $8::jsonb, $9, $10, $11, $12, $13, $14, $15, NOW(), NOW()
       )
-      RETURNING id, type, status, title, slug, excerpt, content, featured_image_url, featured_image_alt,
+      RETURNING id, type, status, title, slug, excerpt, body_html, content, featured_image_url, featured_image_alt,
                 seo_title, seo_description, canonical_url, noindex, published_at, created_at, updated_at
       `,
       [
@@ -338,6 +347,7 @@ export async function createCmsEntry(rawInput: unknown): Promise<CmsEntry> {
         input.title,
         input.slug,
         input.excerpt,
+        input.bodyHtml,
         JSON.stringify(input.content),
         input.featuredImageUrl,
         input.featuredImageAlt,
@@ -383,17 +393,18 @@ export async function updateCmsEntry(id: string, rawPatch: unknown): Promise<Cms
         title = $4,
         slug = $5,
         excerpt = $6,
-        content = $7::jsonb,
-        featured_image_url = $8,
-        featured_image_alt = $9,
-        seo_title = $10,
-        seo_description = $11,
-        canonical_url = $12,
-        noindex = $13,
-        published_at = $14,
+        body_html = $7,
+        content = $8::jsonb,
+        featured_image_url = $9,
+        featured_image_alt = $10,
+        seo_title = $11,
+        seo_description = $12,
+        canonical_url = $13,
+        noindex = $14,
+        published_at = $15,
         updated_at = NOW()
       WHERE id = $1
-      RETURNING id, type, status, title, slug, excerpt, content, featured_image_url, featured_image_alt,
+      RETURNING id, type, status, title, slug, excerpt, body_html, content, featured_image_url, featured_image_alt,
                 seo_title, seo_description, canonical_url, noindex, published_at, created_at, updated_at
       `,
       [
@@ -403,6 +414,7 @@ export async function updateCmsEntry(id: string, rawPatch: unknown): Promise<Cms
         merged.title,
         merged.slug,
         merged.excerpt,
+        merged.bodyHtml,
         JSON.stringify(merged.content),
         merged.featuredImageUrl,
         merged.featuredImageAlt,
@@ -439,7 +451,7 @@ export async function listPublishedEntriesByType(type: CmsEntryType, limit = 100
   await ensureSchema();
   const result = await getPool().query<CmsEntryRow>(
     `
-    SELECT id, type, status, title, slug, excerpt, content, featured_image_url, featured_image_alt,
+    SELECT id, type, status, title, slug, excerpt, body_html, content, featured_image_url, featured_image_alt,
            seo_title, seo_description, canonical_url, noindex, published_at, created_at, updated_at
     FROM cms_entries
     WHERE type = $1 AND status = 'published'

@@ -1,5 +1,5 @@
 import type { CmsEntry } from "@/lib/cms-types";
-import { buildTocFromBlocks } from "@/lib/cms-render";
+import { buildTocFromBlocks, renderCmsBodyHtml } from "@/lib/cms-render";
 import { CmsBlocksRenderer } from "@/components/cms/CmsBlocksRenderer";
 import { CmsTableOfContents } from "@/components/cms/CmsTableOfContents";
 
@@ -8,7 +8,8 @@ type Props = {
 };
 
 export function CmsEntryArticle({ entry }: Props) {
-  const toc = buildTocFromBlocks(entry.content);
+  const bodyRender = renderCmsBodyHtml(entry.bodyHtml || "");
+  const toc = [...bodyRender.toc, ...buildTocFromBlocks(entry.content)];
 
   return (
     <main className="bg-gradient-to-b from-[#fbfaff] to-white py-14 md:py-18">
@@ -33,7 +34,17 @@ export function CmsEntryArticle({ entry }: Props) {
 
           <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px]">
             <section className="rounded-3xl border border-[#d9d7f5] bg-white px-6 py-8 md:px-10 md:py-10 shadow-[0_14px_38px_rgba(32,26,90,0.07)]">
-              <CmsBlocksRenderer blocks={entry.content} />
+              {bodyRender.html ? (
+                <section
+                  className="cms-richtext"
+                  dangerouslySetInnerHTML={{ __html: bodyRender.html }}
+                />
+              ) : null}
+              {entry.content.length > 0 ? (
+                <div className={bodyRender.html ? "mt-8" : ""}>
+                  <CmsBlocksRenderer blocks={entry.content} />
+                </div>
+              ) : null}
             </section>
             <div className="lg:sticky lg:top-24 h-fit">
               <CmsTableOfContents items={toc} />

@@ -1761,3 +1761,57 @@ img[src$=".svg"].publication-logo {
     animation: none !important;
   }
 }
+
+.cms-richtext {
+  color: #2d3050;
+  font-size: 1.05rem;
+  line-height: 1.85;
+}
+
+.cms-richtext p,
+.cms-richtext ul,
+.cms-richtext ol,
+.cms-richtext blockquote {
+  margin-top: 1.05rem;
+}
+
+.cms-richtext h2,
+.cms-richtext h3,
+.cms-richtext h4 {
+  margin-top: 1.9rem;
+  color: #14142b;
+  font-family: var(--font-plus-jakarta), var(--font-inter), sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  scroll-margin-top: 6rem;
+}
+
+.cms-richtext h2 {
+  font-size: 1.8rem;
+}
+
+.cms-richtext h3 {
+  font-size: 1.45rem;
+}
+
+.cms-richtext h4 {
+  font-size: 1.2rem;
+}
+
+.cms-richtext ul,
+.cms-richtext ol {
+  padding-left: 1.35rem;
+}
+
+.cms-richtext a {
+  color: #5a4dbf;
+  font-weight: 700;
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.1em;
+  text-underline-offset: 0.14em;
+  transition: color 0.2s ease;
+}
+
+.cms-richtext a:hover {
+  color: #4a3da8;
+}

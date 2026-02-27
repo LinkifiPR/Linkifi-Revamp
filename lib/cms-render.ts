@@ -46,6 +46,45 @@ export function buildTocFromBlocks(blocks: CmsBlock[]): TocItem[] {
   });
 }
 
+function stripHtmlTags(html: string): string {
+  return html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function sanitizeCmsHtml(input: string): string {
+  return input
+    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
+    .replace(/<style[\s\S]*?>[\s\S]*?<\/style>/gi, "")
+    .replace(/\son\w+="[^"]*"/gi, "")
+    .replace(/\son\w+='[^']*'/gi, "")
+    .replace(/href\s*=\s*["']\s*javascript:[^"']*["']/gi, 'href="#"');
+}
+
+export function renderCmsBodyHtml(bodyHtml: string): { html: string; toc: TocItem[] } {
+  const sanitized = sanitizeCmsHtml(bodyHtml || "");
+  const toc: TocItem[] = [];
+  let headingCount = 0;
+
+  const html = sanitized.replace(
+    /<h([2-4])([^>]*)>([\s\S]*?)<\/h\1>/gi,
+    (_match, levelRaw: string, attrsRaw: string, innerRaw: string) => {
+      const level = Number(levelRaw) as 2 | 3 | 4;
+      const text = stripHtmlTags(innerRaw);
+      headingCount += 1;
+
+      const existingIdMatch = attrsRaw.match(/\sid=["']([^"']+)["']/i);
+      const fallbackId = `${slugifyHeading(text) || "section"}-${headingCount}`;
+      const id = existingIdMatch?.[1] || fallbackId;
+
+      toc.push({ id, text: text || `Section ${headingCount}`, level });
+
+      const attrsWithoutId = attrsRaw.replace(/\sid=["'][^"']*["']/i, "");
+      return `<h${level}${attrsWithoutId} id="${id}">${innerRaw}</h${level}>`;
+    },
+  );
+
+  return { html, toc };
+}
+
 export function extractFaqItems(blocks: CmsBlock[]): FaqItem[] {
   return blocks.flatMap((block) => {
     if (block.type !== "faq") {

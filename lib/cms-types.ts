@@ -69,6 +69,7 @@ export const cmsEntryInputSchema = z.object({
   title: z.string().min(1),
   slug: cmsSlugSchema,
   excerpt: z.string().default(""),
+  bodyHtml: z.string().default(""),
   content: cmsBlocksSchema.default([]),
   featuredImageUrl: z.string().optional().default(""),
   featuredImageAlt: z.string().optional().default(""),
@@ -109,6 +110,7 @@ export type CmsEntry = {
   title: string;
   slug: string;
   excerpt: string;
+  bodyHtml: string;
   content: CmsBlock[];
   featuredImageUrl: string;
   featuredImageAlt: string;

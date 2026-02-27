@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useMemo, useState } from "react";
+import RichTextEditor from "@/app/admin/content/RichTextEditor";
 import type { CmsBlock, CmsEntry, CmsEntryInput } from "@/lib/cms-types";
 import { slugifyCmsValue } from "@/lib/cms-types";
 
@@ -13,13 +14,9 @@ type Props = {
 };
 
 const BLOCK_TYPES: Array<{ type: CmsBlock["type"]; label: string }> = [
-  { type: "heading", label: "Heading" },
-  { type: "paragraph", label: "Paragraph" },
   { type: "image", label: "Image" },
   { type: "faq", label: "FAQ" },
   { type: "table", label: "Table" },
-  { type: "quote", label: "Quote" },
-  { type: "list", label: "List" },
 ];
 
 function makeDefaultInput(): CmsEntryInput {
@@ -29,6 +26,7 @@ function makeDefaultInput(): CmsEntryInput {
     title: "",
     slug: "",
     excerpt: "",
+    bodyHtml: "",
     content: [],
     featuredImageUrl: "",
     featuredImageAlt: "",
@@ -47,6 +45,7 @@ function entryToInput(entry: CmsEntry): CmsEntryInput {
     title: entry.title,
     slug: entry.slug,
     excerpt: entry.excerpt,
+    bodyHtml: entry.bodyHtml || "",
     content: entry.content,
     featuredImageUrl: entry.featuredImageUrl,
     featuredImageAlt: entry.featuredImageAlt,
@@ -388,7 +387,7 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
           </div>
         </header>
 
-        <form onSubmit={onSubmit} className="mt-8 grid gap-6">
+        <form onSubmit={onSubmit} noValidate className="mt-8 grid gap-6">
           <section className="rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-sm">
             <h2 className="text-lg font-semibold">Core Settings</h2>
             <div className="mt-4 grid gap-4 md:grid-cols-2">
@@ -464,7 +463,7 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
               <label className="space-y-1.5 text-sm">
                 <span className="text-[#d0d4f2]">Featured Image URL</span>
                 <input
-                  type="url"
+                  type="text"
                   value={form.featuredImageUrl}
                   onChange={(event) =>
                     setForm((prev) => ({ ...prev, featuredImageUrl: event.target.value.trim() }))
@@ -523,6 +522,20 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
                 />
                 <span className="text-[#d0d4f2]">Noindex this page</span>
               </label>
+            </div>
+          </section>
+
+          <section className="rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-sm">
+            <h2 className="text-lg font-semibold">Main Writing</h2>
+            <p className="mt-2 text-sm text-[#b8bfe8]">
+              Write normal content here. Use heading and link tools inline. Blocks below are now
+              only for structured components like images, FAQs, and tables.
+            </p>
+            <div className="mt-4">
+              <RichTextEditor
+                value={form.bodyHtml}
+                onChange={(nextHtml) => setForm((prev) => ({ ...prev, bodyHtml: nextHtml }))}
+              />
             </div>
           </section>
 
@@ -926,6 +939,24 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
                     ) : null}
                   </div>
                 </article>
+              ))}
+            </div>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              {BLOCK_TYPES.map((blockType) => (
+                <button
+                  key={`bottom-${blockType.type}`}
+                  type="button"
+                  onClick={() =>
+                    setForm((prev) => ({
+                      ...prev,
+                      content: [...prev.content, createBlock(blockType.type)],
+                    }))
+                  }
+                  className="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white hover:bg-white/20"
+                >
+                  + {blockType.label}
+                </button>
               ))}
             </div>
           </section>
