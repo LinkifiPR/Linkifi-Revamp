@@ -31,6 +31,7 @@ import {
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const strategicSectionRef = useRef<HTMLElement | null>(null);
+  const testimonialVideoRefs = useRef<Array<HTMLVideoElement | null>>([]);
 
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
@@ -268,6 +269,50 @@ export default function Home() {
       src: "/testimonials/videos/amanda-v1-720p.mp4",
     },
   ] as const;
+
+  const handleTestimonialHoverStart = async (index: number) => {
+    const video = testimonialVideoRefs.current[index];
+    if (!video) return;
+
+    video.volume = 1;
+    video.muted = false;
+
+    try {
+      await video.play();
+    } catch {
+      // Fallback for browsers that block unmuted hover playback.
+      video.muted = true;
+      try {
+        await video.play();
+      } catch {
+        // Ignore: user can still click to force play/unmute.
+      }
+    }
+  };
+
+  const handleTestimonialHoverEnd = (index: number) => {
+    const video = testimonialVideoRefs.current[index];
+    if (!video) return;
+
+    video.pause();
+    video.currentTime = 0;
+    video.muted = true;
+  };
+
+  const handleTestimonialClick = async (index: number) => {
+    const video = testimonialVideoRefs.current[index];
+    if (!video) return;
+
+    video.volume = 1;
+    video.muted = false;
+
+    try {
+      await video.play();
+    } catch {
+      video.muted = true;
+      await video.play().catch(() => {});
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white font-sans overflow-x-hidden selection:bg-[#5A4DBF]/20 selection:text-[#5A4DBF]">
@@ -1230,11 +1275,21 @@ export default function Home() {
                     viewport={{ once: true, amount: 0.2 }}
                     className="video-testimonial-card group relative overflow-hidden rounded-[24px] md:rounded-[26px]"
                     style={{ animationDelay: `${index * 0.22}s` }}
+                    onMouseEnter={() => handleTestimonialHoverStart(index)}
+                    onMouseLeave={() => handleTestimonialHoverEnd(index)}
+                    onFocus={() => handleTestimonialHoverStart(index)}
+                    onBlur={() => handleTestimonialHoverEnd(index)}
+                    onClick={() => handleTestimonialClick(index)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Play testimonial from ${item.name}`}
                   >
                     <video
+                      ref={(node) => {
+                        testimonialVideoRefs.current[index] = node;
+                      }}
                       src={item.src}
                       className="video-testimonial-media"
-                      autoPlay
                       muted
                       loop
                       playsInline
@@ -1260,14 +1315,18 @@ export default function Home() {
               </div>
 
               <div className="mt-8 flex justify-center md:justify-end">
-                <Link href="/contact-us">
+                <a
+                  href="https://book.linkifi.io/widget/bookings/pr-discovery-call"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Button
                     className="video-testimonials-cta h-12 rounded-full px-7 md:px-8 text-base font-semibold bg-[#5A4DBF] hover:bg-[#4C40A6] text-white"
                     data-testid="button-video-testimonials-contact"
                   >
                     Book a Call With Us
                   </Button>
-                </Link>
+                </a>
               </div>
             </div>
           </div>
