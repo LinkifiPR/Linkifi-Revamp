@@ -4,19 +4,23 @@ export const cmsEntryTypeSchema = z.enum(["blog", "case-study", "page"]);
 export const cmsStatusSchema = z.enum(["draft", "published", "archived"]);
 export const cmsSortBySchema = z.enum(["updatedAt", "createdAt", "title", "status", "type", "publishedAt"]);
 export const cmsSortOrderSchema = z.enum(["asc", "desc"]);
+const cmsBlockIdSchema = z.string().min(1).optional();
 
 export const cmsHeadingBlockSchema = z.object({
+  id: cmsBlockIdSchema,
   type: z.literal("heading"),
   level: z.number().int().min(2).max(4),
   text: z.string().default(""),
 });
 
 export const cmsParagraphBlockSchema = z.object({
+  id: cmsBlockIdSchema,
   type: z.literal("paragraph"),
   text: z.string().default(""),
 });
 
 export const cmsImageBlockSchema = z.object({
+  id: cmsBlockIdSchema,
   type: z.literal("image"),
   src: z.string().default(""),
   alt: z.string().default(""),
@@ -24,12 +28,14 @@ export const cmsImageBlockSchema = z.object({
 });
 
 export const cmsFaqBlockSchema = z.object({
+  id: cmsBlockIdSchema,
   type: z.literal("faq"),
   question: z.string().default(""),
   answer: z.string().default(""),
 });
 
 export const cmsTableBlockSchema = z.object({
+  id: cmsBlockIdSchema,
   type: z.literal("table"),
   caption: z.string().optional().default(""),
   headers: z.array(z.string().min(1)).min(1),
@@ -37,12 +43,14 @@ export const cmsTableBlockSchema = z.object({
 });
 
 export const cmsQuoteBlockSchema = z.object({
+  id: cmsBlockIdSchema,
   type: z.literal("quote"),
   text: z.string().default(""),
   cite: z.string().optional().default(""),
 });
 
 export const cmsListBlockSchema = z.object({
+  id: cmsBlockIdSchema,
   type: z.literal("list"),
   ordered: z.boolean().default(false),
   items: z.array(z.string()).min(1),

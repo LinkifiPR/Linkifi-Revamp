@@ -13,7 +13,9 @@ type Props = {
   initialEntry?: CmsEntry;
 };
 
-const BLOCK_TYPES: Array<{ type: CmsBlock["type"]; label: string }> = [
+type StructuredBlockType = "image" | "faq" | "table";
+
+const BLOCK_TYPES: Array<{ type: StructuredBlockType; label: string }> = [
   { type: "image", label: "Image" },
   { type: "faq", label: "FAQ" },
   { type: "table", label: "Table" },
@@ -57,29 +59,29 @@ function entryToInput(entry: CmsEntry): CmsEntryInput {
   };
 }
 
-function createBlock(type: CmsBlock["type"]): CmsBlock {
+function makeBlockId(): string {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+  return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function createBlock(type: StructuredBlockType): CmsBlock {
   switch (type) {
-    case "heading":
-      return { type: "heading", level: 2, text: "" };
-    case "paragraph":
-      return { type: "paragraph", text: "" };
     case "image":
-      return { type: "image", src: "", alt: "", caption: "" };
+      return { id: makeBlockId(), type: "image", src: "", alt: "", caption: "" };
     case "faq":
-      return { type: "faq", question: "", answer: "" };
+      return { id: makeBlockId(), type: "faq", question: "", answer: "" };
     case "table":
       return {
+        id: makeBlockId(),
         type: "table",
         caption: "",
         headers: ["Column 1", "Column 2"],
         rows: [["", ""]],
       };
-    case "quote":
-      return { type: "quote", text: "", cite: "" };
-    case "list":
-      return { type: "list", ordered: false, items: [""] };
     default:
-      return { type: "paragraph", text: "" };
+      return { id: makeBlockId(), type: "image", src: "", alt: "", caption: "" };
   }
 }
 
@@ -207,6 +209,18 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
       return {
         ...prev,
         content: next,
+      };
+    });
+  }
+
+  function insertBlockAt(position: number, type: StructuredBlockType) {
+    setForm((prev) => {
+      const safePosition = Math.max(0, Math.min(position, prev.content.length));
+      const nextContent = [...prev.content];
+      nextContent.splice(safePosition, 0, createBlock(type));
+      return {
+        ...prev,
+        content: nextContent,
       };
     });
   }
@@ -538,6 +552,21 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
                 onChange={(nextHtml) => setForm((prev) => ({ ...prev, bodyHtml: nextHtml }))}
               />
             </div>
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              <span className="text-xs uppercase tracking-[0.13em] text-[#aeb5e5]">
+                Quick Insert In Flow
+              </span>
+              {BLOCK_TYPES.map((blockType) => (
+                <button
+                  key={`writer-${blockType.type}`}
+                  type="button"
+                  onClick={() => insertBlockAt(form.content.length, blockType.type)}
+                  className="rounded-full border border-[#8f7bff]/45 bg-[#8f7bff]/15 px-3 py-1.5 text-xs font-semibold text-[#efe9ff] hover:bg-[#8f7bff]/25"
+                >
+                  + {blockType.label}
+                </button>
+              ))}
+            </div>
           </section>
 
           <section className="rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-sm">
@@ -581,29 +610,46 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
 
           <section className="rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-sm">
             <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-              <h2 className="text-lg font-semibold">Content Blocks</h2>
+              <h2 className="text-lg font-semibold">Structured Inserts</h2>
               <div className="flex flex-wrap gap-2">
                 {BLOCK_TYPES.map((blockType) => (
                   <button
                     key={blockType.type}
                     type="button"
-                    onClick={() =>
-                      setForm((prev) => ({
-                        ...prev,
-                        content: [...prev.content, createBlock(blockType.type)],
-                      }))
-                    }
+                    onClick={() => insertBlockAt(form.content.length, blockType.type)}
                     className="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white hover:bg-white/20"
                   >
-                    + {blockType.label}
+                    + Add {blockType.label}
                   </button>
                 ))}
               </div>
             </div>
+            <p className="mt-2 text-sm text-[#b8bfe8]">
+              Insert images, FAQs, and tables exactly where they should appear in article flow.
+            </p>
 
             <div className="mt-5 space-y-4">
+              <div className="rounded-2xl border border-white/15 bg-[#0f1328] p-3">
+                <p className="text-xs uppercase tracking-[0.13em] text-[#aeb5e5]">
+                  Insert At Start
+                </p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {BLOCK_TYPES.map((blockType) => (
+                    <button
+                      key={`top-${blockType.type}`}
+                      type="button"
+                      onClick={() => insertBlockAt(0, blockType.type)}
+                      className="rounded-full border border-[#8f7bff]/45 bg-[#8f7bff]/15 px-3 py-1.5 text-xs font-semibold text-[#efe9ff] hover:bg-[#8f7bff]/25"
+                    >
+                      + {blockType.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {form.content.map((block, index) => (
-                <article key={`${block.type}-${index}`} className="rounded-2xl border border-white/15 bg-[#0f1328] p-4">
+                <div key={block.id ? `${block.type}-${block.id}` : `${block.type}-${index}`} className="space-y-3">
+                <article className="rounded-2xl border border-white/15 bg-[#0f1328] p-4">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <p className="text-xs uppercase tracking-[0.14em] text-[#aeb5e5]">{block.type}</p>
                     <div className="flex items-center gap-2">
@@ -940,24 +986,22 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
                     ) : null}
                   </div>
                 </article>
-              ))}
-            </div>
-
-            <div className="mt-4 flex flex-wrap gap-2">
-              {BLOCK_TYPES.map((blockType) => (
-                <button
-                  key={`bottom-${blockType.type}`}
-                  type="button"
-                  onClick={() =>
-                    setForm((prev) => ({
-                      ...prev,
-                      content: [...prev.content, createBlock(blockType.type)],
-                    }))
-                  }
-                  className="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white hover:bg-white/20"
-                >
-                  + {blockType.label}
-                </button>
+                <div className="rounded-2xl border border-white/15 bg-[#0f1328] p-3">
+                  <p className="text-xs uppercase tracking-[0.13em] text-[#aeb5e5]">Insert After This Block</p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {BLOCK_TYPES.map((blockType) => (
+                      <button
+                        key={`after-${index}-${blockType.type}`}
+                        type="button"
+                        onClick={() => insertBlockAt(index + 1, blockType.type)}
+                        className="rounded-full border border-[#8f7bff]/45 bg-[#8f7bff]/15 px-3 py-1.5 text-xs font-semibold text-[#efe9ff] hover:bg-[#8f7bff]/25"
+                      >
+                        + {blockType.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                </div>
               ))}
             </div>
           </section>

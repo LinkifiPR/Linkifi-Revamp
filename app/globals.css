@@ -1815,3 +1815,27 @@ img[src$=".svg"].publication-logo {
 .cms-richtext a:hover {
   color: #4a3da8;
 }
+
+.cms-richtext-editor {
+  color: #eef2ff;
+  caret-color: #e7ebff;
+}
+
+.cms-richtext-editor h2,
+.cms-richtext-editor h3,
+.cms-richtext-editor h4 {
+  color: #fbfcff;
+}
+
+.cms-richtext-editor p,
+.cms-richtext-editor ul,
+.cms-richtext-editor ol,
+.cms-richtext-editor blockquote,
+.cms-richtext-editor li {
+  color: #eef2ff;
+}
+
+.cms-richtext-editor a {
+  color: #9f8eff;
+  font-weight: 700;
+}

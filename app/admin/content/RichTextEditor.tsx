@@ -1,5 +1,6 @@
 "use client";
 
+import type { ClipboardEvent } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 type Props = {
@@ -9,6 +10,150 @@ type Props = {
 
 function escapeForPreview(value: string): string {
   return value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+const ALLOWED_TAGS = new Set([
+  "p",
+  "br",
+  "h2",
+  "h3",
+  "h4",
+  "ul",
+  "ol",
+  "li",
+  "blockquote",
+  "strong",
+  "b",
+  "em",
+  "i",
+  "u",
+  "a",
+]);
+
+const BLOCK_CONTAINER_TAGS = new Set(["p", "h2", "h3", "h4", "blockquote", "ul", "ol", "li"]);
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function normalizeHref(rawHref: string): string {
+  const href = rawHref.trim();
+  if (!href) {
+    return "";
+  }
+
+  const allowedPrefixes = ["http://", "https://", "mailto:", "tel:", "/", "#"];
+  const matchesAllowedPrefix = allowedPrefixes.some((prefix) => href.startsWith(prefix));
+  return matchesAllowedPrefix ? href : "";
+}
+
+function plainTextToHtml(value: string): string {
+  const normalized = value.replace(/\r\n/g, "\n").trim();
+  if (!normalized) {
+    return "<p><br></p>";
+  }
+
+  return normalized
+    .split(/\n{2,}/)
+    .map((paragraph) => {
+      const withLineBreaks = paragraph
+        .split("\n")
+        .map((line) => escapeHtml(line))
+        .join("<br>");
+      return `<p>${withLineBreaks || "<br>"}</p>`;
+    })
+    .join("");
+}
+
+function sanitizeElementNode(node: Node, outputDocument: Document): Node[] {
+  if (node.nodeType === Node.TEXT_NODE) {
+    const value = node.textContent ?? "";
+    return value ? [outputDocument.createTextNode(value)] : [];
+  }
+
+  if (node.nodeType !== Node.ELEMENT_NODE) {
+    return [];
+  }
+
+  const sourceElement = node as HTMLElement;
+  const tagName = sourceElement.tagName.toLowerCase();
+
+  const childNodes = Array.from(sourceElement.childNodes).flatMap((child) =>
+    sanitizeElementNode(child, outputDocument),
+  );
+
+  if (!ALLOWED_TAGS.has(tagName)) {
+    return childNodes;
+  }
+
+  const safeElement = outputDocument.createElement(tagName);
+
+  if (tagName === "a") {
+    const href = normalizeHref(sourceElement.getAttribute("href") || "");
+    if (!href) {
+      return childNodes;
+    }
+
+    safeElement.setAttribute("href", href);
+
+    const target = sourceElement.getAttribute("target");
+    if (target === "_blank") {
+      safeElement.setAttribute("target", "_blank");
+    }
+
+    const relSet = new Set<string>();
+    const sourceRel = (sourceElement.getAttribute("rel") || "")
+      .split(/\s+/)
+      .map((item) => item.trim().toLowerCase())
+      .filter(Boolean);
+
+    for (const token of sourceRel) {
+      if (token === "nofollow" || token === "sponsored" || token === "ugc") {
+        relSet.add(token);
+      }
+    }
+
+    if (target === "_blank") {
+      relSet.add("noopener");
+      relSet.add("noreferrer");
+    }
+
+    if (relSet.size > 0) {
+      safeElement.setAttribute("rel", Array.from(relSet).join(" "));
+    }
+  }
+
+  for (const child of childNodes) {
+    safeElement.appendChild(child);
+  }
+
+  if (BLOCK_CONTAINER_TAGS.has(tagName) && safeElement.childNodes.length === 0) {
+    safeElement.appendChild(outputDocument.createElement("br"));
+  }
+
+  return [safeElement];
+}
+
+function sanitizeClipboardHtml(value: string): string {
+  const parser = new DOMParser();
+  const parsed = parser.parseFromString(value, "text/html");
+  const outputDocument = document.implementation.createHTMLDocument("sanitized");
+  const container = outputDocument.createElement("div");
+
+  for (const node of Array.from(parsed.body.childNodes)) {
+    const safeNodes = sanitizeElementNode(node, outputDocument);
+    for (const safeNode of safeNodes) {
+      container.appendChild(safeNode);
+    }
+  }
+
+  const html = container.innerHTML.trim();
+  return html || "<p><br></p>";
 }
 
 export default function RichTextEditor({ value, onChange }: Props) {
@@ -134,6 +279,20 @@ export default function RichTextEditor({ value, onChange }: Props) {
     closeLinkControls();
   }
 
+  function handlePaste(event: ClipboardEvent<HTMLDivElement>) {
+    event.preventDefault();
+
+    const clipboardHtml = event.clipboardData.getData("text/html");
+    const clipboardText = event.clipboardData.getData("text/plain");
+    const sanitizedHtml = clipboardHtml
+      ? sanitizeClipboardHtml(clipboardHtml)
+      : plainTextToHtml(clipboardText);
+
+    focusEditor();
+    document.execCommand("insertHTML", false, sanitizedHtml);
+    syncContent();
+  }
+
   return (
     <div className="rounded-2xl border border-white/15 bg-[#0f1328] p-4">
       <div className="flex flex-wrap gap-2 border-b border-white/10 pb-3">
@@ -252,7 +411,8 @@ export default function RichTextEditor({ value, onChange }: Props) {
         suppressContentEditableWarning
         onInput={syncContent}
         onBlur={captureSelection}
-        className="cms-richtext mt-3 min-h-[280px] rounded-xl border border-white/15 bg-[#10152e] px-4 py-3 text-white outline-none focus:border-[#8f7bff]/70"
+        onPaste={handlePaste}
+        className="cms-richtext cms-richtext-editor mt-3 min-h-[320px] rounded-xl border border-white/20 bg-[#0e1431] px-5 py-4 text-[#f2f4ff] outline-none focus:border-[#8f7bff]/70 focus:ring-2 focus:ring-[#8f7bff]/20"
       />
 
       <p className="mt-3 text-xs text-[#8f95be]">
