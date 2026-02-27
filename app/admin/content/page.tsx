@@ -83,6 +83,12 @@ export default async function AdminContentPage() {
                 {entries.map((entry) => {
                   const previewBase =
                     entry.type === "blog"
+                      ? "/admin/preview/blog"
+                      : entry.type === "case-study"
+                        ? "/admin/preview/case-studies"
+                        : "/admin/preview/pages";
+                  const liveBase =
+                    entry.type === "blog"
                       ? "/blog"
                       : entry.type === "case-study"
                         ? "/case-studies"
@@ -122,6 +128,15 @@ export default async function AdminContentPage() {
                           >
                             Preview
                           </Link>
+                          {entry.status === "published" ? (
+                            <Link
+                              href={`${liveBase}/${entry.slug}`}
+                              target="_blank"
+                              className="rounded-full border border-[#2a8f5f]/45 bg-[#2a8f5f]/20 px-3 py-1 text-xs text-[#c9ffdf] hover:bg-[#2a8f5f]/30"
+                            >
+                              Live
+                            </Link>
+                          ) : null}
                         </div>
                       </td>
                     </tr>

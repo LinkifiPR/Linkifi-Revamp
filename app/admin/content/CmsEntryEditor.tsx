@@ -91,14 +91,14 @@ function buildPreviewPath(type: CmsEntryInput["type"], slug: string): string {
   }
 
   if (type === "blog") {
-    return `/blog/${cleanedSlug}`;
+    return `/admin/preview/blog/${cleanedSlug}`;
   }
 
   if (type === "case-study") {
-    return `/case-studies/${cleanedSlug}`;
+    return `/admin/preview/case-studies/${cleanedSlug}`;
   }
 
-  return `/pages/${cleanedSlug}`;
+  return `/admin/preview/pages/${cleanedSlug}`;
 }
 
 function toDateInputValue(value: string): string {
