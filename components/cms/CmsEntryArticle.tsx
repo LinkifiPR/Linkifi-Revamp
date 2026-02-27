@@ -1,14 +1,66 @@
 import type { CmsEntry } from "@/lib/cms-types";
 import { buildTocFromBlocks, renderCmsBodyHtml } from "@/lib/cms-render";
-import { CmsBlocksRenderer } from "@/components/cms/CmsBlocksRenderer";
+import { CmsBlocksRenderer, renderCmsBlock } from "@/components/cms/CmsBlocksRenderer";
 import { CmsTableOfContents } from "@/components/cms/CmsTableOfContents";
 
 type Props = {
   entry: CmsEntry;
 };
 
+type InlinePart =
+  | { kind: "html"; html: string }
+  | { kind: "block"; blockId: string };
+
+function splitInlineBody(html: string): InlinePart[] {
+  const parts: InlinePart[] = [];
+  const tokenRegex =
+    /<p[^>]*>\s*(<span[^>]*data-cms-block-id=["']([^"']+)["'][^>]*>[\s\S]*?<\/span>)\s*<\/p>(?:\s*<p>\s*(?:<br\s*\/?>)?\s*<\/p>)?|<span[^>]*data-cms-block-id=["']([^"']+)["'][^>]*>[\s\S]*?<\/span>/gi;
+  let cursor = 0;
+  let match: RegExpExecArray | null = tokenRegex.exec(html);
+
+  while (match) {
+    const [tokenHtml] = match;
+    const blockId = match[2] || match[3];
+    const tokenStart = match.index;
+    const tokenEnd = tokenStart + tokenHtml.length;
+
+    if (!blockId) {
+      cursor = tokenEnd;
+      match = tokenRegex.exec(html);
+      continue;
+    }
+
+    const htmlBefore = html.slice(cursor, tokenStart);
+
+    if (htmlBefore.trim()) {
+      parts.push({ kind: "html", html: htmlBefore });
+    }
+
+    parts.push({ kind: "block", blockId });
+    cursor = tokenEnd;
+    match = tokenRegex.exec(html);
+  }
+
+  const trailingHtml = html.slice(cursor);
+  if (trailingHtml.trim()) {
+    parts.push({ kind: "html", html: trailingHtml });
+  }
+
+  return parts;
+}
+
 export function CmsEntryArticle({ entry }: Props) {
   const bodyRender = renderCmsBodyHtml(entry.bodyHtml || "");
+  const inlineParts = splitInlineBody(bodyRender.html);
+  const inlineBlockIds = new Set(
+    inlineParts.filter((part): part is { kind: "block"; blockId: string } => part.kind === "block").map((part) => part.blockId),
+  );
+  const contentById = new Map(
+    entry.content
+      .filter((block) => typeof block.id === "string" && block.id.length > 0)
+      .map((block) => [block.id as string, block]),
+  );
+  const remainingBlocks = entry.content.filter((block) => !block.id || !inlineBlockIds.has(block.id));
   const toc = [...bodyRender.toc, ...buildTocFromBlocks(entry.content)];
 
   return (
@@ -34,15 +86,36 @@ export function CmsEntryArticle({ entry }: Props) {
 
           <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px]">
             <section className="rounded-3xl border border-[#d9d7f5] bg-white px-6 py-8 md:px-10 md:py-10 shadow-[0_14px_38px_rgba(32,26,90,0.07)]">
-              {bodyRender.html ? (
+              {inlineParts.length > 0 ? (
+                <div className="space-y-8">
+                  {inlineParts.map((part, index) => {
+                    if (part.kind === "html") {
+                      return (
+                        <section
+                          key={`html-${index}`}
+                          className="cms-richtext"
+                          dangerouslySetInnerHTML={{ __html: part.html }}
+                        />
+                      );
+                    }
+
+                    const block = contentById.get(part.blockId);
+                    if (!block) {
+                      return null;
+                    }
+
+                    return <div key={`block-${part.blockId}`}>{renderCmsBlock(block, index)}</div>;
+                  })}
+                </div>
+              ) : bodyRender.html ? (
                 <section
                   className="cms-richtext"
                   dangerouslySetInnerHTML={{ __html: bodyRender.html }}
                 />
               ) : null}
-              {entry.content.length > 0 ? (
-                <div className={bodyRender.html ? "mt-8" : ""}>
-                  <CmsBlocksRenderer blocks={entry.content} />
+              {remainingBlocks.length > 0 ? (
+                <div className={bodyRender.html || inlineParts.length > 0 ? "mt-8" : ""}>
+                  <CmsBlocksRenderer blocks={remainingBlocks} />
                 </div>
               ) : null}
             </section>

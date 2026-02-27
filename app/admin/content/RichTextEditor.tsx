@@ -1,11 +1,18 @@
 "use client";
 
-import type { ClipboardEvent } from "react";
+import type { ClipboardEvent, MouseEvent } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 type Props = {
   value: string;
   onChange: (nextValue: string) => void;
+  onInsertStructuredBlock?: (type: "image" | "faq" | "table") => {
+    id: string;
+    type: "image" | "faq" | "table";
+    label: string;
+  } | null;
+  onSelectStructuredBlock?: (blockId: string | null) => void;
+  selectedStructuredBlockId?: string | null;
 };
 
 function escapeForPreview(value: string): string {
@@ -50,6 +57,25 @@ function normalizeHref(rawHref: string): string {
   const allowedPrefixes = ["http://", "https://", "mailto:", "tel:", "/", "#"];
   const matchesAllowedPrefix = allowedPrefixes.some((prefix) => href.startsWith(prefix));
   return matchesAllowedPrefix ? href : "";
+}
+
+function escapeAttribute(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function buildStructuredTokenHtml(token: { id: string; type: "image" | "faq" | "table"; label: string }): string {
+  const safeId = escapeAttribute(token.id);
+  const safeType = escapeAttribute(token.type);
+  const safeLabel = escapeHtml(token.label);
+
+  return [
+    `<p><span data-cms-block-id="${safeId}" data-cms-block-type="${safeType}" contenteditable="false" class="cms-inline-block-token">${safeLabel}</span></p>`,
+    "<p><br></p>",
+  ].join("");
 }
 
 function plainTextToHtml(value: string): string {
@@ -156,7 +182,13 @@ function sanitizeClipboardHtml(value: string): string {
   return html || "<p><br></p>";
 }
 
-export default function RichTextEditor({ value, onChange }: Props) {
+export default function RichTextEditor({
+  value,
+  onChange,
+  onInsertStructuredBlock,
+  onSelectStructuredBlock,
+  selectedStructuredBlockId,
+}: Props) {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const selectionRef = useRef<Range | null>(null);
 
@@ -175,6 +207,25 @@ export default function RichTextEditor({ value, onChange }: Props) {
       editorRef.current.innerHTML = value || "<p><br></p>";
     }
   }, [value]);
+
+  useEffect(() => {
+    if (!editorRef.current) {
+      return;
+    }
+
+    const tokenElements = Array.from(
+      editorRef.current.querySelectorAll<HTMLElement>("[data-cms-block-id]"),
+    );
+
+    for (const tokenElement of tokenElements) {
+      const tokenId = tokenElement.getAttribute("data-cms-block-id");
+      if (selectedStructuredBlockId && tokenId === selectedStructuredBlockId) {
+        tokenElement.setAttribute("data-selected", "true");
+      } else {
+        tokenElement.removeAttribute("data-selected");
+      }
+    }
+  }, [selectedStructuredBlockId, value]);
 
   const plainPreview = useMemo(() => {
     if (!value) {
@@ -293,6 +344,40 @@ export default function RichTextEditor({ value, onChange }: Props) {
     syncContent();
   }
 
+  function insertStructuredBlock(type: "image" | "faq" | "table") {
+    if (!onInsertStructuredBlock) {
+      return;
+    }
+
+    const token = onInsertStructuredBlock(type);
+    if (!token) {
+      return;
+    }
+
+    focusEditor();
+    const tokenHtml = buildStructuredTokenHtml(token);
+    document.execCommand("insertHTML", false, tokenHtml);
+    syncContent();
+    onSelectStructuredBlock?.(token.id);
+  }
+
+  function handleEditorClick(event: MouseEvent<HTMLDivElement>) {
+    const clickTarget =
+      event.target instanceof Element
+        ? event.target
+        : event.target instanceof Node
+          ? event.target.parentElement
+          : null;
+    const tokenElement = clickTarget?.closest("[data-cms-block-id]");
+
+    if (tokenElement instanceof HTMLElement) {
+      onSelectStructuredBlock?.(tokenElement.getAttribute("data-cms-block-id"));
+      return;
+    }
+
+    onSelectStructuredBlock?.(null);
+  }
+
   return (
     <div className="rounded-2xl border border-white/15 bg-[#0f1328] p-4">
       <div className="flex flex-wrap gap-2 border-b border-white/10 pb-3">
@@ -344,6 +429,27 @@ export default function RichTextEditor({ value, onChange }: Props) {
           className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-white hover:bg-white/10"
         >
           Unlink
+        </button>
+        <button
+          type="button"
+          onClick={() => insertStructuredBlock("image")}
+          className="rounded-full border border-[#8f7bff]/45 bg-[#8f7bff]/15 px-3 py-1 text-xs font-semibold text-white hover:bg-[#8f7bff]/25"
+        >
+          + Image
+        </button>
+        <button
+          type="button"
+          onClick={() => insertStructuredBlock("faq")}
+          className="rounded-full border border-[#8f7bff]/45 bg-[#8f7bff]/15 px-3 py-1 text-xs font-semibold text-white hover:bg-[#8f7bff]/25"
+        >
+          + FAQ
+        </button>
+        <button
+          type="button"
+          onClick={() => insertStructuredBlock("table")}
+          className="rounded-full border border-[#8f7bff]/45 bg-[#8f7bff]/15 px-3 py-1 text-xs font-semibold text-white hover:bg-[#8f7bff]/25"
+        >
+          + Table
         </button>
       </div>
 
@@ -412,6 +518,7 @@ export default function RichTextEditor({ value, onChange }: Props) {
         onInput={syncContent}
         onBlur={captureSelection}
         onPaste={handlePaste}
+        onClick={handleEditorClick}
         className="cms-richtext cms-richtext-editor mt-3 min-h-[320px] rounded-xl border border-white/20 bg-[#0e1431] px-5 py-4 text-[#f2f4ff] outline-none focus:border-[#8f7bff]/70 focus:ring-2 focus:ring-[#8f7bff]/20"
       />
 
