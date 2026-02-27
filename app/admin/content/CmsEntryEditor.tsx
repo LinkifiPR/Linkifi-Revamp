@@ -415,6 +415,7 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
                 >
                   <option value="draft">Draft</option>
                   <option value="published">Published</option>
+                  <option value="archived">Archived</option>
                 </select>
               </label>
 

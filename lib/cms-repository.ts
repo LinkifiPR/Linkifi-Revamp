@@ -12,6 +12,8 @@ import {
   type CmsEntryType,
   type CmsMedia,
   type CmsStatus,
+  type CmsSortBy,
+  type CmsSortOrder,
 } from "@/lib/cms-types";
 
 type CmsEntryRow = {
@@ -83,7 +85,7 @@ async function ensureSchema(): Promise<void> {
           CREATE TABLE IF NOT EXISTS cms_entries (
             id TEXT PRIMARY KEY,
             type TEXT NOT NULL CHECK (type IN ('blog', 'case-study', 'page')),
-            status TEXT NOT NULL CHECK (status IN ('draft', 'published')),
+            status TEXT NOT NULL CHECK (status IN ('draft', 'published', 'archived')),
             title TEXT NOT NULL,
             slug TEXT NOT NULL,
             excerpt TEXT NOT NULL DEFAULT '',
@@ -111,6 +113,30 @@ async function ensureSchema(): Promise<void> {
           ALTER TABLE cms_entries
           ADD COLUMN IF NOT EXISTS body_html TEXT NOT NULL DEFAULT '';
         `);
+
+        await client.query(`
+          DO $$
+          DECLARE
+            constraint_name text;
+          BEGIN
+            SELECT conname INTO constraint_name
+            FROM pg_constraint
+            WHERE conrelid = 'cms_entries'::regclass
+              AND contype = 'c'
+              AND pg_get_constraintdef(oid) ILIKE '%status%';
+
+            IF constraint_name IS NOT NULL THEN
+              EXECUTE format('ALTER TABLE cms_entries DROP CONSTRAINT %I', constraint_name);
+            END IF;
+          END
+          $$;
+        `);
+
+        await client.query(`
+          ALTER TABLE cms_entries
+          ADD CONSTRAINT cms_entries_status_check
+          CHECK (status IN ('draft', 'published', 'archived'));
+        `).catch(() => undefined);
 
         await client.query(`
           CREATE TABLE IF NOT EXISTS cms_media (
@@ -177,6 +203,10 @@ function mapListRow(row: CmsEntryRow): CmsEntryListItem {
     title: mapped.title,
     slug: mapped.slug,
     excerpt: mapped.excerpt,
+    seoTitle: mapped.seoTitle,
+    seoDescription: mapped.seoDescription,
+    canonicalUrl: mapped.canonicalUrl,
+    noindex: mapped.noindex,
     publishedAt: mapped.publishedAt,
     createdAt: mapped.createdAt,
     updatedAt: mapped.updatedAt,
@@ -264,6 +294,20 @@ export async function listCmsEntries(rawQuery: unknown = {}): Promise<CmsEntryLi
   const whereSql = whereClauses.length > 0 ? `WHERE ${whereClauses.join(" AND ")}` : "";
   const limit = query.limit ?? 50;
   const offset = query.offset ?? 0;
+  const sortBy: CmsSortBy = query.sortBy ?? "updatedAt";
+  const sortOrder: CmsSortOrder = query.sortOrder ?? "desc";
+
+  const sortColumns: Record<CmsSortBy, string> = {
+    updatedAt: "updated_at",
+    createdAt: "created_at",
+    title: "title",
+    status: "status",
+    type: "type",
+    publishedAt: "published_at",
+  };
+  const orderColumn = sortColumns[sortBy];
+  const orderDirection = sortOrder === "asc" ? "ASC" : "DESC";
+  const nullOrder = sortBy === "publishedAt" ? "NULLS LAST" : "";
 
   values.push(limit);
   values.push(offset);
@@ -273,7 +317,7 @@ export async function listCmsEntries(rawQuery: unknown = {}): Promise<CmsEntryLi
            seo_title, seo_description, canonical_url, noindex, published_at, created_at, updated_at
     FROM cms_entries
     ${whereSql}
-    ORDER BY COALESCE(published_at, updated_at) DESC, updated_at DESC
+    ORDER BY ${orderColumn} ${orderDirection} ${nullOrder}, updated_at DESC
     LIMIT $${values.length - 1}
     OFFSET $${values.length}
   `;
@@ -468,6 +512,7 @@ export async function getCmsStats(): Promise<{
   total: number;
   published: number;
   drafts: number;
+  archived: number;
   blog: number;
   caseStudy: number;
   page: number;
@@ -477,6 +522,7 @@ export async function getCmsStats(): Promise<{
     total: string;
     published: string;
     drafts: string;
+    archived: string;
     blog: string;
     case_study: string;
     page: string;
@@ -485,6 +531,7 @@ export async function getCmsStats(): Promise<{
       COUNT(*)::text AS total,
       COUNT(*) FILTER (WHERE status = 'published')::text AS published,
       COUNT(*) FILTER (WHERE status = 'draft')::text AS drafts,
+      COUNT(*) FILTER (WHERE status = 'archived')::text AS archived,
       COUNT(*) FILTER (WHERE type = 'blog')::text AS blog,
       COUNT(*) FILTER (WHERE type = 'case-study')::text AS case_study,
       COUNT(*) FILTER (WHERE type = 'page')::text AS page
@@ -496,6 +543,7 @@ export async function getCmsStats(): Promise<{
     total: Number(row?.total ?? 0),
     published: Number(row?.published ?? 0),
     drafts: Number(row?.drafts ?? 0),
+    archived: Number(row?.archived ?? 0),
     blog: Number(row?.blog ?? 0),
     caseStudy: Number(row?.case_study ?? 0),
     page: Number(row?.page ?? 0),

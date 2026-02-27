@@ -38,6 +38,8 @@ export async function GET(request: NextRequest) {
       search: params.get("search") ?? undefined,
       limit: params.get("limit") ?? undefined,
       offset: params.get("offset") ?? undefined,
+      sortBy: params.get("sortBy") ?? undefined,
+      sortOrder: params.get("sortOrder") ?? undefined,
     });
 
     return NextResponse.json({ entries: result });

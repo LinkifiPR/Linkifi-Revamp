@@ -17,13 +17,13 @@ const cmsModules = [
     title: "Media Library",
     description: "Upload images into CMS storage and reuse stable `/api/media/...` links.",
     status: "Live",
-    href: "/admin/content/new",
+    href: "/admin/media",
   },
   {
     title: "SEO Controls",
     description: "Set per-entry metadata, canonical URLs, noindex, and schema-friendly blocks.",
     status: "Live",
-    href: "/admin/content",
+    href: "/admin/seo",
   },
 ] as const;
 
@@ -40,6 +40,7 @@ export default async function AdminPage() {
     total: 0,
     published: 0,
     drafts: 0,
+    archived: 0,
     blog: 0,
     caseStudy: 0,
     page: 0,
@@ -92,7 +93,7 @@ export default async function AdminPage() {
           </p>
         ) : null}
 
-        <section className="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-6">
+        <section className="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-7">
           <article className="rounded-2xl border border-white/15 bg-white/5 p-4">
             <p className="text-xs uppercase tracking-[0.14em] text-[#aeb5e5]">Total</p>
             <p className="mt-2 text-2xl font-semibold">{stats.total}</p>
@@ -104,6 +105,10 @@ export default async function AdminPage() {
           <article className="rounded-2xl border border-white/15 bg-white/5 p-4">
             <p className="text-xs uppercase tracking-[0.14em] text-[#aeb5e5]">Drafts</p>
             <p className="mt-2 text-2xl font-semibold text-[#ffe29d]">{stats.drafts}</p>
+          </article>
+          <article className="rounded-2xl border border-white/15 bg-white/5 p-4">
+            <p className="text-xs uppercase tracking-[0.14em] text-[#aeb5e5]">Archived</p>
+            <p className="mt-2 text-2xl font-semibold text-[#f7b2d0]">{stats.archived}</p>
           </article>
           <article className="rounded-2xl border border-white/15 bg-white/5 p-4">
             <p className="text-xs uppercase tracking-[0.14em] text-[#aeb5e5]">Blog</p>

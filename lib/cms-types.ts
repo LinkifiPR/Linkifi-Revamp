@@ -1,7 +1,9 @@
 import { z } from "zod";
 
 export const cmsEntryTypeSchema = z.enum(["blog", "case-study", "page"]);
-export const cmsStatusSchema = z.enum(["draft", "published"]);
+export const cmsStatusSchema = z.enum(["draft", "published", "archived"]);
+export const cmsSortBySchema = z.enum(["updatedAt", "createdAt", "title", "status", "type", "publishedAt"]);
+export const cmsSortOrderSchema = z.enum(["asc", "desc"]);
 
 export const cmsHeadingBlockSchema = z.object({
   type: z.literal("heading"),
@@ -88,6 +90,8 @@ export const cmsEntryQuerySchema = z.object({
   search: z.string().optional(),
   limit: z.coerce.number().int().min(1).max(500).optional(),
   offset: z.coerce.number().int().min(0).optional(),
+  sortBy: cmsSortBySchema.optional(),
+  sortOrder: cmsSortOrderSchema.optional(),
 });
 
 export const cmsMediaUploadSchema = z.object({
@@ -99,6 +103,8 @@ export const cmsMediaUploadSchema = z.object({
 
 export type CmsEntryType = z.infer<typeof cmsEntryTypeSchema>;
 export type CmsStatus = z.infer<typeof cmsStatusSchema>;
+export type CmsSortBy = z.infer<typeof cmsSortBySchema>;
+export type CmsSortOrder = z.infer<typeof cmsSortOrderSchema>;
 export type CmsBlock = z.infer<typeof cmsBlockSchema>;
 export type CmsEntryInput = z.infer<typeof cmsEntryInputSchema>;
 export type CmsEntryPatch = z.infer<typeof cmsEntryPatchSchema>;
@@ -125,7 +131,19 @@ export type CmsEntry = {
 
 export type CmsEntryListItem = Pick<
   CmsEntry,
-  "id" | "type" | "status" | "title" | "slug" | "excerpt" | "publishedAt" | "createdAt" | "updatedAt"
+  | "id"
+  | "type"
+  | "status"
+  | "title"
+  | "slug"
+  | "excerpt"
+  | "seoTitle"
+  | "seoDescription"
+  | "canonicalUrl"
+  | "noindex"
+  | "publishedAt"
+  | "createdAt"
+  | "updatedAt"
 >;
 
 export type CmsMedia = {
