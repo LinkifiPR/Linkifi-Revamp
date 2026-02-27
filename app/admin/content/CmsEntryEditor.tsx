@@ -29,12 +29,7 @@ function makeDefaultInput(): CmsEntryInput {
     title: "",
     slug: "",
     excerpt: "",
-    content: [
-      {
-        type: "paragraph",
-        text: "",
-      },
-    ],
+    content: [],
     featuredImageUrl: "",
     featuredImageAlt: "",
     seoTitle: "",
@@ -183,6 +178,7 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [uploadingIndex, setUploadingIndex] = useState<number | null>(null);
+  const [uploadingFeatured, setUploadingFeatured] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -254,6 +250,41 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
       setError(uploadError instanceof Error ? uploadError.message : "Upload failed.");
     } finally {
       setUploadingIndex(null);
+    }
+  }
+
+  async function uploadFeaturedImage(file: File) {
+    setUploadingFeatured(true);
+    setError("");
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      if (form.featuredImageAlt) {
+        formData.append("alt", form.featuredImageAlt);
+      }
+
+      const response = await fetch("/api/admin/media/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const payload = (await response.json()) as { error?: string; url?: string };
+
+      if (!response.ok || !payload.url) {
+        throw new Error(payload.error || "Upload failed.");
+      }
+
+      setForm((prev) => ({
+        ...prev,
+        featuredImageUrl: payload.url || prev.featuredImageUrl,
+        featuredImageAlt: prev.featuredImageAlt || file.name,
+      }));
+      setSuccess("Featured image uploaded.");
+    } catch (uploadError) {
+      setError(uploadError instanceof Error ? uploadError.message : "Upload failed.");
+    } finally {
+      setUploadingFeatured(false);
     }
   }
 
@@ -441,6 +472,22 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
                   placeholder="https://... or /api/media/..."
                   className="w-full rounded-xl border border-white/20 bg-[#11142a] px-3 py-2 text-white"
                 />
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(event) => {
+                    const file = event.target.files?.[0];
+                    if (file) {
+                      void uploadFeaturedImage(file);
+                    }
+                  }}
+                  className="mt-2 w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white file:mr-3 file:rounded-lg file:border-0 file:bg-[#5A4DBF] file:px-3 file:py-1.5 file:text-white"
+                />
+                <p className="text-xs text-[#8f95be]">
+                  {uploadingFeatured
+                    ? "Uploading featured image..."
+                    : "Upload stores image in CMS DB and fills the URL automatically."}
+                </p>
               </label>
 
               <label className="space-y-1.5 text-sm">

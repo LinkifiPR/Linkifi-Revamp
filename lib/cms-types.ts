@@ -6,25 +6,25 @@ export const cmsStatusSchema = z.enum(["draft", "published"]);
 export const cmsHeadingBlockSchema = z.object({
   type: z.literal("heading"),
   level: z.number().int().min(2).max(4),
-  text: z.string().min(1),
+  text: z.string().default(""),
 });
 
 export const cmsParagraphBlockSchema = z.object({
   type: z.literal("paragraph"),
-  text: z.string().min(1),
+  text: z.string().default(""),
 });
 
 export const cmsImageBlockSchema = z.object({
   type: z.literal("image"),
-  src: z.string().min(1),
-  alt: z.string().min(1),
+  src: z.string().default(""),
+  alt: z.string().default(""),
   caption: z.string().optional().default(""),
 });
 
 export const cmsFaqBlockSchema = z.object({
   type: z.literal("faq"),
-  question: z.string().min(1),
-  answer: z.string().min(1),
+  question: z.string().default(""),
+  answer: z.string().default(""),
 });
 
 export const cmsTableBlockSchema = z.object({
@@ -36,14 +36,14 @@ export const cmsTableBlockSchema = z.object({
 
 export const cmsQuoteBlockSchema = z.object({
   type: z.literal("quote"),
-  text: z.string().min(1),
+  text: z.string().default(""),
   cite: z.string().optional().default(""),
 });
 
 export const cmsListBlockSchema = z.object({
   type: z.literal("list"),
   ordered: z.boolean().default(false),
-  items: z.array(z.string().min(1)).min(1),
+  items: z.array(z.string()).min(1),
 });
 
 export const cmsBlockSchema = z.union([
@@ -85,7 +85,7 @@ export const cmsEntryQuerySchema = z.object({
   type: cmsEntryTypeSchema.optional(),
   status: cmsStatusSchema.optional(),
   search: z.string().optional(),
-  limit: z.coerce.number().int().min(1).max(100).optional(),
+  limit: z.coerce.number().int().min(1).max(500).optional(),
   offset: z.coerce.number().int().min(0).optional(),
 });
 

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { ZodError } from "zod";
 import { requireAdminSession } from "@/lib/cms-admin";
 import { listCmsEntries } from "@/lib/cms-repository";
 
@@ -25,7 +26,11 @@ export default async function AdminContentPage() {
   try {
     entries = await listCmsEntries({ limit: 200 });
   } catch (error) {
-    listError = error instanceof Error ? error.message : "Could not load content list.";
+    if (error instanceof ZodError) {
+      listError = error.issues[0]?.message ?? "Could not load content list.";
+    } else {
+      listError = error instanceof Error ? error.message : "Could not load content list.";
+    }
     entries = [];
   }
 
