@@ -9,8 +9,11 @@ import {
   BarChart3,
   Boxes,
   CheckCircle2,
+  Fingerprint,
   Menu,
   Megaphone,
+  MessageCircle,
+  Play,
   Sparkles,
   Trophy,
   X,
@@ -242,6 +245,27 @@ export default function Home() {
       outcomeSubtext: "Builds reputation, visibility, and influence over time.",
       ctaLabel: "Discuss Authority PR",
       tone: "authority",
+    },
+  ] as const;
+
+  const videoTestimonials = [
+    {
+      name: "Daniel Glazer",
+      company: "UK Therapy Rooms",
+      role: "Co-Founder",
+      src: "/testimonials/videos/daniel-v1-720p.mp4",
+    },
+    {
+      name: "Joy Aumann",
+      company: "LUXURYSOCALREALTY",
+      role: "Co-Founder",
+      src: "/testimonials/videos/joy-v1-720p.mp4",
+    },
+    {
+      name: "Amanda Leemis",
+      company: "Hollydog LLC",
+      role: "Editor-In-Chief",
+      src: "/testimonials/videos/amanda-v1-720p.mp4",
     },
   ] as const;
 
@@ -1173,6 +1197,78 @@ export default function Home() {
                   </div>
                 </motion.article>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Video Testimonials Section */}
+        <section className="container mx-auto px-6 mb-32">
+          <div className="video-testimonials-shell relative overflow-hidden rounded-[34px] md:rounded-[42px] px-6 py-12 md:px-10 md:py-14">
+            <div className="video-testimonials-orb absolute -left-12 top-16 h-44 w-44 rounded-full blur-3xl" />
+            <div className="video-testimonials-orb video-testimonials-orb-delayed absolute right-8 top-6 h-52 w-52 rounded-full blur-3xl" />
+            <div className="video-testimonials-orb absolute left-1/2 bottom-0 h-48 w-48 -translate-x-1/2 rounded-full blur-3xl" />
+
+            <div className="video-side-badge hidden lg:flex absolute left-6 top-1/2 -translate-y-1/2">
+              <MessageCircle className="h-5 w-5 text-white" />
+            </div>
+            <div className="video-side-badge video-side-badge-alt hidden lg:flex absolute left-10 bottom-8">
+              <Fingerprint className="h-5 w-5 text-white" />
+            </div>
+
+            <div className="relative z-10">
+              <h2 className="text-center text-4xl md:text-6xl font-display font-bold text-white tracking-tight">
+                Testimonials
+              </h2>
+
+              <div className="mt-10 grid md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-7">
+                {videoTestimonials.map((item, index) => (
+                  <motion.article
+                    key={item.name}
+                    variants={fadeIn}
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: true, amount: 0.2 }}
+                    className="video-testimonial-card group relative overflow-hidden rounded-[24px] md:rounded-[26px]"
+                    style={{ animationDelay: `${index * 0.22}s` }}
+                  >
+                    <video
+                      src={item.src}
+                      className="video-testimonial-media"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                    />
+                    <div className="video-testimonial-overlay absolute inset-0" />
+                    <div className="video-testimonial-noise absolute inset-0" />
+
+                    <p className="video-testimonial-name absolute top-5 left-1/2 -translate-x-1/2">
+                      {item.name}
+                    </p>
+
+                    <div className="video-testimonial-play absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                      <Play className="h-4 w-4 text-white" />
+                    </div>
+
+                    <div className="video-testimonial-meta absolute inset-x-6 bottom-6 text-center">
+                      <p className="video-testimonial-company">{item.company}</p>
+                      <p className="video-testimonial-role">{item.role}</p>
+                    </div>
+                  </motion.article>
+                ))}
+              </div>
+
+              <div className="mt-8 flex justify-center md:justify-end">
+                <Link href="/contact-us">
+                  <Button
+                    className="video-testimonials-cta h-12 rounded-full px-7 md:px-8 text-base font-semibold bg-[#5A4DBF] hover:bg-[#4C40A6] text-white"
+                    data-testid="button-video-testimonials-contact"
+                  >
+                    Book a Call With Us
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </section>
