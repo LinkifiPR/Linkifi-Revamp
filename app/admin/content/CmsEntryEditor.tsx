@@ -13,7 +13,7 @@ type Props = {
   initialEntry?: CmsEntry;
 };
 
-type StructuredBlockType = "image" | "faq" | "table";
+type StructuredBlockType = "image" | "faq" | "table" | "stats";
 type StructuredCmsBlock = Extract<CmsBlock, { type: StructuredBlockType }> & { id: string };
 
 function makeDefaultInput(): CmsEntryInput {
@@ -75,6 +75,16 @@ function createBlock(type: StructuredBlockType): CmsBlock {
         headers: ["Column 1", "Column 2"],
         rows: [["", ""]],
       };
+    case "stats":
+      return {
+        id: makeBlockId(),
+        type: "stats",
+        items: [
+          { value: "6", label: "Premium backlinks built" },
+          { value: "13.7M", label: "Views gained" },
+          { value: "85", label: "DR Average" },
+        ],
+      };
     default:
       return { id: makeBlockId(), type: "image", src: "", alt: "", caption: "", align: "center" };
   }
@@ -131,12 +141,15 @@ function getStructuredBlockLabel(type: StructuredBlockType): string {
   if (type === "faq") {
     return "FAQ Block";
   }
-  return "Table Block";
+  if (type === "table") {
+    return "Table Block";
+  }
+  return "Figures Block";
 }
 
 function isStructuredBlock(block: CmsBlock): block is StructuredCmsBlock {
   return (
-    (block.type === "image" || block.type === "faq" || block.type === "table") &&
+    (block.type === "image" || block.type === "faq" || block.type === "table" || block.type === "stats") &&
     typeof block.id === "string" &&
     block.id.length > 0
   );
@@ -748,6 +761,11 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
                 onInsertStructuredBlock={createStructuredBlockForEditor}
                 onSelectStructuredBlock={setSelectedStructuredBlockId}
                 selectedStructuredBlockId={selectedStructuredBlockId}
+                availableInsertTypes={
+                  form.type === "case-study"
+                    ? ["image", "faq", "table", "stats"]
+                    : ["image", "faq", "table"]
+                }
                 contextPanel={
                   selectedStructuredBlock ? (
                     <div className="space-y-3 text-sm">
@@ -1020,6 +1038,72 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
                               className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white"
                             />
                           </label>
+                        </div>
+                      ) : null}
+
+                      {selectedStructuredBlock.type === "stats" ? (
+                        <div className="space-y-4">
+                          <p className="text-xs text-[#8f95be]">
+                            This inserts the fixed three-card case study figures module.
+                          </p>
+                          <div className="space-y-3">
+                            {selectedStructuredBlock.items.map((item, itemIndex) => (
+                              <div
+                                key={`stats-item-${itemIndex}`}
+                                className="rounded-xl border border-white/10 bg-white/5 p-3"
+                              >
+                                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#aeb5e5]">
+                                  Figure {itemIndex + 1}
+                                </p>
+                                <div className="mt-3 grid gap-3">
+                                  <label className="space-y-1.5 block">
+                                    <span className="text-[#d0d4f2]">Value</span>
+                                    <input
+                                      type="text"
+                                      value={item.value}
+                                      onChange={(event) =>
+                                        updateBlock(selectedStructuredBlockIndex, (current) =>
+                                          current.type === "stats"
+                                            ? {
+                                                ...current,
+                                                items: current.items.map((statsItem, statsIndex) =>
+                                                  statsIndex === itemIndex
+                                                    ? { ...statsItem, value: event.target.value }
+                                                    : statsItem,
+                                                ),
+                                              }
+                                            : current,
+                                        )
+                                      }
+                                      className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white"
+                                    />
+                                  </label>
+                                  <label className="space-y-1.5 block">
+                                    <span className="text-[#d0d4f2]">Label</span>
+                                    <input
+                                      type="text"
+                                      value={item.label}
+                                      onChange={(event) =>
+                                        updateBlock(selectedStructuredBlockIndex, (current) =>
+                                          current.type === "stats"
+                                            ? {
+                                                ...current,
+                                                items: current.items.map((statsItem, statsIndex) =>
+                                                  statsIndex === itemIndex
+                                                    ? { ...statsItem, label: event.target.value }
+                                                    : statsItem,
+                                                ),
+                                              }
+                                            : current,
+                                        )
+                                      }
+                                      className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white"
+                                    />
+                                  </label>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       ) : null}
                     </div>

@@ -3,18 +3,21 @@
 import type { ClipboardEvent, MouseEvent, ReactNode } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
+type StructuredInsertType = "image" | "faq" | "table" | "stats";
+
 type Props = {
   value: string;
   onChange: (nextValue: string) => void;
-  onInsertStructuredBlock?: (type: "image" | "faq" | "table") => {
+  onInsertStructuredBlock?: (type: StructuredInsertType) => {
     id: string;
-    type: "image" | "faq" | "table";
+    type: StructuredInsertType;
     label: string;
   } | null;
   onSelectStructuredBlock?: (blockId: string | null) => void;
   selectedStructuredBlockId?: string | null;
   contextPanel?: ReactNode;
   footerPanel?: ReactNode;
+  availableInsertTypes?: StructuredInsertType[];
 };
 
 function escapeForPreview(value: string): string {
@@ -69,7 +72,7 @@ function escapeAttribute(value: string): string {
     .replace(/>/g, "&gt;");
 }
 
-function buildStructuredTokenHtml(token: { id: string; type: "image" | "faq" | "table"; label: string }): string {
+function buildStructuredTokenHtml(token: { id: string; type: StructuredInsertType; label: string }): string {
   const safeId = escapeAttribute(token.id);
   const safeType = escapeAttribute(token.type);
   const safeLabel = escapeHtml(token.label);
@@ -192,6 +195,7 @@ export default function RichTextEditor({
   selectedStructuredBlockId,
   contextPanel,
   footerPanel,
+  availableInsertTypes = ["image", "faq", "table"],
 }: Props) {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const selectionRef = useRef<Range | null>(null);
@@ -376,7 +380,7 @@ export default function RichTextEditor({
     syncContent();
   }
 
-  function insertStructuredBlock(type: "image" | "faq" | "table") {
+  function insertStructuredBlock(type: StructuredInsertType) {
     if (!onInsertStructuredBlock) {
       return;
     }
@@ -410,6 +414,13 @@ export default function RichTextEditor({
 
     onSelectStructuredBlock?.(null);
   }
+
+  const insertButtonLabels: Record<StructuredInsertType, string> = {
+    image: "+ Image",
+    faq: "+ FAQ",
+    table: "+ Table",
+    stats: "+ Figures",
+  };
 
   return (
     <div className="rounded-2xl border border-white/15 bg-[#0f1328] p-4">
@@ -554,27 +565,16 @@ export default function RichTextEditor({
             className="h-5 w-5 cursor-pointer rounded border-0 bg-transparent p-0"
           />
         </label>
-        <button
-          type="button"
-          onClick={() => insertStructuredBlock("image")}
-          className="rounded-full border border-[#8f7bff]/45 bg-[#8f7bff]/15 px-3 py-1 text-xs font-semibold text-white hover:bg-[#8f7bff]/25"
-        >
-          + Image
-        </button>
-        <button
-          type="button"
-          onClick={() => insertStructuredBlock("faq")}
-          className="rounded-full border border-[#8f7bff]/45 bg-[#8f7bff]/15 px-3 py-1 text-xs font-semibold text-white hover:bg-[#8f7bff]/25"
-        >
-          + FAQ
-        </button>
-        <button
-          type="button"
-          onClick={() => insertStructuredBlock("table")}
-          className="rounded-full border border-[#8f7bff]/45 bg-[#8f7bff]/15 px-3 py-1 text-xs font-semibold text-white hover:bg-[#8f7bff]/25"
-        >
-          + Table
-        </button>
+        {availableInsertTypes.map((insertType) => (
+          <button
+            key={insertType}
+            type="button"
+            onClick={() => insertStructuredBlock(insertType)}
+            className="rounded-full border border-[#8f7bff]/45 bg-[#8f7bff]/15 px-3 py-1 text-xs font-semibold text-white hover:bg-[#8f7bff]/25"
+          >
+            {insertButtonLabels[insertType]}
+          </button>
+        ))}
       </div>
 
       {showLinkControls ? (

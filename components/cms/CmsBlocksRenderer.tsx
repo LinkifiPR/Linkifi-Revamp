@@ -108,6 +108,35 @@ export function renderCmsBlock(block: CmsBlock, index: number) {
     );
   }
 
+  if (block.type === "stats") {
+    return (
+      <section
+        key={`stats-${index}`}
+        className="rounded-[2rem] border border-[#171a2f] bg-[#090b14] p-4 md:p-6 shadow-[0_22px_60px_rgba(7,9,18,0.28)]"
+      >
+        <div className="grid gap-4 md:grid-cols-3">
+          {block.items.map((item, itemIndex) => (
+            <div
+              key={`stat-${itemIndex}`}
+              className="relative overflow-hidden rounded-[1.65rem] border border-white/5 bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01))] px-6 py-6"
+            >
+              <span className="absolute right-5 top-4 text-5xl font-black leading-none text-[#6b57e6]">
+                ↗
+              </span>
+              <p className="pr-12 text-5xl md:text-6xl font-display font-bold tracking-[-0.04em] text-[#6b57e6]">
+                {item.value}
+              </p>
+              <p className="mt-4 pr-12 text-sm md:text-base font-semibold uppercase tracking-[0.04em] text-white/90">
+                {item.label}
+              </p>
+              <div className="mt-6 h-px w-full bg-white/8" />
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
   if (block.type === "quote") {
     return (
       <blockquote

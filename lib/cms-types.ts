@@ -43,6 +43,17 @@ export const cmsTableBlockSchema = z.object({
   rows: z.array(z.array(z.string())).min(1),
 });
 
+export const cmsStatItemSchema = z.object({
+  value: z.string().default(""),
+  label: z.string().default(""),
+});
+
+export const cmsStatsBlockSchema = z.object({
+  id: cmsBlockIdSchema,
+  type: z.literal("stats"),
+  items: z.array(cmsStatItemSchema).length(3),
+});
+
 export const cmsQuoteBlockSchema = z.object({
   id: cmsBlockIdSchema,
   type: z.literal("quote"),
@@ -63,6 +74,7 @@ export const cmsBlockSchema = z.union([
   cmsImageBlockSchema,
   cmsFaqBlockSchema,
   cmsTableBlockSchema,
+  cmsStatsBlockSchema,
   cmsQuoteBlockSchema,
   cmsListBlockSchema,
 ]);
