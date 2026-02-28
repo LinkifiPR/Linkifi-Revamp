@@ -58,6 +58,7 @@ export default function AdminAuthorsClient({ initialAuthors, initialError = "" }
   );
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [error, setError] = useState(initialError);
   const [success, setSuccess] = useState("");
 
@@ -86,6 +87,35 @@ export default function AdminAuthorsClient({ initialAuthors, initialError = "" }
     setForm(makeDefaultAuthor());
     setError("");
     setSuccess("");
+  }
+
+  async function uploadAuthorImage(file: File) {
+    setUploadingImage(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("alt", form.name || file.name);
+
+      const response = await fetch("/api/admin/media/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const payload = (await response.json()) as { error?: string; url?: string };
+      if (!response.ok || !payload.url) {
+        throw new Error(payload.error || "Could not upload author image.");
+      }
+
+      setForm((prev) => ({ ...prev, imageUrl: payload.url || prev.imageUrl }));
+      setSuccess("Author image uploaded.");
+    } catch (uploadError) {
+      setError(uploadError instanceof Error ? uploadError.message : "Could not upload author image.");
+    } finally {
+      setUploadingImage(false);
+    }
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -291,13 +321,31 @@ export default function AdminAuthorsClient({ initialAuthors, initialError = "" }
 
               <label className="space-y-1.5 text-sm">
                 <span className="text-[#d0d4f2]">Image URL</span>
-                <input
-                  type="text"
-                  value={form.imageUrl}
-                  onChange={(event) => setForm((prev) => ({ ...prev, imageUrl: event.target.value.trim() }))}
-                  placeholder="https://... or /api/media/..."
-                  className="w-full rounded-xl border border-white/20 bg-[#11142a] px-3 py-2 text-white"
-                />
+                <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_auto]">
+                  <input
+                    type="text"
+                    value={form.imageUrl}
+                    onChange={(event) => setForm((prev) => ({ ...prev, imageUrl: event.target.value.trim() }))}
+                    placeholder="https://... or /api/media/..."
+                    className="w-full rounded-xl border border-white/20 bg-[#11142a] px-3 py-2 text-white"
+                  />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(event) => {
+                      const file = event.target.files?.[0];
+                      if (file) {
+                        void uploadAuthorImage(file);
+                      }
+                    }}
+                    className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white file:mr-3 file:rounded-lg file:border-0 file:bg-[#5A4DBF] file:px-3 file:py-1.5 file:text-white"
+                  />
+                </div>
+                <p className="text-xs text-[#8f95be]">
+                  {uploadingImage
+                    ? "Uploading author image..."
+                    : "Upload stores the image in CMS media and fills the URL automatically."}
+                </p>
               </label>
 
               <label className="space-y-1.5 text-sm">
