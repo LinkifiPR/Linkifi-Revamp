@@ -270,6 +270,51 @@ export default function Home() {
     },
   ] as const;
 
+  const workShowcaseItems = [
+    {
+      key: "dental",
+      href: "/case-studies/6-major-features-13-7m-audience-reach-for-nyc-cosmetic-dentist",
+      eyebrow: "Cosmetic Dentistry",
+      kicker: "Case Study 01",
+      title: "6 Major Features + 13.7M Audience Reach for NYC Cosmetic Dentist",
+      summary:
+        "We turned specialist clinical expertise into national editorial coverage, giving Lux Smiles NYC the kind of authority, trust, and visibility that compounds across both search and brand demand.",
+      statValue: "13.7M",
+      statLabel: "Audience Reach",
+      proofPoints: ["6 premium features", "DR 85 average", "Clinical expert positioning"],
+      gradient: "from-[#725BFF] via-[#4D47D8] to-[#2E8CFF]",
+      Icon: Sparkles,
+    },
+    {
+      key: "therapy",
+      href: "/case-studies/digital-pr-gets-1-spot-on-google-for-therapy-room-directory-website",
+      eyebrow: "Therapy Rooms",
+      kicker: "Case Study 02",
+      title: "Digital PR Gets #1 Spot on Google for Therapy Room Directory Website",
+      summary:
+        "For US Therapy Rooms, we ran a focused campaign built around commercially relevant search demand. The result was stronger rankings, better traffic quality, and a meaningful lift in discoverability.",
+      statValue: "#1",
+      statLabel: "Google Position",
+      proofPoints: ["Doubled organic traffic", "Higher-intent rankings", "Sustained authority growth"],
+      gradient: "from-[#35C7FF] via-[#5B6DFF] to-[#7E53FF]",
+      Icon: TrendingUp,
+    },
+    {
+      key: "legal",
+      href: "/case-studies/59-premium-features-and-national-recognition-for-texas-law-firm",
+      eyebrow: "Legal Services",
+      kicker: "Case Study 03",
+      title: "59 Premium Features and National Recognition for Texas Law Firm",
+      summary:
+        "We built a national visibility layer for a Texas legal brand, turning credibility into wide editorial recognition across competitive legal and business publications where trust is decisive.",
+      statValue: "59",
+      statLabel: "Premium Features",
+      proofPoints: ["National media presence", "Authority-led trust signals", "Broader branded visibility"],
+      gradient: "from-[#FF4FCB] via-[#8A5CFF] to-[#5A4DBF]",
+      Icon: Trophy,
+    },
+  ] as const;
+
   const handleTestimonialHoverStart = async (index: number) => {
     const video = testimonialVideoRefs.current[index];
     if (!video) return;
@@ -1327,6 +1372,123 @@ export default function Home() {
                     Book a Call With Us
                   </Button>
                 </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Work Showcase Section */}
+        <section className="container mx-auto px-6 mb-32">
+          <div className="relative overflow-hidden rounded-[34px] md:rounded-[42px] border border-[#171927] bg-[#07080E] px-6 py-12 md:px-10 md:py-14 shadow-[0_32px_90px_rgba(7,8,14,0.45)]">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(114,91,255,0.18),transparent_32%),radial-gradient(circle_at_85%_15%,rgba(53,199,255,0.14),transparent_30%),radial-gradient(circle_at_50%_100%,rgba(215,51,162,0.14),transparent_34%)]" />
+            <div className="absolute inset-0 [background-image:linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] [background-size:44px_44px] opacity-40" />
+
+            <div className="relative z-10">
+              <div className="mx-auto max-w-3xl text-center">
+                <p className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm font-semibold text-[#8F84FF] shadow-[0_0_0_1px_rgba(255,255,255,0.02)]">
+                  We&apos;re proud of our results
+                </p>
+                <h2 className="mt-5 text-4xl md:text-6xl font-display font-bold tracking-tight text-white">
+                  Our work
+                </h2>
+                <p className="mt-4 text-base md:text-lg leading-relaxed text-[#B8B3D9]">
+                  Three recent campaigns that show what disciplined digital PR looks like when every
+                  placement is built to create measurable commercial impact.
+                </p>
+              </div>
+
+              <div className="mt-10 space-y-6 md:space-y-7">
+                {workShowcaseItems.map((item, index) => {
+                  const CardIcon = item.Icon;
+
+                  return (
+                    <motion.article
+                      key={item.key}
+                      variants={fadeIn}
+                      initial="initial"
+                      whileInView="animate"
+                      viewport={{ once: true, amount: 0.15 }}
+                      whileHover={{ y: -4 }}
+                      className="group grid gap-4 rounded-[28px] border border-white/8 bg-[linear-gradient(180deg,rgba(18,19,30,0.96),rgba(10,11,18,0.96))] p-4 md:gap-6 md:p-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.2fr)]"
+                      style={{ animationDelay: `${index * 0.14}s` }}
+                    >
+                      <div className={`relative overflow-hidden rounded-[24px] border border-white/10 bg-gradient-to-br ${item.gradient} p-[1px] min-h-[250px]`}>
+                        <div className="relative h-full rounded-[23px] bg-[linear-gradient(180deg,rgba(8,10,18,0.96),rgba(13,15,24,0.98))] p-6 md:p-7">
+                          <div className="absolute inset-0 rounded-[23px] bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(122,109,255,0.16),transparent_26%)]" />
+                          <div className="absolute inset-0 rounded-[23px] [background-image:linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] [background-size:28px_28px] opacity-35" />
+
+                          <div className="relative z-10 flex h-full flex-col justify-between">
+                            <div className="flex items-start justify-between gap-4">
+                              <div className="inline-flex items-center rounded-full border border-white/10 bg-white/8 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/80">
+                                {item.eyebrow}
+                              </div>
+                              <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/8 text-white shadow-[0_12px_24px_rgba(0,0,0,0.18)]">
+                                <CardIcon className="h-5 w-5" />
+                              </div>
+                            </div>
+
+                            <div className="pt-6">
+                              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/55">
+                                {item.statLabel}
+                              </p>
+                              <p className="mt-3 font-display text-[clamp(3rem,6vw,4.75rem)] font-bold leading-none tracking-[-0.06em] text-white">
+                                {item.statValue}
+                              </p>
+                            </div>
+
+                            <div className="grid gap-2 sm:grid-cols-3">
+                              {item.proofPoints.map((proof) => (
+                                <div
+                                  key={proof}
+                                  className="rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-2 text-[11px] font-semibold uppercase leading-[1.35] tracking-[0.14em] text-white/70"
+                                >
+                                  {proof}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex min-h-[250px] flex-col justify-between rounded-[24px] border border-white/6 bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.015))] p-5 md:p-6">
+                        <div>
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#8F84FF]">
+                            {item.kicker}
+                          </p>
+                          <h3 className="mt-3 text-2xl md:text-[2rem] font-display font-bold leading-tight text-white">
+                            {item.title}
+                          </h3>
+                          <p className="mt-4 max-w-2xl text-[15px] md:text-base leading-relaxed text-[#B8B3D9]">
+                            {item.summary}
+                          </p>
+                        </div>
+
+                        <div className="mt-6 flex flex-col gap-4 md:mt-8 md:flex-row md:items-end md:justify-between">
+                          <div className="grid gap-2.5">
+                            {item.proofPoints.map((proof) => (
+                              <div key={`${item.key}-${proof}`} className="flex items-center gap-2.5 text-sm text-white/88">
+                                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/8 text-[#9B90FF]">
+                                  <CheckCircle2 className="h-3.5 w-3.5" />
+                                </span>
+                                <span>{proof}</span>
+                              </div>
+                            ))}
+                          </div>
+
+                          <Link href={item.href} className="w-full md:w-auto">
+                            <Button
+                              className="h-11 w-full rounded-full border border-white/10 bg-white text-[#151327] hover:bg-white/90 md:min-w-[190px]"
+                              data-testid={`button-work-showcase-${item.key}`}
+                            >
+                              Read case study
+                              <ArrowRight className="ml-2 h-4 w-4" />
+                            </Button>
+                          </Link>
+                        </div>
+                      </div>
+                    </motion.article>
+                  );
+                })}
               </div>
             </div>
           </div>
