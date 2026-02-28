@@ -1,10 +1,15 @@
 import { randomUUID } from "crypto";
 import { Pool } from "pg";
 import {
+  cmsAuthorInputSchema,
+  cmsAuthorPatchSchema,
   cmsBlocksSchema,
   cmsEntryInputSchema,
   cmsEntryPatchSchema,
   cmsEntryQuerySchema,
+  type CmsAuthor,
+  type CmsAuthorInput,
+  type CmsAuthorPatch,
   type CmsEntry,
   type CmsEntryInput,
   type CmsEntryListItem,
@@ -31,7 +36,31 @@ type CmsEntryRow = {
   seo_description: string;
   canonical_url: string;
   noindex: boolean;
+  author_id: string | null;
   published_at: Date | string | null;
+  created_at: Date | string;
+  updated_at: Date | string;
+  author_record_id?: string | null;
+  author_name?: string | null;
+  author_role?: string | null;
+  author_bio?: string | null;
+  author_image_url?: string | null;
+  author_linkedin_url?: string | null;
+  author_x_url?: string | null;
+  author_youtube_url?: string | null;
+  author_created_at?: Date | string | null;
+  author_updated_at?: Date | string | null;
+};
+
+type CmsAuthorRow = {
+  id: string;
+  name: string;
+  role: string;
+  bio: string;
+  image_url: string;
+  linkedin_url: string;
+  x_url: string;
+  youtube_url: string;
   created_at: Date | string;
   updated_at: Date | string;
 };
@@ -47,9 +76,9 @@ type CmsMediaRow = {
 };
 
 export class CmsRepositoryError extends Error {
-  code: "NOT_FOUND" | "SLUG_EXISTS" | "CONFIG";
+  code: "NOT_FOUND" | "SLUG_EXISTS" | "CONFIG" | "INVALID_AUTHOR";
 
-  constructor(code: "NOT_FOUND" | "SLUG_EXISTS" | "CONFIG", message: string) {
+  constructor(code: "NOT_FOUND" | "SLUG_EXISTS" | "CONFIG" | "INVALID_AUTHOR", message: string) {
     super(message);
     this.code = code;
   }
@@ -57,6 +86,42 @@ export class CmsRepositoryError extends Error {
 
 let pool: Pool | null = null;
 let schemaPromise: Promise<void> | null = null;
+
+const entrySelectColumns = `
+  e.id,
+  e.type,
+  e.status,
+  e.title,
+  e.slug,
+  e.excerpt,
+  e.body_html,
+  e.content,
+  e.featured_image_url,
+  e.featured_image_alt,
+  e.seo_title,
+  e.seo_description,
+  e.canonical_url,
+  e.noindex,
+  e.author_id,
+  e.published_at,
+  e.created_at,
+  e.updated_at,
+  a.id AS author_record_id,
+  a.name AS author_name,
+  a.role AS author_role,
+  a.bio AS author_bio,
+  a.image_url AS author_image_url,
+  a.linkedin_url AS author_linkedin_url,
+  a.x_url AS author_x_url,
+  a.youtube_url AS author_youtube_url,
+  a.created_at AS author_created_at,
+  a.updated_at AS author_updated_at
+`;
+
+const entrySelectJoin = `
+  FROM cms_entries e
+  LEFT JOIN cms_authors a ON a.id = e.author_id
+`;
 
 function getDatabaseUrl(): string {
   const databaseUrl = process.env.DATABASE_URL ?? "";
@@ -81,6 +146,26 @@ async function ensureSchema(): Promise<void> {
     schemaPromise = (async () => {
       const client = await getPool().connect();
       try {
+        await client.query(`
+          CREATE TABLE IF NOT EXISTS cms_authors (
+            id TEXT PRIMARY KEY,
+            name TEXT NOT NULL,
+            role TEXT NOT NULL DEFAULT '',
+            bio TEXT NOT NULL DEFAULT '',
+            image_url TEXT NOT NULL DEFAULT '',
+            linkedin_url TEXT NOT NULL DEFAULT '',
+            x_url TEXT NOT NULL DEFAULT '',
+            youtube_url TEXT NOT NULL DEFAULT '',
+            created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+            updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+          );
+        `);
+
+        await client.query(`
+          CREATE INDEX IF NOT EXISTS cms_authors_updated_idx
+          ON cms_authors (updated_at DESC, name ASC);
+        `);
+
         await client.query(`
           CREATE TABLE IF NOT EXISTS cms_entries (
             id TEXT PRIMARY KEY,
@@ -112,6 +197,11 @@ async function ensureSchema(): Promise<void> {
         await client.query(`
           ALTER TABLE cms_entries
           ADD COLUMN IF NOT EXISTS body_html TEXT NOT NULL DEFAULT '';
+        `);
+
+        await client.query(`
+          ALTER TABLE cms_entries
+          ADD COLUMN IF NOT EXISTS author_id TEXT NULL;
         `);
 
         await client.query(`
@@ -172,6 +262,21 @@ function toIso(value: Date | string | null): string | null {
 
 function mapEntryRow(row: CmsEntryRow): CmsEntry {
   const blocksParsed = cmsBlocksSchema.safeParse(row.content);
+  const author =
+    row.author_record_id && row.author_name
+      ? {
+          id: row.author_record_id,
+          name: row.author_name,
+          role: row.author_role ?? "",
+          bio: row.author_bio ?? "",
+          imageUrl: row.author_image_url ?? "",
+          linkedinUrl: row.author_linkedin_url ?? "",
+          xUrl: row.author_x_url ?? "",
+          youtubeUrl: row.author_youtube_url ?? "",
+          createdAt: toIso(row.author_created_at ?? null) ?? new Date().toISOString(),
+          updatedAt: toIso(row.author_updated_at ?? null) ?? new Date().toISOString(),
+        }
+      : null;
 
   return {
     id: row.id,
@@ -188,6 +293,8 @@ function mapEntryRow(row: CmsEntryRow): CmsEntry {
     seoDescription: row.seo_description,
     canonicalUrl: row.canonical_url,
     noindex: Boolean(row.noindex),
+    authorId: row.author_id,
+    author,
     publishedAt: toIso(row.published_at),
     createdAt: toIso(row.created_at) ?? new Date().toISOString(),
     updatedAt: toIso(row.updated_at) ?? new Date().toISOString(),
@@ -207,6 +314,7 @@ function mapListRow(row: CmsEntryRow): CmsEntryListItem {
     seoDescription: mapped.seoDescription,
     canonicalUrl: mapped.canonicalUrl,
     noindex: mapped.noindex,
+    authorId: mapped.authorId,
     publishedAt: mapped.publishedAt,
     createdAt: mapped.createdAt,
     updatedAt: mapped.updatedAt,
@@ -221,6 +329,21 @@ function mapMediaRow(row: CmsMediaRow): CmsMedia {
     sizeBytes: row.size_bytes,
     alt: row.alt,
     createdAt: toIso(row.created_at) ?? new Date().toISOString(),
+  };
+}
+
+function mapAuthorRow(row: CmsAuthorRow): CmsAuthor {
+  return {
+    id: row.id,
+    name: row.name,
+    role: row.role,
+    bio: row.bio,
+    imageUrl: row.image_url,
+    linkedinUrl: row.linkedin_url,
+    xUrl: row.x_url,
+    youtubeUrl: row.youtube_url,
+    createdAt: toIso(row.created_at) ?? new Date().toISOString(),
+    updatedAt: toIso(row.updated_at) ?? new Date().toISOString(),
   };
 }
 
@@ -241,6 +364,31 @@ function normalizePublishedAt(status: CmsStatus, publishedAt?: string): string |
   return parsed.toISOString();
 }
 
+function normalizeAuthorId(authorId?: string | null): string | null {
+  const trimmed = (authorId ?? "").trim();
+  return trimmed || null;
+}
+
+async function assertAuthorExists(authorId: string | null): Promise<void> {
+  if (!authorId) {
+    return;
+  }
+
+  const result = await getPool().query<{ id: string }>(
+    `
+    SELECT id
+    FROM cms_authors
+    WHERE id = $1
+    LIMIT 1
+    `,
+    [authorId],
+  );
+
+  if (!result.rows[0]) {
+    throw new CmsRepositoryError("INVALID_AUTHOR", "Selected author was not found.");
+  }
+}
+
 function buildPatchInput(current: CmsEntry, patch: CmsEntryPatch): CmsEntryInput {
   return {
     type: patch.type ?? current.type,
@@ -256,6 +404,7 @@ function buildPatchInput(current: CmsEntry, patch: CmsEntryPatch): CmsEntryInput
     seoDescription: patch.seoDescription ?? current.seoDescription,
     canonicalUrl: patch.canonicalUrl ?? current.canonicalUrl,
     noindex: patch.noindex ?? current.noindex,
+    authorId: patch.authorId ?? current.authorId ?? "",
     publishedAt: patch.publishedAt ?? current.publishedAt ?? "",
   };
 }
@@ -278,17 +427,17 @@ export async function listCmsEntries(rawQuery: unknown = {}): Promise<CmsEntryLi
 
   if (query.type) {
     values.push(query.type);
-    whereClauses.push(`type = $${values.length}`);
+    whereClauses.push(`e.type = $${values.length}`);
   }
 
   if (query.status) {
     values.push(query.status);
-    whereClauses.push(`status = $${values.length}`);
+    whereClauses.push(`e.status = $${values.length}`);
   }
 
   if (query.search) {
     values.push(`%${query.search}%`);
-    whereClauses.push(`title ILIKE $${values.length}`);
+    whereClauses.push(`e.title ILIKE $${values.length}`);
   }
 
   const whereSql = whereClauses.length > 0 ? `WHERE ${whereClauses.join(" AND ")}` : "";
@@ -313,11 +462,10 @@ export async function listCmsEntries(rawQuery: unknown = {}): Promise<CmsEntryLi
   values.push(offset);
 
   const sql = `
-    SELECT id, type, status, title, slug, excerpt, body_html, content, featured_image_url, featured_image_alt,
-           seo_title, seo_description, canonical_url, noindex, published_at, created_at, updated_at
-    FROM cms_entries
+    SELECT ${entrySelectColumns}
+    ${entrySelectJoin}
     ${whereSql}
-    ORDER BY ${orderColumn} ${orderDirection} ${nullOrder}, updated_at DESC
+    ORDER BY e.${orderColumn} ${orderDirection} ${nullOrder}, e.updated_at DESC
     LIMIT $${values.length - 1}
     OFFSET $${values.length}
   `;
@@ -330,10 +478,9 @@ export async function getCmsEntryById(id: string): Promise<CmsEntry | null> {
   await ensureSchema();
   const result = await getPool().query<CmsEntryRow>(
     `
-    SELECT id, type, status, title, slug, excerpt, body_html, content, featured_image_url, featured_image_alt,
-           seo_title, seo_description, canonical_url, noindex, published_at, created_at, updated_at
-    FROM cms_entries
-    WHERE id = $1
+    SELECT ${entrySelectColumns}
+    ${entrySelectJoin}
+    WHERE e.id = $1
     LIMIT 1
     `,
     [id],
@@ -349,14 +496,13 @@ export async function getCmsEntryBySlug(
 ): Promise<CmsEntry | null> {
   await ensureSchema();
   const params: Array<string> = [type, slug];
-  const statusClause = options.publishedOnly ? "AND status = 'published'" : "";
+  const statusClause = options.publishedOnly ? "AND e.status = 'published'" : "";
 
   const result = await getPool().query<CmsEntryRow>(
     `
-    SELECT id, type, status, title, slug, excerpt, body_html, content, featured_image_url, featured_image_alt,
-           seo_title, seo_description, canonical_url, noindex, published_at, created_at, updated_at
-    FROM cms_entries
-    WHERE type = $1 AND slug = $2
+    SELECT ${entrySelectColumns}
+    ${entrySelectJoin}
+    WHERE e.type = $1 AND e.slug = $2
     ${statusClause}
     LIMIT 1
     `,
@@ -371,18 +517,20 @@ export async function createCmsEntry(rawInput: unknown): Promise<CmsEntry> {
   const input = cmsEntryInputSchema.parse(rawInput);
   const id = randomUUID();
   const publishedAt = normalizePublishedAt(input.status, input.publishedAt);
+  const authorId = normalizeAuthorId(input.authorId);
+
+  await assertAuthorExists(authorId);
 
   try {
     const result = await getPool().query<CmsEntryRow>(
       `
       INSERT INTO cms_entries (
         id, type, status, title, slug, excerpt, body_html, content, featured_image_url, featured_image_alt,
-        seo_title, seo_description, canonical_url, noindex, published_at, created_at, updated_at
+        seo_title, seo_description, canonical_url, noindex, author_id, published_at, created_at, updated_at
       ) VALUES (
-        $1, $2, $3, $4, $5, $6, $7, $8::jsonb, $9, $10, $11, $12, $13, $14, $15, NOW(), NOW()
+        $1, $2, $3, $4, $5, $6, $7, $8::jsonb, $9, $10, $11, $12, $13, $14, $15, $16, NOW(), NOW()
       )
-      RETURNING id, type, status, title, slug, excerpt, body_html, content, featured_image_url, featured_image_alt,
-                seo_title, seo_description, canonical_url, noindex, published_at, created_at, updated_at
+      RETURNING id
       `,
       [
         id,
@@ -399,11 +547,17 @@ export async function createCmsEntry(rawInput: unknown): Promise<CmsEntry> {
         input.seoDescription,
         input.canonicalUrl,
         input.noindex,
+        authorId,
         publishedAt,
       ],
     );
 
-    return mapEntryRow(result.rows[0]);
+    const createdEntry = await getCmsEntryById(result.rows[0].id);
+    if (!createdEntry) {
+      throw new CmsRepositoryError("NOT_FOUND", "Entry not found after creation.");
+    }
+
+    return createdEntry;
   } catch (error) {
     if (isUniqueViolation(error)) {
       throw new CmsRepositoryError(
@@ -426,6 +580,9 @@ export async function updateCmsEntry(id: string, rawPatch: unknown): Promise<Cms
   const patch = cmsEntryPatchSchema.parse(rawPatch);
   const merged = cmsEntryInputSchema.parse(buildPatchInput(existing, patch));
   const publishedAt = normalizePublishedAt(merged.status, merged.publishedAt);
+  const authorId = normalizeAuthorId(merged.authorId);
+
+  await assertAuthorExists(authorId);
 
   try {
     const result = await getPool().query<CmsEntryRow>(
@@ -445,11 +602,11 @@ export async function updateCmsEntry(id: string, rawPatch: unknown): Promise<Cms
         seo_description = $12,
         canonical_url = $13,
         noindex = $14,
-        published_at = $15,
+        author_id = $15,
+        published_at = $16,
         updated_at = NOW()
       WHERE id = $1
-      RETURNING id, type, status, title, slug, excerpt, body_html, content, featured_image_url, featured_image_alt,
-                seo_title, seo_description, canonical_url, noindex, published_at, created_at, updated_at
+      RETURNING id
       `,
       [
         id,
@@ -466,6 +623,7 @@ export async function updateCmsEntry(id: string, rawPatch: unknown): Promise<Cms
         merged.seoDescription,
         merged.canonicalUrl,
         merged.noindex,
+        authorId,
         publishedAt,
       ],
     );
@@ -474,7 +632,12 @@ export async function updateCmsEntry(id: string, rawPatch: unknown): Promise<Cms
       throw new CmsRepositoryError("NOT_FOUND", "Entry not found.");
     }
 
-    return mapEntryRow(result.rows[0]);
+    const updatedEntry = await getCmsEntryById(result.rows[0].id);
+    if (!updatedEntry) {
+      throw new CmsRepositoryError("NOT_FOUND", "Entry not found.");
+    }
+
+    return updatedEntry;
   } catch (error) {
     if (isUniqueViolation(error)) {
       throw new CmsRepositoryError(
@@ -495,11 +658,10 @@ export async function listPublishedEntriesByType(type: CmsEntryType, limit = 100
   await ensureSchema();
   const result = await getPool().query<CmsEntryRow>(
     `
-    SELECT id, type, status, title, slug, excerpt, body_html, content, featured_image_url, featured_image_alt,
-           seo_title, seo_description, canonical_url, noindex, published_at, created_at, updated_at
-    FROM cms_entries
-    WHERE type = $1 AND status = 'published'
-    ORDER BY COALESCE(published_at, updated_at) DESC, updated_at DESC
+    SELECT ${entrySelectColumns}
+    ${entrySelectJoin}
+    WHERE e.type = $1 AND e.status = 'published'
+    ORDER BY COALESCE(e.published_at, e.updated_at) DESC, e.updated_at DESC
     LIMIT $2
     `,
     [type, limit],
@@ -548,6 +710,119 @@ export async function getCmsStats(): Promise<{
     caseStudy: Number(row?.case_study ?? 0),
     page: Number(row?.page ?? 0),
   };
+}
+
+export async function listCmsAuthors(): Promise<CmsAuthor[]> {
+  await ensureSchema();
+  const result = await getPool().query<CmsAuthorRow>(
+    `
+    SELECT id, name, role, bio, image_url, linkedin_url, x_url, youtube_url, created_at, updated_at
+    FROM cms_authors
+    ORDER BY updated_at DESC, name ASC
+    `,
+  );
+
+  return result.rows.map(mapAuthorRow);
+}
+
+export async function getCmsAuthorById(id: string): Promise<CmsAuthor | null> {
+  await ensureSchema();
+  const result = await getPool().query<CmsAuthorRow>(
+    `
+    SELECT id, name, role, bio, image_url, linkedin_url, x_url, youtube_url, created_at, updated_at
+    FROM cms_authors
+    WHERE id = $1
+    LIMIT 1
+    `,
+    [id],
+  );
+
+  return result.rows[0] ? mapAuthorRow(result.rows[0]) : null;
+}
+
+export async function createCmsAuthor(rawInput: unknown): Promise<CmsAuthor> {
+  await ensureSchema();
+  const input = cmsAuthorInputSchema.parse(rawInput);
+  const id = randomUUID();
+
+  const result = await getPool().query<CmsAuthorRow>(
+    `
+    INSERT INTO cms_authors (
+      id, name, role, bio, image_url, linkedin_url, x_url, youtube_url, created_at, updated_at
+    ) VALUES (
+      $1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW()
+    )
+    RETURNING id, name, role, bio, image_url, linkedin_url, x_url, youtube_url, created_at, updated_at
+    `,
+    [id, input.name, input.role, input.bio, input.imageUrl, input.linkedinUrl, input.xUrl, input.youtubeUrl],
+  );
+
+  return mapAuthorRow(result.rows[0]);
+}
+
+export async function updateCmsAuthor(id: string, rawPatch: unknown): Promise<CmsAuthor> {
+  await ensureSchema();
+
+  const existing = await getCmsAuthorById(id);
+  if (!existing) {
+    throw new CmsRepositoryError("NOT_FOUND", "Author not found.");
+  }
+
+  const patch = cmsAuthorPatchSchema.parse(rawPatch);
+  const merged = cmsAuthorInputSchema.parse({
+    name: patch.name ?? existing.name,
+    role: patch.role ?? existing.role,
+    bio: patch.bio ?? existing.bio,
+    imageUrl: patch.imageUrl ?? existing.imageUrl,
+    linkedinUrl: patch.linkedinUrl ?? existing.linkedinUrl,
+    xUrl: patch.xUrl ?? existing.xUrl,
+    youtubeUrl: patch.youtubeUrl ?? existing.youtubeUrl,
+  });
+
+  const result = await getPool().query<CmsAuthorRow>(
+    `
+    UPDATE cms_authors
+    SET
+      name = $2,
+      role = $3,
+      bio = $4,
+      image_url = $5,
+      linkedin_url = $6,
+      x_url = $7,
+      youtube_url = $8,
+      updated_at = NOW()
+    WHERE id = $1
+    RETURNING id, name, role, bio, image_url, linkedin_url, x_url, youtube_url, created_at, updated_at
+    `,
+    [id, merged.name, merged.role, merged.bio, merged.imageUrl, merged.linkedinUrl, merged.xUrl, merged.youtubeUrl],
+  );
+
+  if (!result.rows[0]) {
+    throw new CmsRepositoryError("NOT_FOUND", "Author not found.");
+  }
+
+  return mapAuthorRow(result.rows[0]);
+}
+
+export async function deleteCmsAuthor(id: string): Promise<void> {
+  await ensureSchema();
+
+  await getPool().query(
+    `
+    UPDATE cms_entries
+    SET author_id = NULL, updated_at = NOW()
+    WHERE author_id = $1
+    `,
+    [id],
+  );
+
+  await getPool().query(
+    `
+    DELETE FROM cms_authors
+    WHERE id = $1
+    `,
+    [id],
+  );
 }
 
 export async function createCmsMedia(input: {

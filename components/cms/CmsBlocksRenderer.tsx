@@ -112,24 +112,38 @@ export function renderCmsBlock(block: CmsBlock, index: number) {
     return (
       <section
         key={`stats-${index}`}
-        className="rounded-[2rem] border border-[#171a2f] bg-[#090b14] p-4 md:p-6 shadow-[0_22px_60px_rgba(7,9,18,0.28)]"
+        className="relative overflow-hidden rounded-[2.25rem] border border-[#cdc6ff] bg-[linear-gradient(135deg,#0b0f1f_0%,#0a1330_54%,#090d18_100%)] p-5 md:p-7 shadow-[0_30px_70px_rgba(42,33,122,0.18)]"
       >
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_14%,rgba(110,92,255,0.24),transparent_24%),radial-gradient(circle_at_82%_20%,rgba(73,189,255,0.12),transparent_18%),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:auto,auto,36px_36px,36px_36px] opacity-70" />
+        <div className="relative mb-5 flex items-center justify-between gap-3">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#c7c0ff]">Campaign Figures</p>
+            <p className="mt-2 text-sm text-white/62">High-signal outcomes pulled into the body of the case study.</p>
+          </div>
+          <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/75">
+            Performance Snapshot
+          </span>
+        </div>
+        <div className="relative grid gap-4 md:grid-cols-3">
           {block.items.map((item, itemIndex) => (
             <div
               key={`stat-${itemIndex}`}
-              className="relative overflow-hidden rounded-[1.65rem] border border-white/5 bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01))] px-6 py-6"
+              className="relative overflow-hidden rounded-[1.7rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.015))] px-6 py-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
             >
-              <span className="absolute right-5 top-4 text-5xl font-black leading-none text-[#6b57e6]">
-                ↗
-              </span>
-              <p className="pr-12 text-5xl md:text-6xl font-display font-bold tracking-[-0.04em] text-[#6b57e6]">
+              <div className="pointer-events-none absolute inset-x-4 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.28),transparent)]" />
+              <div className="pointer-events-none absolute right-4 top-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#7b6bf1]/30 bg-[linear-gradient(135deg,rgba(107,87,230,0.16),rgba(54,164,255,0.08))] text-[#8a79ff]">
+                <span className="text-4xl leading-none">↗</span>
+              </div>
+              <p className="pr-14 text-5xl md:text-6xl font-display font-bold tracking-[-0.05em] text-[#7b6bff]">
                 {item.value}
               </p>
-              <p className="mt-4 pr-12 text-sm md:text-base font-semibold uppercase tracking-[0.04em] text-white/90">
+              <p className="mt-4 max-w-[11rem] text-sm font-semibold uppercase tracking-[0.14em] text-white/90 md:text-base">
                 {item.label}
               </p>
-              <div className="mt-6 h-px w-full bg-white/8" />
+              <div className="mt-6 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/45">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#7b6bff]" />
+                Verified result
+              </div>
             </div>
           ))}
         </div>

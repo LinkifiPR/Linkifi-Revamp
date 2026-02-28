@@ -25,6 +25,12 @@ const cmsModules = [
     status: "Live",
     href: "/admin/seo",
   },
+  {
+    title: "Authors",
+    description: "Create author profiles with imagery and LinkedIn, X, or YouTube links.",
+    status: "Live",
+    href: "/admin/authors",
+  },
 ] as const;
 
 export default async function AdminPage() {
@@ -124,7 +130,7 @@ export default async function AdminPage() {
           </article>
         </section>
 
-        <section className="grid gap-4 md:grid-cols-3">
+        <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {cmsModules.map((module) => (
             <article
               key={module.title}

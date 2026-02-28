@@ -20,10 +20,12 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   }
 
   const url = `https://linkifi.io/blog/${entry.slug}`;
+  const authorUrl = entry.author?.linkedinUrl || entry.author?.xUrl || entry.author?.youtubeUrl || undefined;
 
   return {
     title: entry.seoTitle || entry.title,
     description: entry.seoDescription || entry.excerpt,
+    authors: entry.author ? [{ name: entry.author.name, url: authorUrl }] : [{ name: "Linkifi" }],
     alternates: {
       canonical: entry.canonicalUrl || url,
     },

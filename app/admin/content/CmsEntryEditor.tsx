@@ -4,13 +4,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import RichTextEditor from "@/app/admin/content/RichTextEditor";
-import type { CmsBlock, CmsEntry, CmsEntryInput, CmsMedia } from "@/lib/cms-types";
+import type { CmsAuthor, CmsBlock, CmsEntry, CmsEntryInput, CmsMedia } from "@/lib/cms-types";
 import { slugifyCmsValue } from "@/lib/cms-types";
 
 type Props = {
   mode: "create" | "edit";
   entryId?: string;
   initialEntry?: CmsEntry;
+  initialAuthors?: CmsAuthor[];
 };
 
 type StructuredBlockType = "image" | "faq" | "table" | "stats";
@@ -31,6 +32,7 @@ function makeDefaultInput(): CmsEntryInput {
     seoDescription: "",
     canonicalUrl: "",
     noindex: false,
+    authorId: "",
     publishedAt: "",
   };
 }
@@ -50,6 +52,7 @@ function entryToInput(entry: CmsEntry): CmsEntryInput {
     seoDescription: entry.seoDescription,
     canonicalUrl: entry.canonicalUrl,
     noindex: entry.noindex,
+    authorId: entry.authorId ?? "",
     publishedAt: entry.publishedAt ?? "",
   };
 }
@@ -231,7 +234,7 @@ function formatTableRows(rows: string[][]): string {
   return rows.map((row) => row.join(" | ")).join("\n");
 }
 
-export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
+export default function CmsEntryEditor({ mode, entryId, initialEntry, initialAuthors = [] }: Props) {
   const router = useRouter();
   const [form, setForm] = useState<CmsEntryInput>(() =>
     initialEntry ? entryToInput(initialEntry) : makeDefaultInput(),
@@ -243,6 +246,7 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
   const [uploadingFeatured, setUploadingFeatured] = useState(false);
   const [selectedStructuredBlockId, setSelectedStructuredBlockId] = useState<string | null>(null);
   const [mediaLibrary, setMediaLibrary] = useState<CmsMedia[]>([]);
+  const [authors] = useState<CmsAuthor[]>(initialAuthors);
   const [mediaLibraryLoaded, setMediaLibraryLoaded] = useState(false);
   const [mediaLibraryLoading, setMediaLibraryLoading] = useState(false);
   const [previewing, setPreviewing] = useState(false);
@@ -292,6 +296,10 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
     selectedStructuredBlockIndex >= 0 && isStructuredBlock(form.content[selectedStructuredBlockIndex])
       ? form.content[selectedStructuredBlockIndex]
       : null;
+  const selectedAuthor = useMemo(
+    () => authors.find((author) => author.id === form.authorId) ?? null,
+    [authors, form.authorId],
+  );
 
   useEffect(() => {
     if (!selectedStructuredBlockId) {
@@ -596,6 +604,12 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
                 Open Preview
               </Link>
             ) : null}
+            <Link
+              href="/admin/authors"
+              className="rounded-full border border-white/20 px-4 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors"
+            >
+              Authors
+            </Link>
           </div>
         </header>
 
@@ -607,7 +621,16 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
                 <span className="text-[#d0d4f2]">Type</span>
                 <select
                   value={form.type}
-                  onChange={(event) => setForm((prev) => ({ ...prev, type: event.target.value as CmsEntryInput["type"] }))}
+                  onChange={(event) =>
+                    setForm((prev) => {
+                      const nextType = event.target.value as CmsEntryInput["type"];
+                      return {
+                        ...prev,
+                        type: nextType,
+                        authorId: nextType === "page" ? "" : prev.authorId,
+                      };
+                    })
+                  }
                   className="w-full rounded-xl border border-white/20 bg-[#11142a] px-3 py-2 text-white"
                 >
                   <option value="blog">Blog</option>
@@ -630,6 +653,64 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
                   <option value="archived">Archived</option>
                 </select>
               </label>
+
+              {form.type !== "page" ? (
+                <label className="space-y-1.5 text-sm md:col-span-2">
+                  <span className="text-[#d0d4f2]">Author</span>
+                  <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_auto]">
+                    <select
+                      value={form.authorId}
+                      onChange={(event) =>
+                        setForm((prev) => ({ ...prev, authorId: event.target.value }))
+                      }
+                      className="w-full rounded-xl border border-white/20 bg-[#11142a] px-3 py-2 text-white"
+                    >
+                      <option value="">No author selected</option>
+                      {authors.map((author) => (
+                        <option key={author.id} value={author.id}>
+                          {author.name}{author.role ? ` - ${author.role}` : ""}
+                        </option>
+                      ))}
+                    </select>
+                    <Link
+                      href="/admin/authors"
+                      className="inline-flex items-center justify-center rounded-xl border border-white/20 px-4 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors"
+                    >
+                      Manage Authors
+                    </Link>
+                  </div>
+                  {selectedAuthor ? (
+                    <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-3 py-3">
+                      {selectedAuthor.imageUrl ? (
+                        <img
+                          src={selectedAuthor.imageUrl}
+                          alt={selectedAuthor.name}
+                          className="h-11 w-11 rounded-2xl object-cover"
+                        />
+                      ) : (
+                        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#171b34] text-xs font-semibold text-[#efe9ff]">
+                          {selectedAuthor.name
+                            .split(/\s+/)
+                            .filter(Boolean)
+                            .slice(0, 2)
+                            .map((part) => part[0]?.toUpperCase() ?? "")
+                            .join("")}
+                        </div>
+                      )}
+                      <div className="min-w-0">
+                        <p className="truncate font-semibold text-white">{selectedAuthor.name}</p>
+                        {selectedAuthor.role ? (
+                          <p className="truncate text-xs text-[#b8bfe8]">{selectedAuthor.role}</p>
+                        ) : null}
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-xs text-[#8f95be]">
+                      Pick an author to show a profile card and social links on the published entry.
+                    </p>
+                  )}
+                </label>
+              ) : null}
 
               <label className="space-y-1.5 text-sm md:col-span-2">
                 <span className="text-[#d0d4f2]">Title</span>

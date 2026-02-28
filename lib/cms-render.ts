@@ -101,6 +101,21 @@ export function extractFaqItems(blocks: CmsBlock[]): FaqItem[] {
 }
 
 export function buildEntrySchemas(entry: CmsEntry, url: string) {
+  const authorSameAs = entry.author
+    ? [entry.author.linkedinUrl, entry.author.xUrl, entry.author.youtubeUrl].filter(Boolean)
+    : [];
+  const authorSchema = entry.author
+    ? {
+        "@type": "Person",
+        name: entry.author.name,
+        image: entry.author.imageUrl || undefined,
+        sameAs: authorSameAs.length > 0 ? authorSameAs : undefined,
+      }
+    : {
+        "@type": "Organization",
+        name: "Linkifi",
+      };
+
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": entry.type === "case-study" ? "Report" : "Article",
@@ -110,10 +125,7 @@ export function buildEntrySchemas(entry: CmsEntry, url: string) {
     dateModified: entry.updatedAt,
     url,
     image: entry.featuredImageUrl || undefined,
-    author: {
-      "@type": "Organization",
-      name: "Linkifi",
-    },
+    author: authorSchema,
     publisher: {
       "@type": "Organization",
       name: "Linkifi",

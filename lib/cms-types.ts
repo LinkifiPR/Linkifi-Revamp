@@ -100,6 +100,7 @@ export const cmsEntryInputSchema = z.object({
   seoDescription: z.string().optional().default(""),
   canonicalUrl: z.string().optional().default(""),
   noindex: z.boolean().default(false),
+  authorId: z.string().optional().default(""),
   publishedAt: z.string().optional().default(""),
 });
 
@@ -122,6 +123,18 @@ export const cmsMediaUploadSchema = z.object({
   alt: z.string().optional().default(""),
 });
 
+export const cmsAuthorInputSchema = z.object({
+  name: z.string().min(1),
+  role: z.string().optional().default(""),
+  bio: z.string().optional().default(""),
+  imageUrl: z.string().optional().default(""),
+  linkedinUrl: z.string().optional().default(""),
+  xUrl: z.string().optional().default(""),
+  youtubeUrl: z.string().optional().default(""),
+});
+
+export const cmsAuthorPatchSchema = cmsAuthorInputSchema.partial();
+
 export type CmsEntryType = z.infer<typeof cmsEntryTypeSchema>;
 export type CmsStatus = z.infer<typeof cmsStatusSchema>;
 export type CmsSortBy = z.infer<typeof cmsSortBySchema>;
@@ -129,6 +142,21 @@ export type CmsSortOrder = z.infer<typeof cmsSortOrderSchema>;
 export type CmsBlock = z.infer<typeof cmsBlockSchema>;
 export type CmsEntryInput = z.infer<typeof cmsEntryInputSchema>;
 export type CmsEntryPatch = z.infer<typeof cmsEntryPatchSchema>;
+export type CmsAuthorInput = z.infer<typeof cmsAuthorInputSchema>;
+export type CmsAuthorPatch = z.infer<typeof cmsAuthorPatchSchema>;
+
+export type CmsAuthor = {
+  id: string;
+  name: string;
+  role: string;
+  bio: string;
+  imageUrl: string;
+  linkedinUrl: string;
+  xUrl: string;
+  youtubeUrl: string;
+  createdAt: string;
+  updatedAt: string;
+};
 
 export type CmsEntry = {
   id: string;
@@ -145,6 +173,8 @@ export type CmsEntry = {
   seoDescription: string;
   canonicalUrl: string;
   noindex: boolean;
+  authorId: string | null;
+  author: CmsAuthor | null;
   publishedAt: string | null;
   createdAt: string;
   updatedAt: string;
@@ -162,6 +192,7 @@ export type CmsEntryListItem = Pick<
   | "seoDescription"
   | "canonicalUrl"
   | "noindex"
+  | "authorId"
   | "publishedAt"
   | "createdAt"
   | "updatedAt"
