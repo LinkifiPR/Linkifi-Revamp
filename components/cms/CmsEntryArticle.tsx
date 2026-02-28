@@ -285,7 +285,7 @@ export function CmsEntryArticle({ entry }: Props) {
         </div>
       </section>
 
-      <section className="container mx-auto -mt-8 px-6 md:-mt-10">
+      <section className="container mx-auto mt-8 px-6 md:mt-10">
         <div className={`grid gap-6 xl:gap-8 ${contentGridClass}`}>
           {toc.length > 0 ? (
             <div className="order-2 h-fit xl:order-1 xl:sticky xl:top-24">
