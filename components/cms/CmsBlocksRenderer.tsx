@@ -6,6 +6,35 @@ type Props = {
   blocks: CmsBlock[];
 };
 
+function splitStatLabel(label: string): [string, string] {
+  const normalized = label.trim().replace(/\s+/g, " ");
+  const words = normalized.split(" ").filter(Boolean);
+
+  if (words.length <= 1) {
+    return [normalized, ""];
+  }
+
+  if (words.length === 2) {
+    return [words[0], words[1]];
+  }
+
+  let bestIndex = 1;
+  let bestDifference = Number.POSITIVE_INFINITY;
+
+  for (let index = 1; index < words.length; index += 1) {
+    const left = words.slice(0, index).join(" ");
+    const right = words.slice(index).join(" ");
+    const difference = Math.abs(left.length - right.length);
+
+    if (difference < bestDifference) {
+      bestDifference = difference;
+      bestIndex = index;
+    }
+  }
+
+  return [words.slice(0, bestIndex).join(" "), words.slice(bestIndex).join(" ")];
+}
+
 export function renderCmsBlock(block: CmsBlock, index: number) {
   if (block.type === "heading") {
     const id = getBlockHeadingId(block, index);
@@ -121,8 +150,7 @@ export function renderCmsBlock(block: CmsBlock, index: number) {
         </div>
         <div className="grid gap-3 md:grid-cols-3">
           {block.items.map((item, itemIndex) => {
-            const normalizedValueLength = item.value.replace(/\s+/g, "").length;
-            const compactValue = normalizedValueLength >= 4;
+            const [labelLineOne, labelLineTwo] = splitStatLabel(item.label);
 
             return (
               <div
@@ -133,22 +161,21 @@ export function renderCmsBlock(block: CmsBlock, index: number) {
                 <div className="pointer-events-none absolute right-4 top-4 text-[#7a6dff] drop-shadow-[0_0_10px_rgba(122,109,255,0.18)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-safe:animate-[pulse_5.8s_ease-in-out_infinite]">
                   <ArrowUpRight className="h-5 w-5 stroke-[2]" />
                 </div>
-                <div className="grid flex-1 grid-rows-[4rem_3.5rem]">
+                <div className="grid flex-1 grid-rows-[3.6rem_3.7rem]">
                   <div className="flex items-end">
                     <p
-                      className={`max-w-full pr-8 font-display font-bold leading-none text-[#6b5cff] tabular-nums whitespace-nowrap ${
-                        compactValue
-                          ? "text-[clamp(1.95rem,3vw,2.9rem)] tracking-[-0.06em]"
-                          : "text-[clamp(2.65rem,4.6vw,4rem)] tracking-[-0.05em]"
-                      }`}
+                      className="max-w-full pr-10 font-display font-bold leading-none tracking-[-0.055em] text-[#6b5cff] tabular-nums whitespace-nowrap text-[clamp(2rem,2.7vw,3rem)]"
                     >
                       {item.value}
                     </p>
                   </div>
-                  <div className="flex items-start">
-                    <p className="w-full text-[0.76rem] font-semibold uppercase leading-[1.34] tracking-[0.13em] text-[#232644]">
-                      {item.label}
-                    </p>
+                  <div className="grid h-[3.7rem] w-full grid-rows-2 content-start">
+                    <span className="w-full text-[0.72rem] font-semibold uppercase leading-[1.2] tracking-[0.12em] text-[#232644]">
+                      {labelLineOne}
+                    </span>
+                    <span className="w-full text-[0.72rem] font-semibold uppercase leading-[1.2] tracking-[0.12em] text-[#232644]">
+                      {labelLineTwo || "\u00A0"}
+                    </span>
                   </div>
                 </div>
                 <div>
