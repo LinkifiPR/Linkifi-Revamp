@@ -1801,6 +1801,15 @@ img[src$=".svg"].publication-logo {
 .cms-richtext ul,
 .cms-richtext ol {
   padding-left: 1.35rem;
+  list-style-position: outside;
+}
+
+.cms-richtext ul {
+  list-style-type: disc;
+}
+
+.cms-richtext ol {
+  list-style-type: decimal;
 }
 
 .cms-richtext a {
@@ -1833,6 +1842,20 @@ img[src$=".svg"].publication-logo {
 .cms-richtext-editor blockquote,
 .cms-richtext-editor li {
   color: #eef2ff;
+}
+
+.cms-richtext-editor ul,
+.cms-richtext-editor ol {
+  padding-left: 1.35rem;
+  list-style-position: outside;
+}
+
+.cms-richtext-editor ul {
+  list-style-type: disc;
+}
+
+.cms-richtext-editor ol {
+  list-style-type: decimal;
 }
 
 .cms-richtext-editor ul li::marker,

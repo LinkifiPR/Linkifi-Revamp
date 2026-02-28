@@ -232,6 +232,7 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
   const [mediaLibrary, setMediaLibrary] = useState<CmsMedia[]>([]);
   const [mediaLibraryLoaded, setMediaLibraryLoaded] = useState(false);
   const [mediaLibraryLoading, setMediaLibraryLoading] = useState(false);
+  const [previewing, setPreviewing] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -483,6 +484,51 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
     }
   }
 
+  async function handlePreviewDraft() {
+    setPreviewing(true);
+    setError("");
+    setSuccess("");
+
+    const payload: CmsEntryInput = {
+      ...form,
+      slug: slugifyCmsValue(form.slug || form.title),
+      publishedAt: normalizeDateInput(form.publishedAt),
+    };
+
+    const endpoint = mode === "create" ? "/api/admin/content" : `/api/admin/content/${entryId}`;
+    const method = mode === "create" ? "POST" : "PATCH";
+
+    try {
+      const response = await fetch(endpoint, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = (await response.json()) as { entry?: CmsEntry; error?: string };
+      if (!response.ok || !result.entry) {
+        throw new Error(result.error || "Could not open preview.");
+      }
+
+      setForm(entryToInput(result.entry));
+      const nextPreviewPath = buildPreviewPath(result.entry.type, result.entry.slug);
+
+      if (mode === "create") {
+        router.replace(`/admin/content/${result.entry.id}`);
+        router.refresh();
+      }
+
+      window.open(nextPreviewPath, "_blank", "noopener,noreferrer");
+      setSuccess("Draft saved and preview opened.");
+    } catch (previewError) {
+      setError(previewError instanceof Error ? previewError.message : "Could not open preview.");
+    } finally {
+      setPreviewing(false);
+    }
+  }
+
   async function handleDelete() {
     if (!entryId || mode !== "edit") {
       return;
@@ -681,24 +727,19 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
 
           <section className="rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-sm">
             <h2 className="text-lg font-semibold">Main Writing</h2>
-            <p className="mt-2 text-sm text-[#b8bfe8]">
-              Use the toolbar for full formatting, insert structured elements at the cursor, and
-              edit the selected insert inside this same writing area.
-            </p>
-            <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
-              {canOpenFullPreview ? (
-                <Link
-                  href={previewPath}
-                  target="_blank"
-                  className="rounded-full border border-[#8f7bff]/55 bg-[#8f7bff]/15 px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#8f7bff]/25 transition-colors"
-                >
-                  Open Draft Preview
-                </Link>
-              ) : previewPath ? (
-                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-semibold text-[#b8bfe8]">
-                  Save once to enable draft preview
-                </span>
-              ) : null}
+            <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
+              <p className="text-sm text-[#b8bfe8]">
+                Use the toolbar for full formatting, insert structured elements at the cursor, and
+                edit the selected insert inside this same writing area.
+              </p>
+              <button
+                type="button"
+                onClick={() => void handlePreviewDraft()}
+                disabled={previewing}
+                className="rounded-full border border-[#8f7bff]/55 bg-[#8f7bff]/15 px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#8f7bff]/25 transition-colors disabled:opacity-60"
+              >
+                {previewing ? "Opening Preview..." : "Save & Open Draft Preview"}
+              </button>
             </div>
             <div className="mt-4">
               <RichTextEditor
@@ -982,10 +1023,6 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
                         </div>
                       ) : null}
                     </div>
-                  ) : inlineStructuredBlocks.length > 0 ? (
-                    <p className="text-sm text-[#b8bfe8]">
-                      Click an insert token in the editor to edit it directly here.
-                    </p>
                   ) : detachedStructuredBlocks.length > 0 ? (
                     <div className="space-y-2">
                       <p className="text-sm text-[#d8d0ae]">
@@ -1010,12 +1047,7 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
                         ))}
                       </div>
                     </div>
-                  ) : (
-                    <p className="text-sm text-[#b8bfe8]">
-                      Use the toolbar to add rich formatting, images, FAQs, and tables directly into
-                      the writing flow.
-                    </p>
-                  )
+                  ) : null
                 }
               />
             </div>
