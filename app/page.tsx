@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 import { Button } from "@/components/ui/button";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import {
@@ -315,6 +316,54 @@ export default function Home() {
     },
   ] as const;
 
+  const socialProofTweets = [
+    {
+      handle: "@NicheSiteLady",
+      url: "https://twitter.com/NicheSiteLady/status/1899434164102840788",
+      label: "Client Praise",
+    },
+    {
+      handle: "@nichejason",
+      url: "https://twitter.com/nichejason/status/1748309666935800317",
+      label: "Results Signal",
+    },
+    {
+      handle: "@patientpublish",
+      url: "https://twitter.com/patientpublish/status/1796154692658979117",
+      label: "Founder Feedback",
+    },
+    {
+      handle: "@jakezward",
+      url: "https://twitter.com/jakezward/status/1833490025855557746",
+      label: "Ranking Win",
+    },
+    {
+      handle: "@jakezward",
+      url: "https://twitter.com/jakezward/status/1820431498677297447",
+      label: "Traffic Lift",
+    },
+    {
+      handle: "@FatStacksBlog",
+      url: "https://twitter.com/FatStacksBlog/status/1711730463210099137",
+      label: "Operator Review",
+    },
+    {
+      handle: "@NinaClapperton",
+      url: "https://twitter.com/NinaClapperton/status/1711753602518385067",
+      label: "Client Result",
+    },
+    {
+      handle: "@UKCarlBroadbent",
+      url: "https://twitter.com/UKCarlBroadbent/status/1692083844818911353",
+      label: "Campaign Proof",
+    },
+    {
+      handle: "@NicheSiteSiry",
+      url: "https://twitter.com/NicheSiteSiry/status/1651997948769710103",
+      label: "Public Endorsement",
+    },
+  ] as const;
+
   const handleTestimonialHoverStart = async (index: number) => {
     const video = testimonialVideoRefs.current[index];
     if (!video) return;
@@ -361,6 +410,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white font-sans overflow-x-hidden selection:bg-[#5A4DBF]/20 selection:text-[#5A4DBF]">
+      <Script src="https://platform.twitter.com/widgets.js" strategy="lazyOnload" />
+
       {/* Navbar */}
       <nav className="fixed w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 top-0 transition-all duration-300">
         <div className="container mx-auto px-6 h-20 flex items-center justify-between">
@@ -1504,6 +1555,75 @@ export default function Home() {
                     <ArrowRight className="ml-2.5 h-4.5 w-4.5" />
                   </Button>
                 </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Social Proof Section */}
+        <section className="container mx-auto px-6 mb-32">
+          <div className="relative overflow-hidden rounded-[34px] md:rounded-[42px] border border-[#131521] bg-[#090B12] px-6 py-12 md:px-10 md:py-14 shadow-[0_28px_88px_rgba(9,11,18,0.42)]">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_16%,rgba(114,91,255,0.18),transparent_30%),radial-gradient(circle_at_84%_14%,rgba(53,199,255,0.14),transparent_28%),radial-gradient(circle_at_50%_100%,rgba(215,51,162,0.12),transparent_34%)]" />
+            <div className="absolute inset-0 [background-image:linear-gradient(rgba(255,255,255,0.022)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.022)_1px,transparent_1px)] [background-size:42px_42px] opacity-40" />
+
+            <div className="relative z-10">
+              <div className="mx-auto max-w-3xl text-center">
+                <p className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm font-semibold text-[#8F84FF]">
+                  Public proof
+                </p>
+                <h2 className="mt-5 text-4xl md:text-6xl font-display font-bold tracking-tight text-white">
+                  What our clients have to say
+                </h2>
+                <p className="mt-4 text-base md:text-lg leading-relaxed text-[#B8B3D9]">
+                  Real public feedback from founders, operators, and site owners who have seen the
+                  results in their traffic, rankings, and authority.
+                </p>
+              </div>
+
+              <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                {socialProofTweets.map((tweet, index) => (
+                  <motion.article
+                    key={tweet.url}
+                    variants={fadeIn}
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: true, amount: 0.15 }}
+                    whileHover={{ y: -4 }}
+                    className="group relative overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(18,19,30,0.96),rgba(10,11,18,0.98))] p-[1px] shadow-[0_20px_48px_rgba(0,0,0,0.26)]"
+                    style={{ animationDelay: `${index * 0.08}s` }}
+                  >
+                    <div className="relative h-full rounded-[27px] bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015))] p-4">
+                      <div className="absolute inset-0 rounded-[27px] bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.08),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(122,109,255,0.12),transparent_28%)]" />
+
+                      <div className="relative z-10">
+                        <div className="mb-4 flex items-center justify-between gap-4">
+                          <div className="inline-flex items-center rounded-full border border-white/8 bg-white/[0.04] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/72">
+                            {tweet.label}
+                          </div>
+                          <a
+                            href={tweet.url.replace("twitter.com", "x.com")}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm font-semibold text-[#A49BFF] transition-colors hover:text-white"
+                          >
+                            {tweet.handle}
+                          </a>
+                        </div>
+
+                        <div className="overflow-hidden rounded-[22px] border border-white/8 bg-white">
+                          <blockquote
+                            className="twitter-tweet !m-0"
+                            data-theme="dark"
+                            data-dnt="true"
+                            data-conversation="none"
+                          >
+                            <a href={tweet.url}>View post by {tweet.handle}</a>
+                          </blockquote>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.article>
+                ))}
               </div>
             </div>
           </div>
