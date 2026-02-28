@@ -113,43 +113,39 @@ export function renderCmsBlock(block: CmsBlock, index: number) {
     return (
       <section
         key={`stats-${index}`}
-        className="relative overflow-hidden rounded-[2.4rem] border border-[#1c2451] bg-[linear-gradient(135deg,#091022_0%,#0f1741_42%,#0a0f20_100%)] p-5 md:p-7 shadow-[0_34px_84px_rgba(25,22,72,0.22)]"
+        className="relative overflow-hidden rounded-[2.1rem] border border-[#171d42] bg-[linear-gradient(135deg,#0a1024_0%,#10183d_48%,#0a0f20_100%)] p-4 md:p-5 shadow-[0_28px_70px_rgba(23,21,66,0.18)]"
       >
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(118,103,255,0.24),transparent_24%),radial-gradient(circle_at_84%_16%,rgba(79,185,255,0.14),transparent_18%),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:auto,auto,42px_42px,42px_42px] opacity-80" />
-        <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(163,151,255,0.55),transparent)]" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-[linear-gradient(180deg,transparent,rgba(123,107,255,0.06))]" />
-        <div className="relative mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#d1c9ff]">Campaign Figures</p>
-            <p className="mt-2 text-sm text-white/58">The key commercial outcomes from this campaign.</p>
-          </div>
-          <span className="inline-flex rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/72">
-            Performance Snapshot
-          </span>
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_18%,rgba(118,103,255,0.18),transparent_24%),radial-gradient(circle_at_86%_18%,rgba(79,185,255,0.1),transparent_16%),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:auto,auto,42px_42px,42px_42px]" />
+        <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(163,151,255,0.45),transparent)]" />
+        <div className="relative mb-4 flex items-center gap-3">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#d5ceff]">Campaign Figures</p>
+          <div className="h-px flex-1 bg-[linear-gradient(90deg,rgba(133,118,255,0.32),rgba(255,255,255,0.02))]" />
         </div>
-        <div className="relative grid gap-4 md:grid-cols-3">
+        <div className="relative grid gap-3 md:grid-cols-3">
           {block.items.map((item, itemIndex) => (
             <div
               key={`stat-${itemIndex}`}
-              className="group relative min-h-[11.75rem] overflow-hidden rounded-[1.7rem] border border-white/7 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015))] px-5 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] md:min-h-[13.25rem] md:px-6 md:py-6"
+              className="group relative flex min-h-[10.5rem] flex-col justify-between overflow-hidden rounded-[1.5rem] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.018))] px-5 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] md:min-h-[11.25rem]"
             >
-              <div className="pointer-events-none absolute inset-x-4 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.22),transparent)]" />
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_88%_14%,rgba(123,107,255,0.14),transparent_20%)] opacity-90" />
-              <div className="pointer-events-none absolute right-3 top-3 h-16 w-16 rounded-full bg-[radial-gradient(circle,rgba(128,113,255,0.22),transparent_66%)] blur-2xl motion-safe:animate-[pulse_5.5s_ease-in-out_infinite]" />
-              <div className="pointer-events-none absolute right-5 top-5 text-[#8576ff] drop-shadow-[0_0_14px_rgba(133,118,255,0.42)] transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-safe:animate-[pulse_4.8s_ease-in-out_infinite]">
-                <ArrowUpRight className="h-9 w-9 stroke-[1.8]" />
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_88%_14%,rgba(123,107,255,0.1),transparent_22%)]" />
+              <div className="pointer-events-none absolute right-3 top-3 h-12 w-12 rounded-full bg-[radial-gradient(circle,rgba(128,113,255,0.18),transparent_66%)] blur-xl motion-safe:animate-[pulse_6s_ease-in-out_infinite]" />
+              <div className="pointer-events-none absolute right-4 top-4 text-[#8576ff] drop-shadow-[0_0_10px_rgba(133,118,255,0.35)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+                <ArrowUpRight className="h-6 w-6 stroke-[1.9]" />
               </div>
-              <div className="pointer-events-none absolute right-5 top-14 h-px w-12 rotate-45 bg-[linear-gradient(90deg,transparent,rgba(133,118,255,0.45),transparent)]" />
-              <p className="pr-10 text-[clamp(3.2rem,8vw,5.1rem)] font-display font-bold leading-none tracking-[-0.055em] text-[#8071ff]">
-                {item.value}
-              </p>
-              <p className="mt-4 max-w-[11rem] text-sm font-semibold uppercase leading-[1.45] tracking-[0.17em] text-white/92 md:text-[0.95rem]">
-                {item.label}
-              </p>
-              <div className="mt-6 h-px w-full bg-[linear-gradient(90deg,rgba(128,113,255,0.32),rgba(255,255,255,0.02))]" />
-              <div className="mt-4 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/42">
+              <div>
+                <p className="pr-8 text-[clamp(3rem,8vw,4.8rem)] font-display font-bold leading-none tracking-[-0.055em] text-[#8475ff]">
+                  {item.value}
+                </p>
+                <p className="mt-3 max-w-[9.5rem] text-[0.9rem] font-semibold uppercase leading-[1.42] tracking-[0.17em] text-[#f3f3ff]">
+                  {item.label}
+                </p>
+              </div>
+              <div>
+                <div className="h-px w-full bg-[linear-gradient(90deg,rgba(128,113,255,0.28),rgba(255,255,255,0.02))]" />
+                <div className="mt-3 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#a9afd0]">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#7e70ff]" />
-                Tracked Metric
+                  Tracked Metric
+                </div>
               </div>
             </div>
           ))}
