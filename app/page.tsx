@@ -1580,7 +1580,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              <div className="mt-10 columns-1 gap-5 md:columns-2 xl:columns-3">
                 {socialProofTweets.map((tweet, index) => (
                   <motion.article
                     key={tweet.url}
@@ -1589,7 +1589,7 @@ export default function Home() {
                     whileInView="animate"
                     viewport={{ once: true, amount: 0.15 }}
                     whileHover={{ y: -4 }}
-                    className="group relative overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(18,19,30,0.96),rgba(10,11,18,0.98))] p-[1px] shadow-[0_20px_48px_rgba(0,0,0,0.26)]"
+                    className="group relative mb-5 break-inside-avoid overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(18,19,30,0.96),rgba(10,11,18,0.98))] p-[1px] shadow-[0_20px_48px_rgba(0,0,0,0.26)]"
                     style={{ animationDelay: `${index * 0.08}s` }}
                   >
                     <div className="relative h-full rounded-[27px] bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015))] p-4">
@@ -1597,28 +1597,42 @@ export default function Home() {
 
                       <div className="relative z-10">
                         <div className="mb-4 flex items-center justify-between gap-4">
-                          <div className="inline-flex items-center rounded-full border border-white/8 bg-white/[0.04] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/72">
+                          <div className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-white">
                             {tweet.label}
                           </div>
                           <a
                             href={tweet.url.replace("twitter.com", "x.com")}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-sm font-semibold text-[#A49BFF] transition-colors hover:text-white"
+                            className="text-sm font-semibold text-[#C1BAFF] transition-colors hover:text-white"
                           >
                             {tweet.handle}
                           </a>
                         </div>
 
-                        <div className="overflow-hidden rounded-[22px] border border-white/8 bg-white">
+                        <div className="social-proof-embed relative overflow-hidden rounded-[22px] border border-white/8 bg-[#0b0d15]">
                           <blockquote
                             className="twitter-tweet !m-0"
                             data-theme="dark"
                             data-dnt="true"
                             data-conversation="none"
+                            data-chrome="nofooter noborders transparent"
                           >
                             <a href={tweet.url}>View post by {tweet.handle}</a>
                           </blockquote>
+                          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#0b0d15] via-[#0b0d15]/85 to-transparent" />
+                        </div>
+
+                        <div className="mt-3 flex justify-end">
+                          <a
+                            href={tweet.url.replace("twitter.com", "x.com")}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/85 transition-colors hover:text-white"
+                          >
+                            Open on X
+                            <ArrowRight className="ml-2 h-3.5 w-3.5" />
+                          </a>
                         </div>
                       </div>
                     </div>

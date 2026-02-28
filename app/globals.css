@@ -148,6 +148,20 @@
   transform: scale(1.02);
 }
 
+.social-proof-embed {
+  max-height: 31rem;
+}
+
+.social-proof-embed blockquote.twitter-tweet,
+.social-proof-embed .twitter-tweet-rendered {
+  margin: 0 !important;
+}
+
+.social-proof-embed iframe {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
 img[src$=".svg"].publication-logo {
   filter: brightness(0) invert(1);
 }
