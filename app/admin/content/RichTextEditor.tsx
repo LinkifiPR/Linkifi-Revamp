@@ -1,6 +1,6 @@
 "use client";
 
-import type { ClipboardEvent, MouseEvent } from "react";
+import type { ClipboardEvent, MouseEvent, ReactNode } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 type Props = {
@@ -13,6 +13,8 @@ type Props = {
   } | null;
   onSelectStructuredBlock?: (blockId: string | null) => void;
   selectedStructuredBlockId?: string | null;
+  contextPanel?: ReactNode;
+  footerPanel?: ReactNode;
 };
 
 function escapeForPreview(value: string): string {
@@ -188,6 +190,8 @@ export default function RichTextEditor({
   onInsertStructuredBlock,
   onSelectStructuredBlock,
   selectedStructuredBlockId,
+  contextPanel,
+  footerPanel,
 }: Props) {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const selectionRef = useRef<Range | null>(null);
@@ -197,6 +201,8 @@ export default function RichTextEditor({
   const [linkNoFollow, setLinkNoFollow] = useState(false);
   const [linkSponsored, setLinkSponsored] = useState(false);
   const [linkNewTab, setLinkNewTab] = useState(true);
+  const [textColor, setTextColor] = useState("#f2f4ff");
+  const [highlightColor, setHighlightColor] = useState("#6b57e6");
 
   useEffect(() => {
     if (!editorRef.current) {
@@ -240,19 +246,45 @@ export default function RichTextEditor({
     onChange(editorRef.current?.innerHTML || "");
   }
 
+  function handleToolbarMouseDown(event: MouseEvent<HTMLDivElement>) {
+    if (event.target instanceof HTMLButtonElement) {
+      event.preventDefault();
+    }
+  }
+
   function focusEditor() {
     editorRef.current?.focus();
   }
 
   function executeCommand(command: string, commandValue?: string) {
     focusEditor();
+    restoreSelection();
     document.execCommand(command, false, commandValue);
     syncContent();
   }
 
-  function formatBlock(tag: "P" | "H2" | "H3") {
+  function formatBlock(tag: "P" | "H2" | "H3" | "H4" | "BLOCKQUOTE") {
     focusEditor();
+    restoreSelection();
     document.execCommand("formatBlock", false, `<${tag}>`);
+    syncContent();
+  }
+
+  function applyTextColor(nextColor: string) {
+    setTextColor(nextColor);
+    focusEditor();
+    restoreSelection();
+    document.execCommand("styleWithCSS", false, "true");
+    document.execCommand("foreColor", false, nextColor);
+    syncContent();
+  }
+
+  function applyHighlightColor(nextColor: string) {
+    setHighlightColor(nextColor);
+    focusEditor();
+    restoreSelection();
+    document.execCommand("styleWithCSS", false, "true");
+    document.execCommand("hiliteColor", false, nextColor);
     syncContent();
   }
 
@@ -355,6 +387,7 @@ export default function RichTextEditor({
     }
 
     focusEditor();
+    restoreSelection();
     const tokenHtml = buildStructuredTokenHtml(token);
     document.execCommand("insertHTML", false, tokenHtml);
     syncContent();
@@ -380,7 +413,10 @@ export default function RichTextEditor({
 
   return (
     <div className="rounded-2xl border border-white/15 bg-[#0f1328] p-4">
-      <div className="flex flex-wrap gap-2 border-b border-white/10 pb-3">
+      <div
+        className="flex flex-wrap gap-2 border-b border-white/10 pb-3"
+        onMouseDown={handleToolbarMouseDown}
+      >
         <button
           type="button"
           onClick={() => formatBlock("P")}
@@ -404,6 +440,13 @@ export default function RichTextEditor({
         </button>
         <button
           type="button"
+          onClick={() => formatBlock("H4")}
+          className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-white hover:bg-white/10"
+        >
+          H4
+        </button>
+        <button
+          type="button"
           onClick={() => executeCommand("bold")}
           className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-white hover:bg-white/10"
         >
@@ -415,6 +458,41 @@ export default function RichTextEditor({
           className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-white hover:bg-white/10"
         >
           Italic
+        </button>
+        <button
+          type="button"
+          onClick={() => executeCommand("underline")}
+          className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-white hover:bg-white/10"
+        >
+          Underline
+        </button>
+        <button
+          type="button"
+          onClick={() => executeCommand("strikeThrough")}
+          className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-white hover:bg-white/10"
+        >
+          Strike
+        </button>
+        <button
+          type="button"
+          onClick={() => executeCommand("insertUnorderedList")}
+          className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-white hover:bg-white/10"
+        >
+          Bullets
+        </button>
+        <button
+          type="button"
+          onClick={() => executeCommand("insertOrderedList")}
+          className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-white hover:bg-white/10"
+        >
+          Numbers
+        </button>
+        <button
+          type="button"
+          onClick={() => formatBlock("BLOCKQUOTE")}
+          className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-white hover:bg-white/10"
+        >
+          Quote
         </button>
         <button
           type="button"
@@ -430,6 +508,52 @@ export default function RichTextEditor({
         >
           Unlink
         </button>
+        <button
+          type="button"
+          onClick={() => executeCommand("justifyLeft")}
+          className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-white hover:bg-white/10"
+        >
+          Left
+        </button>
+        <button
+          type="button"
+          onClick={() => executeCommand("justifyCenter")}
+          className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-white hover:bg-white/10"
+        >
+          Center
+        </button>
+        <button
+          type="button"
+          onClick={() => executeCommand("justifyRight")}
+          className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-white hover:bg-white/10"
+        >
+          Right
+        </button>
+        <button
+          type="button"
+          onClick={() => executeCommand("removeFormat")}
+          className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-white hover:bg-white/10"
+        >
+          Clear
+        </button>
+        <label className="flex items-center gap-2 rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-white">
+          Text
+          <input
+            type="color"
+            value={textColor}
+            onChange={(event) => applyTextColor(event.target.value)}
+            className="h-5 w-5 cursor-pointer rounded border-0 bg-transparent p-0"
+          />
+        </label>
+        <label className="flex items-center gap-2 rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-white">
+          Highlight
+          <input
+            type="color"
+            value={highlightColor}
+            onChange={(event) => applyHighlightColor(event.target.value)}
+            className="h-5 w-5 cursor-pointer rounded border-0 bg-transparent p-0"
+          />
+        </label>
         <button
           type="button"
           onClick={() => insertStructuredBlock("image")}
@@ -511,20 +635,31 @@ export default function RichTextEditor({
         </div>
       ) : null}
 
-      <div
-        ref={editorRef}
-        contentEditable
-        suppressContentEditableWarning
-        onInput={syncContent}
-        onBlur={captureSelection}
-        onPaste={handlePaste}
-        onClick={handleEditorClick}
-        className="cms-richtext cms-richtext-editor mt-3 min-h-[320px] rounded-xl border border-white/20 bg-[#0e1431] px-5 py-4 text-[#f2f4ff] outline-none focus:border-[#8f7bff]/70 focus:ring-2 focus:ring-[#8f7bff]/20"
-      />
+      <div className={contextPanel ? "mt-3 grid gap-4 xl:grid-cols-[minmax(0,1fr)_340px]" : "mt-3"}>
+        <div
+          ref={editorRef}
+          contentEditable
+          suppressContentEditableWarning
+          onInput={syncContent}
+          onKeyUp={captureSelection}
+          onMouseUp={captureSelection}
+          onBlur={captureSelection}
+          onPaste={handlePaste}
+          onClick={handleEditorClick}
+          className="cms-richtext cms-richtext-editor min-h-[320px] rounded-xl border border-white/20 bg-[#0e1431] px-5 py-4 text-[#f2f4ff] outline-none focus:border-[#8f7bff]/70 focus:ring-2 focus:ring-[#8f7bff]/20"
+        />
+
+        {contextPanel ? (
+          <aside className="rounded-xl border border-white/15 bg-[#151a35] p-4 xl:sticky xl:top-4 self-start">
+            {contextPanel}
+          </aside>
+        ) : null}
+      </div>
 
       <p className="mt-3 text-xs text-[#8f95be]">
         Preview text: <span className="text-[#c8cdf0]">{escapeForPreview(plainPreview)}</span>
       </p>
+      {footerPanel ? <div className="mt-4 border-t border-white/10 pt-4">{footerPanel}</div> : null}
     </div>
   );
 }

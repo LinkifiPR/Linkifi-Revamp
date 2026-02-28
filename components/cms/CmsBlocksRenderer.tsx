@@ -40,8 +40,16 @@ export function renderCmsBlock(block: CmsBlock, index: number) {
   }
 
   if (block.type === "image") {
+    const imageWrapClass =
+      block.align === "left"
+        ? "mr-auto max-w-[72%]"
+        : block.align === "right"
+          ? "ml-auto max-w-[72%]"
+          : block.align === "full"
+            ? "w-full"
+            : "mx-auto max-w-[84%]";
     return (
-      <figure key={`image-${index}`} className="space-y-3">
+      <figure key={`image-${index}`} className={`space-y-3 ${imageWrapClass}`}>
         <img
           src={block.src}
           alt={block.alt}

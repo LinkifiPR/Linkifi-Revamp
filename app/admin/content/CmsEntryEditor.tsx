@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useMemo, useState } from "react";
+import { renderCmsBlock } from "@/components/cms/CmsBlocksRenderer";
 import RichTextEditor from "@/app/admin/content/RichTextEditor";
-import type { CmsBlock, CmsEntry, CmsEntryInput } from "@/lib/cms-types";
+import { renderCmsBodyHtml } from "@/lib/cms-render";
+import type { CmsBlock, CmsEntry, CmsEntryInput, CmsMedia } from "@/lib/cms-types";
 import { slugifyCmsValue } from "@/lib/cms-types";
 
 type Props = {
@@ -15,6 +17,9 @@ type Props = {
 
 type StructuredBlockType = "image" | "faq" | "table";
 type StructuredCmsBlock = Extract<CmsBlock, { type: StructuredBlockType }> & { id: string };
+type InlinePreviewPart =
+  | { kind: "html"; html: string }
+  | { kind: "block"; blockId: string };
 
 function makeDefaultInput(): CmsEntryInput {
   return {
@@ -64,7 +69,7 @@ function makeBlockId(): string {
 function createBlock(type: StructuredBlockType): CmsBlock {
   switch (type) {
     case "image":
-      return { id: makeBlockId(), type: "image", src: "", alt: "", caption: "" };
+      return { id: makeBlockId(), type: "image", src: "", alt: "", caption: "", align: "center" };
     case "faq":
       return { id: makeBlockId(), type: "faq", question: "", answer: "" };
     case "table":
@@ -76,7 +81,7 @@ function createBlock(type: StructuredBlockType): CmsBlock {
         rows: [["", ""]],
       };
     default:
-      return { id: makeBlockId(), type: "image", src: "", alt: "", caption: "" };
+      return { id: makeBlockId(), type: "image", src: "", alt: "", caption: "", align: "center" };
   }
 }
 
@@ -218,6 +223,43 @@ function formatTableRows(rows: string[][]): string {
   return rows.map((row) => row.join(" | ")).join("\n");
 }
 
+function splitInlinePreviewHtml(html: string): InlinePreviewPart[] {
+  const parts: InlinePreviewPart[] = [];
+  const tokenRegex =
+    /<p[^>]*>\s*(<span[^>]*data-cms-block-id=["']([^"']+)["'][^>]*>[\s\S]*?<\/span>)\s*<\/p>(?:\s*<p>\s*(?:<br\s*\/?>)?\s*<\/p>)?|<span[^>]*data-cms-block-id=["']([^"']+)["'][^>]*>[\s\S]*?<\/span>/gi;
+  let cursor = 0;
+  let match: RegExpExecArray | null = tokenRegex.exec(html);
+
+  while (match) {
+    const [tokenHtml] = match;
+    const blockId = match[2] || match[3];
+    const tokenStart = match.index;
+    const tokenEnd = tokenStart + tokenHtml.length;
+
+    if (!blockId) {
+      cursor = tokenEnd;
+      match = tokenRegex.exec(html);
+      continue;
+    }
+
+    const htmlBefore = html.slice(cursor, tokenStart);
+    if (htmlBefore.trim()) {
+      parts.push({ kind: "html", html: htmlBefore });
+    }
+
+    parts.push({ kind: "block", blockId });
+    cursor = tokenEnd;
+    match = tokenRegex.exec(html);
+  }
+
+  const trailingHtml = html.slice(cursor);
+  if (trailingHtml.trim()) {
+    parts.push({ kind: "html", html: trailingHtml });
+  }
+
+  return parts;
+}
+
 export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
   const router = useRouter();
   const [form, setForm] = useState<CmsEntryInput>(() =>
@@ -229,22 +271,40 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
   const [uploadingIndex, setUploadingIndex] = useState<number | null>(null);
   const [uploadingFeatured, setUploadingFeatured] = useState(false);
   const [selectedStructuredBlockId, setSelectedStructuredBlockId] = useState<string | null>(null);
+  const [mediaLibrary, setMediaLibrary] = useState<CmsMedia[]>([]);
+  const [mediaLibraryLoaded, setMediaLibraryLoaded] = useState(false);
+  const [mediaLibraryLoading, setMediaLibraryLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
   const previewPath = useMemo(() => buildPreviewPath(form.type, form.slug), [form.type, form.slug]);
+  const canOpenFullPreview = mode === "edit" && Boolean(previewPath);
+  const livePreviewRender = useMemo(() => renderCmsBodyHtml(form.bodyHtml || ""), [form.bodyHtml]);
+  const livePreviewParts = useMemo(
+    () => splitInlinePreviewHtml(livePreviewRender.html),
+    [livePreviewRender.html],
+  );
   const inlineStructuredBlockIds = useMemo(() => extractBlockTokenIds(form.bodyHtml || ""), [form.bodyHtml]);
   const inlineStructuredBlockIdSet = useMemo(
     () => new Set(inlineStructuredBlockIds),
     [inlineStructuredBlockIds],
   );
+  const contentById = useMemo(
+    () =>
+      new Map(
+        form.content
+          .filter((block) => typeof block.id === "string" && block.id.length > 0)
+          .map((block) => [block.id as string, block]),
+      ),
+    [form.content],
+  );
   const inlineStructuredBlocks = useMemo(
     () =>
       inlineStructuredBlockIds.flatMap((blockId) => {
-        const block = form.content.find((item) => item.id === blockId);
+        const block = contentById.get(blockId);
         return block && isStructuredBlock(block) ? [block] : [];
       }),
-    [form.content, inlineStructuredBlockIds],
+    [contentById, inlineStructuredBlockIds],
   );
   const detachedStructuredBlocks = useMemo(
     () =>
@@ -282,6 +342,46 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
 
     setSelectedStructuredBlockId(inlineStructuredBlocks[0].id);
   }, [inlineStructuredBlocks, selectedStructuredBlock, selectedStructuredBlockId]);
+
+  useEffect(() => {
+    if (selectedStructuredBlock?.type !== "image" || mediaLibraryLoaded || mediaLibraryLoading) {
+      return;
+    }
+
+    let cancelled = false;
+
+    async function loadMediaLibrary() {
+      setMediaLibraryLoading(true);
+
+      try {
+        const response = await fetch("/api/admin/media?limit=24", { cache: "no-store" });
+        const payload = (await response.json()) as { media?: CmsMedia[]; error?: string };
+
+        if (!response.ok) {
+          throw new Error(payload.error || "Could not load media library.");
+        }
+
+        if (!cancelled) {
+          setMediaLibrary(payload.media || []);
+          setMediaLibraryLoaded(true);
+        }
+      } catch (mediaError) {
+        if (!cancelled) {
+          setError(mediaError instanceof Error ? mediaError.message : "Could not load media library.");
+        }
+      } finally {
+        if (!cancelled) {
+          setMediaLibraryLoading(false);
+        }
+      }
+    }
+
+    void loadMediaLibrary();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [mediaLibraryLoaded, mediaLibraryLoading, selectedStructuredBlock]);
 
   function updateBlock(index: number, updater: (block: CmsBlock) => CmsBlock) {
     setForm((prev) => ({
@@ -475,7 +575,7 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
             >
               Back to Content
             </Link>
-            {previewPath ? (
+            {canOpenFullPreview ? (
               <Link
                 href={previewPath}
                 target="_blank"
@@ -629,8 +729,9 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
           <section className="rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-sm">
             <h2 className="text-lg font-semibold">Main Writing</h2>
             <p className="mt-2 text-sm text-[#b8bfe8]">
-              Write everything in one place. Insert images, FAQs, and tables directly at the
-              cursor using the editor toolbar, then edit the selected insert below.
+              Use the toolbar for full formatting, insert structured elements at the cursor, edit
+              the selected insert inside this same writing area, and review the live draft preview
+              before publishing.
             </p>
             <div className="mt-4">
               <RichTextEditor
@@ -639,271 +740,294 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
                 onInsertStructuredBlock={createStructuredBlockForEditor}
                 onSelectStructuredBlock={setSelectedStructuredBlockId}
                 selectedStructuredBlockId={selectedStructuredBlockId}
-              />
-            </div>
+                contextPanel={
+                  selectedStructuredBlock ? (
+                    <div className="space-y-3 text-sm">
+                      <div className="flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                          <p className="text-xs uppercase tracking-[0.14em] text-[#aeb5e5]">
+                            Block Settings
+                          </p>
+                          <p className="mt-1 font-semibold text-white">
+                            {getStructuredBlockLabel(selectedStructuredBlock.type)}
+                          </p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const blockId = selectedStructuredBlock.id;
+                            setForm((prev) => ({
+                              ...prev,
+                              bodyHtml: removeBlockTokenFromHtml(prev.bodyHtml || "", blockId),
+                              content: prev.content.filter((block) => block.id !== blockId),
+                            }));
+                            setSelectedStructuredBlockId(null);
+                          }}
+                          className="rounded-full border border-[#ff6d8b]/45 bg-[#ff6d8b]/15 px-3 py-1.5 text-xs font-semibold text-[#ffd3dd]"
+                        >
+                          Remove Insert
+                        </button>
+                      </div>
 
-            <div className="mt-5 rounded-2xl border border-white/15 bg-[#0f1328] p-4">
-              <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-                <div>
-                  <h3 className="text-sm font-semibold text-white">Inline Inserts</h3>
-                  <p className="mt-1 text-xs text-[#aeb5e5]">
-                    These blocks appear exactly where their token sits inside the editor.
-                  </p>
-                </div>
-              </div>
-
-              {inlineStructuredBlocks.length > 0 ? (
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {inlineStructuredBlocks.map((block) => (
-                    <button
-                      key={block.id}
-                      type="button"
-                      onClick={() => setSelectedStructuredBlockId(block.id)}
-                      className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${
-                        selectedStructuredBlockId === block.id
-                          ? "border-[#8f7bff]/60 bg-[#8f7bff]/20 text-white"
-                          : "border-white/15 bg-white/5 text-[#d9ddff] hover:bg-white/10"
-                      }`}
-                    >
-                      {getStructuredBlockLabel(block.type)}
-                    </button>
-                  ))}
-                </div>
-              ) : (
-                <p className="mt-3 text-sm text-[#b8bfe8]">
-                  No inline inserts yet. Use the <span className="font-semibold text-white">+ Image</span>,{" "}
-                  <span className="font-semibold text-white">+ FAQ</span>, or{" "}
-                  <span className="font-semibold text-white">+ Table</span> buttons in the toolbar.
-                </p>
-              )}
-
-              {selectedStructuredBlock ? (
-                <div className="mt-4 rounded-2xl border border-white/15 bg-[#131938] p-4">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.14em] text-[#aeb5e5]">
-                        Editing Selected Insert
-                      </p>
-                      <h4 className="mt-1 text-base font-semibold text-white">
-                        {getStructuredBlockLabel(selectedStructuredBlock.type)}
-                      </h4>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const blockId = selectedStructuredBlock.id;
-                        setForm((prev) => ({
-                          ...prev,
-                          bodyHtml: removeBlockTokenFromHtml(prev.bodyHtml || "", blockId),
-                          content: prev.content.filter((block) => block.id !== blockId),
-                        }));
-                        setSelectedStructuredBlockId(null);
-                      }}
-                      className="rounded-full border border-[#ff6d8b]/45 bg-[#ff6d8b]/15 px-3 py-1.5 text-xs font-semibold text-[#ffd3dd]"
-                    >
-                      Remove Insert
-                    </button>
-                  </div>
-
-                  <div className="mt-4 space-y-3 text-sm">
-                    {selectedStructuredBlock.type === "image" ? (
-                      <>
-                        <label className="space-y-1.5 block">
-                          <span className="text-[#d0d4f2]">Image URL</span>
-                          <input
-                            type="text"
-                            value={selectedStructuredBlock.src}
-                            onChange={(event) =>
-                              updateBlock(selectedStructuredBlockIndex, (current) =>
-                                current.type === "image"
-                                  ? { ...current, src: event.target.value.trim() }
-                                  : current,
-                              )
-                            }
-                            placeholder="https://... or /api/media/..."
-                            className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white"
-                          />
-                        </label>
-
-                        <label className="space-y-1.5 block">
-                          <span className="text-[#d0d4f2]">Alt Text</span>
-                          <input
-                            type="text"
-                            value={selectedStructuredBlock.alt}
-                            onChange={(event) =>
-                              updateBlock(selectedStructuredBlockIndex, (current) =>
-                                current.type === "image"
-                                  ? { ...current, alt: event.target.value }
-                                  : current,
-                              )
-                            }
-                            className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white"
-                          />
-                        </label>
-
-                        <label className="space-y-1.5 block">
-                          <span className="text-[#d0d4f2]">Caption</span>
-                          <input
-                            type="text"
-                            value={selectedStructuredBlock.caption || ""}
-                            onChange={(event) =>
-                              updateBlock(selectedStructuredBlockIndex, (current) =>
-                                current.type === "image"
-                                  ? { ...current, caption: event.target.value }
-                                  : current,
-                              )
-                            }
-                            className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white"
-                          />
-                        </label>
-
-                        <label className="space-y-1.5 block">
-                          <span className="text-[#d0d4f2]">Upload Image</span>
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(event) => {
-                              const file = event.target.files?.[0];
-                              if (file) {
-                                void uploadImage(selectedStructuredBlockIndex, file);
+                      {selectedStructuredBlock.type === "image" ? (
+                        <div className="grid gap-3">
+                          <label className="space-y-1.5 block">
+                            <span className="text-[#d0d4f2]">Image URL</span>
+                            <input
+                              type="text"
+                              value={selectedStructuredBlock.src}
+                              onChange={(event) =>
+                                updateBlock(selectedStructuredBlockIndex, (current) =>
+                                  current.type === "image"
+                                    ? { ...current, src: event.target.value.trim() }
+                                    : current,
+                                )
                               }
-                            }}
-                            className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white file:mr-3 file:rounded-lg file:border-0 file:bg-[#5A4DBF] file:px-3 file:py-1.5 file:text-white"
-                          />
-                          {uploadingIndex === selectedStructuredBlockIndex ? (
-                            <p className="text-xs text-[#b7bcdf]">Uploading...</p>
-                          ) : (
-                            <p className="text-xs text-[#8f95be]">
-                              Upload stores image in CMS DB and returns a stable `/api/media/...` URL.
-                            </p>
-                          )}
-                        </label>
-                      </>
-                    ) : null}
+                              placeholder="https://... or /api/media/..."
+                              className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white"
+                            />
+                          </label>
 
-                    {selectedStructuredBlock.type === "faq" ? (
-                      <>
-                        <label className="space-y-1.5 block">
-                          <span className="text-[#d0d4f2]">Question</span>
-                          <input
-                            type="text"
-                            value={selectedStructuredBlock.question}
-                            onChange={(event) =>
-                              updateBlock(selectedStructuredBlockIndex, (current) =>
-                                current.type === "faq"
-                                  ? { ...current, question: event.target.value }
-                                  : current,
-                              )
-                            }
-                            className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white"
-                          />
-                        </label>
-                        <label className="space-y-1.5 block">
-                          <span className="text-[#d0d4f2]">Answer</span>
-                          <textarea
-                            rows={4}
-                            value={selectedStructuredBlock.answer}
-                            onChange={(event) =>
-                              updateBlock(selectedStructuredBlockIndex, (current) =>
-                                current.type === "faq"
-                                  ? { ...current, answer: event.target.value }
-                                  : current,
-                              )
-                            }
-                            className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white"
-                          />
-                        </label>
-                      </>
-                    ) : null}
+                          <label className="space-y-1.5 block">
+                            <span className="text-[#d0d4f2]">Alt Text</span>
+                            <input
+                              type="text"
+                              value={selectedStructuredBlock.alt}
+                              onChange={(event) =>
+                                updateBlock(selectedStructuredBlockIndex, (current) =>
+                                  current.type === "image"
+                                    ? { ...current, alt: event.target.value }
+                                    : current,
+                                )
+                              }
+                              className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white"
+                            />
+                          </label>
 
-                    {selectedStructuredBlock.type === "table" ? (
-                      <>
-                        <label className="space-y-1.5 block">
-                          <span className="text-[#d0d4f2]">Caption</span>
-                          <input
-                            type="text"
-                            value={selectedStructuredBlock.caption || ""}
-                            onChange={(event) =>
-                              updateBlock(selectedStructuredBlockIndex, (current) =>
-                                current.type === "table"
-                                  ? { ...current, caption: event.target.value }
-                                  : current,
-                              )
-                            }
-                            className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white"
-                          />
-                        </label>
-                        <label className="space-y-1.5 block">
-                          <span className="text-[#d0d4f2]">Headers (comma-separated)</span>
-                          <input
-                            type="text"
-                            value={selectedStructuredBlock.headers.join(", ")}
-                            onChange={(event) =>
-                              updateBlock(selectedStructuredBlockIndex, (current) => {
-                                if (current.type !== "table") {
-                                  return current;
+                          <label className="space-y-1.5 block">
+                            <span className="text-[#d0d4f2]">Alignment</span>
+                            <select
+                              value={selectedStructuredBlock.align || "center"}
+                              onChange={(event) =>
+                                updateBlock(selectedStructuredBlockIndex, (current) =>
+                                  current.type === "image"
+                                    ? {
+                                        ...current,
+                                        align: event.target.value as "left" | "center" | "right" | "full",
+                                      }
+                                    : current,
+                                )
+                              }
+                              className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white"
+                            >
+                              <option value="left">Left</option>
+                              <option value="center">Center</option>
+                              <option value="right">Right</option>
+                              <option value="full">Full Width</option>
+                            </select>
+                          </label>
+
+                          <label className="space-y-1.5 block">
+                            <span className="text-[#d0d4f2]">Caption</span>
+                            <input
+                              type="text"
+                              value={selectedStructuredBlock.caption || ""}
+                              onChange={(event) =>
+                                updateBlock(selectedStructuredBlockIndex, (current) =>
+                                  current.type === "image"
+                                    ? { ...current, caption: event.target.value }
+                                    : current,
+                                )
+                              }
+                              className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white"
+                            />
+                          </label>
+
+                          <label className="space-y-1.5 block">
+                            <span className="text-[#d0d4f2]">Upload New Image</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(event) => {
+                                const file = event.target.files?.[0];
+                                if (file) {
+                                  void uploadImage(selectedStructuredBlockIndex, file);
                                 }
-                                const headers = parseTableHeaders(event.target.value);
-                                const rows = current.rows.map((row) => {
-                                  const nextRow = [...row];
-                                  while (nextRow.length < headers.length) {
-                                    nextRow.push("");
-                                  }
-                                  return nextRow.slice(0, headers.length);
-                                });
-                                return {
-                                  ...current,
-                                  headers,
-                                  rows,
-                                };
-                              })
-                            }
-                            className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white"
-                          />
-                        </label>
-                        <label className="space-y-1.5 block">
-                          <span className="text-[#d0d4f2]">Rows (one row per line, cells separated by |)</span>
-                          <textarea
-                            rows={5}
-                            value={formatTableRows(selectedStructuredBlock.rows)}
-                            onChange={(event) =>
-                              updateBlock(selectedStructuredBlockIndex, (current) =>
-                                current.type === "table"
-                                  ? {
-                                      ...current,
-                                      rows: parseTableRows(event.target.value, current.headers.length),
-                                    }
-                                  : current,
-                              )
-                            }
-                            className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white"
-                          />
-                        </label>
-                      </>
-                    ) : null}
-                  </div>
-                </div>
-              ) : inlineStructuredBlocks.length > 0 ? (
-                <p className="mt-4 text-sm text-[#b8bfe8]">
-                  Click an insert token in the editor, or pick one of the inline insert pills above, to edit it.
-                </p>
-              ) : null}
+                              }}
+                              className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white file:mr-3 file:rounded-lg file:border-0 file:bg-[#5A4DBF] file:px-3 file:py-1.5 file:text-white"
+                            />
+                            {uploadingIndex === selectedStructuredBlockIndex ? (
+                              <p className="text-xs text-[#b7bcdf]">Uploading...</p>
+                            ) : (
+                              <p className="text-xs text-[#8f95be]">
+                                Upload or select an existing asset from the media library below.
+                              </p>
+                            )}
+                          </label>
 
-              {detachedStructuredBlocks.length > 0 ? (
-                <div className="mt-5 rounded-2xl border border-[#ffcf70]/20 bg-[#1a1730] p-4">
-                  <p className="text-xs uppercase tracking-[0.14em] text-[#f0d38f]">Detached Inserts</p>
-                  <p className="mt-2 text-sm text-[#d8d0ae]">
-                    These inserts exist in the entry but are not currently placed in the article body.
-                  </p>
-                  <div className="mt-3 space-y-2">
-                    {detachedStructuredBlocks.map((block) => (
-                      <div
-                        key={`detached-${block.id}`}
-                        className="flex flex-col gap-2 rounded-xl border border-white/10 bg-white/5 p-3 md:flex-row md:items-center md:justify-between"
-                      >
-                        <span className="text-sm font-medium text-white">{getStructuredBlockLabel(block.type)}</span>
-                        <div className="flex flex-wrap gap-2">
+                          <div className="space-y-2">
+                            <p className="text-[#d0d4f2]">Choose From Media Library</p>
+                            {mediaLibraryLoading ? (
+                              <p className="text-xs text-[#8f95be]">Loading media library...</p>
+                            ) : mediaLibrary.length > 0 ? (
+                              <div className="grid gap-2 sm:grid-cols-2">
+                                {mediaLibrary.map((item) => {
+                                  const mediaUrl = `/api/media/${item.id}`;
+                                  return (
+                                    <button
+                                      key={item.id}
+                                      type="button"
+                                      onClick={() =>
+                                        updateBlock(selectedStructuredBlockIndex, (current) =>
+                                          current.type === "image"
+                                            ? {
+                                                ...current,
+                                                src: mediaUrl,
+                                                alt: current.alt || item.alt || item.filename,
+                                              }
+                                            : current,
+                                        )
+                                      }
+                                      className={`overflow-hidden rounded-xl border text-left transition-colors ${
+                                        selectedStructuredBlock.src === mediaUrl
+                                          ? "border-[#8f7bff]/60 bg-[#8f7bff]/10"
+                                          : "border-white/10 bg-white/5 hover:bg-white/10"
+                                      }`}
+                                    >
+                                      <img
+                                        src={mediaUrl}
+                                        alt={item.alt || item.filename}
+                                        className="h-20 w-full object-cover"
+                                        loading="lazy"
+                                      />
+                                      <span className="block truncate px-2 py-1.5 text-[11px] text-[#d8ddff]">
+                                        {item.filename}
+                                      </span>
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            ) : (
+                              <p className="text-xs text-[#8f95be]">No uploaded media yet.</p>
+                            )}
+                          </div>
+                        </div>
+                      ) : null}
+
+                      {selectedStructuredBlock.type === "faq" ? (
+                        <div className="space-y-3">
+                          <label className="space-y-1.5 block">
+                            <span className="text-[#d0d4f2]">Question</span>
+                            <input
+                              type="text"
+                              value={selectedStructuredBlock.question}
+                              onChange={(event) =>
+                                updateBlock(selectedStructuredBlockIndex, (current) =>
+                                  current.type === "faq"
+                                    ? { ...current, question: event.target.value }
+                                    : current,
+                                )
+                              }
+                              className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white"
+                            />
+                          </label>
+                          <label className="space-y-1.5 block">
+                            <span className="text-[#d0d4f2]">Answer</span>
+                            <textarea
+                              rows={4}
+                              value={selectedStructuredBlock.answer}
+                              onChange={(event) =>
+                                updateBlock(selectedStructuredBlockIndex, (current) =>
+                                  current.type === "faq"
+                                    ? { ...current, answer: event.target.value }
+                                    : current,
+                                )
+                              }
+                              className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white"
+                            />
+                          </label>
+                        </div>
+                      ) : null}
+
+                      {selectedStructuredBlock.type === "table" ? (
+                        <div className="space-y-3">
+                          <label className="space-y-1.5 block">
+                            <span className="text-[#d0d4f2]">Caption</span>
+                            <input
+                              type="text"
+                              value={selectedStructuredBlock.caption || ""}
+                              onChange={(event) =>
+                                updateBlock(selectedStructuredBlockIndex, (current) =>
+                                  current.type === "table"
+                                    ? { ...current, caption: event.target.value }
+                                    : current,
+                                )
+                              }
+                              className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white"
+                            />
+                          </label>
+                          <label className="space-y-1.5 block">
+                            <span className="text-[#d0d4f2]">Headers (comma-separated)</span>
+                            <input
+                              type="text"
+                              value={selectedStructuredBlock.headers.join(", ")}
+                              onChange={(event) =>
+                                updateBlock(selectedStructuredBlockIndex, (current) => {
+                                  if (current.type !== "table") {
+                                    return current;
+                                  }
+                                  const headers = parseTableHeaders(event.target.value);
+                                  const rows = current.rows.map((row) => {
+                                    const nextRow = [...row];
+                                    while (nextRow.length < headers.length) {
+                                      nextRow.push("");
+                                    }
+                                    return nextRow.slice(0, headers.length);
+                                  });
+                                  return {
+                                    ...current,
+                                    headers,
+                                    rows,
+                                  };
+                                })
+                              }
+                              className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white"
+                            />
+                          </label>
+                          <label className="space-y-1.5 block">
+                            <span className="text-[#d0d4f2]">Rows (one row per line, cells separated by |)</span>
+                            <textarea
+                              rows={5}
+                              value={formatTableRows(selectedStructuredBlock.rows)}
+                              onChange={(event) =>
+                                updateBlock(selectedStructuredBlockIndex, (current) =>
+                                  current.type === "table"
+                                    ? {
+                                        ...current,
+                                        rows: parseTableRows(event.target.value, current.headers.length),
+                                      }
+                                    : current,
+                                )
+                              }
+                              className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white"
+                            />
+                          </label>
+                        </div>
+                      ) : null}
+                    </div>
+                  ) : inlineStructuredBlocks.length > 0 ? (
+                    <p className="text-sm text-[#b8bfe8]">
+                      Click an insert token in the editor to edit it directly here.
+                    </p>
+                  ) : detachedStructuredBlocks.length > 0 ? (
+                    <div className="space-y-2">
+                      <p className="text-sm text-[#d8d0ae]">
+                        Some legacy inserts are not placed in the article body yet.
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {detachedStructuredBlocks.map((block) => (
                           <button
+                            key={`detached-${block.id}`}
                             type="button"
                             onClick={() => {
                               setForm((prev) => ({
@@ -914,26 +1038,77 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
                             }}
                             className="rounded-full border border-[#8f7bff]/45 bg-[#8f7bff]/15 px-3 py-1.5 text-xs font-semibold text-[#efe9ff]"
                           >
-                            Reinsert At End
+                            Reinsert {getStructuredBlockLabel(block.type)}
                           </button>
-                          <button
-                            type="button"
-                            onClick={() =>
-                              setForm((prev) => ({
-                                ...prev,
-                                content: prev.content.filter((item) => item.id !== block.id),
-                              }))
-                            }
-                            className="rounded-full border border-[#ff6d8b]/45 bg-[#ff6d8b]/15 px-3 py-1.5 text-xs font-semibold text-[#ffd3dd]"
-                          >
-                            Delete
-                          </button>
-                        </div>
+                        ))}
                       </div>
-                    ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-[#b8bfe8]">
+                      Use the toolbar to add rich formatting, images, FAQs, and tables directly into
+                      the writing flow.
+                    </p>
+                  )
+                }
+                footerPanel={
+                  <div className="space-y-3">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <div>
+                          <p className="text-xs uppercase tracking-[0.14em] text-[#aeb5e5]">
+                            Live Draft Preview
+                          </p>
+                        <p className="mt-1 text-xs text-[#8f95be]">
+                          This renders your current draft instantly, including inline inserts.
+                        </p>
+                      </div>
+                      {canOpenFullPreview ? (
+                        <Link
+                          href={previewPath}
+                          target="_blank"
+                          className="rounded-full border border-[#8f7bff]/55 bg-[#8f7bff]/15 px-3 py-1.5 text-xs font-semibold text-white"
+                        >
+                          Open Full Preview
+                        </Link>
+                      ) : mode === "create" && previewPath ? (
+                        <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-semibold text-[#b8bfe8]">
+                          Save once to open full preview
+                        </span>
+                      ) : null}
+                    </div>
+
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                      {livePreviewParts.length > 0 ? (
+                        <div className="space-y-6">
+                          {livePreviewParts.map((part, index) => {
+                            if (part.kind === "html") {
+                              return (
+                                <section
+                                  key={`preview-html-${index}`}
+                                  className="cms-richtext"
+                                  dangerouslySetInnerHTML={{ __html: part.html }}
+                                />
+                              );
+                            }
+
+                            const block = contentById.get(part.blockId);
+                            if (!block) {
+                              return null;
+                            }
+
+                            return (
+                              <div key={`preview-block-${part.blockId}`}>
+                                {renderCmsBlock(block, index)}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <p className="text-sm text-[#b8bfe8]">Start writing to see a live preview.</p>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ) : null}
+                }
+              />
             </div>
           </section>
 

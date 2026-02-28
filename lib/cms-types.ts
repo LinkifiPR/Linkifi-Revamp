@@ -25,6 +25,7 @@ export const cmsImageBlockSchema = z.object({
   src: z.string().default(""),
   alt: z.string().default(""),
   caption: z.string().optional().default(""),
+  align: z.enum(["left", "center", "right", "full"]).optional().default("center"),
 });
 
 export const cmsFaqBlockSchema = z.object({
