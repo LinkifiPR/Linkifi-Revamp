@@ -116,7 +116,7 @@ function AuthorSocialLinks({ author }: { author: CmsAuthor }) {
           target="_blank"
           rel="noreferrer"
           aria-label={social.label}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-[#d8d3ff] bg-white text-[#5e50da] transition-colors hover:border-[#7f6cff] hover:text-[#4738da]"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-[#dcd6ff] bg-white text-[#5d4fe0] transition-colors hover:border-[#8b7cff] hover:text-[#4738da]"
         >
           {social.icon}
         </a>
@@ -129,14 +129,16 @@ function AuthorSidebarCard({ author }: { author: CmsAuthor }) {
   const primaryUrl = getAuthorPrimaryUrl(author);
 
   return (
-    <aside className="rounded-[2rem] border border-[#d9d2ff] bg-white p-6 shadow-[0_20px_44px_rgba(71,56,218,0.08)]">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#7871b5]">Author</p>
-      <div className="mt-4 flex items-start gap-4">
+    <aside className="relative overflow-hidden rounded-[2rem] border border-white/85 bg-[linear-gradient(180deg,#ffffff,#f7f5ff)] p-6 shadow-[0_26px_64px_rgba(35,29,91,0.11)]">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_84%_8%,rgba(109,93,255,0.08),transparent_24%),radial-gradient(circle_at_8%_96%,rgba(74,176,255,0.05),transparent_20%)]" />
+      <div className="relative mb-5 h-1 w-20 rounded-full bg-[linear-gradient(90deg,#6d5dff,#4ab0ff)]" />
+      <p className="relative text-[11px] font-semibold uppercase tracking-[0.24em] text-[#7871b5]">Author</p>
+      <div className="relative mt-4 flex items-start gap-4">
         {author.imageUrl ? (
           <img
             src={author.imageUrl}
             alt={author.name}
-            className="h-20 w-20 rounded-[1.4rem] border border-[#d9d2ff] object-cover shadow-[0_12px_24px_rgba(71,56,218,0.12)]"
+            className="h-20 w-20 rounded-[1.4rem] border border-[#d9d2ff] object-cover shadow-[0_14px_28px_rgba(71,56,218,0.14)]"
           />
         ) : (
           <div className="flex h-20 w-20 items-center justify-center rounded-[1.4rem] bg-[linear-gradient(135deg,#5b4ef0,#3ea9ff)] text-xl font-bold text-white shadow-[0_12px_24px_rgba(71,56,218,0.2)]">
@@ -168,14 +170,14 @@ function AuthorSidebarCard({ author }: { author: CmsAuthor }) {
       </div>
 
       {author.bio ? (
-        <p className="mt-5 text-sm leading-relaxed text-[#45476a]">{author.bio}</p>
+        <p className="relative mt-5 text-sm leading-relaxed text-[#45476a]">{author.bio}</p>
       ) : (
-        <p className="mt-5 text-sm leading-relaxed text-[#6a6d92]">
+        <p className="relative mt-5 text-sm leading-relaxed text-[#6a6d92]">
           Linkifi contributor profile attached to this entry.
         </p>
       )}
 
-      <div className="mt-5 border-t border-[#ece8ff] pt-5">
+      <div className="relative mt-5 border-t border-[#ece8ff] pt-5">
         <AuthorSocialLinks author={author} />
       </div>
     </aside>
@@ -208,35 +210,39 @@ export function CmsEntryArticle({ entry }: Props) {
   const readMinutes = estimateReadMinutes(entry);
   const contentGridClass = entry.author
     ? toc.length > 0
-      ? "xl:grid-cols-[240px_minmax(0,1fr)_300px]"
-      : "xl:grid-cols-[minmax(0,1fr)_300px]"
+      ? "xl:grid-cols-[240px_minmax(0,1fr)_305px]"
+      : "xl:grid-cols-[minmax(0,1fr)_305px]"
     : toc.length > 0
       ? "xl:grid-cols-[240px_minmax(0,1fr)]"
       : "";
 
   return (
-    <main className="bg-[linear-gradient(180deg,#f5f2ff_0%,#f9f8ff_36%,#ffffff_100%)] pb-20 text-[#13142f]">
-      <section className="relative overflow-hidden bg-[radial-gradient(circle_at_20%_20%,rgba(129,116,255,0.38),transparent_32%),radial-gradient(circle_at_80%_0%,rgba(61,172,255,0.22),transparent_28%),linear-gradient(135deg,#120f2d_0%,#3f33c8_42%,#20174e_100%)] text-white">
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:44px_44px] opacity-20" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-[linear-gradient(180deg,transparent,rgba(255,255,255,0.08))]" />
-        <div className="container mx-auto px-6 py-16 md:py-24">
-          <div className="mx-auto max-w-4xl text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/85 backdrop-blur-sm">
+    <main className="bg-[radial-gradient(circle_at_top,rgba(109,93,255,0.08),transparent_22%),linear-gradient(180deg,#eef1f7_0%,#f7f8fc_32%,#ffffff_100%)] pb-24 text-[#13142f]">
+      <section className="relative overflow-hidden bg-[radial-gradient(circle_at_18%_20%,rgba(120,105,255,0.32),transparent_30%),radial-gradient(circle_at_82%_0%,rgba(51,180,255,0.13),transparent_26%),linear-gradient(135deg,#0d112a_0%,#2f22a8_44%,#15183a_100%)] text-white">
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:44px_44px] opacity-30" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-36 bg-[linear-gradient(180deg,transparent,rgba(255,255,255,0.14))]" />
+        <div className="pointer-events-none absolute left-1/2 top-8 h-56 w-56 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.12),transparent_62%)] blur-3xl" />
+
+        <div className="container mx-auto px-6 py-14 md:py-16 lg:py-18">
+          <div className="mx-auto max-w-5xl text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/14 bg-white/8 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/86 backdrop-blur-sm">
               <span className="h-2 w-2 rounded-full bg-[#9af3d0]" />
               {articleKindLabel(entry)}
             </div>
-            <h1 className="mt-6 text-4xl font-display font-bold leading-[1.05] tracking-[-0.03em] text-white md:text-6xl">
+
+            <h1 className="mx-auto mt-6 max-w-4xl text-4xl font-display font-bold leading-[1.03] tracking-[-0.035em] text-white md:text-5xl xl:text-[4.15rem]">
               {entry.title}
             </h1>
+
             {entry.excerpt ? (
-              <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-white/82 md:text-xl">
+              <p className="mx-auto mt-6 max-w-[52rem] text-base leading-relaxed text-white/78 md:text-[1.15rem]">
                 {entry.excerpt}
               </p>
             ) : null}
 
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-sm text-white/78">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm text-white/78">
               {entry.author ? (
-                <div className="flex items-center gap-3 rounded-full border border-white/12 bg-white/10 px-3 py-2 backdrop-blur-sm">
+                <div className="flex items-center gap-3 rounded-full border border-white/12 bg-white/8 px-3 py-2 backdrop-blur-sm">
                   {entry.author.imageUrl ? (
                     <img
                       src={entry.author.imageUrl}
@@ -259,7 +265,7 @@ export function CmsEntryArticle({ entry }: Props) {
                   </div>
                 </div>
               ) : (
-                <div className="rounded-full border border-white/12 bg-white/10 px-4 py-2 font-semibold text-white">
+                <div className="rounded-full border border-white/12 bg-white/8 px-4 py-2 font-semibold text-white">
                   Linkifi Editorial
                 </div>
               )}
@@ -276,21 +282,25 @@ export function CmsEntryArticle({ entry }: Props) {
                 <span>{readMinutes} min read</span>
               </div>
             </div>
+
+            <div className="mx-auto mt-9 h-px max-w-3xl bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.42),transparent)]" />
           </div>
         </div>
       </section>
 
-      <section className="container mx-auto px-6">
-        <div className={`mt-10 grid gap-8 md:mt-12 ${contentGridClass}`}>
+      <section className="relative z-10 container mx-auto -mt-12 px-6 md:-mt-16">
+        <div className="rounded-[2.6rem] border border-white/80 bg-white/[0.68] p-4 shadow-[0_34px_90px_rgba(38,29,100,0.1)] backdrop-blur-[8px] md:p-6">
+          <div className={`grid gap-6 lg:gap-8 ${contentGridClass}`}>
           {toc.length > 0 ? (
             <div className="order-2 h-fit xl:order-1 xl:sticky xl:top-24">
               <CmsTableOfContents items={toc} />
             </div>
           ) : null}
 
-          <article className="order-1 overflow-hidden rounded-[2rem] border border-[#ded8ff] bg-white shadow-[0_24px_56px_rgba(49,35,153,0.08)]">
-            <div className="border-b border-[#ede8ff] bg-[linear-gradient(180deg,rgba(248,246,255,0.9),rgba(255,255,255,0.95))] px-6 py-5 md:px-10">
-              <div className="flex flex-wrap items-center gap-3">
+          <article className="order-1 overflow-hidden rounded-[2.25rem] border border-white/90 bg-[linear-gradient(180deg,#ffffff,#fcfbff)] shadow-[0_30px_72px_rgba(28,24,79,0.11)]">
+            <div className="h-1.5 w-full bg-[linear-gradient(90deg,#6d5dff,#48b5ff,#6d5dff)] opacity-80" />
+            <div className="border-b border-[#ede8ff] bg-[linear-gradient(180deg,rgba(249,247,255,0.98),rgba(255,255,255,0.98))] px-6 py-5 md:px-10 md:py-6">
+              <div className="flex flex-wrap items-center gap-3 md:gap-4">
                 <span className="inline-flex items-center gap-2 rounded-full border border-[#d8d0ff] bg-[#f7f4ff] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6559d7]">
                   <span className="h-2 w-2 rounded-full bg-[#6559d7]" />
                   {entry.type === "case-study" ? "Campaign Breakdown" : "Editorial Article"}
@@ -303,7 +313,7 @@ export function CmsEntryArticle({ entry }: Props) {
               </div>
             </div>
 
-            <div className="px-6 py-8 md:px-10 md:py-10">
+            <div className="px-6 py-8 md:px-10 md:py-12">
               {inlineParts.length > 0 ? (
                 <div className="space-y-8">
                   {inlineParts.map((part, index) => {
@@ -342,6 +352,7 @@ export function CmsEntryArticle({ entry }: Props) {
               <AuthorSidebarCard author={entry.author} />
             </div>
           ) : null}
+          </div>
         </div>
       </section>
     </main>

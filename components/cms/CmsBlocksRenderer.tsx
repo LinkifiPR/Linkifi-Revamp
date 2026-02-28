@@ -1,3 +1,4 @@
+import { ArrowUpRight } from "lucide-react";
 import type { CmsBlock } from "@/lib/cms-types";
 import { getBlockHeadingId } from "@/lib/cms-render";
 
@@ -112,15 +113,17 @@ export function renderCmsBlock(block: CmsBlock, index: number) {
     return (
       <section
         key={`stats-${index}`}
-        className="relative overflow-hidden rounded-[2.25rem] border border-[#cdc6ff] bg-[linear-gradient(135deg,#0b0f1f_0%,#0a1330_54%,#090d18_100%)] p-5 md:p-7 shadow-[0_30px_70px_rgba(42,33,122,0.18)]"
+        className="relative overflow-hidden rounded-[2.4rem] border border-[#1c2451] bg-[linear-gradient(135deg,#091022_0%,#0f1741_42%,#0a0f20_100%)] p-5 md:p-7 shadow-[0_34px_84px_rgba(25,22,72,0.22)]"
       >
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_14%,rgba(110,92,255,0.24),transparent_24%),radial-gradient(circle_at_82%_20%,rgba(73,189,255,0.12),transparent_18%),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:auto,auto,36px_36px,36px_36px] opacity-70" />
-        <div className="relative mb-5 flex items-center justify-between gap-3">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(118,103,255,0.24),transparent_24%),radial-gradient(circle_at_84%_16%,rgba(79,185,255,0.14),transparent_18%),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:auto,auto,42px_42px,42px_42px] opacity-80" />
+        <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(163,151,255,0.55),transparent)]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-[linear-gradient(180deg,transparent,rgba(123,107,255,0.06))]" />
+        <div className="relative mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#c7c0ff]">Campaign Figures</p>
-            <p className="mt-2 text-sm text-white/62">High-signal outcomes pulled into the body of the case study.</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#d1c9ff]">Campaign Figures</p>
+            <p className="mt-2 text-sm text-white/58">The key commercial outcomes from this campaign.</p>
           </div>
-          <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/75">
+          <span className="inline-flex rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/72">
             Performance Snapshot
           </span>
         </div>
@@ -128,21 +131,25 @@ export function renderCmsBlock(block: CmsBlock, index: number) {
           {block.items.map((item, itemIndex) => (
             <div
               key={`stat-${itemIndex}`}
-              className="relative overflow-hidden rounded-[1.7rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.015))] px-6 py-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
+              className="group relative min-h-[11.75rem] overflow-hidden rounded-[1.7rem] border border-white/7 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015))] px-5 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] md:min-h-[13.25rem] md:px-6 md:py-6"
             >
-              <div className="pointer-events-none absolute inset-x-4 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.28),transparent)]" />
-              <div className="pointer-events-none absolute right-4 top-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#7b6bf1]/30 bg-[linear-gradient(135deg,rgba(107,87,230,0.16),rgba(54,164,255,0.08))] text-[#8a79ff]">
-                <span className="text-4xl leading-none">↗</span>
+              <div className="pointer-events-none absolute inset-x-4 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.22),transparent)]" />
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_88%_14%,rgba(123,107,255,0.14),transparent_20%)] opacity-90" />
+              <div className="pointer-events-none absolute right-3 top-3 h-16 w-16 rounded-full bg-[radial-gradient(circle,rgba(128,113,255,0.22),transparent_66%)] blur-2xl motion-safe:animate-[pulse_5.5s_ease-in-out_infinite]" />
+              <div className="pointer-events-none absolute right-5 top-5 text-[#8576ff] drop-shadow-[0_0_14px_rgba(133,118,255,0.42)] transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-safe:animate-[pulse_4.8s_ease-in-out_infinite]">
+                <ArrowUpRight className="h-9 w-9 stroke-[1.8]" />
               </div>
-              <p className="pr-14 text-5xl md:text-6xl font-display font-bold tracking-[-0.05em] text-[#7b6bff]">
+              <div className="pointer-events-none absolute right-5 top-14 h-px w-12 rotate-45 bg-[linear-gradient(90deg,transparent,rgba(133,118,255,0.45),transparent)]" />
+              <p className="pr-10 text-[clamp(3.2rem,8vw,5.1rem)] font-display font-bold leading-none tracking-[-0.055em] text-[#8071ff]">
                 {item.value}
               </p>
-              <p className="mt-4 max-w-[11rem] text-sm font-semibold uppercase tracking-[0.14em] text-white/90 md:text-base">
+              <p className="mt-4 max-w-[11rem] text-sm font-semibold uppercase leading-[1.45] tracking-[0.17em] text-white/92 md:text-[0.95rem]">
                 {item.label}
               </p>
-              <div className="mt-6 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/45">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#7b6bff]" />
-                Verified result
+              <div className="mt-6 h-px w-full bg-[linear-gradient(90deg,rgba(128,113,255,0.32),rgba(255,255,255,0.02))]" />
+              <div className="mt-4 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/42">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#7e70ff]" />
+                Tracked Metric
               </div>
             </div>
           ))}
