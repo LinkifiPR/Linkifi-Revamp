@@ -281,19 +281,7 @@ export function CmsEntryArticle({ entry }: Props) {
       </section>
 
       <section className="container mx-auto px-6">
-        {entry.featuredImageUrl ? (
-          <div className="-mt-10 md:-mt-14">
-            <div className="overflow-hidden rounded-[2rem] border border-white/60 bg-white p-3 shadow-[0_28px_60px_rgba(49,35,153,0.16)]">
-              <img
-                src={entry.featuredImageUrl}
-                alt={entry.featuredImageAlt || entry.title}
-                className="h-[220px] w-full rounded-[1.45rem] object-cover md:h-[380px]"
-              />
-            </div>
-          </div>
-        ) : null}
-
-        <div className={`mt-10 grid gap-8 ${contentGridClass}`}>
+        <div className={`mt-10 grid gap-8 md:mt-12 ${contentGridClass}`}>
           {toc.length > 0 ? (
             <div className="order-2 h-fit xl:order-1 xl:sticky xl:top-24">
               <CmsTableOfContents items={toc} />
