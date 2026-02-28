@@ -287,7 +287,7 @@ export default function Home() {
     },
     {
       key: "therapy",
-      href: "/case-studies/digital-pr-gets-1-spot-on-google-for-therapy-room-directory-website",
+      href: "/case-studies/therapy-room-directory-website",
       eyebrow: "Therapy Rooms",
       kicker: "Case Study 02",
       title: "Digital PR Gets #1 Spot on Google for Therapy Room Directory Website",
