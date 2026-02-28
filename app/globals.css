@@ -1835,6 +1835,11 @@ img[src$=".svg"].publication-logo {
   color: #eef2ff;
 }
 
+.cms-richtext-editor ul li::marker,
+.cms-richtext-editor ol li::marker {
+  color: #eef2ff;
+}
+
 .cms-richtext-editor a {
   color: #9f8eff;
   font-weight: 700;

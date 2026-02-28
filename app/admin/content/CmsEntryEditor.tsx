@@ -3,9 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { renderCmsBlock } from "@/components/cms/CmsBlocksRenderer";
 import RichTextEditor from "@/app/admin/content/RichTextEditor";
-import { renderCmsBodyHtml } from "@/lib/cms-render";
 import type { CmsBlock, CmsEntry, CmsEntryInput, CmsMedia } from "@/lib/cms-types";
 import { slugifyCmsValue } from "@/lib/cms-types";
 
@@ -17,9 +15,6 @@ type Props = {
 
 type StructuredBlockType = "image" | "faq" | "table";
 type StructuredCmsBlock = Extract<CmsBlock, { type: StructuredBlockType }> & { id: string };
-type InlinePreviewPart =
-  | { kind: "html"; html: string }
-  | { kind: "block"; blockId: string };
 
 function makeDefaultInput(): CmsEntryInput {
   return {
@@ -223,43 +218,6 @@ function formatTableRows(rows: string[][]): string {
   return rows.map((row) => row.join(" | ")).join("\n");
 }
 
-function splitInlinePreviewHtml(html: string): InlinePreviewPart[] {
-  const parts: InlinePreviewPart[] = [];
-  const tokenRegex =
-    /<p[^>]*>\s*(<span[^>]*data-cms-block-id=["']([^"']+)["'][^>]*>[\s\S]*?<\/span>)\s*<\/p>(?:\s*<p>\s*(?:<br\s*\/?>)?\s*<\/p>)?|<span[^>]*data-cms-block-id=["']([^"']+)["'][^>]*>[\s\S]*?<\/span>/gi;
-  let cursor = 0;
-  let match: RegExpExecArray | null = tokenRegex.exec(html);
-
-  while (match) {
-    const [tokenHtml] = match;
-    const blockId = match[2] || match[3];
-    const tokenStart = match.index;
-    const tokenEnd = tokenStart + tokenHtml.length;
-
-    if (!blockId) {
-      cursor = tokenEnd;
-      match = tokenRegex.exec(html);
-      continue;
-    }
-
-    const htmlBefore = html.slice(cursor, tokenStart);
-    if (htmlBefore.trim()) {
-      parts.push({ kind: "html", html: htmlBefore });
-    }
-
-    parts.push({ kind: "block", blockId });
-    cursor = tokenEnd;
-    match = tokenRegex.exec(html);
-  }
-
-  const trailingHtml = html.slice(cursor);
-  if (trailingHtml.trim()) {
-    parts.push({ kind: "html", html: trailingHtml });
-  }
-
-  return parts;
-}
-
 export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
   const router = useRouter();
   const [form, setForm] = useState<CmsEntryInput>(() =>
@@ -279,11 +237,6 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
 
   const previewPath = useMemo(() => buildPreviewPath(form.type, form.slug), [form.type, form.slug]);
   const canOpenFullPreview = mode === "edit" && Boolean(previewPath);
-  const livePreviewRender = useMemo(() => renderCmsBodyHtml(form.bodyHtml || ""), [form.bodyHtml]);
-  const livePreviewParts = useMemo(
-    () => splitInlinePreviewHtml(livePreviewRender.html),
-    [livePreviewRender.html],
-  );
   const inlineStructuredBlockIds = useMemo(() => extractBlockTokenIds(form.bodyHtml || ""), [form.bodyHtml]);
   const inlineStructuredBlockIdSet = useMemo(
     () => new Set(inlineStructuredBlockIds),
@@ -729,10 +682,24 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
           <section className="rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-sm">
             <h2 className="text-lg font-semibold">Main Writing</h2>
             <p className="mt-2 text-sm text-[#b8bfe8]">
-              Use the toolbar for full formatting, insert structured elements at the cursor, edit
-              the selected insert inside this same writing area, and review the live draft preview
-              before publishing.
+              Use the toolbar for full formatting, insert structured elements at the cursor, and
+              edit the selected insert inside this same writing area.
             </p>
+            <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
+              {canOpenFullPreview ? (
+                <Link
+                  href={previewPath}
+                  target="_blank"
+                  className="rounded-full border border-[#8f7bff]/55 bg-[#8f7bff]/15 px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#8f7bff]/25 transition-colors"
+                >
+                  Open Draft Preview
+                </Link>
+              ) : previewPath ? (
+                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-semibold text-[#b8bfe8]">
+                  Save once to enable draft preview
+                </span>
+              ) : null}
+            </div>
             <div className="mt-4">
               <RichTextEditor
                 value={form.bodyHtml}
@@ -1049,64 +1016,6 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry }: Props) {
                       the writing flow.
                     </p>
                   )
-                }
-                footerPanel={
-                  <div className="space-y-3">
-                      <div className="flex flex-wrap items-center justify-between gap-2">
-                        <div>
-                          <p className="text-xs uppercase tracking-[0.14em] text-[#aeb5e5]">
-                            Live Draft Preview
-                          </p>
-                        <p className="mt-1 text-xs text-[#8f95be]">
-                          This renders your current draft instantly, including inline inserts.
-                        </p>
-                      </div>
-                      {canOpenFullPreview ? (
-                        <Link
-                          href={previewPath}
-                          target="_blank"
-                          className="rounded-full border border-[#8f7bff]/55 bg-[#8f7bff]/15 px-3 py-1.5 text-xs font-semibold text-white"
-                        >
-                          Open Full Preview
-                        </Link>
-                      ) : mode === "create" && previewPath ? (
-                        <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-semibold text-[#b8bfe8]">
-                          Save once to open full preview
-                        </span>
-                      ) : null}
-                    </div>
-
-                    <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                      {livePreviewParts.length > 0 ? (
-                        <div className="space-y-6">
-                          {livePreviewParts.map((part, index) => {
-                            if (part.kind === "html") {
-                              return (
-                                <section
-                                  key={`preview-html-${index}`}
-                                  className="cms-richtext"
-                                  dangerouslySetInnerHTML={{ __html: part.html }}
-                                />
-                              );
-                            }
-
-                            const block = contentById.get(part.blockId);
-                            if (!block) {
-                              return null;
-                            }
-
-                            return (
-                              <div key={`preview-block-${part.blockId}`}>
-                                {renderCmsBlock(block, index)}
-                              </div>
-                            );
-                          })}
-                        </div>
-                      ) : (
-                        <p className="text-sm text-[#b8bfe8]">Start writing to see a live preview.</p>
-                      )}
-                    </div>
-                  </div>
                 }
               />
             </div>
