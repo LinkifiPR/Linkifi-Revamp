@@ -132,19 +132,23 @@ export function renderCmsBlock(block: CmsBlock, index: number) {
                 <div className="pointer-events-none absolute right-4 top-4 text-[#7a6dff] drop-shadow-[0_0_10px_rgba(122,109,255,0.18)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-safe:animate-[pulse_5.8s_ease-in-out_infinite]">
                   <ArrowUpRight className="h-5 w-5 stroke-[2]" />
                 </div>
-                <div>
-                  <p
-                    className={`pr-7 font-display font-bold leading-none tracking-[-0.05em] text-[#6b5cff] tabular-nums whitespace-nowrap ${
-                      compactValue
-                        ? "text-[clamp(2.15rem,4vw,3.35rem)]"
-                        : "text-[clamp(2.6rem,5vw,4.05rem)]"
-                    }`}
-                  >
-                    {item.value}
-                  </p>
-                  <p className="mt-3 max-w-[10rem] text-[0.88rem] font-semibold uppercase leading-[1.45] tracking-[0.16em] text-[#232644]">
-                    {item.label}
-                  </p>
+                <div className="grid flex-1 grid-rows-[4.25rem_4rem]">
+                  <div className="flex items-end">
+                    <p
+                      className={`max-w-full pr-8 font-display font-bold leading-none text-[#6b5cff] tabular-nums whitespace-nowrap ${
+                        compactValue
+                          ? "text-[clamp(1.95rem,3.2vw,3rem)] tracking-[-0.06em]"
+                          : "text-[clamp(2.65rem,4.6vw,4rem)] tracking-[-0.05em]"
+                      }`}
+                    >
+                      {item.value}
+                    </p>
+                  </div>
+                  <div className="flex items-start">
+                    <p className="w-full max-w-[10.5rem] text-[0.8rem] font-semibold uppercase leading-[1.38] tracking-[0.15em] text-[#232644]">
+                      {item.label}
+                    </p>
+                  </div>
                 </div>
                 <div>
                   <div className="h-px w-full bg-[linear-gradient(90deg,rgba(109,93,255,0.16),rgba(109,93,255,0.02))]" />
