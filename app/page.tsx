@@ -1466,11 +1466,14 @@ export default function Home() {
                         <div className="mt-6 flex flex-col gap-4 md:mt-8 md:flex-row md:items-end md:justify-between">
                           <div className="grid gap-2.5">
                             {item.proofPoints.map((proof) => (
-                              <div key={`${item.key}-${proof}`} className="flex items-center gap-2.5 text-sm text-white/88">
+                              <div
+                                key={`${item.key}-${proof}`}
+                                className="flex items-center gap-2.5 text-sm"
+                              >
                                 <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/8 text-[#9B90FF]">
                                   <CheckCircle2 className="h-3.5 w-3.5" />
                                 </span>
-                                <span>{proof}</span>
+                                <span className="font-medium text-white">{proof}</span>
                               </div>
                             ))}
                           </div>
@@ -1489,6 +1492,18 @@ export default function Home() {
                     </motion.article>
                   );
                 })}
+              </div>
+
+              <div className="mt-10 flex justify-center">
+                <Link href="/case-studies">
+                  <Button
+                    className="h-14 rounded-full px-8 md:px-10 text-base md:text-lg font-semibold bg-white text-[#151327] hover:bg-white/92 shadow-[0_18px_40px_rgba(0,0,0,0.24)]"
+                    data-testid="button-work-showcase-all-case-studies"
+                  >
+                    Read more case studies
+                    <ArrowRight className="ml-2.5 h-4.5 w-4.5" />
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
