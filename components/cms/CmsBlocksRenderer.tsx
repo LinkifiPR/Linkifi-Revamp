@@ -120,32 +120,42 @@ export function renderCmsBlock(block: CmsBlock, index: number) {
           <div className="h-px flex-1 bg-[linear-gradient(90deg,rgba(107,97,199,0.26),rgba(107,97,199,0.03))]" />
         </div>
         <div className="grid gap-3 md:grid-cols-3">
-          {block.items.map((item, itemIndex) => (
-            <div
-              key={`stat-${itemIndex}`}
-              className="group relative flex min-h-[10.25rem] flex-col justify-between overflow-hidden rounded-[1.55rem] border border-[#e4defd] bg-[linear-gradient(180deg,#ffffff,#fbfaff)] px-5 py-5 shadow-[0_10px_22px_rgba(88,72,194,0.05)]"
-            >
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,#6d5dff,#48b5ff)] opacity-90" />
-              <div className="pointer-events-none absolute right-4 top-4 text-[#7a6dff] drop-shadow-[0_0_10px_rgba(122,109,255,0.18)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-safe:animate-[pulse_5.8s_ease-in-out_infinite]">
-                <ArrowUpRight className="h-5 w-5 stroke-[2]" />
-              </div>
-              <div>
-                <p className="pr-7 text-[clamp(2.6rem,5vw,4.05rem)] font-display font-bold leading-none tracking-[-0.05em] text-[#6b5cff]">
-                  {item.value}
-                </p>
-                <p className="mt-3 max-w-[10rem] text-[0.88rem] font-semibold uppercase leading-[1.45] tracking-[0.16em] text-[#232644]">
-                  {item.label}
-                </p>
-              </div>
-              <div>
-                <div className="h-px w-full bg-[linear-gradient(90deg,rgba(109,93,255,0.16),rgba(109,93,255,0.02))]" />
-                <div className="mt-3 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#7b80a4]">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#7e70ff]" />
-                  Tracked Metric
+          {block.items.map((item, itemIndex) => {
+            const compactValue = item.value.length >= 5;
+
+            return (
+              <div
+                key={`stat-${itemIndex}`}
+                className="group relative flex min-h-[10.25rem] flex-col justify-between overflow-hidden rounded-[1.55rem] border border-[#e4defd] bg-[linear-gradient(180deg,#ffffff,#fbfaff)] px-5 py-5 shadow-[0_10px_22px_rgba(88,72,194,0.05)]"
+              >
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,#6d5dff,#48b5ff)] opacity-90" />
+                <div className="pointer-events-none absolute right-4 top-4 text-[#7a6dff] drop-shadow-[0_0_10px_rgba(122,109,255,0.18)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-safe:animate-[pulse_5.8s_ease-in-out_infinite]">
+                  <ArrowUpRight className="h-5 w-5 stroke-[2]" />
+                </div>
+                <div>
+                  <p
+                    className={`pr-7 font-display font-bold leading-none tracking-[-0.05em] text-[#6b5cff] tabular-nums whitespace-nowrap ${
+                      compactValue
+                        ? "text-[clamp(2.15rem,4vw,3.35rem)]"
+                        : "text-[clamp(2.6rem,5vw,4.05rem)]"
+                    }`}
+                  >
+                    {item.value}
+                  </p>
+                  <p className="mt-3 max-w-[10rem] text-[0.88rem] font-semibold uppercase leading-[1.45] tracking-[0.16em] text-[#232644]">
+                    {item.label}
+                  </p>
+                </div>
+                <div>
+                  <div className="h-px w-full bg-[linear-gradient(90deg,rgba(109,93,255,0.16),rgba(109,93,255,0.02))]" />
+                  <div className="mt-3 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#7b80a4]">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#7e70ff]" />
+                    Tracked Metric
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
     );
