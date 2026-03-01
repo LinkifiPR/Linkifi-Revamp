@@ -91,17 +91,17 @@ export default function Home() {
   const footerSocialLinks = [
     {
       label: "LinkedIn",
-      href: "https://www.linkedin.com",
+      href: "https://www.linkedin.com/company/linkifi-agency/",
       icon: <Linkedin className="h-5 w-5" />,
     },
     {
       label: "X",
-      href: "https://x.com",
+      href: "https://x.com/Linkifi_",
       icon: <span className="text-sm font-black tracking-tight">X</span>,
     },
     {
       label: "YouTube",
-      href: "https://www.youtube.com",
+      href: "https://www.youtube.com/@linkifi",
       icon: <Youtube className="h-5 w-5" />,
     },
   ] as const;
