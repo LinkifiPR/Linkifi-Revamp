@@ -463,21 +463,24 @@ export default function Home() {
 
       {/* Navbar */}
       <nav className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl rounded-[30px] border border-[#DDD7FF] bg-white/92 shadow-[0_26px_80px_rgba(15,15,35,0.14)] backdrop-blur-xl">
+        <div className="mx-auto max-w-7xl rounded-[30px] border border-white/12 bg-[linear-gradient(135deg,rgba(8,10,24,0.95),rgba(18,24,60,0.92))] shadow-[0_26px_80px_rgba(3,6,18,0.5)] backdrop-blur-xl">
           <div className="flex h-20 items-center justify-between px-5 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2">
-            <Image
-              src="/logo.png"
-              alt="Linkifi"
-              width={160}
-              height={48}
-              className="h-10 md:h-12 w-auto object-contain"
-              priority
-            />
+          <div className="flex items-center gap-3">
+            <div className="relative h-11 w-[54px] overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04]">
+              <Image
+                src="/logo.png"
+                alt=""
+                fill
+                sizes="54px"
+                className="object-cover object-left"
+                priority
+              />
+            </div>
+            <span className="text-[28px] font-semibold tracking-tight text-white">Linkifi</span>
           </div>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center rounded-full border border-[#E8E4FF] bg-[#F7F5FF] p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]">
+          <div className="hidden lg:flex items-center rounded-full border border-white/12 bg-white/[0.92] p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_12px_24px_rgba(8,10,24,0.18)]">
             {navigationItems.map((item) =>
               item.href.startsWith("#") ? (
                 <a
@@ -514,9 +517,9 @@ export default function Home() {
             data-testid="button-mobile-menu"
           >
             {isMenuOpen ? (
-              <X className="text-[#0F0F0F]" />
+              <X className="text-white" />
             ) : (
-              <Menu className="text-[#0F0F0F]" />
+              <Menu className="text-white" />
             )}
           </button>
         </div>
@@ -526,7 +529,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
-            className="lg:hidden border-t border-[#ECE8FF] bg-white/96"
+            className="lg:hidden border-t border-white/10 bg-[#0A0D20]/96"
           >
             <div className="px-5 py-5 flex flex-col gap-2">
               {navigationItems.map((item) =>
@@ -535,7 +538,7 @@ export default function Home() {
                     key={item.label}
                     href={item.href}
                     onClick={() => setIsMenuOpen(false)}
-                    className="rounded-2xl px-4 py-3 text-sm font-semibold text-[#4C4D73] transition-colors hover:bg-[#F5F2FF] hover:text-[#5A4DBF]"
+                    className="rounded-2xl px-4 py-3 text-sm font-semibold text-white/78 transition-colors hover:bg-white/[0.06] hover:text-white"
                   >
                     {item.label}
                   </a>
@@ -544,7 +547,7 @@ export default function Home() {
                     key={item.label}
                     href={item.href}
                     onClick={() => setIsMenuOpen(false)}
-                    className="rounded-2xl px-4 py-3 text-sm font-semibold text-[#4C4D73] transition-colors hover:bg-[#F5F2FF] hover:text-[#5A4DBF]"
+                    className="rounded-2xl px-4 py-3 text-sm font-semibold text-white/78 transition-colors hover:bg-white/[0.06] hover:text-white"
                   >
                     {item.label}
                   </Link>
@@ -1755,13 +1758,13 @@ export default function Home() {
               <div className="grid gap-12 lg:grid-cols-[1.35fr_repeat(3,1fr)]">
                 <div>
                   <div className="mb-6 flex items-center gap-4">
-                    <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
+                    <span className="relative flex h-12 w-[58px] items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/5">
                       <Image
-                        src="/logo-icon.png"
-                        alt="Linkifi"
-                        width={36}
-                        height={36}
-                        className="h-9 w-9 object-contain"
+                        src="/logo.png"
+                        alt=""
+                        fill
+                        sizes="58px"
+                        className="object-cover object-left"
                       />
                     </span>
                     <div>
