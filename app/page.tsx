@@ -22,12 +22,6 @@ import {
   Users,
 } from "lucide-react";
 import { useRef, useState } from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -1643,102 +1637,59 @@ export default function Home() {
           </div>
         </section>
 
-        {/* FAQ Section */}
-        <section className="container mx-auto px-6 mb-32">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-[#0F0F0F] text-center mb-12">
-              Frequently Asked Questions
-            </h2>
-
-            <Accordion type="single" collapsible className="space-y-4">
-              <AccordionItem value="item-1" className="bg-white border border-gray-200 rounded-2xl px-6">
-                <AccordionTrigger className="text-left font-semibold text-[#0F0F0F]">
-                  What kind of publications do you get links from?
-                </AccordionTrigger>
-                <AccordionContent className="text-[#535479]">
-                  We secure links from high-authority US and UK news publications with Domain Ratings
-                  ranging from DR 40 to DR 95. This includes major outlets like Forbes, TechCrunch,
-                  HuffPost, Yahoo, The New York Times, ZDNet, Healthline, and many more tier-1 publications.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="item-2" className="bg-white border border-gray-200 rounded-2xl px-6">
-                <AccordionTrigger className="text-left font-semibold text-[#0F0F0F]">
-                  How long does it take to get links?
-                </AccordionTrigger>
-                <AccordionContent className="text-[#535479]">
-                  Delivery times vary based on your package. For smaller packages (5-10 links), expect
-                  delivery within 12 months. Larger packages (20-50 links) may take 18-24 months. We
-                  provide real-time reporting so you can track every link as it goes live.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="item-3" className="bg-white border border-gray-200 rounded-2xl px-6">
-                <AccordionTrigger className="text-left font-semibold text-[#0F0F0F]">
-                  What is the average DR of links you provide?
-                </AccordionTrigger>
-                <AccordionContent className="text-[#535479]">
-                  We guarantee an average Domain Rating of DR 70+ across all packages. Many of our
-                  placements are in DR 80-95 publications, ensuring you get high-authority backlinks
-                  that significantly impact your SEO.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="item-4" className="bg-white border border-gray-200 rounded-2xl px-6">
-                <AccordionTrigger className="text-left font-semibold text-[#0F0F0F]">
-                  Are these links white-hat and safe?
-                </AccordionTrigger>
-                <AccordionContent className="text-[#535479]">
-                  Absolutely. We exclusively use digital PR methods, which is the only truly white-hat
-                  approach to link building. We pitch real stories to real journalists who choose to
-                  feature your brand. These are genuine editorial placements, not paid links or PBNs.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="item-5" className="bg-white border border-gray-200 rounded-2xl px-6">
-                <AccordionTrigger className="text-left font-semibold text-[#0F0F0F]">
-                  Do you offer payment plans?
-                </AccordionTrigger>
-                <AccordionContent className="text-[#535479]">
-                  Yes! We offer 6-month payment plans for our 10 and 20 link packages, and 12-month
-                  payment plans for our 50-link package. You can also choose one-time payment options
-                  if you prefer.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </div>
-        </section>
-
         {/* CTA Section */}
-        <section className="bg-[#0F0F0F] py-24">
-          <div className="container mx-auto px-6 text-center">
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-6">
-              Ready to build powerful links?
-            </h2>
-            <p className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
-              Join the brands that trust Linkifi to deliver exceptional PR link building results.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="#Pricing">
-                <Button
-                  size="lg"
-                  className="h-14 px-8 rounded-full text-lg bg-[#5A4DBF] hover:bg-[#483d99] text-white font-bold"
-                  data-testid="button-cta-get-started"
-                >
-                  Get Started
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              </a>
-              <Link href="/contact-us">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="h-14 px-8 rounded-full text-lg border-gray-600 text-white hover:bg-white/10"
-                  data-testid="button-cta-contact"
-                >
-                  Contact Us
-                </Button>
-              </Link>
+        <section className="container mx-auto px-6 mb-24">
+          <div className="relative overflow-hidden rounded-[34px] md:rounded-[42px] border border-[#151726] bg-[#090B12] px-6 py-12 md:px-10 md:py-14 shadow-[0_34px_100px_rgba(9,11,18,0.45)]">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(114,91,255,0.2),transparent_30%),radial-gradient(circle_at_84%_20%,rgba(53,199,255,0.14),transparent_28%),radial-gradient(circle_at_50%_100%,rgba(215,51,162,0.16),transparent_34%)]" />
+            <div className="absolute inset-0 [background-image:linear-gradient(rgba(255,255,255,0.022)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.022)_1px,transparent_1px)] [background-size:42px_42px] opacity-40" />
+
+            <div className="relative z-10">
+              <div className="mx-auto max-w-4xl text-center">
+                <p className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.05] px-4 py-1.5 text-sm font-semibold text-[#8F84FF]">
+                  Ready when you are
+                </p>
+                <h2 className="mt-5 text-4xl md:text-6xl font-display font-bold tracking-tight text-white">
+                  Ready to build powerful links?
+                </h2>
+                <p className="mt-5 text-base md:text-xl leading-relaxed text-[#C0BCDB]">
+                  If you want authoritative coverage that improves rankings, strengthens trust, and
+                  compounds across search, media, and AI visibility, this is the next step.
+                </p>
+              </div>
+
+              <div className="mt-8 flex flex-wrap justify-center gap-3 md:gap-4">
+                {["Tier-one placements", "Editorially earned", "Commercially focused"].map((item) => (
+                  <span
+                    key={item}
+                    className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm font-medium text-white/80"
+                  >
+                    <span className="mr-2 h-2 w-2 rounded-full bg-[#8F84FF]" />
+                    {item}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <a href="#Pricing">
+                  <Button
+                    size="lg"
+                    className="h-14 min-w-[220px] rounded-full bg-[#5A4DBF] px-8 text-lg font-bold text-white shadow-[0_18px_38px_rgba(90,77,191,0.38)] transition-all hover:bg-[#4B40A6] hover:shadow-[0_22px_44px_rgba(90,77,191,0.46)]"
+                    data-testid="button-cta-get-started"
+                  >
+                    Get Started
+                    <ArrowRight className="ml-2 w-5 h-5" />
+                  </Button>
+                </a>
+                <Link href="/contact-us">
+                  <Button
+                    size="lg"
+                    className="h-14 min-w-[220px] rounded-full border border-white/12 bg-white/[0.08] px-8 text-lg font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/[0.14]"
+                    data-testid="button-cta-contact"
+                  >
+                    Contact Us
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </section>
