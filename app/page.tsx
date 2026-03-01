@@ -11,6 +11,7 @@ import {
   Boxes,
   CheckCircle2,
   Fingerprint,
+  Linkedin,
   Menu,
   Megaphone,
   MessageCircle,
@@ -20,6 +21,7 @@ import {
   X,
   TrendingUp,
   Users,
+  Youtube,
 } from "lucide-react";
 import { useRef, useState } from "react";
 
@@ -50,6 +52,59 @@ export default function Home() {
     useTransform(strategicScrollProgress, [0, 1], [16, -16]),
     { stiffness: 90, damping: 22, mass: 0.35 },
   );
+
+  const navigationItems = [
+    { label: "SEO Digital PR", href: "#Pricing" },
+    { label: "Authority PR", href: "#Pricing" },
+    { label: "Case Studies", href: "/case-studies" },
+    { label: "Blog", href: "/blog" },
+    { label: "Press Badge Maker", href: "#howitworks" },
+  ] as const;
+
+  const footerMenus = [
+    {
+      title: "Services",
+      links: [
+        { label: "SEO Digital PR", href: "#Pricing" },
+        { label: "Authority PR", href: "#Pricing" },
+        { label: "Press Badge Maker", href: "#howitworks" },
+      ],
+    },
+    {
+      title: "Explore",
+      links: [
+        { label: "Case Studies", href: "/case-studies" },
+        { label: "Blog", href: "/blog" },
+        { label: "Market Movers Podcast", href: "/blog?category=podcast" },
+      ],
+    },
+    {
+      title: "Company",
+      links: [
+        { label: "Contact Us", href: "/contact-us" },
+        { label: "Privacy Policy", href: "/privacy" },
+        { label: "Terms of Service", href: "/terms" },
+      ],
+    },
+  ] as const;
+
+  const footerSocialLinks = [
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com",
+      icon: <Linkedin className="h-5 w-5" />,
+    },
+    {
+      label: "X",
+      href: "https://x.com",
+      icon: <span className="text-sm font-black tracking-tight">X</span>,
+    },
+    {
+      label: "YouTube",
+      href: "https://www.youtube.com",
+      icon: <Youtube className="h-5 w-5" />,
+    },
+  ] as const;
 
   const featuredPublications = [
     {
@@ -407,8 +462,9 @@ export default function Home() {
       <Script src="https://platform.twitter.com/widgets.js" strategy="lazyOnload" />
 
       {/* Navbar */}
-      <nav className="fixed w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 top-0 transition-all duration-300">
-        <div className="container mx-auto px-6 h-20 flex items-center justify-between">
+      <nav className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl rounded-[30px] border border-[#DDD7FF] bg-white/92 shadow-[0_26px_80px_rgba(15,15,35,0.14)] backdrop-blur-xl">
+          <div className="flex h-20 items-center justify-between px-5 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2">
             <Image
               src="/logo.png"
@@ -421,42 +477,31 @@ export default function Home() {
           </div>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
-            <Link
-              href="/expert-quote"
-              className="text-sm font-medium text-[#535479] hover:text-[#5A4DBF] transition-colors"
-            >
-              Expert Quote
-            </Link>
-            <Link
-              href="/digital-pr"
-              className="text-sm font-medium text-[#535479] hover:text-[#5A4DBF] transition-colors"
-            >
-              Digital PR
-            </Link>
-            <a
-              href="#Pricing"
-              className="text-sm font-medium text-[#535479] hover:text-[#5A4DBF] transition-colors"
-            >
-              Pricing
-            </a>
-            <Link
-              href="/case-studies"
-              className="text-sm font-medium text-[#535479] hover:text-[#5A4DBF] transition-colors"
-            >
-              Case Studies
-            </Link>
-            <Link
-              href="/blog"
-              className="text-sm font-medium text-[#535479] hover:text-[#5A4DBF] transition-colors"
-            >
-              Blog
-            </Link>
+          <div className="hidden lg:flex items-center rounded-full border border-[#E8E4FF] bg-[#F7F5FF] p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]">
+            {navigationItems.map((item) =>
+              item.href.startsWith("#") ? (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="inline-flex items-center rounded-full px-4 py-2.5 text-[13px] font-semibold tracking-[0.02em] text-[#4C4D73] transition-all duration-300 hover:bg-white hover:text-[#5A4DBF] hover:shadow-[0_10px_24px_rgba(90,77,191,0.12)]"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="inline-flex items-center rounded-full px-4 py-2.5 text-[13px] font-semibold tracking-[0.02em] text-[#4C4D73] transition-all duration-300 hover:bg-white hover:text-[#5A4DBF] hover:shadow-[0_10px_24px_rgba(90,77,191,0.12)]"
+                >
+                  {item.label}
+                </Link>
+              ),
+            )}
           </div>
 
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-4">
             <Link href="/contact-us">
-              <Button className="bg-[#5A4DBF] hover:bg-[#483d99] text-white shadow-lg shadow-[#5A4DBF]/20 transition-all duration-300 hover:scale-105 rounded-full px-6">
+              <Button className="rounded-full border border-[#8A7BFF]/40 bg-[linear-gradient(135deg,#5A4DBF_0%,#6B5AF3_48%,#8470FF_100%)] px-6 text-sm font-semibold text-white shadow-[0_18px_36px_rgba(90,77,191,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(90,77,191,0.34)]">
                 Contact
               </Button>
             </Link>
@@ -464,7 +509,7 @@ export default function Home() {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden p-2"
+            className="lg:hidden p-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             data-testid="button-mobile-menu"
           >
@@ -481,32 +526,39 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
-            className="md:hidden bg-white border-b border-gray-100"
+            className="lg:hidden border-t border-[#ECE8FF] bg-white/96"
           >
-            <div className="px-6 py-4 flex flex-col gap-4">
-              <Link href="/expert-quote" className="text-[#535479] font-medium py-2">
-                Expert Quote
-              </Link>
-              <Link href="/digital-pr" className="text-[#535479] font-medium py-2">
-                Digital PR
-              </Link>
-              <a href="#Pricing" className="text-[#535479] font-medium py-2">
-                Pricing
-              </a>
-              <Link href="/case-studies" className="text-[#535479] font-medium py-2">
-                Case Studies
-              </Link>
-              <Link href="/blog" className="text-[#535479] font-medium py-2">
-                Blog
-              </Link>
+            <div className="px-5 py-5 flex flex-col gap-2">
+              {navigationItems.map((item) =>
+                item.href.startsWith("#") ? (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="rounded-2xl px-4 py-3 text-sm font-semibold text-[#4C4D73] transition-colors hover:bg-[#F5F2FF] hover:text-[#5A4DBF]"
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="rounded-2xl px-4 py-3 text-sm font-semibold text-[#4C4D73] transition-colors hover:bg-[#F5F2FF] hover:text-[#5A4DBF]"
+                  >
+                    {item.label}
+                  </Link>
+                ),
+              )}
               <Link href="/contact-us">
-                <Button className="w-full bg-[#5A4DBF] text-white rounded-full">
+                <Button className="mt-2 w-full rounded-full bg-[linear-gradient(135deg,#5A4DBF_0%,#6B5AF3_48%,#8470FF_100%)] text-white shadow-[0_16px_30px_rgba(90,77,191,0.24)]">
                   Contact
                 </Button>
               </Link>
             </div>
           </motion.div>
         )}
+        </div>
       </nav>
 
       <main className="pt-32">
@@ -1695,80 +1747,94 @@ export default function Home() {
         </section>
 
         {/* Footer */}
-        <footer className="border-t border-gray-100 bg-white pt-20 pb-10">
-          <div className="container mx-auto px-6">
-            <div className="grid md:grid-cols-4 gap-12 mb-16">
-              <div className="col-span-1 md:col-span-1">
-                <div className="flex items-center gap-2 mb-6">
-                  <Image
-                    src="/logo.png"
-                    alt="Linkifi"
-                    width={120}
-                    height={32}
-                    className="h-8 w-auto object-contain"
-                  />
+        <footer className="relative overflow-hidden border-t border-[#0D1026] bg-[#060710] pt-24 pb-10 text-white">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(90,77,191,0.22),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(122,98,255,0.14),transparent_34%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:42px_42px]" />
+          <div className="relative container mx-auto px-6">
+            <div className="rounded-[36px] border border-white/10 bg-[linear-gradient(145deg,rgba(13,16,38,0.96),rgba(9,11,24,0.94))] px-8 py-10 shadow-[0_30px_120px_rgba(0,0,0,0.45)] md:px-12 md:py-12">
+              <div className="grid gap-12 lg:grid-cols-[1.35fr_repeat(3,1fr)]">
+                <div>
+                  <div className="mb-6 flex items-center gap-4">
+                    <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
+                      <Image
+                        src="/logo-icon.png"
+                        alt="Linkifi"
+                        width={36}
+                        height={36}
+                        className="h-9 w-9 object-contain"
+                      />
+                    </span>
+                    <div>
+                      <p className="text-xl font-semibold tracking-tight text-white">Linkifi</p>
+                      <p className="text-xs font-semibold uppercase tracking-[0.26em] text-[#A79CFF]">
+                        Authority-led Digital PR
+                      </p>
+                    </div>
+                  </div>
+                  <p className="max-w-sm text-sm leading-7 text-white/72">
+                    Built for companies that need authoritative links, stronger brand signals, and
+                    visible commercial outcomes across search and media.
+                  </p>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/72">
+                      Editorial placements
+                    </span>
+                    <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/72">
+                      SEO authority
+                    </span>
+                  </div>
+                  <div className="mt-8 flex items-center gap-3">
+                    {footerSocialLinks.map((item) => (
+                      <a
+                        key={item.label}
+                        href={item.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={item.label}
+                        className="group flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-[#8A7BFF]/50 hover:bg-[#8A7BFF]/16 hover:text-white hover:shadow-[0_14px_30px_rgba(122,98,255,0.22)]"
+                      >
+                        {item.icon}
+                      </a>
+                    ))}
+                  </div>
                 </div>
-                <p className="text-[#535479] mb-6">
-                  Building the most powerful links on the planet through Digital PR.
+
+                {footerMenus.map((menu) => (
+                  <div key={menu.title}>
+                    <h4 className="mb-6 text-sm font-semibold uppercase tracking-[0.24em] text-[#A79CFF]">
+                      {menu.title}
+                    </h4>
+                    <ul className="space-y-4">
+                      {menu.links.map((item) => (
+                        <li key={item.label}>
+                          {item.href.startsWith("#") ? (
+                            <a
+                              href={item.href}
+                              className="text-sm font-medium text-white/74 transition-colors hover:text-white"
+                            >
+                              {item.label}
+                            </a>
+                          ) : (
+                            <Link
+                              href={item.href}
+                              className="text-sm font-medium text-white/74 transition-colors hover:text-white"
+                            >
+                              {item.label}
+                            </Link>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-12 flex flex-col gap-4 border-t border-white/8 pt-6 text-sm text-white/50 md:flex-row md:items-center md:justify-between">
+                <p>© 2024 Linkifi. All rights reserved.</p>
+                <p className="font-medium text-white/42">
+                  Built to turn digital PR into measurable authority.
                 </p>
               </div>
-
-              <div>
-                <h4 className="font-bold text-[#0F0F0F] mb-6">Services</h4>
-                <ul className="space-y-4 text-[#535479]">
-                  <li>
-                    <Link href="/expert-quote" className="hover:text-[#5A4DBF] transition-colors">
-                      Expert Quote Link Building
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/digital-pr" className="hover:text-[#5A4DBF] transition-colors">
-                      Digital PR Campaigns
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="font-bold text-[#0F0F0F] mb-6">Company</h4>
-                <ul className="space-y-4 text-[#535479]">
-                  <li>
-                    <Link href="/case-studies" className="hover:text-[#5A4DBF] transition-colors">
-                      Case Studies
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/blog" className="hover:text-[#5A4DBF] transition-colors">
-                      Blog
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/contact-us" className="hover:text-[#5A4DBF] transition-colors">
-                      Contact Us
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="font-bold text-[#0F0F0F] mb-6">Legal</h4>
-                <ul className="space-y-4 text-[#535479]">
-                  <li>
-                    <Link href="/privacy" className="hover:text-[#5A4DBF] transition-colors">
-                      Privacy Policy
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/terms" className="hover:text-[#5A4DBF] transition-colors">
-                      Terms of Service
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center text-[#9aa0b0] text-sm">
-              <p>© 2024 Linkifi. All rights reserved.</p>
             </div>
           </div>
         </footer>
