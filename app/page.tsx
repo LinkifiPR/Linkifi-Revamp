@@ -413,6 +413,12 @@ export default function Home() {
     },
   ] as const;
 
+  const socialProofTweetColumns = [
+    [socialProofTweets[0], socialProofTweets[5], socialProofTweets[7]],
+    [socialProofTweets[1], socialProofTweets[3], socialProofTweets[8]],
+    [socialProofTweets[2], socialProofTweets[4], socialProofTweets[6]],
+  ] as const;
+
   const handleTestimonialHoverStart = async (index: number) => {
     const video = testimonialVideoRefs.current[index];
     if (!video) return;
@@ -456,6 +462,67 @@ export default function Home() {
       await video.play().catch(() => {});
     }
   };
+
+  const renderSocialProofCard = (
+    tweet: (typeof socialProofTweets)[number],
+    index: number,
+  ) => (
+    <motion.article
+      key={tweet.url}
+      variants={fadeIn}
+      initial="initial"
+      whileInView="animate"
+      viewport={{ once: true, amount: 0.15 }}
+      whileHover={{ y: -4 }}
+      className="group relative overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(18,19,30,0.96),rgba(10,11,18,0.98))] p-[1px] shadow-[0_20px_48px_rgba(0,0,0,0.26)]"
+      style={{ animationDelay: `${index * 0.08}s` }}
+    >
+      <div className="relative h-full rounded-[27px] bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015))] p-4">
+        <div className="absolute inset-0 rounded-[27px] bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.08),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(122,109,255,0.12),transparent_28%)]" />
+
+        <div className="relative z-10">
+          <div className="mb-4 flex items-center justify-between gap-4">
+            <div className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-white">
+              {tweet.label}
+            </div>
+            <a
+              href={tweet.url.replace("twitter.com", "x.com")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-semibold text-[#C1BAFF] transition-colors hover:text-white"
+            >
+              {tweet.handle}
+            </a>
+          </div>
+
+          <div className="social-proof-embed relative overflow-hidden rounded-[22px] border border-white/8 bg-[#0b0d15]">
+            <blockquote
+              className="twitter-tweet !m-0"
+              data-theme="dark"
+              data-dnt="true"
+              data-conversation="none"
+              data-chrome="nofooter noborders transparent"
+            >
+              <a href={tweet.url}>View post by {tweet.handle}</a>
+            </blockquote>
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#0b0d15] via-[#0b0d15]/85 to-transparent" />
+          </div>
+
+          <div className="mt-3 flex justify-end">
+            <a
+              href={tweet.url.replace("twitter.com", "x.com")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/85 transition-colors hover:text-white"
+            >
+              Open on X
+              <ArrowRight className="ml-2 h-3.5 w-3.5" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </motion.article>
+  );
 
   return (
     <div className="min-h-screen bg-white font-sans overflow-x-hidden selection:bg-[#5A4DBF]/20 selection:text-[#5A4DBF]">
@@ -1629,63 +1696,13 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="mt-10 columns-1 gap-5 md:columns-2 xl:columns-3">
-                {socialProofTweets.map((tweet, index) => (
-                  <motion.article
-                    key={tweet.url}
-                    variants={fadeIn}
-                    initial="initial"
-                    whileInView="animate"
-                    viewport={{ once: true, amount: 0.15 }}
-                    whileHover={{ y: -4 }}
-                    className="group relative mb-5 break-inside-avoid overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(18,19,30,0.96),rgba(10,11,18,0.98))] p-[1px] shadow-[0_20px_48px_rgba(0,0,0,0.26)]"
-                    style={{ animationDelay: `${index * 0.08}s` }}
-                  >
-                    <div className="relative h-full rounded-[27px] bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015))] p-4">
-                      <div className="absolute inset-0 rounded-[27px] bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.08),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(122,109,255,0.12),transparent_28%)]" />
-
-                      <div className="relative z-10">
-                        <div className="mb-4 flex items-center justify-between gap-4">
-                          <div className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-white">
-                            {tweet.label}
-                          </div>
-                          <a
-                            href={tweet.url.replace("twitter.com", "x.com")}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-sm font-semibold text-[#C1BAFF] transition-colors hover:text-white"
-                          >
-                            {tweet.handle}
-                          </a>
-                        </div>
-
-                        <div className="social-proof-embed relative overflow-hidden rounded-[22px] border border-white/8 bg-[#0b0d15]">
-                          <blockquote
-                            className="twitter-tweet !m-0"
-                            data-theme="dark"
-                            data-dnt="true"
-                            data-conversation="none"
-                            data-chrome="nofooter noborders transparent"
-                          >
-                            <a href={tweet.url}>View post by {tweet.handle}</a>
-                          </blockquote>
-                          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#0b0d15] via-[#0b0d15]/85 to-transparent" />
-                        </div>
-
-                        <div className="mt-3 flex justify-end">
-                          <a
-                            href={tweet.url.replace("twitter.com", "x.com")}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/85 transition-colors hover:text-white"
-                          >
-                            Open on X
-                            <ArrowRight className="ml-2 h-3.5 w-3.5" />
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.article>
+              <div className="mt-10 grid gap-5 lg:grid-cols-3">
+                {socialProofTweetColumns.map((column, columnIndex) => (
+                  <div key={`social-proof-column-${columnIndex}`} className="grid gap-5">
+                    {column.map((tweet, tweetIndex) =>
+                      renderSocialProofCard(tweet, columnIndex * 3 + tweetIndex),
+                    )}
+                  </div>
                 ))}
               </div>
             </div>
