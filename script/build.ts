@@ -3,6 +3,11 @@ import { rm, mkdir, writeFile } from "fs/promises";
 
 async function buildAll() {
   console.log("Building Next.js application...");
+
+  // Always start from a clean Next output directory. This repo has historically
+  // carried .next artifacts, and stale chunk files/manifests can cause deploys
+  // to reference hashes that no longer exist at runtime.
+  await rm(".next", { recursive: true, force: true });
   
   // Run next build
   await new Promise<void>((resolve, reject) => {
