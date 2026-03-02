@@ -305,18 +305,21 @@ export default function Home() {
       company: "UK Therapy Rooms",
       role: "Co-Founder",
       src: "/testimonials/videos/daniel-v1-720p.mp4",
+      poster: "/testimonials/posters/daniel-v1-720p.mp4.png",
     },
     {
       name: "Joy Aumann",
       company: "LUXURYSOCALREALTY",
       role: "Co-Founder",
       src: "/testimonials/videos/joy-v1-720p.mp4",
+      poster: "/testimonials/posters/joy-v1-720p.mp4.png",
     },
     {
       name: "Amanda Leemis",
       company: "Hollydog LLC",
       role: "Editor-In-Chief",
       src: "/testimonials/videos/amanda-v1-720p.mp4",
+      poster: "/testimonials/posters/amanda-v1-720p.mp4.png",
     },
   ] as const;
 
@@ -1501,11 +1504,12 @@ export default function Home() {
                         testimonialVideoRefs.current[index] = node;
                       }}
                       src={item.src}
+                      poster={item.poster}
                       className="video-testimonial-media"
                       muted
                       loop
                       playsInline
-                      preload="metadata"
+                      preload="none"
                     />
                     <div className="video-testimonial-overlay absolute inset-0" />
                     <div className="video-testimonial-noise absolute inset-0" />
