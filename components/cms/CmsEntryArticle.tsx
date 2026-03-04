@@ -4,6 +4,7 @@ import type { CmsAuthor, CmsEntry } from "@/lib/cms-types";
 import { buildTocFromBlocks, renderCmsBodyHtml } from "@/lib/cms-render";
 import { CmsBlocksRenderer, renderCmsBlock } from "@/components/cms/CmsBlocksRenderer";
 import { CmsTableOfContents } from "@/components/cms/CmsTableOfContents";
+import { SearchDemandWidget } from "@/components/cms/SearchDemandWidget";
 
 type Props = {
   entry: CmsEntry;
@@ -344,7 +345,8 @@ export function CmsEntryArticle({ entry }: Props) {
           </article>
 
           {entry.author ? (
-            <div className="order-3 h-fit xl:sticky xl:top-24">
+            <div className="order-3 h-fit space-y-4 xl:sticky xl:top-24">
+              <SearchDemandWidget />
               <AuthorSidebarCard author={entry.author} />
             </div>
           ) : null}
