@@ -5,6 +5,7 @@ import { buildTocFromBlocks, renderCmsBodyHtml } from "@/lib/cms-render";
 import { CmsBlocksRenderer, renderCmsBlock } from "@/components/cms/CmsBlocksRenderer";
 import { CmsTableOfContents } from "@/components/cms/CmsTableOfContents";
 import { SearchDemandWidget } from "@/components/cms/SearchDemandWidget";
+import { SiteFooter, SiteHeader } from "@/components/site/SiteChrome";
 
 type Props = {
   entry: CmsEntry;
@@ -258,8 +259,10 @@ export function CmsEntryArticle({ entry }: Props) {
       : "";
 
   return (
-    <main className="bg-[linear-gradient(180deg,#f2f4fb_0%,#f8f9fd_34%,#ffffff_100%)] pb-24 text-[#13142f]">
-      <section className="relative overflow-hidden bg-[radial-gradient(circle_at_18%_20%,rgba(120,105,255,0.28),transparent_28%),radial-gradient(circle_at_82%_0%,rgba(51,180,255,0.1),transparent_22%),linear-gradient(135deg,#0e122b_0%,#2b1fa0_44%,#16183a_100%)] text-white">
+    <>
+      <SiteHeader />
+      <main className="bg-[linear-gradient(180deg,#f2f4fb_0%,#f8f9fd_34%,#ffffff_100%)] pb-24 text-[#13142f]">
+        <section className="relative overflow-hidden bg-[radial-gradient(circle_at_18%_20%,rgba(120,105,255,0.28),transparent_28%),radial-gradient(circle_at_82%_0%,rgba(51,180,255,0.1),transparent_22%),linear-gradient(135deg,#0e122b_0%,#2b1fa0_44%,#16183a_100%)] text-white">
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:44px_44px]" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-[linear-gradient(180deg,transparent,rgba(255,255,255,0.1))]" />
 
@@ -324,9 +327,9 @@ export function CmsEntryArticle({ entry }: Props) {
             </div>
           </div>
         </div>
-      </section>
+        </section>
 
-      <section className="container mx-auto mt-8 px-6 md:mt-10">
+        <section className="container mx-auto mt-8 px-6 md:mt-10">
         <div className={`grid gap-6 xl:gap-8 ${contentGridClass}`}>
           {toc.length > 0 ? (
             <div className="order-2 h-fit xl:order-1 xl:sticky xl:top-24">
@@ -391,9 +394,11 @@ export function CmsEntryArticle({ entry }: Props) {
             </div>
           ) : null}
         </div>
-      </section>
+        </section>
 
-      <PressCoverageCheatSheetCta />
-    </main>
+        <PressCoverageCheatSheetCta />
+      </main>
+      <SiteFooter />
+    </>
   );
 }

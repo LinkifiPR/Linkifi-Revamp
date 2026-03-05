@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, CalendarDays, Clock3 } from "lucide-react";
 import type { CmsEntry } from "@/lib/cms-types";
+import { SiteFooter, SiteHeader } from "@/components/site/SiteChrome";
 
 type CollectionKind = "blog" | "case-study";
 
@@ -130,8 +131,10 @@ export function CmsCollectionShowcase({
   const visiblePages = getVisiblePages(currentPage, totalPages);
 
   return (
-    <main className="min-h-screen bg-[linear-gradient(180deg,#f2f4fb_0%,#f8f9fd_34%,#ffffff_100%)] pb-20">
-      <section className={`relative overflow-hidden ${theme.heroBackground} text-white`}>
+    <>
+      <SiteHeader />
+      <main className="min-h-screen bg-[linear-gradient(180deg,#f2f4fb_0%,#f8f9fd_34%,#ffffff_100%)] pb-20">
+        <section className={`relative overflow-hidden ${theme.heroBackground} text-white`}>
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:44px_44px]" />
         <div className="container mx-auto px-6 py-14 md:py-20">
           <div className="mx-auto max-w-4xl text-center">
@@ -145,9 +148,9 @@ export function CmsCollectionShowcase({
             <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-white/82 md:text-xl">{description}</p>
           </div>
         </div>
-      </section>
+        </section>
 
-      <section className="container mx-auto -mt-8 px-6 md:-mt-12">
+        <section className="container mx-auto -mt-8 px-6 md:-mt-12">
         <div className="mb-8 rounded-[1.7rem] border border-[#e8e3ff] bg-white px-5 py-5 shadow-[0_14px_36px_rgba(19,24,58,0.08)] md:px-6">
           <form method="get" action={basePath} className="flex flex-col gap-3 md:flex-row md:items-center">
             <div className="flex-1">
@@ -326,7 +329,9 @@ export function CmsCollectionShowcase({
             </Link>
           </nav>
         ) : null}
-      </section>
-    </main>
+        </section>
+      </main>
+      <SiteFooter />
+    </>
   );
 }
