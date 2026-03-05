@@ -11,6 +11,10 @@ type Props = {
   eyebrow: string;
   title: string;
   description: string;
+  searchQuery: string;
+  currentPage: number;
+  totalPages: number;
+  totalEntries: number;
 };
 
 const COLLECTION_THEME: Record<
@@ -76,10 +80,54 @@ function EntryImage({ entry, className }: { entry: CmsEntry; className: string }
   );
 }
 
-export function CmsCollectionShowcase({ entries, kind, basePath, eyebrow, title, description }: Props) {
+function buildPageHref(basePath: string, page: number, query: string): string {
+  const params = new URLSearchParams();
+
+  if (query) {
+    params.set("q", query);
+  }
+  if (page > 1) {
+    params.set("page", String(page));
+  }
+
+  const queryString = params.toString();
+  return queryString ? `${basePath}?${queryString}` : basePath;
+}
+
+function getVisiblePages(currentPage: number, totalPages: number): number[] {
+  if (totalPages <= 7) {
+    return Array.from({ length: totalPages }, (_, index) => index + 1);
+  }
+
+  const pages = new Set<number>([1, totalPages, currentPage, currentPage - 1, currentPage + 1]);
+  const sorted = [...pages].filter((page) => page >= 1 && page <= totalPages).sort((a, b) => a - b);
+
+  if (sorted[1] > 3) {
+    sorted.splice(1, 0, 2);
+  }
+  if (sorted[sorted.length - 2] < totalPages - 2) {
+    sorted.splice(sorted.length - 1, 0, totalPages - 1);
+  }
+
+  return sorted;
+}
+
+export function CmsCollectionShowcase({
+  entries,
+  kind,
+  basePath,
+  eyebrow,
+  title,
+  description,
+  searchQuery,
+  currentPage,
+  totalPages,
+  totalEntries,
+}: Props) {
   const theme = COLLECTION_THEME[kind];
   const featured = entries[0];
   const secondary = entries.slice(1);
+  const visiblePages = getVisiblePages(currentPage, totalPages);
 
   return (
     <main className="min-h-screen bg-[linear-gradient(180deg,#f2f4fb_0%,#f8f9fd_34%,#ffffff_100%)] pb-20">
@@ -100,6 +148,43 @@ export function CmsCollectionShowcase({ entries, kind, basePath, eyebrow, title,
       </section>
 
       <section className="container mx-auto -mt-8 px-6 md:-mt-12">
+        <div className="mb-8 rounded-[1.7rem] border border-[#e8e3ff] bg-white px-5 py-5 shadow-[0_14px_36px_rgba(19,24,58,0.08)] md:px-6">
+          <form method="get" action={basePath} className="flex flex-col gap-3 md:flex-row md:items-center">
+            <div className="flex-1">
+              <label htmlFor={`${kind}-search`} className="sr-only">
+                Search {kind === "blog" ? "blog posts" : "case studies"}
+              </label>
+              <input
+                id={`${kind}-search`}
+                name="q"
+                defaultValue={searchQuery}
+                placeholder={kind === "blog" ? "Search articles…" : "Search case studies…"}
+                className="h-12 w-full rounded-2xl border border-[#d9dcf3] bg-[#f8f9ff] px-4 text-[#1a2142] outline-none transition-all focus:border-[#6b5cf1] focus:bg-white focus:ring-2 focus:ring-[#6b5cf1]/20"
+              />
+            </div>
+            <button
+              type="submit"
+              className="inline-flex h-12 items-center justify-center rounded-2xl bg-[#171a3b] px-6 text-sm font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-[#101332]"
+            >
+              Search
+            </button>
+            {searchQuery ? (
+              <Link
+                href={basePath}
+                className="inline-flex h-12 items-center justify-center rounded-2xl border border-[#d3d8f0] bg-[#f3f5ff] px-5 text-sm font-semibold text-[#2d3567] transition-colors hover:bg-[#e9eeff]"
+              >
+                Clear
+              </Link>
+            ) : null}
+          </form>
+
+          <p className="mt-3 text-sm text-[#5d668f]">
+            Showing <span className="font-semibold text-[#212652]">{entries.length}</span> of{" "}
+            <span className="font-semibold text-[#212652]">{totalEntries}</span>{" "}
+            {kind === "blog" ? "articles" : "case studies"} (page {currentPage} of {totalPages})
+          </p>
+        </div>
+
         {featured ? (
           <article
             className={`group relative overflow-hidden rounded-[2rem] border ${theme.cardBorder} bg-white shadow-[0_24px_58px_rgba(20,20,60,0.12)] transition-all duration-300 ${theme.cardGlow}`}
@@ -144,8 +229,14 @@ export function CmsCollectionShowcase({ entries, kind, basePath, eyebrow, title,
           </article>
         ) : (
           <div className="rounded-[2rem] border border-[#e7e3ff] bg-white px-8 py-10 text-center shadow-[0_18px_42px_rgba(20,20,60,0.08)]">
-            <p className="text-lg font-semibold text-[#22264a]">No published entries yet.</p>
-            <p className="mt-2 text-[#5a6089]">Publish content in the CMS and it will appear here automatically.</p>
+            <p className="text-lg font-semibold text-[#22264a]">
+              {searchQuery ? "No matching entries found." : "No published entries yet."}
+            </p>
+            <p className="mt-2 text-[#5a6089]">
+              {searchQuery
+                ? "Try a different search phrase or clear filters."
+                : "Publish content in the CMS and it will appear here automatically."}
+            </p>
           </div>
         )}
 
@@ -186,6 +277,54 @@ export function CmsCollectionShowcase({ entries, kind, basePath, eyebrow, title,
               </article>
             ))}
           </div>
+        ) : null}
+
+        {totalPages > 1 ? (
+          <nav className="mt-10 flex flex-wrap items-center justify-center gap-2" aria-label="Pagination">
+            <Link
+              href={buildPageHref(basePath, Math.max(1, currentPage - 1), searchQuery)}
+              className={`inline-flex h-10 min-w-10 items-center justify-center rounded-xl px-3 text-sm font-semibold transition-colors ${
+                currentPage === 1
+                  ? "pointer-events-none border border-[#e4e8f6] bg-[#f6f8ff] text-[#acb3cf]"
+                  : "border border-[#d8def2] bg-white text-[#2c3568] hover:bg-[#eff3ff]"
+              }`}
+            >
+              Prev
+            </Link>
+
+            {visiblePages.map((page, index) => {
+              const prev = visiblePages[index - 1];
+              const hasGap = prev && page - prev > 1;
+
+              return (
+                <div key={page} className="flex items-center gap-2">
+                  {hasGap ? <span className="px-1 text-sm font-semibold text-[#8d95b8]">…</span> : null}
+                  <Link
+                    href={buildPageHref(basePath, page, searchQuery)}
+                    className={`inline-flex h-10 min-w-10 items-center justify-center rounded-xl px-3 text-sm font-semibold transition-colors ${
+                      page === currentPage
+                        ? "bg-[#1a1f46] text-white shadow-[0_10px_24px_rgba(26,31,70,0.24)]"
+                        : "border border-[#d8def2] bg-white text-[#2c3568] hover:bg-[#eff3ff]"
+                    }`}
+                    aria-current={page === currentPage ? "page" : undefined}
+                  >
+                    {page}
+                  </Link>
+                </div>
+              );
+            })}
+
+            <Link
+              href={buildPageHref(basePath, Math.min(totalPages, currentPage + 1), searchQuery)}
+              className={`inline-flex h-10 min-w-10 items-center justify-center rounded-xl px-3 text-sm font-semibold transition-colors ${
+                currentPage === totalPages
+                  ? "pointer-events-none border border-[#e4e8f6] bg-[#f6f8ff] text-[#acb3cf]"
+                  : "border border-[#d8def2] bg-white text-[#2c3568] hover:bg-[#eff3ff]"
+              }`}
+            >
+              Next
+            </Link>
+          </nav>
         ) : null}
       </section>
     </main>
