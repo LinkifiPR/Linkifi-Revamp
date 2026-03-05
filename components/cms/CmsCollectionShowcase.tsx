@@ -150,7 +150,7 @@ export function CmsCollectionShowcase({
         </div>
         </section>
 
-        <section className="container mx-auto -mt-8 px-6 md:-mt-12">
+        <section className="container mx-auto mt-8 px-6 md:mt-10">
         <div className="mb-8 rounded-[1.7rem] border border-[#e8e3ff] bg-white px-5 py-5 shadow-[0_14px_36px_rgba(19,24,58,0.08)] md:px-6">
           <form method="get" action={basePath} className="flex flex-col gap-3 md:flex-row md:items-center">
             <div className="flex-1">

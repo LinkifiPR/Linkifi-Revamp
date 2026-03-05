@@ -56,28 +56,31 @@ const footerSocialLinks = [
 
 function BrandMark() {
   return (
-    <Link href="/" className="inline-flex items-center gap-3 text-white">
-      <span className="relative inline-flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl border border-white/18 bg-white/8">
+    <Link href="/" className="inline-flex min-w-0 items-center gap-3 text-white">
+      <span className="relative inline-flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white/18 bg-white/8">
         <img src="/icon.png" alt="Linkifi" className="h-7 w-7 object-contain" />
       </span>
-      <span className="text-[2rem] font-display font-bold tracking-[-0.03em] leading-none">Linkifi</span>
+      <span className="truncate text-[1.85rem] font-display font-bold leading-none tracking-[-0.03em] text-white sm:text-[2rem]">
+        Linkifi
+      </span>
     </Link>
   );
 }
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-40 border-b border-white/10 bg-[linear-gradient(100deg,#0b0f2a_0%,#1c2154_54%,#1f1753_100%)] backdrop-blur-xl">
-      <div className="container mx-auto px-6 py-4">
-        <div className="flex items-center justify-between gap-4 rounded-[1.9rem] border border-white/14 bg-[#0e1230]/75 px-5 py-3 shadow-[0_16px_34px_rgba(10,14,41,0.36)]">
+    <header className="relative z-30 bg-transparent">
+      <div className="container mx-auto px-6 pt-5">
+        <div className="rounded-[1.6rem] border border-white/16 bg-[linear-gradient(104deg,rgba(8,12,35,0.9)_0%,rgba(26,33,82,0.9)_54%,rgba(34,23,84,0.9)_100%)] px-4 py-3 shadow-[0_16px_34px_rgba(8,11,34,0.3)] md:px-5">
+          <div className="flex items-center justify-between gap-4">
           <BrandMark />
 
-          <nav className="hidden rounded-full border border-[#dcd9f6] bg-white p-1 md:flex md:items-center">
+          <nav className="hidden items-center gap-1 rounded-full border border-white/14 bg-white/8 p-1 md:flex">
             {navigationItems.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="rounded-full px-4 py-2 text-sm font-semibold text-[#3a4070] transition-colors hover:bg-[#f4f5ff]"
+                className="rounded-full px-4 py-2 text-sm font-semibold text-white/88 transition-colors hover:bg-white/16 hover:text-white"
               >
                 {item.label}
               </Link>
@@ -86,10 +89,29 @@ export function SiteHeader() {
 
           <Link
             href="/contact-us"
-            className="inline-flex items-center justify-center rounded-full bg-[#6b5cf1] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#5847e3]"
+            className="hidden items-center justify-center rounded-full bg-[#6b5cf1] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#5847e3] md:inline-flex"
           >
             Contact
           </Link>
+        </div>
+
+          <nav className="mt-3 flex flex-wrap gap-2 md:hidden">
+            {navigationItems.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="inline-flex rounded-full border border-white/20 bg-white/8 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-white/16"
+              >
+                {item.label}
+              </Link>
+            ))}
+            <Link
+              href="/contact-us"
+              className="inline-flex rounded-full bg-[#6b5cf1] px-3.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#5847e3]"
+            >
+              Contact
+            </Link>
+          </nav>
         </div>
       </div>
     </header>
