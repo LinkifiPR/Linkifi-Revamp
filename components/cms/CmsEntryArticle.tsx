@@ -195,6 +195,46 @@ function articleKindLabel(entry: CmsEntry): string {
   return "Page";
 }
 
+function PressCoverageCheatSheetCta() {
+  return (
+    <section className="container mx-auto mt-12 px-6 md:mt-14">
+      <div className="relative overflow-hidden rounded-[2rem] border border-[#2b326a] bg-[radial-gradient(circle_at_18%_20%,rgba(120,105,255,0.35),transparent_28%),radial-gradient(circle_at_86%_14%,rgba(65,185,255,0.22),transparent_24%),linear-gradient(135deg,#0f122c_0%,#2b1fa0_46%,#0f1233_100%)] px-7 py-10 text-white shadow-[0_34px_80px_rgba(21,18,64,0.44)] md:px-12 md:py-12">
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:46px_46px]" />
+        <div className="pointer-events-none absolute -left-10 top-8 h-36 w-36 rounded-full bg-[#6a5bff]/30 blur-3xl" />
+        <div className="pointer-events-none absolute -right-12 bottom-0 h-44 w-44 rounded-full bg-[#49b5ff]/28 blur-3xl" />
+
+        <div className="relative mx-auto max-w-4xl text-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/85 backdrop-blur-sm">
+            Free Resource
+          </span>
+
+          <h2 className="mt-5 text-balance text-3xl font-display font-bold leading-[1.02] tracking-[-0.03em] md:text-[2.75rem]">
+            Get The Press Coverage Cheat Sheet
+          </h2>
+          <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-white/82 md:text-lg">
+            Everything you need to land your first few pieces of tier-one, mega tier-one,
+            editorially earned coverage. No fluff. Just the exact playbook.
+          </p>
+
+          <div className="mt-7 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <a
+              href="https://go.linkifi.io/press-coverage-cheat-sheet-page"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center rounded-2xl bg-white px-7 py-3.5 text-sm font-bold uppercase tracking-[0.08em] text-[#1a1b35] shadow-[0_14px_30px_rgba(255,255,255,0.2)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#f0f2ff]"
+            >
+              Download The Cheat Sheet
+            </a>
+            <span className="rounded-2xl border border-white/18 bg-white/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white/82">
+              Tier-One Pitch Angles • Outreach Scripts • Editorial Workflow
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function CmsEntryArticle({ entry }: Props) {
   const bodyRender = renderCmsBodyHtml(entry.bodyHtml || "");
   const inlineParts = splitInlineBody(bodyRender.html);
@@ -352,6 +392,8 @@ export function CmsEntryArticle({ entry }: Props) {
           ) : null}
         </div>
       </section>
+
+      <PressCoverageCheatSheetCta />
     </main>
   );
 }
