@@ -71,6 +71,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://linkifi.io",
   },
+  icons: {
+    icon: [{ url: "/favicon.ico", sizes: "any" }],
+    shortcut: [{ url: "/favicon.ico" }],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+  },
 };
 
 export default function RootLayout({
