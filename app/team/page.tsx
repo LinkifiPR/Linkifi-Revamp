@@ -10,6 +10,7 @@ type TeamMember = {
   bio: string;
   areas: string[];
   imageSrc?: string;
+  objectPosition?: string;
 };
 
 const leadership: TeamMember[] = [
@@ -19,6 +20,8 @@ const leadership: TeamMember[] = [
     role: "Co-Founder",
     bio: "Leads commercial strategy, campaign direction, and editorial positioning for high-authority growth.",
     areas: ["Campaign Strategy", "Editorial Positioning", "Growth Systems"],
+    imageSrc: "/team/chris-panteli.webp",
+    objectPosition: "50% 20%",
   },
   {
     id: "nick",
@@ -26,22 +29,24 @@ const leadership: TeamMember[] = [
     role: "Co-Founder",
     bio: "Owns delivery systems, partner operations, and execution quality across every Linkifi campaign.",
     areas: ["Operations", "Delivery Quality", "Client Success"],
+    imageSrc: "/team/nick-biggs.webp",
+    objectPosition: "50% 18%",
   },
 ];
 
 const teamPods: TeamMember[] = [
-  { id: "agustin", name: "Agustin", role: "PR Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/agustin.jpg" },
-  { id: "damjan", name: "Damjan", role: "Digital PR Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Damjan.webp" },
-  { id: "dani-b", name: "Dani B", role: "Campaign Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/dani-b.png" },
-  { id: "dario", name: "Dario", role: "Outreach Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Dario.webp" },
-  { id: "naomi", name: "Naomi", role: "Editorial Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Naomi.webp" },
-  { id: "roland", name: "Roland", role: "Outreach Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Roland.webp" },
-  { id: "sabina", name: "Sabina", role: "Content Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Sabina.webp" },
-  { id: "sandra", name: "Sandra", role: "Campaign Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Sandra.webp" },
-  { id: "selma", name: "Selma", role: "Campaign Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Selma.webp" },
-  { id: "sue", name: "Sue", role: "Editorial QA", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Sue.webp" },
-  { id: "barbara", name: "Barbara", role: "PR Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Barbara.webp" },
-  { id: "uros", name: "Uros", role: "Campaign Delivery", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Uros.webp" },
+  { id: "agustin", name: "Agustin", role: "PR Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/agustin.jpg", objectPosition: "50% 22%" },
+  { id: "damjan", name: "Damjan", role: "Digital PR Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Damjan.webp", objectPosition: "50% 20%" },
+  { id: "dani-b", name: "Dani B", role: "Campaign Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/dani-b.png", objectPosition: "50% 16%" },
+  { id: "dario", name: "Dario", role: "Outreach Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Dario.webp", objectPosition: "50% 18%" },
+  { id: "naomi", name: "Naomi", role: "Editorial Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Naomi.webp", objectPosition: "50% 20%" },
+  { id: "roland", name: "Roland", role: "Outreach Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Roland.webp", objectPosition: "50% 18%" },
+  { id: "sabina", name: "Sabina", role: "Content Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Sabina.webp", objectPosition: "50% 18%" },
+  { id: "sandra", name: "Sandra", role: "Campaign Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Sandra.webp", objectPosition: "50% 18%" },
+  { id: "selma", name: "Selma", role: "Campaign Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Selma.webp", objectPosition: "50% 18%" },
+  { id: "sue", name: "Sue", role: "Editorial QA", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Sue.webp", objectPosition: "50% 18%" },
+  { id: "barbara", name: "Barbara", role: "PR Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Barbara.webp", objectPosition: "50% 18%" },
+  { id: "uros", name: "Uros", role: "Campaign Delivery", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Uros.webp", objectPosition: "50% 18%" },
   { id: "pending-one", name: "Name Pending", role: "Team Specialist", bio: "Awaiting final name and headshot.", areas: [] },
   { id: "pending-two", name: "Name Pending", role: "Team Specialist", bio: "Awaiting final name and headshot.", areas: [] },
 ];
@@ -72,12 +77,11 @@ function getInitials(name: string): string {
 
 function PortraitPlaceholder({ name, size = "large" }: { name: string; size?: "large" | "small" }) {
   const isLarge = size === "large";
+  const sizeClass = isLarge ? "aspect-[16/10]" : "aspect-[4/5]";
 
   return (
     <div
-      className={`relative overflow-hidden rounded-[1.4rem] border border-[#d8d4ff] ${
-        isLarge ? "h-48" : "h-28"
-      } bg-[radial-gradient(circle_at_20%_18%,rgba(106,94,255,0.42),transparent_38%),linear-gradient(140deg,#221e5a_0%,#4335bf_56%,#2a5fff_100%)]`}
+      className={`relative overflow-hidden rounded-[1.4rem] border border-[#d8d4ff] ${sizeClass} bg-[radial-gradient(circle_at_20%_18%,rgba(106,94,255,0.42),transparent_38%),linear-gradient(140deg,#221e5a_0%,#4335bf_56%,#2a5fff_100%)]`}
       aria-hidden="true"
     >
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.12)_1px,transparent_1px)] bg-[size:32px_32px] opacity-40" />
@@ -92,16 +96,21 @@ function PortraitPlaceholder({ name, size = "large" }: { name: string; size?: "l
 
 function TeamPortrait({ member, size = "large" }: { member: TeamMember; size?: "large" | "small" }) {
   const isLarge = size === "large";
+  const sizeClass = isLarge ? "aspect-[16/10]" : "aspect-[4/5]";
 
   if (!member.imageSrc) {
     return <PortraitPlaceholder name={member.name} size={size} />;
   }
 
   return (
-    <div
-      className={`overflow-hidden rounded-[1.4rem] border border-[#d8d4ff] ${isLarge ? "h-48" : "h-28"} bg-[#eceefe]`}
-    >
-      <img src={member.imageSrc} alt={`${member.name} portrait`} className="h-full w-full object-cover" loading="lazy" />
+    <div className={`overflow-hidden rounded-[1.4rem] border border-[#d8d4ff] ${sizeClass} bg-[#e7ebff]`}>
+      <img
+        src={member.imageSrc}
+        alt={`${member.name} portrait`}
+        className="h-full w-full object-cover"
+        style={{ objectPosition: member.objectPosition ?? "50% 18%" }}
+        loading="lazy"
+      />
     </div>
   );
 }
@@ -147,7 +156,7 @@ export default function TeamPage() {
               </h2>
             </div>
             <span className="hidden rounded-full border border-[#d9dfff] bg-[#f4f7ff] px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#495189] md:inline-flex">
-              Visual placeholders active
+              Founder portraits updated
             </span>
           </div>
 
@@ -155,7 +164,7 @@ export default function TeamPage() {
             {leadership.map((member) => (
               <article
                 key={member.id}
-                className="overflow-hidden rounded-[2rem] border border-[#dcd9ff] bg-white p-6 shadow-[0_22px_52px_rgba(26,22,78,0.1)]"
+                className="group overflow-hidden rounded-[2rem] border border-[#dcd9ff] bg-white p-6 shadow-[0_22px_52px_rgba(26,22,78,0.1)]"
               >
                 <TeamPortrait member={member} />
                 <div className="mt-5">
@@ -184,14 +193,14 @@ export default function TeamPage() {
             Specialists Across Outreach, Editorial, And Delivery
           </h2>
 
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {teamPods.map((member) => (
               <article
                 key={member.id}
-                className="rounded-[1.6rem] border border-[#e3e0ff] bg-white p-4 shadow-[0_14px_36px_rgba(26,22,78,0.08)]"
+                className="group rounded-[1.6rem] border border-[#e3e0ff] bg-white p-5 shadow-[0_14px_36px_rgba(26,22,78,0.08)]"
               >
                 <TeamPortrait member={member} size="small" />
-                <p className="mt-3 text-lg font-display font-bold text-[#14163b]">{member.name}</p>
+                <p className="mt-4 text-xl font-display font-bold text-[#14163b]">{member.name}</p>
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#6863a4]">{member.role}</p>
                 <p className="mt-2 text-sm text-[#545b83]">{member.bio}</p>
               </article>
@@ -216,10 +225,10 @@ export default function TeamPage() {
         <section className="container mx-auto mt-12 px-6">
           <div className="rounded-[2rem] border border-[#d4d0ff] bg-[radial-gradient(circle_at_18%_18%,rgba(120,105,255,0.2),transparent_30%),linear-gradient(135deg,#ffffff_0%,#f7f6ff_62%,#f2f8ff_100%)] px-7 py-8 md:px-10">
             <h2 className="text-3xl font-display font-bold tracking-[-0.02em] text-[#161942] md:text-4xl">
-              Team visuals are next
+              Final Team Bios In Progress
             </h2>
             <p className="mt-3 max-w-2xl text-base text-[#4e567f]">
-              Send over the portraits and we will replace every placeholder with polished cards, social links, and full profile content.
+              We have the core roster and portraits in place. Next step is finalizing each profile bio and social links.
             </p>
             <div className="mt-6">
               <Link
