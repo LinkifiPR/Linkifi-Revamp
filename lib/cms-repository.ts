@@ -14,6 +14,7 @@ import {
   type CmsEntryInput,
   type CmsEntryListItem,
   type CmsEntryPatch,
+  type CmsEntrySummary,
   type CmsEntryType,
   type CmsMedia,
   type CmsStatus,
@@ -73,6 +74,19 @@ type CmsMediaRow = {
   alt: string;
   bytes: Buffer;
   created_at: Date | string;
+};
+
+type CmsPublishedSummaryRow = {
+  id: string;
+  type: CmsEntryType;
+  status: CmsStatus;
+  title: string;
+  slug: string;
+  excerpt: string;
+  featured_image_url: string;
+  featured_image_alt: string;
+  published_at: Date | string | null;
+  updated_at: Date | string;
 };
 
 export class CmsRepositoryError extends Error {
@@ -318,6 +332,21 @@ function mapListRow(row: CmsEntryRow): CmsEntryListItem {
     publishedAt: mapped.publishedAt,
     createdAt: mapped.createdAt,
     updatedAt: mapped.updatedAt,
+  };
+}
+
+function mapPublishedSummaryRow(row: CmsPublishedSummaryRow): CmsEntrySummary {
+  return {
+    id: row.id,
+    type: row.type,
+    status: row.status,
+    title: row.title,
+    slug: row.slug,
+    excerpt: row.excerpt,
+    featuredImageUrl: row.featured_image_url,
+    featuredImageAlt: row.featured_image_alt,
+    publishedAt: toIso(row.published_at),
+    updatedAt: toIso(row.updated_at) ?? new Date().toISOString(),
   };
 }
 
@@ -668,6 +697,76 @@ export async function listPublishedEntriesByType(type: CmsEntryType, limit = 100
   );
 
   return result.rows.map(mapEntryRow);
+}
+
+export async function countPublishedEntriesByType(type: CmsEntryType, search = ""): Promise<number> {
+  await ensureSchema();
+  const normalizedSearch = search.trim();
+  const values: Array<string> = [type];
+  const searchClause = normalizedSearch
+    ? (() => {
+        values.push(`%${normalizedSearch}%`);
+        return `AND (e.title ILIKE $2 OR e.excerpt ILIKE $2)`;
+      })()
+    : "";
+
+  const result = await getPool().query<{ total: string }>(
+    `
+    SELECT COUNT(*)::text AS total
+    FROM cms_entries e
+    WHERE e.type = $1 AND e.status = 'published'
+    ${searchClause}
+    `,
+    values,
+  );
+
+  return Number(result.rows[0]?.total ?? 0);
+}
+
+export async function listPublishedEntrySummariesByType(
+  type: CmsEntryType,
+  options: { search?: string; limit?: number; offset?: number } = {},
+): Promise<CmsEntrySummary[]> {
+  await ensureSchema();
+  const normalizedSearch = (options.search ?? "").trim();
+  const limit = options.limit ?? 8;
+  const offset = options.offset ?? 0;
+
+  const values: Array<string | number> = [type];
+  let searchClause = "";
+
+  if (normalizedSearch) {
+    values.push(`%${normalizedSearch}%`);
+    searchClause = `AND (e.title ILIKE $2 OR e.excerpt ILIKE $2)`;
+  }
+
+  values.push(limit);
+  values.push(offset);
+
+  const result = await getPool().query<CmsPublishedSummaryRow>(
+    `
+    SELECT
+      e.id,
+      e.type,
+      e.status,
+      e.title,
+      e.slug,
+      e.excerpt,
+      e.featured_image_url,
+      e.featured_image_alt,
+      e.published_at,
+      e.updated_at
+    FROM cms_entries e
+    WHERE e.type = $1 AND e.status = 'published'
+    ${searchClause}
+    ORDER BY COALESCE(e.published_at, e.updated_at) DESC, e.updated_at DESC
+    LIMIT $${values.length - 1}
+    OFFSET $${values.length}
+    `,
+    values,
+  );
+
+  return result.rows.map(mapPublishedSummaryRow);
 }
 
 export async function getCmsStats(): Promise<{

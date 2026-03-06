@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { ArrowUpRight, CalendarDays, Clock3 } from "lucide-react";
-import type { CmsEntry } from "@/lib/cms-types";
+import type { CmsEntrySummary } from "@/lib/cms-types";
 import { SiteFooter, SiteHeader } from "@/components/site/SiteChrome";
 
 type CollectionKind = "blog" | "case-study";
 
 type Props = {
-  entries: CmsEntry[];
+  entries: CmsEntrySummary[];
   kind: CollectionKind;
   basePath: string;
   eyebrow: string;
@@ -43,8 +43,8 @@ const COLLECTION_THEME: Record<
   },
 };
 
-function estimateReadMinutes(entry: CmsEntry): number {
-  const raw = `${entry.title} ${entry.excerpt} ${entry.bodyHtml ?? ""}`.replace(/<[^>]+>/g, " ").trim();
+function estimateReadMinutes(entry: CmsEntrySummary): number {
+  const raw = `${entry.title} ${entry.excerpt}`.trim();
   const words = raw ? raw.split(/\s+/).length : 0;
   return Math.max(1, Math.ceil(words / 220));
 }
@@ -68,7 +68,7 @@ function formatDate(date: string | null): string {
   });
 }
 
-function EntryImage({ entry, className }: { entry: CmsEntry; className: string }) {
+function EntryImage({ entry, className }: { entry: CmsEntrySummary; className: string }) {
   if (!entry.featuredImageUrl) {
     return (
       <div

@@ -198,6 +198,20 @@ export type CmsEntryListItem = Pick<
   | "updatedAt"
 >;
 
+export type CmsEntrySummary = Pick<
+  CmsEntry,
+  | "id"
+  | "type"
+  | "status"
+  | "title"
+  | "slug"
+  | "excerpt"
+  | "featuredImageUrl"
+  | "featuredImageAlt"
+  | "publishedAt"
+  | "updatedAt"
+>;
+
 export type CmsMedia = {
   id: string;
   filename: string;
