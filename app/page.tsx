@@ -1755,13 +1755,13 @@ export default function Home() {
         </section>
 
         {/* Conference Video Stats Section */}
-        <section className="container mx-auto px-6 mb-32">
+        <section className="mb-32 px-4 sm:px-6">
           <motion.div
             variants={fadeIn}
             initial="initial"
             whileInView="animate"
             viewport={{ once: true, amount: 0.15 }}
-            className="conference-spotlight-shell relative overflow-hidden rounded-[34px] md:rounded-[42px] border border-[#171927] bg-[#07080E]"
+            className="conference-spotlight-shell relative mx-auto w-full max-w-[1460px] overflow-hidden rounded-[34px] md:rounded-[42px] border border-[#171927] bg-[#07080E]"
           >
             <video
               ref={conferencePrimaryVideoRef}
@@ -1794,7 +1794,7 @@ export default function Home() {
             <div className="conference-spotlight-overlay absolute inset-0" />
             <div className="conference-spotlight-rim absolute inset-0" />
 
-            <div className="relative z-10 px-6 py-10 md:px-10 md:py-14 lg:px-12 lg:py-16">
+            <div className="relative z-10 flex min-h-[clamp(30rem,62vw,41rem)] flex-col justify-end px-5 py-5 sm:px-6 md:px-8 md:py-7 lg:px-10">
               <div className="flex items-center gap-2" aria-hidden="true">
                 {conferenceVideos.map((videoSrc, index) => (
                   <span
@@ -1808,17 +1808,17 @@ export default function Home() {
                 ))}
               </div>
 
-              <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="mt-3 grid gap-2.5 sm:grid-cols-2 xl:grid-cols-4">
                 {conferenceStats.map((stat, index) => (
                   <div
                     key={stat.label}
-                    className="conference-spotlight-stat rounded-[20px] border border-white/16 p-4 md:p-5"
+                    className="conference-spotlight-stat rounded-[18px] border border-white/16 p-3.5 md:p-4"
                     style={{ animationDelay: `${index * 0.16}s` }}
                   >
-                    <p className="conference-spotlight-stat-value text-3xl md:text-4xl font-display font-bold leading-none">
+                    <p className="conference-spotlight-stat-value text-2xl md:text-3xl font-display font-bold leading-none">
                       {stat.value}
                     </p>
-                    <p className="conference-spotlight-stat-label mt-2 text-[13px] md:text-[15px] leading-snug">
+                    <p className="conference-spotlight-stat-label mt-1.5 text-[12px] md:text-[13px] leading-snug">
                       {stat.label}
                     </p>
                   </div>

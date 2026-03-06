@@ -248,7 +248,7 @@ img[src$=".svg"].publication-logo {
 .conference-spotlight-media {
   transform-origin: center;
   animation: conference-video-drift 18s ease-in-out infinite;
-  filter: saturate(0.94) contrast(1.02) brightness(0.7);
+  filter: saturate(0.98) contrast(1.03) brightness(0.88);
   will-change: transform, opacity;
   backface-visibility: hidden;
 }
@@ -258,13 +258,13 @@ img[src$=".svg"].publication-logo {
   background:
     linear-gradient(
       102deg,
-      rgba(3, 4, 10, 0.92) 0%,
-      rgba(5, 6, 13, 0.78) 34%,
-      rgba(5, 6, 13, 0.68) 62%,
-      rgba(3, 4, 10, 0.78) 100%
+      rgba(3, 4, 10, 0.62) 0%,
+      rgba(5, 6, 13, 0.46) 34%,
+      rgba(5, 6, 13, 0.38) 62%,
+      rgba(3, 4, 10, 0.56) 100%
     ),
-    radial-gradient(circle at 14% 22%, rgba(114, 91, 255, 0.28), transparent 44%),
-    radial-gradient(circle at 84% 80%, rgba(215, 51, 162, 0.24), transparent 42%);
+    radial-gradient(circle at 14% 22%, rgba(114, 91, 255, 0.2), transparent 44%),
+    radial-gradient(circle at 84% 80%, rgba(215, 51, 162, 0.17), transparent 42%);
 }
 
 .conference-spotlight-rim {
@@ -272,7 +272,7 @@ img[src$=".svg"].publication-logo {
   border-radius: inherit;
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.08),
-    inset 0 0 120px rgba(10, 12, 24, 0.38);
+    inset 0 0 92px rgba(10, 12, 24, 0.24);
 }
 
 .conference-spotlight-stat {
