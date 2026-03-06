@@ -58,6 +58,7 @@ export default function Home() {
     { label: "Authority PR", href: "#Pricing" },
     { label: "Case Studies", href: "/case-studies" },
     { label: "Blog", href: "/blog" },
+    { label: "Team", href: "/team" },
     { label: "Press Badge Maker", href: "#howitworks" },
   ] as const;
 
@@ -75,6 +76,7 @@ export default function Home() {
       links: [
         { label: "Case Studies", href: "/case-studies" },
         { label: "Blog", href: "/blog" },
+        { label: "Team", href: "/team" },
         { label: "Market Movers Podcast", href: "/blog?category=podcast" },
       ],
     },
