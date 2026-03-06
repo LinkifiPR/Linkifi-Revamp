@@ -4,20 +4,24 @@ import { ArrowUpRight, Sparkles } from "lucide-react";
 import { SiteFooter, SiteHeader } from "@/components/site/SiteChrome";
 
 type TeamMember = {
+  id: string;
   name: string;
   role: string;
   bio: string;
   areas: string[];
+  imageSrc?: string;
 };
 
 const leadership: TeamMember[] = [
   {
+    id: "chris",
     name: "Chris",
     role: "Co-Founder",
     bio: "Leads commercial strategy, campaign direction, and editorial positioning for high-authority growth.",
     areas: ["Campaign Strategy", "Editorial Positioning", "Growth Systems"],
   },
   {
+    id: "nick",
     name: "Nick",
     role: "Co-Founder",
     bio: "Owns delivery systems, partner operations, and execution quality across every Linkifi campaign.",
@@ -26,15 +30,20 @@ const leadership: TeamMember[] = [
 ];
 
 const teamPods: TeamMember[] = [
-  { name: "Damjan", role: "Digital PR Specialist", bio: "Photo and full profile coming soon.", areas: [] },
-  { name: "Roland", role: "Outreach Specialist", bio: "Photo and full profile coming soon.", areas: [] },
-  { name: "Naomi", role: "Editorial Specialist", bio: "Photo and full profile coming soon.", areas: [] },
-  { name: "Salma", role: "Campaign Specialist", bio: "Photo and full profile coming soon.", areas: [] },
-  { name: "Sabina", role: "Content Specialist", bio: "Photo and full profile coming soon.", areas: [] },
-  { name: "Sue", role: "Editorial QA", bio: "Photo and full profile coming soon.", areas: [] },
-  { name: "Barbara", role: "PR Specialist", bio: "Photo and full profile coming soon.", areas: [] },
-  { name: "Leonardo", role: "Outreach Coordinator", bio: "Photo and full profile coming soon.", areas: [] },
-  { name: "Uros", role: "Campaign Delivery", bio: "Photo and full profile coming soon.", areas: [] },
+  { id: "agustin", name: "Agustin", role: "PR Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/agustin.jpg" },
+  { id: "damjan", name: "Damjan", role: "Digital PR Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Damjan.webp" },
+  { id: "dani-b", name: "Dani B", role: "Campaign Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/dani-b.png" },
+  { id: "dario", name: "Dario", role: "Outreach Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Dario.webp" },
+  { id: "naomi", name: "Naomi", role: "Editorial Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Naomi.webp" },
+  { id: "roland", name: "Roland", role: "Outreach Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Roland.webp" },
+  { id: "sabina", name: "Sabina", role: "Content Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Sabina.webp" },
+  { id: "sandra", name: "Sandra", role: "Campaign Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Sandra.webp" },
+  { id: "selma", name: "Selma", role: "Campaign Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Selma.webp" },
+  { id: "sue", name: "Sue", role: "Editorial QA", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Sue.webp" },
+  { id: "barbara", name: "Barbara", role: "PR Specialist", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Barbara.webp" },
+  { id: "uros", name: "Uros", role: "Campaign Delivery", bio: "Full profile copy coming soon.", areas: [], imageSrc: "/team/Uros.webp" },
+  { id: "pending-one", name: "Name Pending", role: "Team Specialist", bio: "Awaiting final name and headshot.", areas: [] },
+  { id: "pending-two", name: "Name Pending", role: "Team Specialist", bio: "Awaiting final name and headshot.", areas: [] },
 ];
 
 const operatingPrinciples = [
@@ -77,6 +86,22 @@ function PortraitPlaceholder({ name, size = "large" }: { name: string; size?: "l
           {getInitials(name)}
         </span>
       </div>
+    </div>
+  );
+}
+
+function TeamPortrait({ member, size = "large" }: { member: TeamMember; size?: "large" | "small" }) {
+  const isLarge = size === "large";
+
+  if (!member.imageSrc) {
+    return <PortraitPlaceholder name={member.name} size={size} />;
+  }
+
+  return (
+    <div
+      className={`overflow-hidden rounded-[1.4rem] border border-[#d8d4ff] ${isLarge ? "h-48" : "h-28"} bg-[#eceefe]`}
+    >
+      <img src={member.imageSrc} alt={`${member.name} portrait`} className="h-full w-full object-cover" loading="lazy" />
     </div>
   );
 }
@@ -129,10 +154,10 @@ export default function TeamPage() {
           <div className="mt-6 grid gap-6 lg:grid-cols-2">
             {leadership.map((member) => (
               <article
-                key={member.name}
+                key={member.id}
                 className="overflow-hidden rounded-[2rem] border border-[#dcd9ff] bg-white p-6 shadow-[0_22px_52px_rgba(26,22,78,0.1)]"
               >
-                <PortraitPlaceholder name={member.name} />
+                <TeamPortrait member={member} />
                 <div className="mt-5">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6e68a8]">{member.role}</p>
                   <h3 className="mt-2 text-3xl font-display font-bold tracking-[-0.02em] text-[#14163b]">{member.name}</h3>
@@ -162,10 +187,10 @@ export default function TeamPage() {
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {teamPods.map((member) => (
               <article
-                key={member.name}
+                key={member.id}
                 className="rounded-[1.6rem] border border-[#e3e0ff] bg-white p-4 shadow-[0_14px_36px_rgba(26,22,78,0.08)]"
               >
-                <PortraitPlaceholder name={member.name} size="small" />
+                <TeamPortrait member={member} size="small" />
                 <p className="mt-3 text-lg font-display font-bold text-[#14163b]">{member.name}</p>
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#6863a4]">{member.role}</p>
                 <p className="mt-2 text-sm text-[#545b83]">{member.bio}</p>
