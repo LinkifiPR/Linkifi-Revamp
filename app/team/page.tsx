@@ -109,22 +109,22 @@ const teamMembers: TeamMember[] = [
   {
     id: "agustin",
     name: "Agustin",
-    portrait: { src: "/team/agustin.jpg", mode: "photo", objectPosition: "50% 21%", tint: 0.86, softMask: true },
+    portrait: { src: "/team/agustin.jpg", mode: "photo", objectPosition: "50% 21%", tint: 0.78, softMask: true },
   },
   {
     id: "dani",
     name: "Dani",
-    portrait: { src: "/team/dani-b.png", mode: "photo", objectPosition: "50% 14%", tint: 0.82, softMask: true },
+    portrait: { src: "/team/dani-b.png", mode: "photo", objectPosition: "50% 16%", tint: 0.76, softMask: true },
   },
   {
     id: "dani-d",
     name: "Dani D",
-    portrait: { src: "/team/dani-d.jpg", mode: "photo", objectPosition: "50% 22%", tint: 0.84, softMask: true },
+    portrait: { src: "/team/dani-d.jpg", mode: "photo", objectPosition: "50% 18%", tint: 0.82, softMask: true },
   },
   {
     id: "mateos",
     name: "Mateos",
-    portrait: { src: "/team/mateos.jpg", mode: "photo", objectPosition: "50% 15%", tint: 0.9, softMask: true },
+    portrait: { src: "/team/mateos.jpg", mode: "photo", objectPosition: "50% 18%", tint: 0.84, softMask: true },
   },
   {
     id: "dario",
@@ -176,21 +176,30 @@ function PurplePortrait({
             <img
               src={portrait.src}
               alt={`${name} portrait`}
-              className="h-full w-full object-cover [filter:brightness(1.06)_contrast(1.05)_saturate(0.98)]"
+              className="absolute inset-0 h-full w-full scale-[1.12] object-cover blur-[10px] [filter:brightness(0.9)_contrast(1.04)_saturate(0.76)]"
               style={{
                 objectPosition: portrait.objectPosition ?? "50% 18%",
-                maskImage: portrait.softMask
-                  ? "radial-gradient(ellipse 88% 86% at 50% 60%, #000 53%, rgba(0,0,0,0.9) 67%, transparent 91%)"
-                  : undefined,
-                WebkitMaskImage: portrait.softMask
-                  ? "radial-gradient(ellipse 88% 86% at 50% 60%, #000 53%, rgba(0,0,0,0.9) 67%, transparent 91%)"
-                  : undefined,
               }}
               loading="lazy"
             />
             <div
               className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,#7e61e8_0%,#6e5adf_52%,#5f53d4_100%)] mix-blend-multiply"
               style={{ opacity: portrait.tint ?? 0.68 }}
+            />
+            <img
+              src={portrait.src}
+              alt={`${name} portrait`}
+              className="absolute bottom-0 left-1/2 h-[98%] w-[86%] -translate-x-1/2 object-cover [filter:brightness(1.07)_contrast(1.05)_saturate(1.02)]"
+              style={{
+                objectPosition: portrait.objectPosition ?? "50% 18%",
+                maskImage: portrait.softMask
+                  ? "radial-gradient(ellipse 76% 88% at 50% 58%, #000 60%, rgba(0,0,0,0.92) 72%, transparent 92%)"
+                  : undefined,
+                WebkitMaskImage: portrait.softMask
+                  ? "radial-gradient(ellipse 76% 88% at 50% 58%, #000 60%, rgba(0,0,0,0.92) 72%, transparent 92%)"
+                  : undefined,
+              }}
+              loading="lazy"
             />
             <div
               className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_78%_16%,rgba(187,164,255,0.7),transparent_46%)]"
