@@ -27,8 +27,10 @@ import { useRef, useState } from "react";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [conferenceVideoIndex, setConferenceVideoIndex] = useState(0);
   const strategicSectionRef = useRef<HTMLElement | null>(null);
   const testimonialVideoRefs = useRef<Array<HTMLVideoElement | null>>([]);
+  const conferenceVideoRef = useRef<HTMLVideoElement | null>(null);
 
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
@@ -325,6 +327,32 @@ export default function Home() {
     },
   ] as const;
 
+  const conferenceVideos = [
+    "/homepage/conference/Chris1.mp4",
+    "/homepage/conference/Chris2.mp4",
+    "/homepage/conference/Chris3.mp4",
+    "/homepage/conference/Chris4.mp4",
+  ] as const;
+
+  const conferenceStats = [
+    {
+      value: "8+",
+      label: "International Speaking Events",
+    },
+    {
+      value: "15,000+",
+      label: "Tier-1 Premium Coverage Built for Clients",
+    },
+    {
+      value: "$17,000+",
+      label: "Revenue Generated for Clients",
+    },
+    {
+      value: "150+",
+      label: "Podcasts",
+    },
+  ] as const;
+
   const workShowcaseItems = [
     {
       key: "dental",
@@ -466,6 +494,16 @@ export default function Home() {
       video.muted = true;
       await video.play().catch(() => {});
     }
+  };
+
+  const handleConferenceVideoEnded = () => {
+    setConferenceVideoIndex((current) => (current + 1) % conferenceVideos.length);
+  };
+
+  const handleConferenceVideoLoadedData = () => {
+    const video = conferenceVideoRef.current;
+    if (!video) return;
+    video.play().catch(() => {});
   };
 
   const renderSocialProofCard = (
@@ -1680,6 +1718,79 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </section>
+
+        {/* Conference Video Stats Section */}
+        <section className="container mx-auto px-6 mb-32">
+          <motion.div
+            variants={fadeIn}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.15 }}
+            className="conference-spotlight-shell relative overflow-hidden rounded-[34px] md:rounded-[42px] border border-[#171927] bg-[#07080E]"
+          >
+            <video
+              key={conferenceVideos[conferenceVideoIndex]}
+              ref={conferenceVideoRef}
+              src={conferenceVideos[conferenceVideoIndex]}
+              className="conference-spotlight-media absolute inset-0 h-full w-full object-cover"
+              autoPlay
+              muted
+              playsInline
+              preload="metadata"
+              onEnded={handleConferenceVideoEnded}
+              onLoadedData={handleConferenceVideoLoadedData}
+              aria-hidden="true"
+            />
+            <div className="conference-spotlight-overlay absolute inset-0" />
+            <div className="conference-spotlight-rim absolute inset-0" />
+
+            <div className="relative z-10 px-6 py-10 md:px-10 md:py-14 lg:px-12 lg:py-16">
+              <div className="max-w-3xl">
+                <p className="inline-flex items-center rounded-full border border-white/18 bg-white/8 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/92">
+                  On Stage. In Publications. In Results.
+                </p>
+                <h2 className="mt-5 text-4xl md:text-6xl font-display font-bold tracking-tight text-white">
+                  Conference-Led Authority That Converts
+                </h2>
+                <p className="mt-4 max-w-2xl text-base md:text-lg leading-relaxed text-white/84">
+                  Highlights from international stages where Linkifi frameworks were shared in
+                  front of global audiences, then executed to drive premium coverage and revenue
+                  outcomes for clients.
+                </p>
+              </div>
+
+              <div className="mt-7 flex items-center gap-2" aria-hidden="true">
+                {conferenceVideos.map((videoSrc, index) => (
+                  <span
+                    key={videoSrc}
+                    className={`conference-spotlight-dot h-1.5 rounded-full transition-all duration-500 ${
+                      conferenceVideoIndex === index
+                        ? "w-8 bg-white"
+                        : "w-3 bg-white/40"
+                    }`}
+                  />
+                ))}
+              </div>
+
+              <div className="mt-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                {conferenceStats.map((stat, index) => (
+                  <div
+                    key={stat.label}
+                    className="conference-spotlight-stat rounded-[20px] border border-white/16 p-4 md:p-5"
+                    style={{ animationDelay: `${index * 0.16}s` }}
+                  >
+                    <p className="conference-spotlight-stat-value text-3xl md:text-4xl font-display font-bold leading-none">
+                      {stat.value}
+                    </p>
+                    <p className="mt-2 text-[13px] md:text-[15px] leading-snug text-white/88">
+                      {stat.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
         </section>
 
         {/* Social Proof Section */}
