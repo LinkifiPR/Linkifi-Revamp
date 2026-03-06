@@ -207,7 +207,12 @@ export function CmsCollectionShowcase({
                   {kind === "case-study" ? "Featured Campaign" : "Featured Insight"}
                 </div>
                 <h2 className="mt-5 text-balance text-3xl font-display font-bold leading-[1.06] tracking-[-0.02em] text-[#15173a] md:text-4xl">
-                  {featured.title}
+                  <Link
+                    href={`${basePath}/${featured.slug}`}
+                    className="transition-colors hover:text-[#2c3470]"
+                  >
+                    {featured.title}
+                  </Link>
                 </h2>
                 {featured.excerpt ? (
                   <p className="mt-4 text-base leading-relaxed text-[#4a4f78] md:text-lg">{featured.excerpt}</p>
@@ -273,7 +278,12 @@ export function CmsCollectionShowcase({
                     <span>{estimateReadMinutes(entry)} min read</span>
                   </div>
                   <h3 className="mt-3 text-balance text-2xl font-display font-bold leading-[1.1] tracking-[-0.018em] text-[#131739]">
-                    {entry.title}
+                    <Link
+                      href={`${basePath}/${entry.slug}`}
+                      className="transition-colors hover:text-[#2c3470]"
+                    >
+                      {entry.title}
+                    </Link>
                   </h3>
                   {entry.excerpt ? <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-[#525882]">{entry.excerpt}</p> : null}
                   <div className="mt-5">
