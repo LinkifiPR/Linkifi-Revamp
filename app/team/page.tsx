@@ -20,6 +20,7 @@ type Founder = {
     x?: string;
     y?: string;
     tint?: number;
+    softMask?: boolean;
   };
   layout: FounderLayout;
 };
@@ -35,26 +36,11 @@ type TeamMember = {
     x?: string;
     y?: string;
     tint?: number;
+    softMask?: boolean;
   };
 };
 
 const founders: Founder[] = [
-  {
-    id: "nick-biggs",
-    cardName: "Nick",
-    fullName: "Nick Biggs",
-    role: "Co-Founder",
-    bio: "Nick brings over a decade of digital marketing and PR expertise. He leads campaign strategy and innovation while ensuring every placement is commercially relevant and built for long-term authority.",
-    linkedin: "https://www.linkedin.com/in/nick-biggs/",
-    portrait: {
-      src: "/team/nick-biggs.webp",
-      mode: "cutout",
-      width: "78%",
-      x: "7%",
-      y: "0%",
-    },
-    layout: "imageTop",
-  },
   {
     id: "chris-panteli",
     cardName: "Chris",
@@ -65,11 +51,27 @@ const founders: Founder[] = [
     portrait: {
       src: "/team/chris-panteli.webp",
       mode: "cutout",
-      width: "74%",
-      x: "-1%",
+      width: "83%",
+      x: "-20%",
       y: "0%",
     },
     layout: "imageBottom",
+  },
+  {
+    id: "nick-biggs",
+    cardName: "Nick",
+    fullName: "Nick Biggs",
+    role: "Co-Founder",
+    bio: "Nick brings over a decade of digital marketing and PR expertise. He leads campaign strategy and innovation while ensuring every placement is commercially relevant and built for long-term authority.",
+    linkedin: "https://www.linkedin.com/in/nick-biggs/",
+    portrait: {
+      src: "/team/nick-biggs.webp",
+      mode: "cutout",
+      width: "83%",
+      x: "20%",
+      y: "0%",
+    },
+    layout: "imageTop",
   },
 ];
 
@@ -107,17 +109,22 @@ const teamMembers: TeamMember[] = [
   {
     id: "agustin",
     name: "Agustin",
-    portrait: { src: "/team/agustin.jpg", mode: "photo", objectPosition: "50% 21%", tint: 0.76 },
+    portrait: { src: "/team/agustin.jpg", mode: "photo", objectPosition: "50% 21%", tint: 0.86, softMask: true },
   },
   {
     id: "dani",
     name: "Dani",
-    portrait: { src: "/team/dani-b.png", mode: "photo", objectPosition: "50% 14%", tint: 0.64 },
+    portrait: { src: "/team/dani-b.png", mode: "photo", objectPosition: "50% 14%", tint: 0.82, softMask: true },
+  },
+  {
+    id: "dani-d",
+    name: "Dani D",
+    portrait: { src: "/team/dani-d.jpg", mode: "photo", objectPosition: "50% 22%", tint: 0.84, softMask: true },
   },
   {
     id: "mateos",
     name: "Mateos",
-    portrait: { src: "/team/mateos.jpg", mode: "photo", objectPosition: "50% 15%", tint: 0.8 },
+    portrait: { src: "/team/mateos.jpg", mode: "photo", objectPosition: "50% 15%", tint: 0.9, softMask: true },
   },
   {
     id: "dario",
@@ -139,8 +146,6 @@ const teamMembers: TeamMember[] = [
     name: "Uros",
     portrait: { src: "/team/processed/uros.webp", mode: "cutout", width: "84%" },
   },
-  { id: "pending-one", name: "TBD" },
-  { id: "pending-two", name: "TBD" },
 ];
 
 function initials(name: string): string {
@@ -172,12 +177,24 @@ function PurplePortrait({
               src={portrait.src}
               alt={`${name} portrait`}
               className="h-full w-full object-cover [filter:brightness(1.06)_contrast(1.05)_saturate(0.98)]"
-              style={{ objectPosition: portrait.objectPosition ?? "50% 18%" }}
+              style={{
+                objectPosition: portrait.objectPosition ?? "50% 18%",
+                maskImage: portrait.softMask
+                  ? "radial-gradient(ellipse 88% 86% at 50% 60%, #000 53%, rgba(0,0,0,0.9) 67%, transparent 91%)"
+                  : undefined,
+                WebkitMaskImage: portrait.softMask
+                  ? "radial-gradient(ellipse 88% 86% at 50% 60%, #000 53%, rgba(0,0,0,0.9) 67%, transparent 91%)"
+                  : undefined,
+              }}
               loading="lazy"
             />
             <div
               className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,#7e61e8_0%,#6e5adf_52%,#5f53d4_100%)] mix-blend-multiply"
               style={{ opacity: portrait.tint ?? 0.68 }}
+            />
+            <div
+              className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_78%_16%,rgba(187,164,255,0.7),transparent_46%)]"
+              style={{ opacity: portrait.softMask ? 0.48 : 0.34 }}
             />
           </>
         ) : (
