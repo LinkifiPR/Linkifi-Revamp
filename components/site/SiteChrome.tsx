@@ -70,17 +70,16 @@ function BrandMark() {
 export function SiteHeader() {
   return (
     <header className="relative z-30 bg-transparent">
-      <div className="container mx-auto px-6 pt-5">
-        <div className="rounded-[1.6rem] border border-white/16 bg-[linear-gradient(104deg,rgba(8,12,35,0.9)_0%,rgba(26,33,82,0.9)_54%,rgba(34,23,84,0.9)_100%)] px-4 py-3 shadow-[0_16px_34px_rgba(8,11,34,0.3)] md:px-5">
-          <div className="flex items-center justify-between gap-4">
+      <div className="container mx-auto px-6 pt-6">
+        <div className="flex items-center justify-between gap-4 border-b border-white/20 pb-4">
           <BrandMark />
 
-          <nav className="hidden items-center gap-1 rounded-full border border-white/14 bg-white/8 p-1 md:flex">
+          <nav className="hidden items-center gap-6 md:flex">
             {navigationItems.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="rounded-full px-4 py-2 text-sm font-semibold text-white/88 transition-colors hover:bg-white/16 hover:text-white"
+                className="text-sm font-semibold text-white/88 transition-colors hover:text-white"
               >
                 {item.label}
               </Link>
@@ -89,30 +88,29 @@ export function SiteHeader() {
 
           <Link
             href="/contact-us"
-            className="hidden items-center justify-center rounded-full bg-[#6b5cf1] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#5847e3] md:inline-flex"
+            className="hidden items-center justify-center rounded-full border border-white/30 bg-white/8 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/15 md:inline-flex"
           >
             Contact
           </Link>
         </div>
 
-          <nav className="mt-3 flex flex-wrap gap-2 md:hidden">
+        <nav className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-white/14 pb-3 md:hidden">
             {navigationItems.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="inline-flex rounded-full border border-white/20 bg-white/8 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-white/16"
+                className="text-sm font-semibold text-white/92 transition-colors hover:text-white"
               >
                 {item.label}
               </Link>
             ))}
             <Link
               href="/contact-us"
-              className="inline-flex rounded-full bg-[#6b5cf1] px-3.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#5847e3]"
+              className="ml-auto inline-flex rounded-full border border-white/30 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-white/18"
             >
               Contact
             </Link>
-          </nav>
-        </div>
+        </nav>
       </div>
     </header>
   );

@@ -132,22 +132,22 @@ export function CmsCollectionShowcase({
 
   return (
     <>
-      <SiteHeader />
       <main className="min-h-screen bg-[linear-gradient(180deg,#f2f4fb_0%,#f8f9fd_34%,#ffffff_100%)] pb-20">
         <section className={`relative overflow-hidden ${theme.heroBackground} text-white`}>
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:44px_44px]" />
-        <div className="container mx-auto px-6 py-14 md:py-20">
-          <div className="mx-auto max-w-4xl text-center">
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:44px_44px]" />
+          <SiteHeader />
+          <div className="container mx-auto px-6 pb-10 pt-8 md:pb-14 md:pt-10">
+            <div className="mx-auto max-w-4xl text-center">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/18 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/88 backdrop-blur-sm">
               <span className="h-2 w-2 rounded-full bg-[#9af3d0]" />
               {eyebrow}
             </span>
-            <h1 className="mt-5 text-balance text-4xl font-display font-bold leading-[1.03] tracking-[-0.03em] md:text-6xl">
+            <h1 className="mt-4 text-balance text-3xl font-display font-bold leading-[1.04] tracking-[-0.03em] md:text-5xl">
               {title}
             </h1>
-            <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-white/82 md:text-xl">{description}</p>
+            <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-white/82 md:text-lg">{description}</p>
+            </div>
           </div>
-        </div>
         </section>
 
         <section className="container mx-auto mt-8 px-6 md:mt-10">
