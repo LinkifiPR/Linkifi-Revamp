@@ -325,15 +325,6 @@ export default function Home() {
     },
   ] as const;
 
-  const homepageVideoSpotlight = {
-    src: "/testimonials/videos/daniel-v1-720p.mp4",
-    poster: "/testimonials/posters/daniel-v1-720p.mp4.png",
-    eyebrow: "Video Spotlight",
-    title: "Results You Can See",
-    description:
-      "Watch how Linkifi translated digital PR into measurable visibility and stronger rankings for UK Therapy Rooms.",
-  } as const;
-
   const workShowcaseItems = [
     {
       key: "dental",
@@ -826,67 +817,6 @@ export default function Home() {
                 ))}
               </div>
             </motion.div>
-          </motion.div>
-        </section>
-
-        {/* Homepage Video Spotlight */}
-        <section className="container mx-auto px-6 mb-20 lg:mb-24">
-          <motion.div
-            variants={fadeIn}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, amount: 0.2 }}
-            className="relative overflow-hidden rounded-[34px] md:rounded-[42px] border border-[#171927] bg-[#060712] shadow-[0_32px_90px_rgba(7,8,14,0.42)]"
-          >
-            <video
-              src={homepageVideoSpotlight.src}
-              poster={homepageVideoSpotlight.poster}
-              className="homepage-video-spotlight-media absolute inset-0 h-full w-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              aria-hidden="true"
-            />
-            <div className="absolute inset-0 bg-[linear-gradient(96deg,rgba(5,6,13,0.88)_0%,rgba(5,6,13,0.72)_46%,rgba(5,6,13,0.42)_100%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_18%,rgba(126,107,255,0.34),transparent_42%),radial-gradient(circle_at_86%_82%,rgba(215,51,162,0.24),transparent_40%)]" />
-
-            <div className="relative z-10 px-6 py-10 md:px-10 md:py-14 lg:min-h-[420px] flex items-center">
-              <div className="homepage-video-spotlight-copy w-full max-w-[560px] rounded-[24px] border border-white/18 bg-[#0C1028]/74 p-6 md:p-8 backdrop-blur-sm">
-                <p className="inline-flex items-center rounded-full border border-white/18 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white/90">
-                  {homepageVideoSpotlight.eyebrow}
-                </p>
-                <h2 className="mt-4 text-3xl md:text-5xl font-display font-bold text-white leading-tight tracking-tight">
-                  {homepageVideoSpotlight.title}
-                </h2>
-                <p className="mt-4 text-base md:text-lg text-white/82 leading-relaxed">
-                  {homepageVideoSpotlight.description}
-                </p>
-                <div className="mt-6 flex flex-col sm:flex-row gap-3">
-                  <a href="#testimonials">
-                    <Button
-                      size="lg"
-                      className="h-12 rounded-full px-6 bg-[#5A4DBF] hover:bg-[#4B3EA7] text-white font-semibold w-full sm:w-auto"
-                      data-testid="button-video-spotlight-testimonials"
-                    >
-                      Watch More Testimonials
-                    </Button>
-                  </a>
-                  <Link href="/case-studies">
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      className="h-12 rounded-full px-6 border-white/40 text-white hover:bg-white/10 hover:text-white font-semibold w-full sm:w-auto"
-                      data-testid="button-video-spotlight-case-studies"
-                    >
-                      See Case Studies
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
           </motion.div>
         </section>
 
@@ -1534,7 +1464,7 @@ export default function Home() {
         </section>
 
         {/* Video Testimonials Section */}
-        <section id="testimonials" className="container mx-auto px-6 mb-32">
+        <section className="container mx-auto px-6 mb-32">
           <div className="video-testimonials-shell relative overflow-hidden rounded-[34px] md:rounded-[42px] px-6 py-12 md:px-10 md:py-14">
             <div className="video-testimonials-orb absolute -left-12 top-16 h-44 w-44 rounded-full blur-3xl" />
             <div className="video-testimonials-orb video-testimonials-orb-delayed absolute right-8 top-6 h-52 w-52 rounded-full blur-3xl" />
