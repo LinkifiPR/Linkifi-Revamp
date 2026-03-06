@@ -58,7 +58,7 @@ function BrandMark() {
   return (
     <Link href="/" className="inline-flex min-w-0 items-center gap-3 text-white">
       <span className="relative inline-flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white/18 bg-white/8">
-        <img src="/icon.png" alt="Linkifi" className="h-7 w-7 object-contain" />
+        <img src="/brand-mark.png" alt="Linkifi" className="h-7 w-7 object-contain" />
       </span>
       <span className="truncate text-[1.85rem] font-display font-bold leading-none tracking-[-0.03em] text-white sm:text-[2rem]">
         Linkifi
