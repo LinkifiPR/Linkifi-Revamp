@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { CalendarDays, Clock3, Linkedin, Youtube } from "lucide-react";
+import Script from "next/script";
 import type { CmsAuthor, CmsEntry } from "@/lib/cms-types";
 import { buildTocFromBlocks, renderCmsBodyHtml } from "@/lib/cms-render";
 import { CmsBlocksRenderer, renderCmsBlock } from "@/components/cms/CmsBlocksRenderer";
@@ -253,6 +254,44 @@ function PressCoverageCheatSheetCta() {
   );
 }
 
+function NewsletterSidebarEmbed() {
+  return (
+    <aside className="overflow-hidden rounded-[1.9rem] border border-[#d9d7ff] bg-[linear-gradient(180deg,#ffffff,#f9f8ff)] shadow-[0_20px_48px_rgba(35,29,91,0.08)]">
+      <div className="border-b border-[#ece8ff] bg-[linear-gradient(135deg,#f7f4ff,#ffffff)] px-4 py-4">
+        <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6f68a8]">
+          <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[#ece8ff]">
+            <img src="/brand-mark.png" alt="" aria-hidden="true" className="h-3.5 w-3.5 object-contain" />
+          </span>
+          Linkifi Newsletter
+        </p>
+        <p className="mt-2 text-sm text-[#4b5079]">Get weekly digital PR tactics and editorial growth insights.</p>
+      </div>
+
+      <div className="h-[224px] w-full p-3">
+        <iframe
+          src="https://book.linkifi.io/widget/form/hVqu5hZcaqpIBpyexaZs"
+          style={{ width: "100%", height: "100%", border: "none", borderRadius: "12px" }}
+          id="inline-hVqu5hZcaqpIBpyexaZs"
+          data-layout="{'id':'INLINE'}"
+          data-trigger-type="alwaysShow"
+          data-trigger-value=""
+          data-activation-type="alwaysActivated"
+          data-activation-value=""
+          data-deactivation-type="neverDeactivate"
+          data-deactivation-value=""
+          data-form-name="Newsletter Website Optin"
+          data-height="224"
+          data-layout-iframe-id="inline-hVqu5hZcaqpIBpyexaZs"
+          data-form-id="hVqu5hZcaqpIBpyexaZs"
+          title="Newsletter Website Optin"
+        />
+      </div>
+
+      <Script src="https://book.linkifi.io/js/form_embed.js" strategy="lazyOnload" />
+    </aside>
+  );
+}
+
 export function CmsEntryArticle({ entry }: Props) {
   const bodyRender = renderCmsBodyHtml(entry.bodyHtml || "");
   const inlineParts = splitInlineBody(bodyRender.html);
@@ -268,11 +307,13 @@ export function CmsEntryArticle({ entry }: Props) {
   const toc = [...bodyRender.toc, ...buildTocFromBlocks(entry.content)];
   const readMinutes = estimateReadMinutes(entry);
   const publishedDate = formatPublishedDate(entry.publishedAt);
+  const showNewsletterSidebar = entry.type === "blog" || entry.type === "case-study";
+  const hasLeftSidebar = toc.length > 0 || showNewsletterSidebar;
   const contentGridClass = entry.author
-    ? toc.length > 0
+    ? hasLeftSidebar
       ? "xl:grid-cols-[220px_minmax(0,1fr)_280px]"
       : "xl:grid-cols-[minmax(0,1fr)_280px]"
-    : toc.length > 0
+    : hasLeftSidebar
       ? "xl:grid-cols-[220px_minmax(0,1fr)]"
       : "";
 
@@ -349,9 +390,10 @@ export function CmsEntryArticle({ entry }: Props) {
 
         <section className="container mx-auto mt-8 px-6 md:mt-10">
         <div className={`grid gap-6 xl:gap-8 ${contentGridClass}`}>
-          {toc.length > 0 ? (
-            <div className="order-2 h-fit xl:order-1 xl:sticky xl:top-24">
-              <CmsTableOfContents items={toc} />
+          {hasLeftSidebar ? (
+            <div className="order-2 h-fit space-y-4 xl:order-1 xl:sticky xl:top-24">
+              {toc.length > 0 ? <CmsTableOfContents items={toc} /> : null}
+              {showNewsletterSidebar ? <NewsletterSidebarEmbed /> : null}
             </div>
           ) : null}
 
