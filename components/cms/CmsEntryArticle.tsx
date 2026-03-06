@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
-import { CalendarDays, Clock3, Linkedin, Mail, Youtube } from "lucide-react";
-import Script from "next/script";
+import { CalendarDays, Clock3, Linkedin, Youtube } from "lucide-react";
 import type { CmsAuthor, CmsEntry } from "@/lib/cms-types";
 import { buildTocFromBlocks, renderCmsBodyHtml } from "@/lib/cms-render";
 import { CmsBlocksRenderer, renderCmsBlock } from "@/components/cms/CmsBlocksRenderer";
@@ -254,54 +253,6 @@ function PressCoverageCheatSheetCta() {
   );
 }
 
-function NewsletterSidebarEmbed() {
-  return (
-    <aside className="relative overflow-hidden rounded-[2rem] border border-[#d7d4ff] bg-[linear-gradient(170deg,#ffffff_0%,#f7f5ff_55%,#f1f6ff_100%)] p-5 shadow-[0_26px_58px_rgba(35,29,91,0.12)]">
-      <div className="pointer-events-none absolute -right-10 -top-8 h-28 w-28 rounded-full bg-[#6859ff]/15 blur-2xl" />
-      <div className="pointer-events-none absolute -bottom-10 -left-10 h-28 w-28 rounded-full bg-[#4bb6ff]/12 blur-2xl" />
-
-      <div className="relative">
-        <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6660a1]">
-          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#ded9ff] bg-[#efedff] text-[#5c4de0]">
-            <Mail className="h-4 w-4" />
-          </span>
-          Weekly Brief
-        </p>
-        <h3 className="mt-3 text-xl font-display font-bold leading-tight text-[#1a1d43]">
-          Get Linkifi’s
-          <br />
-          <span className="text-[#4f44cb]">Digital PR Playbook</span>
-        </h3>
-        <p className="mt-2 text-sm leading-relaxed text-[#4b5079]">
-          Tactical frameworks, pitch ideas, and real editorial growth moves. Delivered weekly.
-        </p>
-      </div>
-
-      <div className="relative mt-4 h-[260px] w-full overflow-hidden rounded-[1.2rem] border border-[#e5e3ff] bg-white p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
-        <iframe
-          src="https://book.linkifi.io/widget/form/hVqu5hZcaqpIBpyexaZs"
-          style={{ width: "100%", height: "100%", border: "none", borderRadius: "10px" }}
-          id="inline-hVqu5hZcaqpIBpyexaZs"
-          data-layout="{'id':'INLINE'}"
-          data-trigger-type="alwaysShow"
-          data-trigger-value=""
-          data-activation-type="alwaysActivated"
-          data-activation-value=""
-          data-deactivation-type="neverDeactivate"
-          data-deactivation-value=""
-          data-form-name="Newsletter Website Optin"
-          data-height="260"
-          data-layout-iframe-id="inline-hVqu5hZcaqpIBpyexaZs"
-          data-form-id="hVqu5hZcaqpIBpyexaZs"
-          title="Newsletter Website Optin"
-        />
-      </div>
-
-      <Script src="https://book.linkifi.io/js/form_embed.js" strategy="lazyOnload" />
-    </aside>
-  );
-}
-
 export function CmsEntryArticle({ entry }: Props) {
   const bodyRender = renderCmsBodyHtml(entry.bodyHtml || "");
   const inlineParts = splitInlineBody(bodyRender.html);
@@ -317,14 +268,11 @@ export function CmsEntryArticle({ entry }: Props) {
   const toc = [...bodyRender.toc, ...buildTocFromBlocks(entry.content)];
   const readMinutes = estimateReadMinutes(entry);
   const publishedDate = formatPublishedDate(entry.publishedAt);
-  const showNewsletterSidebar = entry.type === "blog" || entry.type === "case-study";
-  const hasLeftSidebar = toc.length > 0;
-  const hasRightSidebar = showNewsletterSidebar || Boolean(entry.author);
-  const contentGridClass = hasRightSidebar
-    ? hasLeftSidebar
-      ? "xl:grid-cols-[220px_minmax(0,1fr)_300px]"
-      : "xl:grid-cols-[minmax(0,1fr)_300px]"
-    : hasLeftSidebar
+  const contentGridClass = entry.author
+    ? toc.length > 0
+      ? "xl:grid-cols-[220px_minmax(0,1fr)_280px]"
+      : "xl:grid-cols-[minmax(0,1fr)_280px]"
+    : toc.length > 0
       ? "xl:grid-cols-[220px_minmax(0,1fr)]"
       : "";
 
@@ -401,7 +349,7 @@ export function CmsEntryArticle({ entry }: Props) {
 
         <section className="container mx-auto mt-8 px-6 md:mt-10">
         <div className={`grid gap-6 xl:gap-8 ${contentGridClass}`}>
-          {hasLeftSidebar ? (
+          {toc.length > 0 ? (
             <div className="order-2 h-fit xl:order-1 xl:sticky xl:top-24">
               <CmsTableOfContents items={toc} />
             </div>
@@ -457,11 +405,10 @@ export function CmsEntryArticle({ entry }: Props) {
             </div>
           </article>
 
-          {hasRightSidebar ? (
+          {entry.author ? (
             <div className="order-3 h-fit space-y-4 xl:sticky xl:top-24">
-              {showNewsletterSidebar ? <NewsletterSidebarEmbed /> : null}
-              {entry.author ? <SearchDemandWidget /> : null}
-              {entry.author ? <AuthorSidebarCard author={entry.author} /> : null}
+              <SearchDemandWidget />
+              <AuthorSidebarCard author={entry.author} />
             </div>
           ) : null}
         </div>
