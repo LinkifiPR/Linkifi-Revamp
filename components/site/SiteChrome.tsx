@@ -118,9 +118,16 @@ export function SiteHeader() {
   );
 }
 
-export function SiteFooter({ className = "" }: { className?: string } = {}) {
+export function SiteFooter({
+  className = "",
+  flushTop = false,
+}: { className?: string; flushTop?: boolean } = {}) {
+  const topSpacingClass = flushTop ? "mt-0" : "mt-20";
+
   return (
-    <footer className={`mt-20 bg-[radial-gradient(circle_at_24%_10%,rgba(99,90,255,0.24),transparent_34%),radial-gradient(circle_at_80%_12%,rgba(76,178,255,0.2),transparent_30%),linear-gradient(180deg,#080b23_0%,#040617_100%)] pb-12 pt-14 text-white ${className}`}>
+    <footer
+      className={`${topSpacingClass} bg-[radial-gradient(circle_at_24%_10%,rgba(99,90,255,0.24),transparent_34%),radial-gradient(circle_at_80%_12%,rgba(76,178,255,0.2),transparent_30%),linear-gradient(180deg,#080b23_0%,#040617_100%)] pb-12 pt-14 text-white ${className}`}
+    >
       <div className="container mx-auto px-6">
         <div className="rounded-[2rem] border border-white/12 bg-[linear-gradient(100deg,rgba(14,18,52,0.82),rgba(9,12,34,0.88))] p-8 shadow-[0_28px_62px_rgba(8,10,33,0.55)] md:p-10">
           <div className="grid gap-10 lg:grid-cols-[1.25fr_1fr_1fr_1fr]">
