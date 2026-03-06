@@ -65,6 +65,23 @@ function estimateReadMinutes(entry: CmsEntry): number {
   return Math.max(1, Math.ceil(wordCount / 220));
 }
 
+function formatPublishedDate(date: string | null): string | null {
+  if (!date) {
+    return null;
+  }
+
+  const parsedDate = new Date(date);
+  if (Number.isNaN(parsedDate.getTime())) {
+    return null;
+  }
+
+  return parsedDate.toLocaleDateString(undefined, {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
 function getAuthorPrimaryUrl(author: CmsAuthor): string {
   return author.linkedinUrl || author.xUrl || author.youtubeUrl || "";
 }
@@ -116,7 +133,7 @@ function AuthorSocialLinks({ author }: { author: CmsAuthor }) {
           key={social.label}
           href={social.href}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           aria-label={social.label}
           className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-[#ddd8ff] bg-[#f7f5ff] text-[#5d4fe0] transition-all duration-200 hover:border-[#8b7cff] hover:bg-white hover:text-[#4738da]"
         >
@@ -157,7 +174,7 @@ function AuthorSidebarCard({ author }: { author: CmsAuthor }) {
             <a
               href={primaryUrl}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="text-xl font-display font-bold text-[#13142f] transition-colors hover:text-[#4b3dd9]"
             >
               {author.name}
@@ -221,7 +238,7 @@ function PressCoverageCheatSheetCta() {
             <a
               href="https://go.linkifi.io/press-coverage-cheat-sheet-page"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center rounded-2xl bg-white px-7 py-3.5 text-sm font-bold uppercase tracking-[0.08em] text-[#1a1b35] shadow-[0_14px_30px_rgba(255,255,255,0.2)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#f0f2ff]"
             >
               Download The Cheat Sheet
@@ -250,6 +267,7 @@ export function CmsEntryArticle({ entry }: Props) {
   const remainingBlocks = entry.content.filter((block) => !block.id || !inlineBlockIds.has(block.id));
   const toc = [...bodyRender.toc, ...buildTocFromBlocks(entry.content)];
   const readMinutes = estimateReadMinutes(entry);
+  const publishedDate = formatPublishedDate(entry.publishedAt);
   const contentGridClass = entry.author
     ? toc.length > 0
       ? "xl:grid-cols-[220px_minmax(0,1fr)_280px]"
@@ -313,10 +331,10 @@ export function CmsEntryArticle({ entry }: Props) {
                 </div>
               )}
 
-              {entry.publishedAt ? (
+              {publishedDate ? (
                 <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.14] bg-white/[0.08] px-4 py-2 backdrop-blur-sm">
                   <CalendarDays className="h-4 w-4" />
-                  <span>{new Date(entry.publishedAt).toLocaleDateString()}</span>
+                  <span>{publishedDate}</span>
                 </div>
               ) : null}
 

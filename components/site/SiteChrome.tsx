@@ -141,7 +141,7 @@ export function SiteFooter() {
                     key={social.label}
                     href={social.href}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     aria-label={social.label}
                     className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/18 bg-white/7 text-white transition-colors hover:border-white/28 hover:bg-white/12"
                   >

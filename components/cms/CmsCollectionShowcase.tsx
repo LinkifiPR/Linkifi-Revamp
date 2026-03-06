@@ -50,11 +50,18 @@ function estimateReadMinutes(entry: CmsEntry): number {
 }
 
 function formatDate(date: string | null): string {
+  const fallback = "Recently published";
+
   if (!date) {
-    return "Recently published";
+    return fallback;
   }
 
-  return new Date(date).toLocaleDateString(undefined, {
+  const parsedDate = new Date(date);
+  if (Number.isNaN(parsedDate.getTime())) {
+    return fallback;
+  }
+
+  return parsedDate.toLocaleDateString(undefined, {
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -129,6 +136,8 @@ export function CmsCollectionShowcase({
   const featured = entries[0];
   const secondary = entries.slice(1);
   const visiblePages = getVisiblePages(currentPage, totalPages);
+  const canGoPrev = currentPage > 1;
+  const canGoNext = currentPage < totalPages;
 
   return (
     <>
@@ -284,16 +293,21 @@ export function CmsCollectionShowcase({
 
         {totalPages > 1 ? (
           <nav className="mt-10 flex flex-wrap items-center justify-center gap-2" aria-label="Pagination">
-            <Link
-              href={buildPageHref(basePath, Math.max(1, currentPage - 1), searchQuery)}
-              className={`inline-flex h-10 min-w-10 items-center justify-center rounded-xl px-3 text-sm font-semibold transition-colors ${
-                currentPage === 1
-                  ? "pointer-events-none border border-[#e4e8f6] bg-[#f6f8ff] text-[#acb3cf]"
-                  : "border border-[#d8def2] bg-white text-[#2c3568] hover:bg-[#eff3ff]"
-              }`}
-            >
-              Prev
-            </Link>
+            {canGoPrev ? (
+              <Link
+                href={buildPageHref(basePath, currentPage - 1, searchQuery)}
+                className="inline-flex h-10 min-w-10 items-center justify-center rounded-xl border border-[#d8def2] bg-white px-3 text-sm font-semibold text-[#2c3568] transition-colors hover:bg-[#eff3ff]"
+              >
+                Prev
+              </Link>
+            ) : (
+              <span
+                aria-disabled="true"
+                className="inline-flex h-10 min-w-10 cursor-not-allowed items-center justify-center rounded-xl border border-[#e4e8f6] bg-[#f6f8ff] px-3 text-sm font-semibold text-[#acb3cf]"
+              >
+                Prev
+              </span>
+            )}
 
             {visiblePages.map((page, index) => {
               const prev = visiblePages[index - 1];
@@ -317,16 +331,21 @@ export function CmsCollectionShowcase({
               );
             })}
 
-            <Link
-              href={buildPageHref(basePath, Math.min(totalPages, currentPage + 1), searchQuery)}
-              className={`inline-flex h-10 min-w-10 items-center justify-center rounded-xl px-3 text-sm font-semibold transition-colors ${
-                currentPage === totalPages
-                  ? "pointer-events-none border border-[#e4e8f6] bg-[#f6f8ff] text-[#acb3cf]"
-                  : "border border-[#d8def2] bg-white text-[#2c3568] hover:bg-[#eff3ff]"
-              }`}
-            >
-              Next
-            </Link>
+            {canGoNext ? (
+              <Link
+                href={buildPageHref(basePath, currentPage + 1, searchQuery)}
+                className="inline-flex h-10 min-w-10 items-center justify-center rounded-xl border border-[#d8def2] bg-white px-3 text-sm font-semibold text-[#2c3568] transition-colors hover:bg-[#eff3ff]"
+              >
+                Next
+              </Link>
+            ) : (
+              <span
+                aria-disabled="true"
+                className="inline-flex h-10 min-w-10 cursor-not-allowed items-center justify-center rounded-xl border border-[#e4e8f6] bg-[#f6f8ff] px-3 text-sm font-semibold text-[#acb3cf]"
+              >
+                Next
+              </span>
+            )}
           </nav>
         ) : null}
         </section>

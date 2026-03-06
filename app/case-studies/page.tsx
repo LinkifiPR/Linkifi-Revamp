@@ -20,14 +20,15 @@ export const metadata: Metadata = {
 
 export default async function CaseStudiesIndexPage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams;
-  const query = (params.q ?? "").trim().toLowerCase();
+  const query = (params.q ?? "").trim();
+  const normalizedQuery = query.toLowerCase();
   const rawPage = Number.parseInt(params.page ?? "1", 10);
   const requestedPage = Number.isFinite(rawPage) && rawPage > 0 ? rawPage : 1;
 
   const allEntries = await listPublishedEntriesByType("case-study", 500);
-  const filteredEntries = query
+  const filteredEntries = normalizedQuery
     ? allEntries.filter((entry) =>
-        `${entry.title} ${entry.excerpt}`.toLowerCase().includes(query),
+        `${entry.title} ${entry.excerpt}`.toLowerCase().includes(normalizedQuery),
       )
     : allEntries;
 
