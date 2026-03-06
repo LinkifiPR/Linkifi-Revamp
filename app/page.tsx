@@ -1795,21 +1795,7 @@ export default function Home() {
             <div className="conference-spotlight-rim absolute inset-0" />
 
             <div className="relative z-10 px-6 py-10 md:px-10 md:py-14 lg:px-12 lg:py-16">
-              <div className="conference-spotlight-content max-w-3xl rounded-[24px] border border-white/14 px-5 py-5 md:px-7 md:py-6">
-                <p className="conference-spotlight-eyebrow inline-flex items-center rounded-full px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em]">
-                  On Stage. In Publications. In Results.
-                </p>
-                <h2 className="conference-spotlight-heading mt-5 text-4xl md:text-6xl font-display font-bold tracking-tight">
-                  Conference-Led Authority That Converts
-                </h2>
-                <p className="conference-spotlight-copy mt-4 max-w-2xl text-base md:text-lg leading-relaxed">
-                  Highlights from international stages where Linkifi frameworks were shared in
-                  front of global audiences, then executed to drive premium coverage and revenue
-                  outcomes for clients.
-                </p>
-              </div>
-
-              <div className="mt-7 flex items-center gap-2" aria-hidden="true">
+              <div className="flex items-center gap-2" aria-hidden="true">
                 {conferenceVideos.map((videoSrc, index) => (
                   <span
                     key={videoSrc}
@@ -1822,7 +1808,7 @@ export default function Home() {
                 ))}
               </div>
 
-              <div className="mt-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                 {conferenceStats.map((stat, index) => (
                   <div
                     key={stat.label}
@@ -1832,7 +1818,7 @@ export default function Home() {
                     <p className="conference-spotlight-stat-value text-3xl md:text-4xl font-display font-bold leading-none">
                       {stat.value}
                     </p>
-                    <p className="mt-2 text-[13px] md:text-[15px] leading-snug text-white/88">
+                    <p className="conference-spotlight-stat-label mt-2 text-[13px] md:text-[15px] leading-snug">
                       {stat.label}
                     </p>
                   </div>
