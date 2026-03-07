@@ -374,7 +374,7 @@ export default function Home() {
       label: "Tier-1 Premium Coverage Built for Clients",
     },
     {
-      value: "$17,000+",
+      value: "$17,000,000+",
       label: "Revenue Generated for Clients",
     },
     {
