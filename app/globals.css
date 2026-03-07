@@ -315,6 +315,20 @@ img[src$=".svg"].publication-logo {
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
+@media (max-width: 640px) {
+  .conference-spotlight-shell {
+    min-height: 23rem;
+  }
+
+  .conference-spotlight-media {
+    animation: none;
+  }
+
+  .conference-spotlight-stat {
+    backdrop-filter: blur(3px);
+  }
+}
+
 .testimonial-card {
   --rim-rgb: 255, 255, 255;
   border: 1px solid rgba(255, 255, 255, 0.3);

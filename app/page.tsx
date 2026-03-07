@@ -23,7 +23,7 @@ import {
   Users,
   Youtube,
 } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,7 +32,9 @@ export default function Home() {
   const [conferenceActiveLayer, setConferenceActiveLayer] = useState<"primary" | "secondary">(
     "primary",
   );
+  const [conferenceVideosReady, setConferenceVideosReady] = useState(false);
   const strategicSectionRef = useRef<HTMLElement | null>(null);
+  const conferenceSectionRef = useRef<HTMLDivElement | null>(null);
   const testimonialVideoRefs = useRef<Array<HTMLVideoElement | null>>([]);
   const conferencePrimaryVideoRef = useRef<HTMLVideoElement | null>(null);
   const conferenceSecondaryVideoRef = useRef<HTMLVideoElement | null>(null);
@@ -59,6 +61,29 @@ export default function Home() {
     useTransform(strategicScrollProgress, [0, 1], [16, -16]),
     { stiffness: 90, damping: 22, mass: 0.35 },
   );
+
+  useEffect(() => {
+    const section = conferenceSectionRef.current;
+    if (!section || conferenceVideosReady) return;
+
+    if (typeof IntersectionObserver === "undefined") {
+      setConferenceVideosReady(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setConferenceVideosReady(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "340px 0px" },
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [conferenceVideosReady]);
 
   const navigationItems = [
     { label: "SEO Digital PR", href: "#Pricing" },
@@ -682,7 +707,7 @@ export default function Home() {
                     key={item.label}
                     href={item.href}
                     onClick={() => setIsMenuOpen(false)}
-                    className="rounded-2xl px-4 py-3 text-sm font-semibold text-white/78 transition-colors hover:bg-white/[0.06] hover:text-white"
+                    className="rounded-2xl px-4 py-3 text-sm font-semibold text-[rgba(255,255,255,0.92)] transition-colors hover:bg-white/[0.06] hover:text-white"
                   >
                     {item.label}
                   </a>
@@ -691,7 +716,7 @@ export default function Home() {
                     key={item.label}
                     href={item.href}
                     onClick={() => setIsMenuOpen(false)}
-                    className="rounded-2xl px-4 py-3 text-sm font-semibold text-white/78 transition-colors hover:bg-white/[0.06] hover:text-white"
+                    className="rounded-2xl px-4 py-3 text-sm font-semibold text-[rgba(255,255,255,0.92)] transition-colors hover:bg-white/[0.06] hover:text-white"
                   >
                     {item.label}
                   </Link>
@@ -1757,6 +1782,7 @@ export default function Home() {
         {/* Conference Video Stats Section */}
         <section className="mb-32 px-4 sm:px-6">
           <motion.div
+            ref={conferenceSectionRef}
             variants={fadeIn}
             initial="initial"
             whileInView="animate"
@@ -1765,28 +1791,28 @@ export default function Home() {
           >
             <video
               ref={conferencePrimaryVideoRef}
-              src={conferencePrimaryVideoSrc}
+              src={conferenceVideosReady ? conferencePrimaryVideoSrc : undefined}
               className={`conference-spotlight-media absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
                 conferenceActiveLayer === "primary" ? "opacity-100" : "opacity-0"
               }`}
-              autoPlay={conferenceActiveLayer === "primary"}
+              autoPlay={conferenceVideosReady && conferenceActiveLayer === "primary"}
               muted
               playsInline
-              preload="auto"
+              preload={conferenceVideosReady && conferenceActiveLayer === "primary" ? "auto" : "none"}
               onEnded={() => handleConferenceVideoEnded("primary")}
               onLoadedData={() => handleConferenceVideoLoadedData("primary")}
               aria-hidden="true"
             />
             <video
               ref={conferenceSecondaryVideoRef}
-              src={conferenceSecondaryVideoSrc}
+              src={conferenceVideosReady ? conferenceSecondaryVideoSrc : undefined}
               className={`conference-spotlight-media absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
                 conferenceActiveLayer === "secondary" ? "opacity-100" : "opacity-0"
               }`}
-              autoPlay={conferenceActiveLayer === "secondary"}
+              autoPlay={conferenceVideosReady && conferenceActiveLayer === "secondary"}
               muted
               playsInline
-              preload="auto"
+              preload={conferenceVideosReady && conferenceActiveLayer === "secondary" ? "auto" : "none"}
               onEnded={() => handleConferenceVideoEnded("secondary")}
               onLoadedData={() => handleConferenceVideoLoadedData("secondary")}
               aria-hidden="true"
@@ -1794,7 +1820,7 @@ export default function Home() {
             <div className="conference-spotlight-overlay absolute inset-0" />
             <div className="conference-spotlight-rim absolute inset-0" />
 
-            <div className="relative z-10 flex min-h-[clamp(30rem,62vw,41rem)] flex-col justify-end px-5 py-5 sm:px-6 md:px-8 md:py-7 lg:px-10">
+            <div className="relative z-10 flex min-h-[23rem] flex-col justify-end px-4 py-4 sm:min-h-[clamp(30rem,62vw,41rem)] sm:px-6 sm:py-5 md:px-8 md:py-7 lg:px-10">
               <div className="flex items-center gap-2" aria-hidden="true">
                 {conferenceVideos.map((videoSrc, index) => (
                   <span
@@ -1808,17 +1834,17 @@ export default function Home() {
                 ))}
               </div>
 
-              <div className="mt-3 grid gap-2.5 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="mt-3 grid grid-cols-2 gap-2 sm:gap-2.5 lg:grid-cols-4">
                 {conferenceStats.map((stat, index) => (
                   <div
                     key={stat.label}
-                    className="conference-spotlight-stat rounded-[18px] border border-white/16 p-3.5 md:p-4"
+                    className="conference-spotlight-stat rounded-[16px] border border-white/16 p-2.5 sm:rounded-[18px] sm:p-3.5 md:p-4"
                     style={{ animationDelay: `${index * 0.16}s` }}
                   >
-                    <p className="conference-spotlight-stat-value text-2xl md:text-3xl font-display font-bold leading-none">
+                    <p className="conference-spotlight-stat-value text-xl sm:text-2xl md:text-3xl font-display font-bold leading-none">
                       {stat.value}
                     </p>
-                    <p className="conference-spotlight-stat-label mt-1.5 text-[12px] md:text-[13px] leading-snug">
+                    <p className="conference-spotlight-stat-label mt-1 text-[11px] sm:mt-1.5 sm:text-[12px] md:text-[13px] leading-snug">
                       {stat.label}
                     </p>
                   </div>
