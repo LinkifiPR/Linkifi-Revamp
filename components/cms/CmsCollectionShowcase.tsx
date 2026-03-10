@@ -137,6 +137,7 @@ export function CmsCollectionShowcase({
   const theme = COLLECTION_THEME[kind];
   const featured = showFeatured ? entries[0] : null;
   const secondary = showFeatured ? entries.slice(1) : entries;
+  const hasEntries = entries.length > 0;
   const visiblePages = getVisiblePages(currentPage, totalPages);
   const canGoPrev = currentPage > 1;
   const canGoNext = currentPage < totalPages;
@@ -246,7 +247,9 @@ export function CmsCollectionShowcase({
               </div>
             </div>
           </article>
-        ) : (
+        ) : null}
+
+        {!hasEntries ? (
           <div className="rounded-[2rem] border border-[#e7e3ff] bg-white px-8 py-10 text-center shadow-[0_18px_42px_rgba(20,20,60,0.08)]">
             <p className="text-lg font-semibold text-[#22264a]">
               {searchQuery ? "No matching entries found." : "No published entries yet."}
@@ -257,7 +260,7 @@ export function CmsCollectionShowcase({
                 : "Publish content in the CMS and it will appear here automatically."}
             </p>
           </div>
-        )}
+        ) : null}
 
         {secondary.length > 0 ? (
           <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
