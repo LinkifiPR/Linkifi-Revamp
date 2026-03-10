@@ -89,6 +89,16 @@ type CmsPublishedSummaryRow = {
   updated_at: Date | string;
 };
 
+export type CmsMediaBinaryRecord = {
+  id: string;
+  filename: string;
+  mimeType: string;
+  sizeBytes: number;
+  alt: string;
+  bytes: Buffer;
+  createdAt: string;
+};
+
 export class CmsRepositoryError extends Error {
   code: "NOT_FOUND" | "SLUG_EXISTS" | "CONFIG" | "INVALID_AUTHOR";
 
@@ -959,6 +969,54 @@ export async function listCmsMedia(limit = 40): Promise<CmsMedia[]> {
   );
 
   return result.rows.map(mapMediaRow);
+}
+
+export async function listCmsMediaBinaries(
+  options: { limit?: number; offset?: number } = {},
+): Promise<CmsMediaBinaryRecord[]> {
+  await ensureSchema();
+  const limit = options.limit ?? 250;
+  const offset = options.offset ?? 0;
+
+  const result = await getPool().query<CmsMediaRow>(
+    `
+    SELECT id, filename, mime_type, size_bytes, alt, bytes, created_at
+    FROM cms_media
+    ORDER BY created_at DESC
+    LIMIT $1
+    OFFSET $2
+    `,
+    [limit, offset],
+  );
+
+  return result.rows.map((row) => ({
+    id: row.id,
+    filename: row.filename,
+    mimeType: row.mime_type,
+    sizeBytes: row.size_bytes,
+    alt: row.alt,
+    bytes: row.bytes,
+    createdAt: toIso(row.created_at) ?? new Date().toISOString(),
+  }));
+}
+
+export async function updateCmsMediaBinary(input: {
+  id: string;
+  filename: string;
+  mimeType: string;
+  sizeBytes: number;
+  bytes: Buffer;
+}): Promise<void> {
+  await ensureSchema();
+
+  await getPool().query(
+    `
+    UPDATE cms_media
+    SET filename = $2, mime_type = $3, size_bytes = $4, bytes = $5
+    WHERE id = $1
+    `,
+    [input.id, input.filename, input.mimeType, input.sizeBytes, input.bytes],
+  );
 }
 
 export async function getCmsMediaBinary(id: string): Promise<{ mimeType: string; bytes: Buffer } | null> {

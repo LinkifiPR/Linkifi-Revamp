@@ -16,6 +16,7 @@ type Props = {
   currentPage: number;
   totalPages: number;
   totalEntries: number;
+  showFeatured: boolean;
 };
 
 const COLLECTION_THEME: Record<
@@ -131,10 +132,11 @@ export function CmsCollectionShowcase({
   currentPage,
   totalPages,
   totalEntries,
+  showFeatured,
 }: Props) {
   const theme = COLLECTION_THEME[kind];
-  const featured = entries[0];
-  const secondary = entries.slice(1);
+  const featured = showFeatured ? entries[0] : null;
+  const secondary = showFeatured ? entries.slice(1) : entries;
   const visiblePages = getVisiblePages(currentPage, totalPages);
   const canGoPrev = currentPage > 1;
   const canGoNext = currentPage < totalPages;
