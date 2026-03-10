@@ -33,6 +33,7 @@ export default function Home() {
     "primary",
   );
   const [conferenceVideosReady, setConferenceVideosReady] = useState(false);
+  const [conferenceLowDataMode, setConferenceLowDataMode] = useState(false);
   const strategicSectionRef = useRef<HTMLElement | null>(null);
   const conferenceSectionRef = useRef<HTMLDivElement | null>(null);
   const testimonialVideoRefs = useRef<Array<HTMLVideoElement | null>>([]);
@@ -84,6 +85,31 @@ export default function Home() {
     observer.observe(section);
     return () => observer.disconnect();
   }, [conferenceVideosReady]);
+
+  useEffect(() => {
+    if (typeof navigator === "undefined") return;
+
+    const nav = navigator as Navigator & {
+      connection?: {
+        saveData?: boolean;
+        effectiveType?: string;
+        addEventListener?: (type: "change", listener: () => void) => void;
+        removeEventListener?: (type: "change", listener: () => void) => void;
+      };
+    };
+    const connection = nav.connection;
+    if (!connection) return;
+
+    const updateLowDataMode = () => {
+      const effectiveType = connection.effectiveType ?? "";
+      const isSlowConnection = effectiveType.includes("2g") || effectiveType.includes("3g");
+      setConferenceLowDataMode(Boolean(connection.saveData || isSlowConnection));
+    };
+
+    updateLowDataMode();
+    connection.addEventListener?.("change", updateLowDataMode);
+    return () => connection.removeEventListener?.("change", updateLowDataMode);
+  }, []);
 
   const navigationItems = [
     { label: "SEO Digital PR", href: "#Pricing" },
@@ -363,6 +389,7 @@ export default function Home() {
     "/homepage/conference/Chris3.mp4",
     "/homepage/conference/Chris4.mp4",
   ] as const;
+  const conferencePoster = "/homepage/conference/Chris1-poster.png";
 
   const conferenceStats = [
     {
@@ -543,7 +570,7 @@ export default function Home() {
   };
 
   const handleConferenceVideoEnded = (layer: "primary" | "secondary") => {
-    if (layer !== conferenceActiveLayer) return;
+    if (layer !== conferenceActiveLayer || conferenceLowDataMode) return;
 
     const nextLayer = conferenceActiveLayer === "primary" ? "secondary" : "primary";
     const nextVideo =
@@ -1792,27 +1819,35 @@ export default function Home() {
             <video
               ref={conferencePrimaryVideoRef}
               src={conferenceVideosReady ? conferencePrimaryVideoSrc : undefined}
+              poster={conferencePoster}
               className={`conference-spotlight-media absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
                 conferenceActiveLayer === "primary" ? "opacity-100" : "opacity-0"
               }`}
               autoPlay={conferenceVideosReady && conferenceActiveLayer === "primary"}
               muted
+              loop={conferenceLowDataMode}
               playsInline
-              preload={conferenceVideosReady && conferenceActiveLayer === "primary" ? "auto" : "none"}
+              preload={conferenceVideosReady && conferenceActiveLayer === "primary" ? "metadata" : "none"}
               onEnded={() => handleConferenceVideoEnded("primary")}
               onLoadedData={() => handleConferenceVideoLoadedData("primary")}
               aria-hidden="true"
             />
             <video
               ref={conferenceSecondaryVideoRef}
-              src={conferenceVideosReady ? conferenceSecondaryVideoSrc : undefined}
+              src={conferenceVideosReady && !conferenceLowDataMode ? conferenceSecondaryVideoSrc : undefined}
+              poster={conferencePoster}
               className={`conference-spotlight-media absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
                 conferenceActiveLayer === "secondary" ? "opacity-100" : "opacity-0"
               }`}
-              autoPlay={conferenceVideosReady && conferenceActiveLayer === "secondary"}
+              autoPlay={conferenceVideosReady && !conferenceLowDataMode && conferenceActiveLayer === "secondary"}
               muted
+              loop={conferenceLowDataMode}
               playsInline
-              preload={conferenceVideosReady && conferenceActiveLayer === "secondary" ? "auto" : "none"}
+              preload={
+                conferenceVideosReady && !conferenceLowDataMode && conferenceActiveLayer === "secondary"
+                  ? "metadata"
+                  : "none"
+              }
               onEnded={() => handleConferenceVideoEnded("secondary")}
               onLoadedData={() => handleConferenceVideoLoadedData("secondary")}
               aria-hidden="true"
