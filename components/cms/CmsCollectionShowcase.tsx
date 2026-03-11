@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, CalendarDays, Clock3 } from "lucide-react";
 import type { CmsEntrySummary } from "@/lib/cms-types";
@@ -59,7 +60,17 @@ function formatDate(date: string | null): string {
   });
 }
 
-function EntryImage({ entry, className }: { entry: CmsEntrySummary; className: string }) {
+function EntryImage({
+  entry,
+  className,
+  sizes,
+  priority = false,
+}: {
+  entry: CmsEntrySummary;
+  className: string;
+  sizes: string;
+  priority?: boolean;
+}) {
   if (!entry.featuredImageUrl) {
     return (
       <div
@@ -70,11 +81,14 @@ function EntryImage({ entry, className }: { entry: CmsEntrySummary; className: s
   }
 
   return (
-    <img
+    <Image
       src={entry.featuredImageUrl}
       alt={entry.featuredImageAlt || entry.title}
+      fill
+      sizes={sizes}
+      priority={priority}
+      quality={78}
       className={`${className} object-cover`}
-      loading="lazy"
     />
   );
 }
@@ -240,7 +254,12 @@ export function CmsCollectionShowcase({
                 </div>
 
                 <div className="relative min-h-[260px] md:min-h-full">
-                  <EntryImage entry={featured} className="h-full w-full transition-transform duration-700 group-hover:scale-[1.03]" />
+                  <EntryImage
+                    entry={featured}
+                    className="h-full w-full transition-transform duration-700 group-hover:scale-[1.03]"
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    priority
+                  />
                   <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(13,18,39,0.02),rgba(13,18,39,0.48))]" />
                 </div>
               </div>
@@ -272,6 +291,7 @@ export function CmsCollectionShowcase({
                     <EntryImage
                       entry={entry}
                       className="h-full w-full transition-transform duration-700 group-hover:scale-[1.05]"
+                      sizes="(min-width: 1280px) 30vw, (min-width: 768px) 46vw, 100vw"
                     />
                     <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(10,15,38,0.08),rgba(10,15,38,0.5))]" />
                     <div className={`absolute left-4 top-4 rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] ${theme.secondaryChip}`}>

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { unstable_cache } from "next/cache";
 import { CmsCollectionShowcase } from "@/components/cms/CmsCollectionShowcase";
 import { countPublishedEntriesByType, listPublishedEntrySummariesByType } from "@/lib/cms-repository";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 const GRID_PAGE_SIZE = 6;
 const FIRST_PAGE_FETCH_SIZE = GRID_PAGE_SIZE + 1;
 
@@ -18,6 +19,23 @@ export const metadata: Metadata = {
     canonical: "https://linkifi.io/case-studies",
   },
 };
+
+const getCachedCaseStudyCount = unstable_cache(
+  async (search: string) => countPublishedEntriesByType("case-study", search),
+  ["cms-case-study-count"],
+  { revalidate },
+);
+
+const getCachedCaseStudyEntries = unstable_cache(
+  async (search: string, limit: number, offset: number) =>
+    listPublishedEntrySummariesByType("case-study", {
+      search,
+      limit,
+      offset,
+    }),
+  ["cms-case-study-entries"],
+  { revalidate },
+);
 
 function getTotalPages(totalEntries: number): number {
   if (totalEntries <= 0) {
@@ -39,7 +57,7 @@ export default async function CaseStudiesIndexPage({ searchParams }: { searchPar
   const rawPage = Number.parseInt(params.page ?? "1", 10);
   const requestedPage = Number.isFinite(rawPage) && rawPage > 0 ? rawPage : 1;
 
-  const totalEntries = await countPublishedEntriesByType("case-study", normalizedQuery);
+  const totalEntries = await getCachedCaseStudyCount(normalizedQuery);
   const totalPages = getTotalPages(totalEntries);
   const currentPage = Math.min(requestedPage, totalPages);
   const showFeatured = currentPage === 1;
@@ -49,11 +67,7 @@ export default async function CaseStudiesIndexPage({ searchParams }: { searchPar
     : FIRST_PAGE_FETCH_SIZE + (currentPage - 2) * GRID_PAGE_SIZE;
   const entries =
     totalEntries > 0
-      ? await listPublishedEntrySummariesByType("case-study", {
-          search: normalizedQuery,
-          limit,
-          offset: startIndex,
-        })
+      ? await getCachedCaseStudyEntries(normalizedQuery, limit, startIndex)
       : [];
 
   return (

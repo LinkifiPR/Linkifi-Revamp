@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { unstable_cache } from "next/cache";
 import { CmsCollectionShowcase } from "@/components/cms/CmsCollectionShowcase";
 import { countPublishedEntriesByType, listPublishedEntrySummariesByType } from "@/lib/cms-repository";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 const GRID_PAGE_SIZE = 6;
 const FIRST_PAGE_FETCH_SIZE = GRID_PAGE_SIZE + 1;
 
@@ -18,6 +19,23 @@ export const metadata: Metadata = {
     canonical: "https://linkifi.io/blog",
   },
 };
+
+const getCachedBlogCount = unstable_cache(
+  async (search: string) => countPublishedEntriesByType("blog", search),
+  ["cms-blog-count"],
+  { revalidate },
+);
+
+const getCachedBlogEntries = unstable_cache(
+  async (search: string, limit: number, offset: number) =>
+    listPublishedEntrySummariesByType("blog", {
+      search,
+      limit,
+      offset,
+    }),
+  ["cms-blog-entries"],
+  { revalidate },
+);
 
 function getTotalPages(totalEntries: number): number {
   if (totalEntries <= 0) {
@@ -39,7 +57,7 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Se
   const rawPage = Number.parseInt(params.page ?? "1", 10);
   const requestedPage = Number.isFinite(rawPage) && rawPage > 0 ? rawPage : 1;
 
-  const totalEntries = await countPublishedEntriesByType("blog", normalizedQuery);
+  const totalEntries = await getCachedBlogCount(normalizedQuery);
   const totalPages = getTotalPages(totalEntries);
   const currentPage = Math.min(requestedPage, totalPages);
   const showFeatured = currentPage === 1;
@@ -49,11 +67,7 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Se
     : FIRST_PAGE_FETCH_SIZE + (currentPage - 2) * GRID_PAGE_SIZE;
   const entries =
     totalEntries > 0
-      ? await listPublishedEntrySummariesByType("blog", {
-          search: normalizedQuery,
-          limit,
-          offset: startIndex,
-        })
+      ? await getCachedBlogEntries(normalizedQuery, limit, startIndex)
       : [];
 
   return (
