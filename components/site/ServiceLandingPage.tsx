@@ -91,6 +91,7 @@ const trustLogos = [
     width: 520,
     height: 90,
     className: "h-8 w-auto sm:h-9",
+    filterClass: "opacity-95",
   },
   {
     src: "/publication-logos/forbes.png",
@@ -98,6 +99,7 @@ const trustLogos = [
     width: 280,
     height: 90,
     className: "h-10 w-auto sm:h-11",
+    filterClass: "opacity-95",
   },
   {
     src: "/publication-logos/guardian.png",
@@ -105,6 +107,7 @@ const trustLogos = [
     width: 320,
     height: 95,
     className: "h-7 w-auto sm:h-8",
+    filterClass: "opacity-95",
   },
   {
     src: "/publication-logos/healthline.png",
@@ -112,6 +115,7 @@ const trustLogos = [
     width: 360,
     height: 70,
     className: "h-7 w-auto sm:h-8",
+    filterClass: "opacity-95",
   },
   {
     src: "/publication-logos/bbc.svg",
@@ -119,6 +123,7 @@ const trustLogos = [
     width: 112,
     height: 40,
     className: "h-6 w-auto sm:h-7",
+    filterClass: "invert opacity-90",
   },
   {
     src: "/publication-logos/daily-express-clean.png",
@@ -126,6 +131,7 @@ const trustLogos = [
     width: 3816,
     height: 454,
     className: "h-4 w-auto sm:h-5",
+    filterClass: "invert opacity-90",
   },
   {
     src: "/publication-logos/wsj-clean.png",
@@ -133,6 +139,7 @@ const trustLogos = [
     width: 3690,
     height: 2091,
     className: "h-6 w-auto sm:h-7",
+    filterClass: "invert opacity-90",
   },
   {
     src: "/publication-logos/hubspot-clean.png",
@@ -140,6 +147,7 @@ const trustLogos = [
     width: 800,
     height: 232,
     className: "h-6 w-auto sm:h-7",
+    filterClass: "invert opacity-90",
   },
 ] as const;
 
@@ -657,24 +665,32 @@ function TrustArchitecture() {
   return (
     <SectionWrap>
       <PagePanel tone="white" className="py-8 sm:py-10">
-        <div className="border-y border-[#ece8f5] py-8 sm:py-10">
-          <div className="text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.26em] text-[#767a96]">Trusted by journalists at</p>
-          </div>
-          <div className="mt-8 grid gap-4 sm:grid-cols-4">
-            {trustLogos.map((logo) => (
-              <motion.div key={logo.alt} {...revealProps} whileHover={{ y: -4 }}>
-                <div className="flex h-[72px] items-center justify-center rounded-[18px] border border-[#ece8f5] bg-[#fcfcff] px-4 grayscale transition-all duration-300 hover:border-[#d8d0f2] hover:grayscale-0">
-                  <Image
-                    src={logo.src}
-                    alt={logo.alt}
-                    width={logo.width}
-                    height={logo.height}
-                    className={cn("object-contain opacity-65 transition-opacity duration-300 hover:opacity-95", logo.className)}
-                  />
-                </div>
-              </motion.div>
-            ))}
+        <div className="relative rounded-[20px] border border-[#d7d1f0] bg-[linear-gradient(135deg,#0e1433_0%,#141f4b_50%,#1e2b62_100%)] px-5 py-8 shadow-[0_24px_52px_rgba(16,22,56,0.28)] sm:px-7 sm:py-10">
+          <div className="pointer-events-none absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(255,255,255,0.45)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.45)_1px,transparent_1px)] [background-size:36px_36px]" />
+          <div className="relative z-10 border-y border-white/16 py-6 sm:py-8">
+            <div className="text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.26em] text-white/72">Trusted by journalists at</p>
+            </div>
+            <div className="mt-8 grid gap-4 sm:grid-cols-4">
+              {trustLogos.map((logo) => (
+                <motion.div key={logo.alt} {...revealProps} whileHover={{ y: -4, scale: 1.01 }}>
+                  <div className="group relative flex h-[74px] items-center justify-center overflow-hidden rounded-[16px] border border-white/16 bg-[linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] px-4 backdrop-blur-sm transition-all duration-300 hover:border-[#b9adff] hover:shadow-[0_0_0_1px_rgba(168,149,255,0.38),0_12px_26px_rgba(105,89,219,0.3)]">
+                    <div className="pointer-events-none absolute -right-5 -top-5 h-16 w-16 rounded-full bg-[radial-gradient(circle,rgba(173,146,255,0.45),transparent_70%)] blur-xl" />
+                    <Image
+                      src={logo.src}
+                      alt={logo.alt}
+                      width={logo.width}
+                      height={logo.height}
+                      className={cn(
+                        "relative z-10 object-contain transition-opacity duration-300 group-hover:opacity-100",
+                        logo.className,
+                        logo.filterClass,
+                      )}
+                    />
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </PagePanel>
