@@ -2,8 +2,8 @@ import Link from "next/link";
 import { Linkedin, Youtube } from "lucide-react";
 
 const navigationItems = [
-  { label: "SEO Digital PR", href: "/#Pricing" },
-  { label: "Authority PR", href: "/#Pricing" },
+  { label: "SEO Digital PR", href: "/seo-digital-pr" },
+  { label: "Authority PR", href: "/authority-pr" },
   { label: "Case Studies", href: "/case-studies" },
   { label: "Blog", href: "/blog" },
   { label: "Team", href: "/team" },
@@ -14,8 +14,8 @@ const footerMenus = [
   {
     title: "Services",
     links: [
-      { label: "SEO Digital PR", href: "/#Pricing" },
-      { label: "Authority PR", href: "/#Pricing" },
+      { label: "SEO Digital PR", href: "/seo-digital-pr" },
+      { label: "Authority PR", href: "/authority-pr" },
       { label: "Press Badge Maker", href: "/#howitworks" },
     ],
   },

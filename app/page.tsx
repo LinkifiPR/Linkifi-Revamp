@@ -112,8 +112,8 @@ export default function Home() {
   }, []);
 
   const navigationItems = [
-    { label: "SEO Digital PR", href: "#Pricing" },
-    { label: "Authority PR", href: "#Pricing" },
+    { label: "SEO Digital PR", href: "/seo-digital-pr" },
+    { label: "Authority PR", href: "/authority-pr" },
     { label: "Case Studies", href: "/case-studies" },
     { label: "Blog", href: "/blog" },
     { label: "Team", href: "/team" },
@@ -124,8 +124,8 @@ export default function Home() {
     {
       title: "Services",
       links: [
-        { label: "SEO Digital PR", href: "#Pricing" },
-        { label: "Authority PR", href: "#Pricing" },
+        { label: "SEO Digital PR", href: "/seo-digital-pr" },
+        { label: "Authority PR", href: "/authority-pr" },
         { label: "Press Badge Maker", href: "#howitworks" },
       ],
     },
