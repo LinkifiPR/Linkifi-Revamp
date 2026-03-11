@@ -787,8 +787,7 @@ export default function Home() {
                 variants={fadeIn}
                 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-[#0F0F0F] leading-[1.1] mb-6 tracking-tight"
               >
-                Effortless PR <br />
-                <span className="text-gradient-purple">Link Building</span>,{" "}
+                Effortless PR
                 <br />
                 Exceptional Results.
               </motion.h1>
