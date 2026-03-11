@@ -56,32 +56,57 @@ const footerSocialLinks = [
   },
 ] as const;
 
-function BrandMark() {
+type HeaderTheme = "dark" | "light";
+
+function BrandMark({ theme = "dark" }: { theme?: HeaderTheme } = {}) {
+  const isLight = theme === "light";
+
   return (
-    <Link href="/" className="inline-flex min-w-0 items-center gap-3 text-white">
-      <span className="relative inline-flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white/18 bg-white/8">
+    <Link
+      href="/"
+      className={`inline-flex min-w-0 items-center gap-3 ${isLight ? "text-[#15162b]" : "text-white"}`}
+    >
+      <span
+        className={`relative inline-flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl ${
+          isLight
+            ? "border border-[#e3e1f0] bg-[linear-gradient(135deg,#f7f4ff_0%,#eef0ff_100%)] shadow-[0_16px_32px_rgba(92,87,172,0.12)]"
+            : "border border-white/18 bg-white/8"
+        }`}
+      >
         <img src="/brand-mark.png" alt="Linkifi" className="h-7 w-7 object-contain" />
       </span>
-      <span className="truncate text-[1.85rem] font-display font-bold leading-none tracking-[-0.03em] text-white sm:text-[2rem]">
+      <span
+        className={`truncate text-[1.85rem] font-display font-bold leading-none tracking-[-0.03em] sm:text-[2rem] ${
+          isLight ? "text-[#15162b]" : "text-white"
+        }`}
+      >
         Linkifi
       </span>
     </Link>
   );
 }
 
-export function SiteHeader() {
+export function SiteHeader({ theme = "dark" }: { theme?: HeaderTheme } = {}) {
+  const isLight = theme === "light";
+
   return (
     <header className="relative z-30 bg-transparent">
       <div className="container mx-auto px-6 pt-6">
-        <div className="flex items-center justify-between gap-4 border-b border-white/20 pb-4">
-          <BrandMark />
+        <div
+          className={`flex items-center justify-between gap-4 pb-4 ${
+            isLight ? "border-b border-[#e5e2f1]" : "border-b border-white/20"
+          }`}
+        >
+          <BrandMark theme={theme} />
 
           <nav className="hidden items-center gap-6 md:flex">
             {navigationItems.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="text-sm font-semibold text-white/88 transition-colors hover:text-white"
+                className={`text-sm font-semibold transition-colors ${
+                  isLight ? "text-[#4c4d73] hover:text-[#1a1c34]" : "text-white/88 hover:text-white"
+                }`}
               >
                 {item.label}
               </Link>
@@ -90,25 +115,39 @@ export function SiteHeader() {
 
           <Link
             href="/contact-us"
-            className="hidden items-center justify-center rounded-full border border-white/30 bg-white/8 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/15 md:inline-flex"
+            className={`hidden items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold transition-colors md:inline-flex ${
+              isLight
+                ? "border border-[#d7d2eb] bg-white text-[#2c2f55] shadow-[0_14px_34px_rgba(76,77,115,0.08)] hover:bg-[#f6f4ff]"
+                : "border border-white/30 bg-white/8 text-white hover:bg-white/15"
+            }`}
           >
             Contact
           </Link>
         </div>
 
-        <nav className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-white/14 pb-3 md:hidden">
+        <nav
+          className={`mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 pb-3 md:hidden ${
+            isLight ? "border-b border-[#ece9f6]" : "border-b border-white/14"
+          }`}
+        >
             {navigationItems.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="text-sm font-semibold text-white/92 transition-colors hover:text-white"
+                className={`text-sm font-semibold transition-colors ${
+                  isLight ? "text-[#4c4d73] hover:text-[#1a1c34]" : "text-white/92 hover:text-white"
+                }`}
               >
                 {item.label}
               </Link>
             ))}
             <Link
               href="/contact-us"
-              className="ml-auto inline-flex rounded-full border border-white/30 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-white/18"
+              className={`ml-auto inline-flex rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors ${
+                isLight
+                  ? "border border-[#d7d2eb] bg-white text-[#2c2f55] hover:bg-[#f6f4ff]"
+                  : "border border-white/30 bg-white/10 text-white hover:bg-white/18"
+              }`}
             >
               Contact
             </Link>
