@@ -1436,11 +1436,14 @@ function BuildSignalsSection() {
 }
 
 function CompoundingAuthoritySection() {
-  const nodes = [
-    { title: "Editorial Authority", Icon: Newspaper, position: "top-5 left-1/2 -translate-x-1/2" },
-    { title: "Search Rankings", Icon: TrendingUp, position: "right-4 top-1/2 -translate-y-1/2" },
-    { title: "AI Recommendations", Icon: Bot, position: "bottom-5 left-1/2 -translate-x-1/2" },
-    { title: "E-E-A-T Signals", Icon: ShieldCheck, position: "left-4 top-1/2 -translate-y-1/2" },
+  const leftNodes = [
+    { title: "E-E-A-T Signals", Icon: ShieldCheck },
+    { title: "Editorial Authority", Icon: Newspaper },
+  ] as const;
+
+  const rightNodes = [
+    { title: "Search Rankings", Icon: TrendingUp },
+    { title: "AI Recommendations", Icon: Bot },
   ] as const;
 
   return (
@@ -1458,58 +1461,69 @@ function CompoundingAuthoritySection() {
             </div>
           </div>
 
-          <div className="relative mx-auto w-full max-w-[620px] rounded-[22px] border border-[#ece7f4] bg-[linear-gradient(180deg,#fcfbff_0%,#f5f4ff_100%)] p-6 shadow-[0_18px_38px_rgba(24,31,62,0.08)] sm:p-7">
+          <div className="relative mx-auto w-full max-w-[640px] rounded-[22px] border border-[#ece7f4] bg-[linear-gradient(180deg,#fcfbff_0%,#f5f4ff_100%)] p-6 shadow-[0_18px_38px_rgba(24,31,62,0.08)] sm:p-8">
             <div className="sm:hidden">
-              <div className="grid gap-3">
-                {nodes.map((node) => (
-                  <div key={node.title} className="flex items-center gap-3 rounded-[14px] border border-[#e4def3] bg-white px-4 py-3 text-[#171929] shadow-[0_14px_28px_rgba(24,31,62,0.08)]">
+              <div className="flex h-[132px] items-center justify-center rounded-[18px] bg-[linear-gradient(135deg,#6f5dff_0%,#4d92ff_100%)] text-white shadow-[0_20px_46px_rgba(99,90,255,0.26)]">
+                <div className="text-center">
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/74">Core outcome</div>
+                  <div className="mt-2 text-[1.15rem] font-display font-semibold leading-[1.2]">Compounding authority</div>
+                </div>
+              </div>
+              <div className="mt-4 grid gap-3">
+                {[...leftNodes, ...rightNodes].map((node) => (
+                  <div key={node.title} className="flex min-h-[76px] items-center gap-3 rounded-[14px] border border-[#e4def3] bg-white px-4 py-3 text-[#171929] shadow-[0_14px_28px_rgba(24,31,62,0.08)]">
                     <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff]">
                       <node.Icon className="h-4 w-4" />
                     </span>
                     <span className="text-[13px] font-semibold leading-[1.25]">{node.title}</span>
                   </div>
                 ))}
-                <div className="mt-2 flex h-[130px] items-center justify-center rounded-[18px] bg-[linear-gradient(135deg,#6f5dff_0%,#4d92ff_100%)] text-white shadow-[0_20px_46px_rgba(99,90,255,0.26)]">
-                  <div className="text-center">
-                    <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/74">Core outcome</div>
-                    <div className="mt-2 text-[1.15rem] font-display font-semibold leading-[1.2]">Compounding authority</div>
-                  </div>
-                </div>
               </div>
             </div>
 
-            <div className="relative hidden h-[410px] sm:block">
-              <div className="pointer-events-none absolute left-1/2 top-1/2 h-[1px] w-[70%] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,rgba(111,93,255,0.1),rgba(111,93,255,0.46),rgba(111,93,255,0.1))]" />
-              <div className="pointer-events-none absolute left-1/2 top-1/2 h-[72%] w-[1px] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(180deg,rgba(111,93,255,0.1),rgba(111,93,255,0.46),rgba(77,146,255,0.12))]" />
+            <div className="relative hidden sm:block">
+              <div className="pointer-events-none absolute left-1/2 top-1/2 h-[270px] w-[270px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#dbd4f8]" />
+              <div className="pointer-events-none absolute left-1/2 top-1/2 h-[220px] w-[220px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#e7e1fa]" />
 
-              {nodes.map((node, index) => (
-                <motion.div
-                  key={node.title}
-                  animate={{ y: [0, -4, 0] }}
-                  transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: index * 0.24 }}
-                  className={cn(
-                    "absolute flex h-[88px] w-[168px] items-center gap-3 rounded-[16px] border border-[#e4def3] bg-white px-4 py-3 text-[#171929] shadow-[0_16px_34px_rgba(24,31,62,0.08)]",
-                    node.position,
-                  )}
-                >
-                  <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff]">
-                    <node.Icon className="h-[18px] w-[18px]" />
-                  </span>
-                  <span className="text-[13px] font-semibold leading-[1.3]">{node.title}</span>
-                </motion.div>
-              ))}
-
-              <motion.div
-                animate={{ scale: [1, 1.045, 1] }}
-                transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute left-1/2 top-1/2 flex h-[168px] w-[168px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[linear-gradient(135deg,#6f5dff_0%,#4d92ff_100%)] text-white shadow-[0_24px_54px_rgba(99,90,255,0.28)]"
-              >
-                <div className="text-center">
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/74">Core outcome</div>
-                  <div className="mt-2 text-[1.25rem] font-display font-semibold leading-[1.15]">Compounding</div>
-                  <div className="text-[1.25rem] font-display font-semibold leading-[1.1]">authority</div>
+              <div className="grid min-h-[360px] grid-cols-[minmax(0,1fr)_176px_minmax(0,1fr)] items-center gap-4">
+                <div className="space-y-4">
+                  {leftNodes.map((node) => (
+                    <motion.div key={node.title} animate={{ y: [0, -2, 0] }} transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut" }}>
+                      <div className="flex min-h-[88px] items-center gap-3 rounded-[16px] border border-[#e4def3] bg-white px-4 py-3 text-[#171929] shadow-[0_16px_34px_rgba(24,31,62,0.08)]">
+                        <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff]">
+                          <node.Icon className="h-[18px] w-[18px]" />
+                        </span>
+                        <span className="text-[13px] font-semibold leading-[1.3]">{node.title}</span>
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
-              </motion.div>
+
+                <motion.div
+                  animate={{ scale: [1, 1.035, 1] }}
+                  transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
+                  className="relative z-10 mx-auto flex h-[168px] w-[168px] items-center justify-center rounded-full bg-[linear-gradient(135deg,#6f5dff_0%,#4d92ff_100%)] text-white shadow-[0_24px_54px_rgba(99,90,255,0.28)]"
+                >
+                  <div className="text-center">
+                    <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/74">Core outcome</div>
+                    <div className="mt-2 text-[1.2rem] font-display font-semibold leading-[1.15]">Compounding</div>
+                    <div className="text-[1.2rem] font-display font-semibold leading-[1.1]">authority</div>
+                  </div>
+                </motion.div>
+
+                <div className="space-y-4">
+                  {rightNodes.map((node) => (
+                    <motion.div key={node.title} animate={{ y: [0, -2, 0] }} transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut", delay: 0.24 }}>
+                      <div className="flex min-h-[88px] items-center gap-3 rounded-[16px] border border-[#e4def3] bg-white px-4 py-3 text-[#171929] shadow-[0_16px_34px_rgba(24,31,62,0.08)]">
+                        <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff]">
+                          <node.Icon className="h-[18px] w-[18px]" />
+                        </span>
+                        <span className="text-[13px] font-semibold leading-[1.3]">{node.title}</span>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
