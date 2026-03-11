@@ -329,7 +329,8 @@ export default function Home() {
       ],
       outcomeTitle: "World-Class Backlinks",
       outcomeSubtext: "Editorial links built to drive rankings.",
-      ctaLabel: "Buy Now",
+      ctaLabel: "View SEO Digital PR",
+      ctaHref: "/seo-digital-pr",
       tone: "seo",
     },
     {
@@ -354,7 +355,8 @@ export default function Home() {
       ],
       outcomeTitle: "Credibility + Market Authority",
       outcomeSubtext: "Builds reputation, visibility, and influence over time.",
-      ctaLabel: "Discuss Authority PR",
+      ctaLabel: "View Authority PR",
+      ctaHref: "/authority-pr",
       tone: "authority",
     },
   ] as const;
@@ -1566,7 +1568,7 @@ export default function Home() {
                     </div>
 
                     <div className="mt-auto pt-7 flex justify-center">
-                      <Link href="/contact-us" className="w-full sm:w-auto">
+                      <Link href={offer.ctaHref} className="w-full sm:w-auto">
                         <Button
                           className={`offer-cta h-12 rounded-full px-6 font-semibold w-full sm:min-w-[220px] justify-center ${
                             offer.tone === "seo"
