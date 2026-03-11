@@ -769,18 +769,51 @@ function SeoHeroVisual() {
             <SurfaceCard className="border-[#d4cdf9] bg-[linear-gradient(140deg,#f5f0ff_0%,#ecefff_100%)] p-5 sm:p-6">
               <div className="flex items-center justify-between gap-3">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6f5dff]">Average authority</p>
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#d7cdf9] bg-white/86 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#5a4dbf]">
-                  <Image src="/publication-logos/ahrefs.png" alt="Ahrefs" width={18} height={22} className="h-3.5 w-auto object-contain" />
-                  DR benchmark
+                <span className="inline-flex items-center gap-2 rounded-full border border-[#d7cdf9] bg-white/90 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#5a4dbf] shadow-[0_12px_24px_rgba(24,31,62,0.06)]">
+                  <Image src="/publication-logos/ahrefs.png" alt="Ahrefs" width={28} height={34} className="h-5 w-auto object-contain" />
+                  DR
                 </span>
               </div>
               <p className="mt-3 text-[2rem] font-display font-bold tracking-[-0.04em] text-[#171929]">DR 70+</p>
-              <p className="mt-2 text-[14px] leading-[1.6] text-[#656982]">Coverage built to sit inside commercially relevant, trusted media contexts.</p>
+              <p className="mt-2 text-[14px] leading-[1.6] text-[#656982]">We guarantee average DR70+ links across all of our link packages.</p>
             </SurfaceCard>
             <SurfaceCard className="border-[#cfe0ff] bg-[linear-gradient(140deg,#edf5ff_0%,#f4f6ff_100%)] p-5 sm:p-6">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6f5dff]">Publication footprint</p>
-              <p className="mt-3 text-[2rem] font-display font-bold tracking-[-0.04em] text-[#171929]">US + UK</p>
-              <p className="mt-2 text-[14px] leading-[1.6] text-[#656982]">Editorial opportunities aligned with search trust and brand authority goals.</p>
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                <div className="rounded-[18px] border border-[#cfdfff] bg-white/88 p-3 shadow-[0_14px_28px_rgba(24,31,62,0.06)]">
+                  <div className="flex items-center gap-3">
+                    <span
+                      aria-hidden="true"
+                      className="h-10 w-10 shrink-0 rounded-full border border-white/80 shadow-[0_8px_18px_rgba(44,78,164,0.18)]"
+                      style={{
+                        background:
+                          "radial-gradient(circle at 28% 28%, #2348a5 0 33%, transparent 34%), repeating-linear-gradient(180deg, #c6283f 0 11%, #ffffff 11% 22%)",
+                      }}
+                    />
+                    <div>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6f5dff]">Market</p>
+                      <p className="text-[1rem] font-display font-semibold tracking-[-0.02em] text-[#171929]">United States</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="rounded-[18px] border border-[#d6d3ff] bg-white/88 p-3 shadow-[0_14px_28px_rgba(24,31,62,0.06)]">
+                  <div className="flex items-center gap-3">
+                    <span
+                      aria-hidden="true"
+                      className="h-10 w-10 shrink-0 rounded-full border border-white/80 shadow-[0_8px_18px_rgba(58,76,164,0.18)]"
+                      style={{
+                        background:
+                          "linear-gradient(90deg, transparent 0 40%, #ffffff 40% 60%, transparent 60% 100%), linear-gradient(180deg, transparent 0 40%, #ffffff 40% 60%, transparent 60% 100%), linear-gradient(90deg, transparent 0 44%, #d62d45 44% 56%, transparent 56% 100%), linear-gradient(180deg, transparent 0 44%, #d62d45 44% 56%, transparent 56% 100%), #2448a6",
+                      }}
+                    />
+                    <div>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6f5dff]">Market</p>
+                      <p className="text-[1rem] font-display font-semibold tracking-[-0.02em] text-[#171929]">United Kingdom</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p className="mt-3 text-[14px] leading-[1.6] text-[#656982]">Editorial opportunities aligned with search trust and commercial authority goals across both markets.</p>
             </SurfaceCard>
           </div>
         </div>
@@ -1443,7 +1476,7 @@ function CompoundingAuthoritySection() {
 
   const rightNodes = [
     { title: "Search Rankings", Icon: TrendingUp },
-    { title: "AI Recommendations", Icon: Bot },
+    { title: "AI Signals", Icon: Bot },
   ] as const;
 
   return (
