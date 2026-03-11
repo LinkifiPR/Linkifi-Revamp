@@ -1471,11 +1471,11 @@ function CompoundingAuthoritySection() {
               </div>
               <div className="mt-4 grid gap-3">
                 {[...leftNodes, ...rightNodes].map((node) => (
-                  <div key={node.title} className="flex min-h-[76px] items-center gap-3 rounded-[14px] border border-[#e4def3] bg-white px-4 py-3 text-[#171929] shadow-[0_14px_28px_rgba(24,31,62,0.08)]">
+                  <div key={node.title} className="flex min-h-[76px] items-center gap-3 overflow-hidden rounded-[14px] border border-[#e4def3] bg-white px-4 py-3 text-[#171929] shadow-[0_14px_28px_rgba(24,31,62,0.08)]">
                     <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff]">
                       <node.Icon className="h-4 w-4" />
                     </span>
-                    <span className="text-[13px] font-semibold leading-[1.25]">{node.title}</span>
+                    <span className="min-w-0 break-words text-[13px] font-semibold leading-[1.25]">{node.title}</span>
                   </div>
                 ))}
               </div>
@@ -1489,11 +1489,11 @@ function CompoundingAuthoritySection() {
                 <div className="space-y-4">
                   {leftNodes.map((node) => (
                     <motion.div key={node.title} animate={{ y: [0, -2, 0] }} transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut" }}>
-                      <div className="flex min-h-[88px] items-center gap-3 rounded-[16px] border border-[#e4def3] bg-white px-4 py-3 text-[#171929] shadow-[0_16px_34px_rgba(24,31,62,0.08)]">
+                      <div className="flex min-h-[88px] items-center gap-3 overflow-hidden rounded-[16px] border border-[#e4def3] bg-white px-4 py-3 text-[#171929] shadow-[0_16px_34px_rgba(24,31,62,0.08)]">
                         <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff]">
                           <node.Icon className="h-[18px] w-[18px]" />
                         </span>
-                        <span className="text-[13px] font-semibold leading-[1.3]">{node.title}</span>
+                        <span className="min-w-0 break-words text-[13px] font-semibold leading-[1.25]">{node.title}</span>
                       </div>
                     </motion.div>
                   ))}
@@ -1514,11 +1514,11 @@ function CompoundingAuthoritySection() {
                 <div className="space-y-4">
                   {rightNodes.map((node) => (
                     <motion.div key={node.title} animate={{ y: [0, -2, 0] }} transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut", delay: 0.24 }}>
-                      <div className="flex min-h-[88px] items-center gap-3 rounded-[16px] border border-[#e4def3] bg-white px-4 py-3 text-[#171929] shadow-[0_16px_34px_rgba(24,31,62,0.08)]">
+                      <div className="flex min-h-[88px] items-center gap-3 overflow-hidden rounded-[16px] border border-[#e4def3] bg-white px-4 py-3 text-[#171929] shadow-[0_16px_34px_rgba(24,31,62,0.08)]">
                         <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff]">
                           <node.Icon className="h-[18px] w-[18px]" />
                         </span>
-                        <span className="text-[13px] font-semibold leading-[1.3]">{node.title}</span>
+                        <span className="min-w-0 break-words text-[13px] font-semibold leading-[1.25]">{node.title}</span>
                       </div>
                     </motion.div>
                   ))}
