@@ -789,7 +789,7 @@ export default function Home() {
               >
                 Effortless PR
                 <br />
-                Exceptional Results.
+                <span className="text-gradient-purple">Exceptional</span> Results.
               </motion.h1>
 
               <motion.p
