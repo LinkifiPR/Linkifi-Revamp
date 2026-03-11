@@ -405,8 +405,9 @@ const authorityPrograms: PricingCardData[] = [
     price: "$3,000",
     priceDetail: "per month",
     cadence: "Minimum 6 months",
-    description: "Combines AI visibility growth with direct SEO reinforcement.",
+    description: "Full SEO optimization included with AI visibility growth.",
     bullets: [
+      "Full SEO optimization included",
       "Everything in AI Visibility Growth",
       "Up to 5 page optimizations",
       "Internal linking improvements",
@@ -414,6 +415,7 @@ const authorityPrograms: PricingCardData[] = [
     ],
     ctaLabel: "Book Strategy Call",
     ctaHref: "/contact-us?service=authority-pr&program=ai-discovery-seo-optimization",
+    badge: "Most popular",
     footnote: "Minimum delivery window: 6 months.",
   },
   {
@@ -663,38 +665,40 @@ function HeroSignalPill({ children }: { children: React.ReactNode }) {
 
 function TrustArchitecture() {
   return (
-    <SectionWrap>
-      <PagePanel tone="white" className="py-8 sm:py-10">
-        <div className="relative rounded-[20px] border border-[#d7d1f0] bg-[linear-gradient(135deg,#0e1433_0%,#141f4b_50%,#1e2b62_100%)] px-5 py-8 shadow-[0_24px_52px_rgba(16,22,56,0.28)] sm:px-7 sm:py-10">
-          <div className="pointer-events-none absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(255,255,255,0.45)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.45)_1px,transparent_1px)] [background-size:36px_36px]" />
-          <div className="relative z-10 border-y border-white/16 py-6 sm:py-8">
-            <div className="text-center">
-              <p className="text-xs font-semibold uppercase tracking-[0.26em] text-white/72">Trusted by journalists at</p>
-            </div>
-            <div className="mt-8 grid gap-4 sm:grid-cols-4">
-              {trustLogos.map((logo) => (
-                <motion.div key={logo.alt} {...revealProps} whileHover={{ y: -4, scale: 1.01 }}>
-                  <div className="group relative flex h-[74px] items-center justify-center overflow-hidden rounded-[16px] border border-white/16 bg-[linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] px-4 backdrop-blur-sm transition-all duration-300 hover:border-[#b9adff] hover:shadow-[0_0_0_1px_rgba(168,149,255,0.38),0_12px_26px_rgba(105,89,219,0.3)]">
-                    <div className="pointer-events-none absolute -right-5 -top-5 h-16 w-16 rounded-full bg-[radial-gradient(circle,rgba(173,146,255,0.45),transparent_70%)] blur-xl" />
-                    <Image
-                      src={logo.src}
-                      alt={logo.alt}
-                      width={logo.width}
-                      height={logo.height}
-                      className={cn(
-                        "relative z-10 object-contain transition-opacity duration-300 group-hover:opacity-100",
-                        logo.className,
-                        logo.filterClass,
-                      )}
-                    />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+    <section className="relative py-14">
+      <div className="relative left-1/2 w-screen -translate-x-1/2 border-y border-[#0f1540] bg-[linear-gradient(135deg,#070d2b_0%,#121d4b_48%,#1a2b63_100%)] py-14 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),inset_0_-1px_0_rgba(255,255,255,0.06)]">
+        <div className="pointer-events-none absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(255,255,255,0.44)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.44)_1px,transparent_1px)] [background-size:38px_38px]" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(149,122,255,0.28),transparent_64%)]" />
+        <div className={`relative z-10 ${heroContainerClass}`}>
+          <div className="mx-auto max-w-4xl text-center">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-white/66">Trusted by journalists at</p>
+            <h3 className="mt-3 text-balance font-display text-[2rem] font-bold tracking-[-0.04em] text-white sm:text-[2.4rem]">
+              Media Reach That Builds Commercial Authority
+            </h3>
+          </div>
+          <div className="mt-10 grid gap-4 sm:grid-cols-4">
+            {trustLogos.map((logo) => (
+              <motion.div key={logo.alt} {...revealProps} whileHover={{ y: -5, scale: 1.012 }}>
+                <div className="group relative flex h-[78px] items-center justify-center overflow-hidden rounded-[16px] border border-white/18 bg-[linear-gradient(140deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04))] px-4 backdrop-blur-sm transition-all duration-300 hover:border-[#b6abff] hover:shadow-[0_0_0_1px_rgba(182,171,255,0.44),0_16px_34px_rgba(68,70,168,0.34)]">
+                  <div className="pointer-events-none absolute -right-5 -top-5 h-16 w-16 rounded-full bg-[radial-gradient(circle,rgba(173,146,255,0.48),transparent_70%)] blur-xl" />
+                  <Image
+                    src={logo.src}
+                    alt={logo.alt}
+                    width={logo.width}
+                    height={logo.height}
+                    className={cn(
+                      "relative z-10 object-contain transition-opacity duration-300 group-hover:opacity-100",
+                      logo.className,
+                      logo.filterClass,
+                    )}
+                  />
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
-      </PagePanel>
-    </SectionWrap>
+      </div>
+    </section>
   );
 }
 
@@ -731,7 +735,7 @@ function SeoHeroVisual() {
         </div>
 
         <div className="grid gap-4 md:grid-cols-[1.1fr_0.9fr]">
-          <SurfaceCard className="p-5 sm:p-6">
+          <SurfaceCard className="border-[#d9cff7] bg-[linear-gradient(140deg,#f8f4ff_0%,#eef3ff_100%)] p-5 sm:p-6">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6f5dff]">Signal stack</p>
             <div className="mt-4 space-y-3">
               {[
@@ -750,12 +754,18 @@ function SeoHeroVisual() {
           </SurfaceCard>
 
           <div className="grid gap-4">
-            <SurfaceCard className="p-5 sm:p-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6f5dff]">Average authority</p>
+            <SurfaceCard className="border-[#d4cdf9] bg-[linear-gradient(140deg,#f5f0ff_0%,#ecefff_100%)] p-5 sm:p-6">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6f5dff]">Average authority</p>
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#d7cdf9] bg-white/86 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#5a4dbf]">
+                  <BarChart3 className="h-3 w-3" />
+                  DR benchmark
+                </span>
+              </div>
               <p className="mt-3 text-[2rem] font-display font-bold tracking-[-0.04em] text-[#171929]">DR 70+</p>
               <p className="mt-2 text-[14px] leading-[1.6] text-[#656982]">Coverage built to sit inside commercially relevant, trusted media contexts.</p>
             </SurfaceCard>
-            <SurfaceCard className="p-5 sm:p-6">
+            <SurfaceCard className="border-[#cfe0ff] bg-[linear-gradient(140deg,#edf5ff_0%,#f4f6ff_100%)] p-5 sm:p-6">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6f5dff]">Publication footprint</p>
               <p className="mt-3 text-[2rem] font-display font-bold tracking-[-0.04em] text-[#171929]">US + UK</p>
               <p className="mt-2 text-[14px] leading-[1.6] text-[#656982]">Editorial opportunities aligned with search trust and brand authority goals.</p>
@@ -997,12 +1007,20 @@ function ProofSection({ cards }: { cards: ProofCardData[] }) {
 function GradientPricingCard({
   card,
   billingMode,
+  index,
 }: {
   card: PricingCardData;
   billingMode: BillingMode;
+  index: number;
 }) {
   const isHighlighted = Boolean(card.badge);
   const isMonthly = billingMode === "monthly";
+  const [linkCount, linkLabel] = card.title.split(" ");
+  const accentClass = [
+    "from-[#a490ff]/38",
+    "from-[#7fa9ff]/36",
+    "from-[#ff86ce]/34",
+  ][index] ?? "from-[#a490ff]/36";
 
   return (
     <motion.div {...revealProps} whileHover={{ y: -6 }}>
@@ -1042,8 +1060,11 @@ function GradientPricingCard({
                 : "bg-[linear-gradient(155deg,#25104a_0%,#6931b1_58%,#d14ea6_100%)]",
             )}
           >
-            <div>
-              <h3 className="text-[18px] font-display font-semibold leading-[1.35] tracking-[-0.02em]">{card.title}</h3>
+            <div className={cn("rounded-[12px] bg-[linear-gradient(140deg,rgba(255,255,255,0.14),rgba(255,255,255,0.03))] px-4 py-3", accentClass)}>
+              <h3 className="text-[2.1rem] font-display font-bold leading-none tracking-[-0.04em]">
+                <span>{linkCount}</span>
+                <span className="ml-1 text-[1rem] font-semibold uppercase tracking-[0.15em] text-white/76">{linkLabel}</span>
+              </h3>
               <p className="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/68">
                 {card.cadence ?? (isMonthly ? "Monthly package" : "One-time package")}
               </p>
@@ -1052,7 +1073,7 @@ function GradientPricingCard({
             <div className="mt-8">
               <div className="text-[2.75rem] font-display font-bold leading-none tracking-[-0.05em]">{card.price}</div>
               {card.priceDetail ? <p className="mt-2 text-[15px] leading-[1.6] text-white/62">{card.priceDetail}</p> : null}
-              {card.description ? <p className="mt-3 text-[15px] leading-[1.6] text-white/76">{card.description}</p> : null}
+              {card.description ? <p className="mt-3 min-h-[3.1rem] text-[15px] leading-[1.6] text-white/76">{card.description}</p> : <div className="mt-3 min-h-[3.1rem]" />}
             </div>
 
             <div className="mt-8 h-px bg-[linear-gradient(90deg,rgba(255,255,255,0.24),rgba(255,255,255,0.06))]" />
@@ -1097,6 +1118,7 @@ function ProgramPricingCard({
   premium?: boolean;
   index: number;
 }) {
+  const isPopular = Boolean(card.badge);
   const toneClass = [
     "bg-[linear-gradient(135deg,#7766ff_0%,#5549bf_52%,#437dff_100%)]",
     "bg-[linear-gradient(135deg,#6653ff_0%,#4458d6_52%,#2f84ff_100%)]",
@@ -1112,6 +1134,7 @@ function ProgramPricingCard({
           premium
             ? "shadow-[0_0_0_1px_rgba(138,114,255,0.48),0_18px_44px_rgba(86,74,193,0.26)]"
             : "",
+          isPopular && "shadow-[0_0_0_1px_rgba(255,194,90,0.52),0_20px_52px_rgba(195,129,255,0.28)]",
         )}
       >
         <div
@@ -1119,21 +1142,26 @@ function ProgramPricingCard({
         />
         <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-white/12 blur-3xl" />
         {premium ? <div className="absolute left-6 top-6 rounded-full border border-white/18 bg-white/12 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-white">Premium tier</div> : null}
+        {isPopular ? (
+          <div className="absolute right-5 top-5 rounded-full border border-[#ffd98a]/55 bg-[linear-gradient(135deg,#ffcf73_0%,#ff9f5a_100%)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#2c1e06] shadow-[0_8px_18px_rgba(255,170,72,0.36)]">
+            {card.badge}
+          </div>
+        ) : null}
         <div className="relative flex h-full flex-col rounded-[19px] bg-[linear-gradient(155deg,#161243_0%,#332b8b_58%,#5568ff_100%)] p-7 text-white">
-          <div>
+          <div className="min-h-[96px]">
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/62">{card.cadence}</p>
-            <h3 className="mt-4 text-[1.35rem] font-display font-semibold leading-[1.2] tracking-[-0.03em]">{card.title}</h3>
+            <h3 className="mt-4 whitespace-nowrap text-[1.23rem] font-display font-semibold leading-[1.2] tracking-[-0.03em] sm:text-[1.32rem]">{card.title}</h3>
           </div>
 
-          <div className="mt-6">
+          <div className="mt-2 min-h-[124px]">
             <div className="text-[2.25rem] font-display font-bold leading-none tracking-[-0.05em]">{card.price}</div>
             {card.priceDetail ? <p className="mt-2 text-[14px] leading-[1.6] text-white/64">{card.priceDetail}</p> : null}
-            {card.description ? <p className="mt-3 text-[14px] leading-[1.6] text-white/76">{card.description}</p> : null}
+            {card.description ? <p className="mt-3 min-h-[3.2rem] text-[14px] leading-[1.6] text-white/76">{card.description}</p> : <div className="mt-3 min-h-[3.2rem]" />}
           </div>
 
           <div className="mt-6 h-px bg-[linear-gradient(90deg,rgba(255,255,255,0.24),rgba(255,255,255,0.06))]" />
 
-          <div className="mt-6 space-y-3">
+          <div className="mt-6 min-h-[196px] space-y-3">
             {card.bullets.map((bullet) => (
               <div key={bullet} className="flex items-start gap-3">
                 <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/12 text-white">
@@ -1215,8 +1243,8 @@ function SeoPricingSection() {
         </motion.div>
 
         <div className="mt-10 grid gap-8 xl:grid-cols-3">
-          {cards.map((card) => (
-            <GradientPricingCard key={`${billingMode}-${card.title}`} card={card} billingMode={billingMode} />
+          {cards.map((card, index) => (
+            <GradientPricingCard key={`${billingMode}-${card.title}`} card={card} billingMode={billingMode} index={index} />
           ))}
         </div>
       </PagePanel>
@@ -1231,18 +1259,18 @@ function AuthorityProgramsSection() {
         <SectionHeading
           label="Monthly Programs"
           title="Programs built to influence recommendation systems over time"
-          description="The cards now read like SaaS tiers instead of generic retainers. Authority PR Engine is treated as the premium program rather than another equivalent block."
+          description="Every tier now aligns on the same baseline. AI Discovery + SEO is highlighted as the most popular package with full SEO optimization included."
           align="center"
         />
 
-        <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-[0.95fr_0.95fr_1fr_1.18fr] xl:items-stretch">
+        <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4 xl:items-stretch">
           {authorityPrograms.map((card, index) => (
             <ProgramPricingCard key={card.title} card={card} index={index} premium={index === authorityPrograms.length - 1} />
           ))}
         </div>
 
         <motion.div {...revealProps} className="mt-8">
-          <SurfaceCard className="overflow-hidden p-0">
+          <SurfaceCard className="overflow-hidden border-[#c9bcff] p-0 shadow-[0_0_0_1px_rgba(145,121,255,0.28),0_24px_56px_rgba(95,84,199,0.2)]">
             <div className="grid md:grid-cols-[1.1fr_0.9fr]">
               <div className="bg-[linear-gradient(135deg,#faf8ff_0%,#eef3ff_100%)] p-6 sm:p-7">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6f5dff]">Optional add-on</p>
@@ -1416,17 +1444,17 @@ function CompoundingAuthoritySection() {
             </div>
           </div>
 
-          <div className="relative mx-auto w-full max-w-[560px] rounded-[22px] border border-[#ece7f4] bg-[linear-gradient(180deg,#fcfbff_0%,#f5f4ff_100%)] p-6 shadow-[0_18px_38px_rgba(24,31,62,0.08)]">
+          <div className="relative mx-auto w-full max-w-[580px] rounded-[22px] border border-[#ece7f4] bg-[linear-gradient(180deg,#fcfbff_0%,#f5f4ff_100%)] p-6 shadow-[0_18px_38px_rgba(24,31,62,0.08)]">
             <div className="absolute left-1/2 top-1/2 h-[1px] w-[66%] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,rgba(111,93,255,0.1),rgba(111,93,255,0.42),rgba(111,93,255,0.1))]" />
             <div className="absolute left-1/2 top-1/2 h-[66%] w-[1px] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(180deg,rgba(111,93,255,0.1),rgba(111,93,255,0.42),rgba(77,146,255,0.12))]" />
-            <div className="relative grid h-[360px] grid-cols-3 grid-rows-3 items-center justify-items-center">
+            <div className="relative grid h-[380px] grid-cols-3 grid-rows-3 items-center justify-items-center">
               {nodes.map((node, index) => (
                 <motion.div
                   key={node.title}
                   animate={{ y: [0, -4, 0] }}
                   transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut", delay: index * 0.28 }}
                   className={cn(
-                    "flex h-[70px] w-[120px] items-center gap-2 rounded-[14px] border border-[#e4def3] bg-white px-2.5 py-2 text-[#171929] shadow-[0_16px_34px_rgba(24,31,62,0.08)] sm:h-[84px] sm:w-[148px] sm:gap-3 sm:rounded-[16px] sm:px-4 sm:py-3",
+                    "flex h-[74px] w-[130px] items-center gap-2 rounded-[14px] border border-[#e4def3] bg-white px-2.5 py-2 text-[#171929] shadow-[0_16px_34px_rgba(24,31,62,0.08)] sm:h-[88px] sm:w-[164px] sm:gap-3 sm:rounded-[16px] sm:px-4 sm:py-3",
                     node.position,
                   )}
                 >
@@ -1439,11 +1467,12 @@ function CompoundingAuthoritySection() {
               <motion.div
                 animate={{ scale: [1, 1.04, 1] }}
                 transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
-                className="col-[2] row-[2] flex h-32 w-32 items-center justify-center rounded-full bg-[linear-gradient(135deg,#6f5dff_0%,#4d92ff_100%)] text-white shadow-[0_24px_54px_rgba(99,90,255,0.28)]"
+                className="col-[2] row-[2] flex h-[148px] w-[148px] items-center justify-center rounded-full bg-[linear-gradient(135deg,#6f5dff_0%,#4d92ff_100%)] text-white shadow-[0_24px_54px_rgba(99,90,255,0.28)]"
               >
                 <div className="text-center">
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/72">Core outcome</div>
-                  <div className="mt-2 text-[1rem] font-display font-semibold leading-[1.2]">Compounding authority</div>
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/72">Core outcome</div>
+                  <div className="mt-2 text-[1.2rem] font-display font-semibold leading-[1.2]">Compounding</div>
+                  <div className="text-[1.2rem] font-display font-semibold leading-[1.1]">authority</div>
                 </div>
               </motion.div>
             </div>
