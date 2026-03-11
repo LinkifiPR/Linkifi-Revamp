@@ -47,7 +47,11 @@ type PricingCardData = {
   ctaLabel: string;
   ctaHref: string;
   badge?: string;
+  footnote?: string;
 };
+
+const pageContainerClass = "mx-auto w-full max-w-[1200px] px-6";
+const heroContainerClass = "mx-auto w-full max-w-[1280px] px-6";
 
 const trustLogos = [
   { src: "/publication-logos/forbes.png", alt: "Forbes", width: 280, height: 90 },
@@ -136,6 +140,7 @@ const seoMonthlyPackages: PricingCardData[] = [
     ],
     ctaLabel: "Get Started",
     ctaHref: "/contact-us?service=seo-digital-pr&package=10-links-monthly",
+    footnote: "Max delivery window: 6-month campaign.",
   },
   {
     title: "20 Links",
@@ -151,6 +156,7 @@ const seoMonthlyPackages: PricingCardData[] = [
     ctaLabel: "Get Started",
     ctaHref: "/contact-us?service=seo-digital-pr&package=20-links-monthly",
     badge: "Most popular",
+    footnote: "Max delivery window: 6-month campaign.",
   },
   {
     title: "50 Links",
@@ -165,6 +171,7 @@ const seoMonthlyPackages: PricingCardData[] = [
     ],
     ctaLabel: "Get Started",
     ctaHref: "/contact-us?service=seo-digital-pr&package=50-links-monthly",
+    footnote: "Max delivery window: 12-month campaign.",
   },
 ];
 
@@ -181,6 +188,7 @@ const seoOneTimePackages: PricingCardData[] = [
     ],
     ctaLabel: "Get Started",
     ctaHref: "/contact-us?service=seo-digital-pr&package=5-links-one-time",
+    footnote: "Delivery schedule confirmed during onboarding.",
   },
   {
     title: "10 Links",
@@ -195,6 +203,7 @@ const seoOneTimePackages: PricingCardData[] = [
     ctaLabel: "Get Started",
     ctaHref: "/contact-us?service=seo-digital-pr&package=10-links-one-time",
     badge: "Most popular",
+    footnote: "Delivery schedule confirmed during onboarding.",
   },
   {
     title: "20 Links",
@@ -208,6 +217,7 @@ const seoOneTimePackages: PricingCardData[] = [
     ],
     ctaLabel: "Get Started",
     ctaHref: "/contact-us?service=seo-digital-pr&package=20-links-one-time",
+    footnote: "Delivery schedule confirmed during onboarding.",
   },
 ];
 
@@ -228,6 +238,7 @@ const authorityPrograms: PricingCardData[] = [
     ],
     ctaLabel: "Book Strategy Call",
     ctaHref: "/contact-us?service=authority-pr&program=ai-visibility-core",
+    footnote: "Minimum delivery window: 6 months.",
   },
   {
     title: "AI Visibility Growth",
@@ -246,6 +257,7 @@ const authorityPrograms: PricingCardData[] = [
     ctaLabel: "Book Strategy Call",
     ctaHref: "/contact-us?service=authority-pr&program=ai-visibility-growth",
     badge: "Recommended",
+    footnote: "Minimum delivery window: 6 months.",
   },
   {
     title: "AI Discovery + SEO Optimization",
@@ -262,6 +274,7 @@ const authorityPrograms: PricingCardData[] = [
     ],
     ctaLabel: "Book Strategy Call",
     ctaHref: "/contact-us?service=authority-pr&program=ai-discovery-seo-optimization",
+    footnote: "Minimum delivery window: 6 months.",
   },
   {
     title: "Authority PR Engine",
@@ -278,6 +291,7 @@ const authorityPrograms: PricingCardData[] = [
     ],
     ctaLabel: "Book Strategy Call",
     ctaHref: "/contact-us?service=authority-pr&program=authority-pr-engine",
+    footnote: "Minimum delivery window: 6 months.",
   },
 ];
 
@@ -361,10 +375,10 @@ function SectionHeading({
   return (
     <div className={cn("max-w-3xl", align === "center" && "mx-auto text-center")}>
       <Eyebrow>{label}</Eyebrow>
-      <h2 className="mt-5 text-balance text-4xl font-display font-bold tracking-[-0.04em] text-[#171929] sm:text-5xl md:text-6xl">
+      <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
         {title}
       </h2>
-      <p className="mt-5 text-lg leading-relaxed text-[#5a5d79] sm:text-xl">{description}</p>
+      <p className="mt-4 text-[18px] leading-[1.6] text-[#5a5d79]">{description}</p>
     </div>
   );
 }
@@ -390,7 +404,7 @@ function PrimaryButton({ href, label }: { href: string; label: string }) {
     <Button
       asChild
       variant="ghost"
-      className="h-12 rounded-full bg-[linear-gradient(135deg,#6f5dff_0%,#5a4dbf_52%,#4d92ff_100%)] px-6 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(103,89,255,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_46px_rgba(103,89,255,0.34)] sm:h-14 sm:px-7 sm:text-base"
+      className="h-12 rounded-full bg-[linear-gradient(135deg,#6f5dff_0%,#5a4dbf_52%,#4d92ff_100%)] px-6 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(103,89,255,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_0_6px_rgba(111,93,255,0.12),0_24px_46px_rgba(103,89,255,0.34)] sm:h-14 sm:px-7 sm:text-base"
     >
       <Link href={href}>
         {label}
@@ -405,7 +419,7 @@ function SecondaryButton({ href, label }: { href: string; label: string }) {
     <Button
       asChild
       variant="ghost"
-      className="h-12 rounded-full border border-[#d8d3eb] bg-white px-6 text-sm font-semibold text-[#252846] shadow-[0_16px_34px_rgba(24,31,62,0.06)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f7f4ff] sm:h-14 sm:px-7 sm:text-base"
+      className="h-12 rounded-full border border-[#d8d3eb] bg-white px-6 text-sm font-semibold text-[#252846] shadow-[0_16px_34px_rgba(24,31,62,0.06)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f7f4ff] hover:shadow-[0_0_0_5px_rgba(111,93,255,0.08),0_18px_38px_rgba(24,31,62,0.08)] sm:h-14 sm:px-7 sm:text-base"
     >
       <Link href={href}>{label}</Link>
     </Button>
@@ -416,7 +430,7 @@ function HeroMetric({ value, label }: { value: string; label: string }) {
   return (
     <div className="rounded-[1.5rem] border border-[#e6e2f2] bg-white px-4 py-4 shadow-[0_16px_34px_rgba(24,31,62,0.06)]">
       <div className="text-[1.75rem] font-display font-bold tracking-[-0.035em] text-[#171929] sm:text-[2rem]">{value}</div>
-      <p className="mt-1 text-sm leading-relaxed text-[#636782]">{label}</p>
+      <p className="mt-1 text-[15px] leading-[1.6] text-[#636782]">{label}</p>
     </div>
   );
 }
@@ -424,7 +438,7 @@ function HeroMetric({ value, label }: { value: string; label: string }) {
 function TrustBar() {
   return (
     <section className="border-y border-[#ece8f5] bg-white">
-      <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-6 px-6 py-7 md:flex-row md:items-center md:justify-between">
+      <div className={`${pageContainerClass} flex flex-col gap-6 py-7 md:flex-row md:items-center md:justify-between`}>
         <p className="text-xs font-semibold uppercase tracking-[0.26em] text-[#6b6e8d]">
           Seen in trusted publications
         </p>
@@ -621,25 +635,41 @@ function DarkHighlightPanel({
   title,
   description,
   proofs,
+  ctaHref,
+  ctaLabel,
 }: {
   label: string;
   title: string;
   description: string;
   proofs: string[];
+  ctaHref: string;
+  ctaLabel: string;
 }) {
   return (
     <motion.div {...revealProps}>
-      <div className="relative overflow-hidden rounded-[2.4rem] bg-[linear-gradient(135deg,#090d22_0%,#11173b_52%,#121730_100%)] px-6 py-8 text-white shadow-[0_34px_88px_rgba(8,11,29,0.32)] sm:px-8 sm:py-10 md:px-10">
+      <div className="relative overflow-hidden rounded-[20px] bg-[linear-gradient(135deg,#090d22_0%,#11173b_52%,#121730_100%)] p-12 text-white shadow-[0_34px_88px_rgba(8,11,29,0.32)]">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(115,93,255,0.22),transparent_30%),radial-gradient(circle_at_84%_22%,rgba(87,157,255,0.14),transparent_26%)]" />
         <div className="pointer-events-none absolute inset-0 opacity-[0.12] [background-image:linear-gradient(rgba(255,255,255,0.8)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:36px_36px]" />
 
         <div className="relative z-10 grid gap-8 lg:grid-cols-[1fr_0.95fr] lg:items-center">
           <div>
             <Eyebrow inverted>{label}</Eyebrow>
-            <h2 className="mt-5 text-balance text-4xl font-display font-bold tracking-[-0.04em] text-white sm:text-5xl">
+            <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-white sm:text-[2.25rem]">
               {title}
             </h2>
-            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/72">{description}</p>
+            <p className="mt-4 max-w-2xl text-[18px] leading-[1.6] text-white/72">{description}</p>
+            <div className="mt-8">
+              <Button
+                asChild
+                variant="ghost"
+                className="h-12 rounded-full bg-white px-6 text-sm font-semibold text-[#1b1f44] shadow-[0_16px_34px_rgba(255,255,255,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/92 hover:shadow-[0_0_0_5px_rgba(255,255,255,0.08),0_18px_38px_rgba(255,255,255,0.14)] sm:h-14 sm:px-7"
+              >
+                <Link href={ctaHref}>
+                  {ctaLabel}
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
@@ -649,7 +679,7 @@ function DarkHighlightPanel({
                   <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10">
                     <CheckCircle2 className="h-4 w-4 text-white" />
                   </span>
-                  <span className="text-sm leading-relaxed text-white/84">{item}</span>
+                  <span className="text-[15px] leading-[1.6] text-white/84">{item}</span>
                 </div>
               </div>
             ))}
@@ -673,12 +703,12 @@ function DarkHighlightPanel({
 function FeatureCard({ item }: { item: FeatureCardData }) {
   return (
     <motion.div {...revealProps} whileHover={{ y: -6 }}>
-      <SurfaceCard hoverLift className="h-full p-6 sm:p-7">
-        <div className="flex h-14 w-14 items-center justify-center rounded-[1.25rem] bg-[linear-gradient(135deg,#f3efff_0%,#eef2ff_100%)] text-[#6f5dff] shadow-[inset_0_0_0_1px_rgba(111,93,255,0.08)]">
+      <SurfaceCard hoverLift className="h-full p-7">
+        <div className="flex h-14 w-14 items-center justify-center rounded-[1.25rem] bg-[linear-gradient(135deg,#f3efff_0%,#eef2ff_100%)] text-[#6f5dff] shadow-[inset_0_0_0_1px_rgba(111,93,255,0.08)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-[4deg]">
           <item.Icon className="h-6 w-6" />
         </div>
-        <h3 className="mt-6 text-[1.7rem] font-display font-bold tracking-[-0.035em] text-[#171929]">{item.title}</h3>
-        <p className="mt-4 text-base leading-relaxed text-[#61657f]">{item.description}</p>
+        <h3 className="mt-6 text-[18px] font-display font-semibold leading-[1.35] tracking-[-0.02em] text-[#171929]">{item.title}</h3>
+        <p className="mt-4 text-[15px] leading-[1.6] text-[#61657f]">{item.description}</p>
       </SurfaceCard>
     </motion.div>
   );
@@ -687,57 +717,73 @@ function FeatureCard({ item }: { item: FeatureCardData }) {
 function ProcessCard({ item, index }: { item: ProcessStep; index: number }) {
   return (
     <motion.div {...revealProps} transition={{ ...revealProps.transition, delay: index * 0.08 }}>
-      <SurfaceCard hoverLift className="h-full p-6 sm:p-7">
+      <SurfaceCard hoverLift className="h-full p-7">
         <div className="flex items-start gap-4">
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#dcd6f0] bg-white text-sm font-bold text-[#6f5dff] shadow-[0_12px_28px_rgba(89,84,165,0.08)]">
             {index + 1}
           </div>
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#7c6de0]">{item.step}</p>
-            <h3 className="mt-2 text-2xl font-display font-bold tracking-[-0.03em] text-[#171929]">{item.title}</h3>
+            <h3 className="mt-2 text-[18px] font-display font-semibold leading-[1.35] tracking-[-0.02em] text-[#171929]">{item.title}</h3>
           </div>
         </div>
-        <p className="mt-5 text-base leading-relaxed text-[#61657f]">{item.description}</p>
+        <p className="mt-5 text-[15px] leading-[1.6] text-[#61657f]">{item.description}</p>
       </SurfaceCard>
     </motion.div>
   );
 }
 
 function GradientPricingCard({ card }: { card: PricingCardData }) {
+  const isHighlighted = Boolean(card.badge);
+
   return (
     <motion.div {...revealProps} whileHover={{ y: -6 }}>
-      <div className="group relative h-full overflow-hidden rounded-[2rem] p-[1px] shadow-[0_26px_66px_rgba(86,74,193,0.18)] transition duration-500 hover:shadow-[0_34px_84px_rgba(86,74,193,0.24)]">
+      <div
+        className={cn(
+          "relative mx-auto w-full max-w-[360px] pt-6",
+          isHighlighted && "lg:max-w-[376px] lg:-translate-y-3",
+        )}
+      >
+        {card.badge ? (
+          <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#a38dff]/40 bg-[linear-gradient(135deg,#7f6aff_0%,#5a4dbf_100%)] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white shadow-[0_10px_24px_rgba(103,89,255,0.28)]">
+            {card.badge}
+          </div>
+        ) : null}
+
+        <div
+          className={cn(
+            "group relative h-full overflow-hidden rounded-[18px] p-[1px] shadow-[0_10px_30px_rgba(0,0,0,0.08)] transition duration-500 hover:shadow-[0_18px_42px_rgba(86,74,193,0.18)]",
+            isHighlighted && "shadow-[0_0_0_1px_rgba(138,114,255,0.42),0_16px_42px_rgba(86,74,193,0.22)]",
+          )}
+        >
         <div className="absolute inset-0 bg-[linear-gradient(135deg,#8470ff_0%,#5a4dbf_48%,#437dff_100%)]" />
         <div className="absolute -right-10 top-0 h-36 w-36 rounded-full bg-white/12 blur-3xl" />
         <div className="absolute left-8 top-8 h-20 w-20 rounded-full bg-[#f46bcb]/18 blur-3xl" />
-        <div className="relative flex h-full flex-col rounded-[calc(2rem-1px)] bg-[linear-gradient(155deg,#161243_0%,#3f36a7_58%,#5f6bff_100%)] p-6 text-white sm:p-7">
+        <div className="relative flex h-full flex-col rounded-[17px] bg-[linear-gradient(155deg,#161243_0%,#3f36a7_58%,#5f6bff_100%)] p-9 text-white">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h3 className="text-[1.8rem] font-display font-bold tracking-[-0.035em]">{card.title}</h3>
+              <h3 className="text-[18px] font-display font-semibold leading-[1.35] tracking-[-0.02em]">{card.title}</h3>
               {card.cadence ? (
                 <p className="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/68">{card.cadence}</p>
               ) : null}
             </div>
-            {card.badge ? (
-              <span className="rounded-full border border-white/14 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/88">
-                {card.badge}
-              </span>
-            ) : null}
           </div>
 
-          <div className="mt-7">
-            <div className="text-4xl font-display font-bold tracking-[-0.05em] sm:text-5xl">{card.price}</div>
-            {card.priceDetail ? <p className="mt-2 text-sm text-white/62">{card.priceDetail}</p> : null}
-            {card.description ? <p className="mt-4 text-base leading-relaxed text-white/76">{card.description}</p> : null}
+          <div className="mt-8">
+            <div className="text-[2.5rem] font-display font-bold leading-none tracking-[-0.05em]">{card.price}</div>
+            {card.priceDetail ? <p className="mt-2 text-[15px] leading-[1.6] text-white/62">{card.priceDetail}</p> : null}
+            {card.description ? <p className="mt-3 text-[15px] leading-[1.6] text-white/76">{card.description}</p> : null}
           </div>
 
-          <div className="mt-7 space-y-3">
+          <div className="mt-8 h-px bg-[linear-gradient(90deg,rgba(255,255,255,0.24),rgba(255,255,255,0.06))]" />
+
+          <div className="mt-8 space-y-4">
             {card.bullets.map((bullet) => (
               <div key={bullet} className="flex items-start gap-3">
                 <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/12">
                   <CheckCircle2 className="h-3.5 w-3.5" />
                 </span>
-                <span className="text-sm leading-relaxed text-white/84">{bullet}</span>
+                <span className="text-[15px] leading-[1.6] text-white/84">{bullet}</span>
               </div>
             ))}
           </div>
@@ -746,13 +792,17 @@ function GradientPricingCard({ card }: { card: PricingCardData }) {
             <Button
               asChild
               variant="ghost"
-              className="h-12 w-full rounded-full bg-white text-[#3f36a7] shadow-[0_16px_34px_rgba(255,255,255,0.14)] transition-all duration-300 hover:bg-white/92"
+              className="h-12 w-full rounded-full bg-white text-[#3f36a7] shadow-[0_16px_34px_rgba(255,255,255,0.14)] transition-all duration-300 hover:bg-white/92 hover:shadow-[0_0_0_5px_rgba(255,255,255,0.08),0_18px_38px_rgba(255,255,255,0.18)]"
             >
               <Link href={card.ctaHref}>
                 {card.ctaLabel}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
+            {card.footnote ? (
+              <p className="mt-4 text-[13px] leading-[1.6] text-white/62">{card.footnote}</p>
+            ) : null}
+          </div>
           </div>
         </div>
       </div>
@@ -765,12 +815,12 @@ function SeoPricingSection() {
   const cards = billingMode === "monthly" ? seoMonthlyPackages : seoOneTimePackages;
 
   return (
-    <section id="packages" className="bg-white py-24 sm:py-28">
-      <div className="mx-auto w-full max-w-[1180px] px-6">
+    <section id="packages" className="bg-[linear-gradient(180deg,#ffffff_0%,#f7f5ff_100%)] py-[8.75rem]">
+      <div className={pageContainerClass}>
         <SectionHeading
           label="Packages"
-          title="Productized editorial authority packages."
-          description="Choose a retained monthly campaign or a one-time authority burst. This is the only place on the page where the gradient card language takes over."
+          title="Packages designed for scalable authority growth"
+          description="Choose a retained monthly campaign or a one-time authority burst built around earned editorial placements and commercially relevant authority signals."
           align="center"
         />
 
@@ -803,7 +853,7 @@ function SeoPricingSection() {
           </div>
         </motion.div>
 
-        <div className="mt-12 grid gap-6 xl:grid-cols-3">
+        <div className="mt-10 grid gap-8 xl:grid-cols-3">
           {cards.map((card) => (
             <GradientPricingCard key={`${billingMode}-${card.title}`} card={card} />
           ))}
@@ -815,10 +865,10 @@ function SeoPricingSection() {
 
 function BlueprintSection() {
   return (
-    <section className="bg-[linear-gradient(180deg,#fbfaff_0%,#f3f2fb_100%)] py-24 sm:py-28">
-      <div className="mx-auto w-full max-w-[1180px] px-6">
+    <section className="bg-[linear-gradient(180deg,#fbfaff_0%,#f3f2fb_100%)] py-[7.5rem]">
+      <div className={pageContainerClass}>
         <motion.div {...revealProps}>
-          <SurfaceCard className="mx-auto max-w-[1080px] overflow-hidden p-6 sm:p-8 md:p-10">
+          <SurfaceCard className="mx-auto max-w-[760px] overflow-hidden p-12">
             <div className="absolute -right-14 top-0 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(127,108,255,0.18),transparent_64%)] blur-3xl" />
             <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
               <div>
@@ -836,14 +886,14 @@ function BlueprintSection() {
                 </div>
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-2">
+              <div className="grid gap-3">
                 {authorityFeatureBullets.map((bullet) => (
                   <div key={bullet} className="rounded-[1.4rem] border border-[#e8e5f3] bg-white px-4 py-4 shadow-[0_14px_30px_rgba(24,31,62,0.05)]">
                     <div className="flex items-start gap-3">
                       <span className="mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f0ecff] text-[#6f5dff]">
                         <CheckCircle2 className="h-4 w-4" />
                       </span>
-                      <span className="text-sm leading-relaxed text-[#575b76]">{bullet}</span>
+                      <span className="text-[15px] leading-[1.6] text-[#575b76]">{bullet}</span>
                     </div>
                   </div>
                 ))}
@@ -858,8 +908,8 @@ function BlueprintSection() {
 
 function AuthorityProgramsSection() {
   return (
-    <section id="programs" className="bg-white py-24 sm:py-28">
-      <div className="mx-auto w-full max-w-[1180px] px-6">
+    <section id="programs" className="bg-[linear-gradient(180deg,#ffffff_0%,#f7f5ff_100%)] py-[8.75rem]">
+      <div className={pageContainerClass}>
         <SectionHeading
           label="Monthly Programs"
           title="Programs built to influence recommendation systems over time."
@@ -867,7 +917,7 @@ function AuthorityProgramsSection() {
           align="center"
         />
 
-        <div className="mt-12 grid gap-6 xl:grid-cols-2">
+        <div className="mt-10 grid gap-8 xl:grid-cols-2">
           {authorityPrograms.map((card) => (
             <GradientPricingCard key={card.title} card={card} />
           ))}
@@ -878,8 +928,8 @@ function AuthorityProgramsSection() {
             <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6f5dff]">Optional add-on</p>
-                <h3 className="mt-3 text-3xl font-display font-bold tracking-[-0.035em] text-[#171929]">Content Engine</h3>
-                <p className="mt-3 max-w-2xl text-base leading-relaxed text-[#5d617b]">
+                <h3 className="mt-3 text-[18px] font-display font-semibold leading-[1.35] tracking-[-0.02em] text-[#171929]">Content Engine</h3>
+                <p className="mt-3 max-w-2xl text-[15px] leading-[1.6] text-[#5d617b]">
                   $2,000 per month for a structured content layer that supports authority positioning, comparison visibility, and AI discovery.
                 </p>
               </div>
@@ -887,7 +937,7 @@ function AuthorityProgramsSection() {
               <div className="rounded-[1.6rem] border border-[#e7e3f4] bg-[linear-gradient(135deg,#faf8ff_0%,#eef2ff_100%)] p-5 md:min-w-[19rem]">
                 <div className="text-4xl font-display font-bold tracking-[-0.04em] text-[#171929]">$2,000</div>
                 <p className="mt-2 text-sm text-[#6a6f8a]">per month</p>
-                <div className="mt-5 space-y-2 text-sm text-[#565a75]">
+                <div className="mt-5 space-y-2 text-[15px] leading-[1.6] text-[#565a75]">
                   <p>Content strategy blueprint</p>
                   <p>5 expert content pieces per month</p>
                   <p>Authority positioning topics</p>
@@ -905,19 +955,19 @@ function AuthorityProgramsSection() {
 function SignalCard({ item }: { item: (typeof authoritySignals)[number] }) {
   return (
     <motion.div {...revealProps} whileHover={{ y: -6 }}>
-      <SurfaceCard hoverLift className="h-full p-6 sm:p-7">
-        <div className="flex h-14 w-14 items-center justify-center rounded-[1.25rem] bg-[linear-gradient(135deg,#f3efff_0%,#eef2ff_100%)] text-[#6f5dff] shadow-[inset_0_0_0_1px_rgba(111,93,255,0.08)]">
+      <SurfaceCard hoverLift className="h-full p-7">
+        <div className="flex h-14 w-14 items-center justify-center rounded-[1.25rem] bg-[linear-gradient(135deg,#f3efff_0%,#eef2ff_100%)] text-[#6f5dff] shadow-[inset_0_0_0_1px_rgba(111,93,255,0.08)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-[4deg]">
           <item.Icon className="h-6 w-6" />
         </div>
-        <h3 className="mt-6 text-[1.7rem] font-display font-bold tracking-[-0.035em] text-[#171929]">{item.title}</h3>
-        <p className="mt-4 text-base leading-relaxed text-[#61657f]">{item.description}</p>
+        <h3 className="mt-6 text-[18px] font-display font-semibold leading-[1.35] tracking-[-0.02em] text-[#171929]">{item.title}</h3>
+        <p className="mt-4 text-[15px] leading-[1.6] text-[#61657f]">{item.description}</p>
         <div className="mt-6 space-y-3">
           {item.examples.map((example) => (
             <div key={example} className="flex items-start gap-3">
               <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#f0ecff] text-[#6f5dff]">
                 <CheckCircle2 className="h-3.5 w-3.5" />
               </span>
-              <span className="text-sm leading-relaxed text-[#575b76]">{example}</span>
+              <span className="text-[15px] leading-[1.6] text-[#575b76]">{example}</span>
             </div>
           ))}
         </div>
@@ -933,6 +983,7 @@ function FinalCta({
   primaryLabel,
   secondaryHref,
   secondaryLabel,
+  dark = false,
 }: {
   title: string;
   description: string;
@@ -940,23 +991,62 @@ function FinalCta({
   primaryLabel: string;
   secondaryHref: string;
   secondaryLabel: string;
+  dark?: boolean;
 }) {
   return (
     <motion.div {...revealProps}>
-      <SurfaceCard className="overflow-hidden p-6 sm:p-8 md:p-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_18%,rgba(127,108,255,0.12),transparent_28%),radial-gradient(circle_at_84%_12%,rgba(87,157,255,0.08),transparent_26%)]" />
+      <div
+        className={cn(
+          "relative overflow-hidden rounded-[20px] p-10 md:p-12",
+          dark
+            ? "bg-[linear-gradient(135deg,#090d22_0%,#11173b_52%,#121730_100%)] text-white shadow-[0_34px_88px_rgba(8,11,29,0.32)]"
+            : "border border-[#e8e5f3] bg-white shadow-[0_28px_60px_rgba(24,31,62,0.08)]",
+        )}
+      >
+        <div
+          className={cn(
+            "absolute inset-0",
+            dark
+              ? "bg-[radial-gradient(circle_at_15%_18%,rgba(127,108,255,0.18),transparent_28%),radial-gradient(circle_at_84%_12%,rgba(87,157,255,0.12),transparent_26%)]"
+              : "bg-[radial-gradient(circle_at_15%_18%,rgba(127,108,255,0.12),transparent_28%),radial-gradient(circle_at_84%_12%,rgba(87,157,255,0.08),transparent_26%)]",
+          )}
+        />
         <div className="relative z-10 mx-auto max-w-3xl text-center">
-          <Eyebrow>Ready to move</Eyebrow>
-          <h2 className="mt-5 text-balance text-4xl font-display font-bold tracking-[-0.04em] text-[#171929] sm:text-5xl md:text-6xl">
+          <Eyebrow inverted={dark}>Ready to move</Eyebrow>
+          <h2 className={cn("mt-5 text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] sm:text-[2.25rem] md:text-[2.5rem]", dark ? "text-white" : "text-[#171929]")}>
             {title}
           </h2>
-          <p className="mt-5 text-lg leading-relaxed text-[#5b5f79] sm:text-xl">{description}</p>
+          <p className={cn("mt-4 text-[18px] leading-[1.6]", dark ? "text-white/72" : "text-[#5b5f79]")}>{description}</p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-            <PrimaryButton href={primaryHref} label={primaryLabel} />
-            <SecondaryButton href={secondaryHref} label={secondaryLabel} />
+            {dark ? (
+              <>
+                <Button
+                  asChild
+                  variant="ghost"
+                  className="h-12 rounded-full bg-white px-6 text-sm font-semibold text-[#1b1f44] shadow-[0_16px_34px_rgba(255,255,255,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/92 hover:shadow-[0_0_0_5px_rgba(255,255,255,0.08),0_18px_38px_rgba(255,255,255,0.14)] sm:h-14 sm:px-7"
+                >
+                  <Link href={primaryHref}>
+                    {primaryLabel}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="ghost"
+                  className="h-12 rounded-full border border-white/16 bg-white/10 px-6 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/14 sm:h-14 sm:px-7"
+                >
+                  <Link href={secondaryHref}>{secondaryLabel}</Link>
+                </Button>
+              </>
+            ) : (
+              <>
+                <PrimaryButton href={primaryHref} label={primaryLabel} />
+                <SecondaryButton href={secondaryHref} label={secondaryLabel} />
+              </>
+            )}
           </div>
         </div>
-      </SurfaceCard>
+      </div>
     </motion.div>
   );
 }
@@ -966,7 +1056,7 @@ function SeoLandingContent() {
     <>
       <section className="relative overflow-hidden border-b border-[#ede9f6] bg-[radial-gradient(circle_at_14%_0%,rgba(144,122,255,0.18),transparent_26%),radial-gradient(circle_at_88%_10%,rgba(79,155,255,0.12),transparent_24%),linear-gradient(180deg,#ffffff_0%,#fbfbff_100%)]">
         <div className="pointer-events-none absolute inset-0 opacity-[0.32] [background-image:linear-gradient(rgba(117,110,174,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(117,110,174,0.12)_1px,transparent_1px)] [background-size:54px_54px]" />
-        <div className="relative mx-auto w-full max-w-[1180px] px-6 pb-20 pt-10 sm:pb-24">
+        <div className={`relative ${heroContainerClass} pb-20 pt-10`}>
           <div className="grid gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-14">
             <motion.div {...revealProps}>
               <Eyebrow>SEO Digital PR</Eyebrow>
@@ -994,8 +1084,8 @@ function SeoLandingContent() {
 
       <TrustBar />
 
-      <section className="bg-white py-12 sm:py-16">
-        <div className="mx-auto w-full max-w-[1180px] px-6">
+      <section className="bg-white py-[7.5rem]">
+        <div className={pageContainerClass}>
           <DarkHighlightPanel
             label="Authority highlight"
             title="Where others scatter links, we build authority."
@@ -1005,19 +1095,21 @@ function SeoLandingContent() {
               "Expert positioning that strengthens E-E-A-T signals",
               "Editorial links that cannot simply be bought",
             ]}
+            ctaHref="#packages"
+            ctaLabel="View Packages"
           />
         </div>
       </section>
 
-      <section className="bg-white py-24 sm:py-28">
-        <div className="mx-auto w-full max-w-[1180px] px-6">
+      <section className="bg-white py-[7.5rem]">
+        <div className={pageContainerClass}>
           <SectionHeading
             label="What SEO Digital PR Does"
             title="Four reasons the model is built for authority, not noise."
             description="This section stays intentionally clean: white cards, strong hierarchy, and enough space for the product story to breathe."
             align="center"
           />
-          <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-10 grid gap-7 md:grid-cols-2 xl:grid-cols-4">
             {seoFeatureCards.map((item) => (
               <FeatureCard key={item.title} item={item} />
             ))}
@@ -1025,17 +1117,17 @@ function SeoLandingContent() {
         </div>
       </section>
 
-      <section className="bg-[#f5f4fb] py-24 sm:py-28">
-        <div className="mx-auto w-full max-w-[1180px] px-6">
+      <section className="bg-[#f5f4fb] py-[7.5rem]">
+        <div className={pageContainerClass}>
           <SectionHeading
             label="How It Works"
             title="A simple delivery system with clear operational steps."
             description="The process section is lighter and cleaner by design, mirroring the homepage rhythm rather than reverting to another heavy dark block."
             align="center"
           />
-          <div className="relative mt-12">
+          <div className="relative mt-10">
             <div className="absolute left-6 top-0 hidden h-full w-px bg-[linear-gradient(180deg,rgba(121,109,214,0.32),transparent)] md:left-1/2 md:block md:-translate-x-1/2" />
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="grid gap-8 md:grid-cols-3">
               {seoProcessSteps.map((item, index) => (
                 <ProcessCard key={item.title} item={item} index={index} />
               ))}
@@ -1046,8 +1138,8 @@ function SeoLandingContent() {
 
       <SeoPricingSection />
 
-      <section className="bg-[linear-gradient(180deg,#fbfbff_0%,#f3f2fb_100%)] py-24 sm:py-28">
-        <div className="mx-auto w-full max-w-[1180px] px-6">
+      <section className="bg-[linear-gradient(180deg,#fbfbff_0%,#f3f2fb_100%)] py-[8.75rem]">
+        <div className={pageContainerClass}>
           <motion.div {...revealProps}>
             <SurfaceCard className="p-6 sm:p-8 md:p-10">
               <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
@@ -1073,8 +1165,8 @@ function SeoLandingContent() {
         </div>
       </section>
 
-      <section className="bg-white pb-24 pt-2 sm:pb-28">
-        <div className="mx-auto w-full max-w-[1180px] px-6">
+      <section className="bg-[#060915] py-[8.75rem]">
+        <div className={pageContainerClass}>
           <FinalCta
             title="Ready to turn editorial coverage into ranking leverage?"
             description="If you want a cleaner authority layer around your brand, the next move is simple: choose the package model or book a strategy call."
@@ -1082,6 +1174,7 @@ function SeoLandingContent() {
             primaryLabel="Book Strategy Call"
             secondaryHref="#packages"
             secondaryLabel="View Packages"
+            dark
           />
         </div>
       </section>
@@ -1094,7 +1187,7 @@ function AuthorityLandingContent() {
     <>
       <section className="relative overflow-hidden border-b border-[#ede9f6] bg-[radial-gradient(circle_at_14%_0%,rgba(144,122,255,0.18),transparent_26%),radial-gradient(circle_at_88%_10%,rgba(79,155,255,0.12),transparent_24%),linear-gradient(180deg,#ffffff_0%,#fbfbff_100%)]">
         <div className="pointer-events-none absolute inset-0 opacity-[0.32] [background-image:linear-gradient(rgba(117,110,174,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(117,110,174,0.12)_1px,transparent_1px)] [background-size:54px_54px]" />
-        <div className="relative mx-auto w-full max-w-[1180px] px-6 pb-20 pt-10 sm:pb-24">
+        <div className={`relative ${heroContainerClass} pb-20 pt-10`}>
           <div className="grid gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-14">
             <motion.div {...revealProps}>
               <Eyebrow>Authority PR</Eyebrow>
@@ -1122,8 +1215,8 @@ function AuthorityLandingContent() {
 
       <TrustBar />
 
-      <section className="bg-white py-12 sm:py-16">
-        <div className="mx-auto w-full max-w-[1180px] px-6">
+      <section className="bg-white py-[7.5rem]">
+        <div className={pageContainerClass}>
           <DarkHighlightPanel
             label="Authority highlight"
             title="Build the signals that travel across search, AI, and editorial discovery."
@@ -1133,19 +1226,21 @@ function AuthorityLandingContent() {
               "Create stronger citation density across trusted recommendation sources",
               "Reinforce expertise through editorial and authority content assets",
             ]}
+            ctaHref="#programs"
+            ctaLabel="View Programs"
           />
         </div>
       </section>
 
-      <section className="bg-white py-24 sm:py-28">
-        <div className="mx-auto w-full max-w-[1180px] px-6">
+      <section className="bg-white py-[7.5rem]">
+        <div className={pageContainerClass}>
           <SectionHeading
             label="Authority PR Overview"
             title="A more strategic product story, still structured like software."
             description="The visual language stays clean and bright here: white cards, measured shadows, and only enough accent color to signal hierarchy."
             align="center"
           />
-          <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-10 grid gap-7 md:grid-cols-2 xl:grid-cols-4">
             {authorityFeatureCards.map((item) => (
               <FeatureCard key={item.title} item={item} />
             ))}
@@ -1157,15 +1252,15 @@ function AuthorityLandingContent() {
 
       <AuthorityProgramsSection />
 
-      <section className="bg-white py-24 sm:py-28">
-        <div className="mx-auto w-full max-w-[1180px] px-6">
+      <section className="bg-white py-[7.5rem]">
+        <div className={pageContainerClass}>
           <SectionHeading
             label="How AI Visibility Signals Work"
             title="Three signal layers that influence recommendation systems."
             description="Keep the explanation section readable and structured. White background, short explanations, and enough card separation to feel premium rather than dense."
             align="center"
           />
-          <div className="mt-12 grid gap-6 lg:grid-cols-3">
+          <div className="mt-10 grid gap-8 lg:grid-cols-3">
             {authoritySignals.map((item) => (
               <SignalCard key={item.title} item={item} />
             ))}
@@ -1173,8 +1268,8 @@ function AuthorityLandingContent() {
         </div>
       </section>
 
-      <section className="bg-[#f5f4fb] py-24 sm:py-28">
-        <div className="mx-auto w-full max-w-[1180px] px-6">
+      <section className="bg-[#f5f4fb] py-[7.5rem]">
+        <div className={pageContainerClass}>
           <motion.div {...revealProps}>
             <SurfaceCard className="p-6 sm:p-8 md:p-10">
               <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
@@ -1197,7 +1292,7 @@ function AuthorityLandingContent() {
                         <span className="mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white text-[#6f5dff] shadow-[0_10px_24px_rgba(89,84,165,0.08)]">
                           <CheckCircle2 className="h-4 w-4" />
                         </span>
-                        <span className="text-base leading-relaxed text-[#565a75]">{item}</span>
+                        <span className="text-[15px] leading-[1.6] text-[#565a75]">{item}</span>
                       </div>
                     </div>
                   ))}
@@ -1208,8 +1303,8 @@ function AuthorityLandingContent() {
         </div>
       </section>
 
-      <section className="bg-white pb-24 pt-2 sm:pb-28">
-        <div className="mx-auto w-full max-w-[1180px] px-6">
+      <section className="bg-[#060915] py-[8.75rem]">
+        <div className={pageContainerClass}>
           <FinalCta
             title="Build authority where discovery happens."
             description="Search engines, AI assistants, editorial sources, and comparison platforms increasingly determine how brands are discovered. Authority PR is built for that environment."
@@ -1217,6 +1312,7 @@ function AuthorityLandingContent() {
             primaryLabel="Book Strategy Call"
             secondaryHref="#programs"
             secondaryLabel="View Programs"
+            dark
           />
         </div>
       </section>
