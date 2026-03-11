@@ -666,21 +666,32 @@ function HeroSignalPill({ children }: { children: React.ReactNode }) {
 function TrustArchitecture() {
   return (
     <section className="relative py-14">
-      <div className="relative left-1/2 w-screen -translate-x-1/2 border-y border-[#0f1540] bg-[linear-gradient(135deg,#070d2b_0%,#121d4b_48%,#1a2b63_100%)] py-14 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),inset_0_-1px_0_rgba(255,255,255,0.06)]">
-        <div className="pointer-events-none absolute inset-0 opacity-[0.16] [background-image:linear-gradient(rgba(255,255,255,0.44)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.44)_1px,transparent_1px)] [background-size:38px_38px]" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(149,122,255,0.28),transparent_64%)]" />
+      <div className="relative left-1/2 w-screen -translate-x-1/2 border-y border-[#141d52] bg-[linear-gradient(130deg,#13194c_0%,#25348b_48%,#33439a_100%)] py-16 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),inset_0_-1px_0_rgba(255,255,255,0.08)]">
+        <div className="pointer-events-none absolute inset-0 opacity-[0.11] [background-image:linear-gradient(rgba(181,196,255,0.42)_1px,transparent_1px),linear-gradient(90deg,rgba(181,196,255,0.42)_1px,transparent_1px)] [background-size:52px_52px]" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-[radial-gradient(circle_at_top,rgba(173,146,255,0.34),transparent_68%)]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-[radial-gradient(circle_at_bottom,rgba(109,143,255,0.26),transparent_72%)]" />
         <div className={`relative z-10 ${heroContainerClass}`}>
           <div className="mx-auto max-w-4xl text-center">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-white/66">Trusted by journalists at</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#f4f1ff] [text-shadow:0_1px_0_rgba(8,10,28,0.35)]">Trusted by journalists at</p>
             <h3 className="mt-3 text-balance font-display text-[2rem] font-bold tracking-[-0.04em] text-white sm:text-[2.4rem]">
               Media Reach That Builds Commercial Authority
             </h3>
           </div>
           <div className="mt-10 grid gap-4 sm:grid-cols-4">
-            {trustLogos.map((logo) => (
-              <motion.div key={logo.alt} {...revealProps} whileHover={{ y: -5, scale: 1.012 }}>
-                <div className="group relative flex h-[78px] items-center justify-center overflow-hidden rounded-[16px] border border-white/18 bg-[linear-gradient(140deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04))] px-4 backdrop-blur-sm transition-all duration-300 hover:border-[#b6abff] hover:shadow-[0_0_0_1px_rgba(182,171,255,0.44),0_16px_34px_rgba(68,70,168,0.34)]">
-                  <div className="pointer-events-none absolute -right-5 -top-5 h-16 w-16 rounded-full bg-[radial-gradient(circle,rgba(173,146,255,0.48),transparent_70%)] blur-xl" />
+            {trustLogos.map((logo, index) => (
+              <motion.div
+                key={logo.alt}
+                {...revealProps}
+                whileHover={{ y: -5, scale: 1.012 }}
+                animate={{ y: [0, -1.5, 0] }}
+                transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut", delay: index * 0.14 }}
+              >
+                <div className="group relative flex h-[78px] items-center justify-center overflow-hidden rounded-[16px] border border-white/24 bg-[linear-gradient(140deg,rgba(255,255,255,0.17),rgba(255,255,255,0.06))] px-4 backdrop-blur-sm transition-all duration-300 hover:border-[#d5c8ff] hover:shadow-[0_0_0_1px_rgba(199,188,255,0.56),0_18px_40px_rgba(56,63,168,0.38)]">
+                  <motion.div
+                    className="pointer-events-none absolute -right-5 -top-5 h-16 w-16 rounded-full bg-[radial-gradient(circle,rgba(191,167,255,0.56),transparent_70%)] blur-xl"
+                    animate={{ opacity: [0.22, 0.62, 0.22], scale: [0.9, 1.08, 0.9] }}
+                    transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut", delay: index * 0.2 }}
+                  />
                   <Image
                     src={logo.src}
                     alt={logo.alt}
@@ -742,6 +753,8 @@ function SeoHeroVisual() {
                 "Editorial relevance",
                 "Search trust",
                 "Brand authority",
+                "Topical entity alignment",
+                "Citation consistency",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-3 rounded-2xl border border-[#ece8f5] bg-[#faf9ff] px-4 py-3">
                   <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#efebff] text-[#6f5dff]">
@@ -758,7 +771,7 @@ function SeoHeroVisual() {
               <div className="flex items-center justify-between gap-3">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6f5dff]">Average authority</p>
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-[#d7cdf9] bg-white/86 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#5a4dbf]">
-                  <BarChart3 className="h-3 w-3" />
+                  <Image src="/publication-logos/ahrefs.png" alt="Ahrefs" width={18} height={22} className="h-3.5 w-auto object-contain" />
                   DR benchmark
                 </span>
               </div>
@@ -1015,6 +1028,7 @@ function GradientPricingCard({
 }) {
   const isHighlighted = Boolean(card.badge);
   const isMonthly = billingMode === "monthly";
+  const hasDescription = Boolean(card.description);
   const [linkCount, linkLabel] = card.title.split(" ");
   const accentClass = [
     "from-[#a490ff]/38",
@@ -1073,12 +1087,12 @@ function GradientPricingCard({
             <div className="mt-8">
               <div className="text-[2.75rem] font-display font-bold leading-none tracking-[-0.05em]">{card.price}</div>
               {card.priceDetail ? <p className="mt-2 text-[15px] leading-[1.6] text-white/62">{card.priceDetail}</p> : null}
-              {card.description ? <p className="mt-3 h-[3.2rem] overflow-hidden text-[15px] leading-[1.6] text-white/76">{card.description}</p> : <div className="mt-3 h-[3.2rem]" />}
+              {card.description ? <p className="mt-3 h-[3.2rem] overflow-hidden text-[15px] leading-[1.6] text-white/76">{card.description}</p> : null}
             </div>
 
-            <div className="mt-8 h-px bg-[linear-gradient(90deg,rgba(255,255,255,0.24),rgba(255,255,255,0.06))]" />
+            <div className={cn("h-px bg-[linear-gradient(90deg,rgba(255,255,255,0.24),rgba(255,255,255,0.06))]", hasDescription ? "mt-8" : "mt-4")} />
 
-            <div className="mt-8 space-y-4">
+            <div className={cn("space-y-4", hasDescription ? "mt-8" : "mt-5")}>
               {card.bullets.map((bullet) => (
                 <div key={bullet} className="flex items-start gap-3">
                   <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/12 text-white">
@@ -1423,10 +1437,10 @@ function BuildSignalsSection() {
 
 function CompoundingAuthoritySection() {
   const nodes = [
-    { title: "Editorial Authority", Icon: Newspaper, position: "col-[2] row-[1]" },
-    { title: "Search Rankings", Icon: TrendingUp, position: "col-[3] row-[2]" },
-    { title: "AI Recommendations", Icon: Bot, position: "col-[2] row-[3]" },
-    { title: "E-E-A-T Signals", Icon: ShieldCheck, position: "col-[1] row-[2]" },
+    { title: "Editorial Authority", Icon: Newspaper, position: "top-5 left-1/2 -translate-x-1/2" },
+    { title: "Search Rankings", Icon: TrendingUp, position: "right-4 top-1/2 -translate-y-1/2" },
+    { title: "AI Recommendations", Icon: Bot, position: "bottom-5 left-1/2 -translate-x-1/2" },
+    { title: "E-E-A-T Signals", Icon: ShieldCheck, position: "left-4 top-1/2 -translate-y-1/2" },
   ] as const;
 
   return (
@@ -1444,35 +1458,56 @@ function CompoundingAuthoritySection() {
             </div>
           </div>
 
-          <div className="relative mx-auto w-full max-w-[580px] rounded-[22px] border border-[#ece7f4] bg-[linear-gradient(180deg,#fcfbff_0%,#f5f4ff_100%)] p-6 shadow-[0_18px_38px_rgba(24,31,62,0.08)]">
-            <div className="absolute left-1/2 top-1/2 h-[1px] w-[66%] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,rgba(111,93,255,0.1),rgba(111,93,255,0.42),rgba(111,93,255,0.1))]" />
-            <div className="absolute left-1/2 top-1/2 h-[66%] w-[1px] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(180deg,rgba(111,93,255,0.1),rgba(111,93,255,0.42),rgba(77,146,255,0.12))]" />
-            <div className="relative grid h-[380px] grid-cols-3 grid-rows-3 items-center justify-items-center">
+          <div className="relative mx-auto w-full max-w-[620px] rounded-[22px] border border-[#ece7f4] bg-[linear-gradient(180deg,#fcfbff_0%,#f5f4ff_100%)] p-6 shadow-[0_18px_38px_rgba(24,31,62,0.08)] sm:p-7">
+            <div className="sm:hidden">
+              <div className="grid gap-3">
+                {nodes.map((node) => (
+                  <div key={node.title} className="flex items-center gap-3 rounded-[14px] border border-[#e4def3] bg-white px-4 py-3 text-[#171929] shadow-[0_14px_28px_rgba(24,31,62,0.08)]">
+                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff]">
+                      <node.Icon className="h-4 w-4" />
+                    </span>
+                    <span className="text-[13px] font-semibold leading-[1.25]">{node.title}</span>
+                  </div>
+                ))}
+                <div className="mt-2 flex h-[130px] items-center justify-center rounded-[18px] bg-[linear-gradient(135deg,#6f5dff_0%,#4d92ff_100%)] text-white shadow-[0_20px_46px_rgba(99,90,255,0.26)]">
+                  <div className="text-center">
+                    <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/74">Core outcome</div>
+                    <div className="mt-2 text-[1.15rem] font-display font-semibold leading-[1.2]">Compounding authority</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative hidden h-[410px] sm:block">
+              <div className="pointer-events-none absolute left-1/2 top-1/2 h-[1px] w-[70%] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,rgba(111,93,255,0.1),rgba(111,93,255,0.46),rgba(111,93,255,0.1))]" />
+              <div className="pointer-events-none absolute left-1/2 top-1/2 h-[72%] w-[1px] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(180deg,rgba(111,93,255,0.1),rgba(111,93,255,0.46),rgba(77,146,255,0.12))]" />
+
               {nodes.map((node, index) => (
                 <motion.div
                   key={node.title}
                   animate={{ y: [0, -4, 0] }}
-                  transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut", delay: index * 0.28 }}
+                  transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: index * 0.24 }}
                   className={cn(
-                    "flex h-[74px] w-[130px] items-center gap-2 rounded-[14px] border border-[#e4def3] bg-white px-2.5 py-2 text-[#171929] shadow-[0_16px_34px_rgba(24,31,62,0.08)] sm:h-[88px] sm:w-[164px] sm:gap-3 sm:rounded-[16px] sm:px-4 sm:py-3",
+                    "absolute flex h-[88px] w-[168px] items-center gap-3 rounded-[16px] border border-[#e4def3] bg-white px-4 py-3 text-[#171929] shadow-[0_16px_34px_rgba(24,31,62,0.08)]",
                     node.position,
                   )}
                 >
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff] sm:h-9 sm:w-9">
-                    <node.Icon className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
+                  <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff]">
+                    <node.Icon className="h-[18px] w-[18px]" />
                   </span>
-                  <span className="text-[11px] font-semibold leading-[1.25] sm:text-[13px] sm:leading-[1.3]">{node.title}</span>
+                  <span className="text-[13px] font-semibold leading-[1.3]">{node.title}</span>
                 </motion.div>
               ))}
+
               <motion.div
-                animate={{ scale: [1, 1.04, 1] }}
+                animate={{ scale: [1, 1.045, 1] }}
                 transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
-                className="col-[2] row-[2] flex h-[148px] w-[148px] items-center justify-center rounded-full bg-[linear-gradient(135deg,#6f5dff_0%,#4d92ff_100%)] text-white shadow-[0_24px_54px_rgba(99,90,255,0.28)]"
+                className="absolute left-1/2 top-1/2 flex h-[168px] w-[168px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[linear-gradient(135deg,#6f5dff_0%,#4d92ff_100%)] text-white shadow-[0_24px_54px_rgba(99,90,255,0.28)]"
               >
                 <div className="text-center">
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/72">Core outcome</div>
-                  <div className="mt-2 text-[1.2rem] font-display font-semibold leading-[1.2]">Compounding</div>
-                  <div className="text-[1.2rem] font-display font-semibold leading-[1.1]">authority</div>
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/74">Core outcome</div>
+                  <div className="mt-2 text-[1.25rem] font-display font-semibold leading-[1.15]">Compounding</div>
+                  <div className="text-[1.25rem] font-display font-semibold leading-[1.1]">authority</div>
                 </div>
               </motion.div>
             </div>
