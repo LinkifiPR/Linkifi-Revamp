@@ -286,7 +286,7 @@ const seoMonthlyPackages: PricingCardData[] = [
     ],
     ctaLabel: "Get Started",
     ctaHref: "/contact-us?service=seo-digital-pr&package=10-links-monthly",
-    footnote: "Max delivery window: 6-month campaign.",
+    footnote: "Max delivery time: 12 months.",
   },
   {
     title: "20 Links",
@@ -302,7 +302,7 @@ const seoMonthlyPackages: PricingCardData[] = [
     ctaLabel: "Get Started",
     ctaHref: "/contact-us?service=seo-digital-pr&package=20-links-monthly",
     badge: "Most popular",
-    footnote: "Max delivery window: 6-month campaign.",
+    footnote: "Max delivery time: 18 months.",
   },
   {
     title: "50 Links",
@@ -317,7 +317,7 @@ const seoMonthlyPackages: PricingCardData[] = [
     ],
     ctaLabel: "Get Started",
     ctaHref: "/contact-us?service=seo-digital-pr&package=50-links-monthly",
-    footnote: "Max delivery window: 12-month campaign.",
+    footnote: "Max delivery time: 24 months.",
   },
 ];
 
@@ -334,7 +334,7 @@ const seoOneTimePackages: PricingCardData[] = [
     ],
     ctaLabel: "Get Started",
     ctaHref: "/contact-us?service=seo-digital-pr&package=5-links-one-time",
-    footnote: "Delivery schedule confirmed during onboarding.",
+    footnote: "Max delivery time: 12 months.",
   },
   {
     title: "10 Links",
@@ -349,12 +349,12 @@ const seoOneTimePackages: PricingCardData[] = [
     ctaLabel: "Get Started",
     ctaHref: "/contact-us?service=seo-digital-pr&package=10-links-one-time",
     badge: "Most popular",
-    footnote: "Delivery schedule confirmed during onboarding.",
+    footnote: "Max delivery time: 12 months.",
   },
   {
     title: "20 Links",
     price: "$16,000",
-    description: "Built for larger campaigns that need stronger editorial volume fast.",
+    description: "High-volume one-time package for stronger editorial authority.",
     bullets: [
       "DR 50-95 PR Links",
       "Guaranteed Average DR 70+",
@@ -363,7 +363,7 @@ const seoOneTimePackages: PricingCardData[] = [
     ],
     ctaLabel: "Get Started",
     ctaHref: "/contact-us?service=seo-digital-pr&package=20-links-one-time",
-    footnote: "Delivery schedule confirmed during onboarding.",
+    footnote: "Max delivery time: 18 months.",
   },
 ];
 
@@ -1073,7 +1073,7 @@ function GradientPricingCard({
             <div className="mt-8">
               <div className="text-[2.75rem] font-display font-bold leading-none tracking-[-0.05em]">{card.price}</div>
               {card.priceDetail ? <p className="mt-2 text-[15px] leading-[1.6] text-white/62">{card.priceDetail}</p> : null}
-              {card.description ? <p className="mt-3 min-h-[3.1rem] text-[15px] leading-[1.6] text-white/76">{card.description}</p> : <div className="mt-3 min-h-[3.1rem]" />}
+              {card.description ? <p className="mt-3 h-[3.2rem] overflow-hidden text-[15px] leading-[1.6] text-white/76">{card.description}</p> : <div className="mt-3 h-[3.2rem]" />}
             </div>
 
             <div className="mt-8 h-px bg-[linear-gradient(90deg,rgba(255,255,255,0.24),rgba(255,255,255,0.06))]" />
