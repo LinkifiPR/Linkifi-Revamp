@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
@@ -83,15 +84,63 @@ type BlueprintItem = {
 const pageContainerClass = "mx-auto w-full max-w-[1200px] px-6";
 const heroContainerClass = "mx-auto w-full max-w-[1280px] px-6";
 
-const trustBrands = [
-  "Forbes",
-  "Business Insider",
-  "BBC",
-  "The Guardian",
-  "New York Times",
-  "Daily Express",
-  "HubSpot",
-  "Entrepreneur",
+const trustLogos = [
+  {
+    src: "/publication-logos/nytimes.png",
+    alt: "The New York Times",
+    width: 520,
+    height: 90,
+    className: "h-8 w-auto sm:h-9",
+  },
+  {
+    src: "/publication-logos/forbes.png",
+    alt: "Forbes",
+    width: 280,
+    height: 90,
+    className: "h-10 w-auto sm:h-11",
+  },
+  {
+    src: "/publication-logos/guardian.png",
+    alt: "The Guardian",
+    width: 320,
+    height: 95,
+    className: "h-7 w-auto sm:h-8",
+  },
+  {
+    src: "/publication-logos/healthline.png",
+    alt: "healthline",
+    width: 360,
+    height: 70,
+    className: "h-7 w-auto sm:h-8",
+  },
+  {
+    src: "/publication-logos/bbc.svg",
+    alt: "BBC",
+    width: 112,
+    height: 40,
+    className: "h-6 w-auto sm:h-7",
+  },
+  {
+    src: "/publication-logos/daily-express-clean.png",
+    alt: "Daily Express",
+    width: 3816,
+    height: 454,
+    className: "h-4 w-auto sm:h-5",
+  },
+  {
+    src: "/publication-logos/wsj-clean.png",
+    alt: "WSJ",
+    width: 3690,
+    height: 2091,
+    className: "h-6 w-auto sm:h-7",
+  },
+  {
+    src: "/publication-logos/hubspot-clean.png",
+    alt: "HubSpot",
+    width: 800,
+    height: 232,
+    className: "h-6 w-auto sm:h-7",
+  },
 ] as const;
 
 const seoHeroStats: StatItem[] = [
@@ -361,8 +410,8 @@ const authorityPrograms: PricingCardData[] = [
   },
   {
     title: "Authority PR Engine",
-    price: "Starting at $6,000",
-    priceDetail: "per month",
+    price: "$6,000",
+    priceDetail: "starting at per month",
     cadence: "Premium tier",
     description: "A broader authority engine influencing AI systems, editorial media, and human audiences together.",
     bullets: [
@@ -391,7 +440,7 @@ const blueprintItems: BlueprintItem[] = [
   },
   {
     title: "Citation source analysis",
-    description: "Map the domains, listicles, and directories shaping AI recommendation outputs.",
+    description: "Map the domains and listicles shaping recommendation outputs.",
     Icon: Link2,
   },
   {
@@ -401,12 +450,12 @@ const blueprintItems: BlueprintItem[] = [
   },
   {
     title: "Content gap analysis",
-    description: "Pinpoint missing landing pages, explainers, and comparison assets suppressing visibility.",
+    description: "Pinpoint missing landing pages and explainers suppressing visibility.",
     Icon: FileSearch,
   },
   {
     title: "Recommendation triggers",
-    description: "Reveal the prompts, phrasing, and intent patterns that currently unlock recommendations.",
+    description: "Reveal the prompt and intent patterns that currently unlock recommendations.",
     Icon: Target,
   },
 ];
@@ -613,10 +662,16 @@ function TrustArchitecture() {
             <p className="text-xs font-semibold uppercase tracking-[0.26em] text-[#767a96]">Trusted by journalists at</p>
           </div>
           <div className="mt-8 grid gap-4 sm:grid-cols-4">
-            {trustBrands.map((brand) => (
-              <motion.div key={brand} {...revealProps} whileHover={{ y: -4 }}>
-                <div className="flex h-[72px] items-center justify-center rounded-[18px] border border-[#ece8f5] bg-[#fcfcff] px-4 text-center text-[15px] font-semibold tracking-[0.08em] text-[#8a8ea6] grayscale transition-all duration-300 hover:border-[#d8d0f2] hover:text-[#52566f]">
-                  {brand}
+            {trustLogos.map((logo) => (
+              <motion.div key={logo.alt} {...revealProps} whileHover={{ y: -4 }}>
+                <div className="flex h-[72px] items-center justify-center rounded-[18px] border border-[#ece8f5] bg-[#fcfcff] px-4 grayscale transition-all duration-300 hover:border-[#d8d0f2] hover:grayscale-0">
+                  <Image
+                    src={logo.src}
+                    alt={logo.alt}
+                    width={logo.width}
+                    height={logo.height}
+                    className={cn("object-contain opacity-65 transition-opacity duration-300 hover:opacity-95", logo.className)}
+                  />
                 </div>
               </motion.div>
             ))}
@@ -698,10 +753,10 @@ function SeoHeroVisual() {
 
 function AuthorityHeroVisual() {
   const nodes = [
-    { top: "14%", left: "18%", label: "Editorial" },
-    { top: "18%", left: "68%", label: "AI citations" },
-    { top: "48%", left: "76%", label: "Search" },
-    { top: "72%", left: "26%", label: "Comparison" },
+    { title: "Editorial media", Icon: Newspaper, position: "col-[2] row-[1]" },
+    { title: "AI citations", Icon: Bot, position: "col-[3] row-[2]" },
+    { title: "Search visibility", Icon: TrendingUp, position: "col-[2] row-[3]" },
+    { title: "Comparison surfaces", Icon: Radar, position: "col-[1] row-[2]" },
   ] as const;
 
   return (
@@ -730,30 +785,33 @@ function AuthorityHeroVisual() {
           </div>
 
           <div className="relative mt-8 h-[17rem] overflow-hidden rounded-[20px] border border-[#e4e0f4] bg-white px-6 py-6 sm:h-[18rem]">
-            <div className="absolute left-1/2 top-1/2 h-[1px] w-[52%] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,rgba(111,93,255,0),rgba(111,93,255,0.4),rgba(77,146,255,0))]" />
-            <div className="absolute left-1/2 top-1/2 h-[52%] w-[1px] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(180deg,rgba(111,93,255,0),rgba(111,93,255,0.4),rgba(77,146,255,0))]" />
-
-            <motion.div
-              animate={{ scale: [1, 1.05, 1] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute left-1/2 top-1/2 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[linear-gradient(135deg,#6f5dff_0%,#4d92ff_100%)] shadow-[0_22px_52px_rgba(99,90,255,0.28)]"
-            >
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-[#6f5dff] shadow-[inset_0_0_0_1px_rgba(111,93,255,0.14)]">
-                <BrainCircuit className="h-7 w-7" />
-              </div>
-            </motion.div>
-
-            {nodes.map((node, index) => (
+            <div className="absolute left-1/2 top-1/2 h-[1px] w-[64%] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,rgba(111,93,255,0.1),rgba(111,93,255,0.4),rgba(77,146,255,0.12))]" />
+            <div className="absolute left-1/2 top-1/2 h-[64%] w-[1px] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(180deg,rgba(111,93,255,0.1),rgba(111,93,255,0.42),rgba(77,146,255,0.14))]" />
+            <div className="relative grid h-full grid-cols-3 grid-rows-3 items-center justify-items-center">
+              {nodes.map((node, index) => (
+                <motion.div
+                  key={node.title}
+                  animate={{ y: [0, -4, 0] }}
+                  transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut", delay: index * 0.28 }}
+                  className={cn(
+                    "flex h-[68px] w-[96px] flex-col items-center justify-center rounded-[14px] border border-[#e6e2f3] bg-white px-2.5 py-2 text-center shadow-[0_14px_30px_rgba(24,31,62,0.08)] sm:h-[74px] sm:w-[130px] sm:rounded-[16px] sm:px-3 sm:py-3",
+                    node.position,
+                  )}
+                >
+                  <node.Icon className="h-4 w-4 text-[#6f5dff]" />
+                  <span className="mt-1 text-[10px] font-semibold leading-[1.25] text-[#2f3450] sm:text-[12px]">{node.title}</span>
+                </motion.div>
+              ))}
               <motion.div
-                key={node.label}
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut", delay: index * 0.4 }}
-                className="absolute flex min-h-[68px] min-w-[116px] items-center justify-center rounded-[18px] border border-[#e6e2f3] bg-white px-4 py-3 text-center text-[14px] font-semibold text-[#2f3450] shadow-[0_14px_30px_rgba(24,31,62,0.08)]"
-                style={{ top: node.top, left: node.left, transform: "translate(-50%, -50%)" }}
+                animate={{ scale: [1, 1.04, 1] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                className="col-[2] row-[2] flex h-28 w-28 items-center justify-center rounded-full bg-[linear-gradient(135deg,#6f5dff_0%,#4d92ff_100%)] shadow-[0_22px_52px_rgba(99,90,255,0.28)]"
               >
-                {node.label}
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-[#6f5dff] shadow-[inset_0_0_0_1px_rgba(111,93,255,0.14)]">
+                  <BrainCircuit className="h-7 w-7" />
+                </div>
               </motion.div>
-            ))}
+            </div>
           </div>
         </div>
       </SurfaceCard>
@@ -920,12 +978,19 @@ function ProofSection({ cards }: { cards: ProofCardData[] }) {
   );
 }
 
-function GradientPricingCard({ card }: { card: PricingCardData }) {
+function GradientPricingCard({
+  card,
+  billingMode,
+}: {
+  card: PricingCardData;
+  billingMode: BillingMode;
+}) {
   const isHighlighted = Boolean(card.badge);
+  const isMonthly = billingMode === "monthly";
 
   return (
     <motion.div {...revealProps} whileHover={{ y: -6 }}>
-      <div className={cn("relative mx-auto w-full pt-6", isHighlighted ? "max-w-[376px]" : "max-w-[360px]")}>
+      <div className="relative mx-auto w-full max-w-[360px] pt-6">
         {card.badge ? (
           <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#a38dff]/40 bg-[linear-gradient(135deg,#7f6aff_0%,#5a4dbf_100%)] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white shadow-[0_10px_24px_rgba(103,89,255,0.28)]">
             {card.badge}
@@ -938,13 +1003,34 @@ function GradientPricingCard({ card }: { card: PricingCardData }) {
             isHighlighted && "shadow-[0_0_0_1px_rgba(138,114,255,0.42),0_16px_42px_rgba(86,74,193,0.22)]",
           )}
         >
-          <div className="absolute inset-0 bg-[linear-gradient(135deg,#8470ff_0%,#5a4dbf_48%,#437dff_100%)]" />
+          <div
+            className={cn(
+              "absolute inset-0",
+              isMonthly
+                ? "bg-[linear-gradient(135deg,#8470ff_0%,#5a4dbf_48%,#437dff_100%)]"
+                : "bg-[linear-gradient(135deg,#9962ff_0%,#7a46d8_45%,#ff5ac4_100%)]",
+            )}
+          />
           <div className="absolute -right-10 top-0 h-36 w-36 rounded-full bg-white/12 blur-3xl" />
-          <div className="absolute left-8 top-8 h-20 w-20 rounded-full bg-[#f46bcb]/18 blur-3xl" />
-          <div className="relative flex h-full flex-col rounded-[17px] bg-[linear-gradient(155deg,#161243_0%,#3f36a7_58%,#5f6bff_100%)] p-9 text-white">
+          <div
+            className={cn(
+              "absolute left-8 top-8 h-20 w-20 rounded-full blur-3xl",
+              isMonthly ? "bg-[#f46bcb]/18" : "bg-[#ffd260]/20",
+            )}
+          />
+          <div
+            className={cn(
+              "relative flex h-full flex-col rounded-[17px] p-9 text-white",
+              isMonthly
+                ? "bg-[linear-gradient(155deg,#161243_0%,#3f36a7_58%,#5f6bff_100%)]"
+                : "bg-[linear-gradient(155deg,#25104a_0%,#6931b1_58%,#d14ea6_100%)]",
+            )}
+          >
             <div>
               <h3 className="text-[18px] font-display font-semibold leading-[1.35] tracking-[-0.02em]">{card.title}</h3>
-              {card.cadence ? <p className="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/68">{card.cadence}</p> : null}
+              <p className="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/68">
+                {card.cadence ?? (isMonthly ? "Monthly package" : "One-time package")}
+              </p>
             </div>
 
             <div className="mt-8">
@@ -986,35 +1072,45 @@ function GradientPricingCard({ card }: { card: PricingCardData }) {
   );
 }
 
-function ProgramPricingCard({ card, premium = false }: { card: PricingCardData; premium?: boolean }) {
+function ProgramPricingCard({
+  card,
+  premium = false,
+  index,
+}: {
+  card: PricingCardData;
+  premium?: boolean;
+  index: number;
+}) {
+  const toneClass = [
+    "bg-[linear-gradient(135deg,#7766ff_0%,#5549bf_52%,#437dff_100%)]",
+    "bg-[linear-gradient(135deg,#6653ff_0%,#4458d6_52%,#2f84ff_100%)]",
+    "bg-[linear-gradient(135deg,#7c5bff_0%,#5d43cc_52%,#3b6bff_100%)]",
+    "bg-[linear-gradient(135deg,#8a76ff_0%,#5a4dbf_48%,#437dff_100%)]",
+  ][index] ?? "bg-[linear-gradient(135deg,#7766ff_0%,#5549bf_52%,#437dff_100%)]";
+
   return (
-    <motion.div {...revealProps} whileHover={{ y: -6 }} className={cn(premium && "xl:-translate-y-3")}>
+    <motion.div {...revealProps} whileHover={{ y: -6 }}>
       <div
         className={cn(
-          "relative h-full overflow-hidden rounded-[20px] p-[1px] shadow-[0_12px_34px_rgba(24,31,62,0.1)] transition duration-500 hover:shadow-[0_20px_46px_rgba(24,31,62,0.16)]",
+          "relative h-full min-h-[440px] overflow-hidden rounded-[20px] p-[1px] shadow-[0_12px_34px_rgba(24,31,62,0.1)] transition duration-500 hover:shadow-[0_20px_46px_rgba(24,31,62,0.16)]",
           premium
             ? "shadow-[0_0_0_1px_rgba(138,114,255,0.48),0_18px_44px_rgba(86,74,193,0.26)]"
             : "",
         )}
       >
         <div
-          className={cn(
-            "absolute inset-0",
-            premium
-              ? "bg-[linear-gradient(135deg,#8a76ff_0%,#5a4dbf_48%,#437dff_100%)]"
-              : "bg-[linear-gradient(135deg,#7766ff_0%,#5549bf_52%,#437dff_100%)]",
-          )}
+          className={cn("absolute inset-0", toneClass)}
         />
         <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-white/12 blur-3xl" />
         {premium ? <div className="absolute left-6 top-6 rounded-full border border-white/18 bg-white/12 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-white">Premium tier</div> : null}
         <div className="relative flex h-full flex-col rounded-[19px] bg-[linear-gradient(155deg,#161243_0%,#332b8b_58%,#5568ff_100%)] p-7 text-white">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/62">{card.cadence}</p>
-            <h3 className={cn("mt-4 font-display font-semibold leading-[1.2] tracking-[-0.03em]", premium ? "text-[1.7rem]" : "text-[1.35rem]")}>{card.title}</h3>
+            <h3 className="mt-4 text-[1.35rem] font-display font-semibold leading-[1.2] tracking-[-0.03em]">{card.title}</h3>
           </div>
 
           <div className="mt-6">
-            <div className={cn("font-display font-bold leading-none tracking-[-0.05em]", premium ? "text-[2.7rem]" : "text-[2.25rem]")}>{card.price}</div>
+            <div className="text-[2.25rem] font-display font-bold leading-none tracking-[-0.05em]">{card.price}</div>
             {card.priceDetail ? <p className="mt-2 text-[14px] leading-[1.6] text-white/64">{card.priceDetail}</p> : null}
             {card.description ? <p className="mt-3 text-[14px] leading-[1.6] text-white/76">{card.description}</p> : null}
           </div>
@@ -1057,7 +1153,15 @@ function SeoPricingSection() {
 
   return (
     <SectionWrap>
-      <PagePanel tone="gradient" className="lg:p-14">
+      <PagePanel
+        tone="gradient"
+        className={cn(
+          "lg:p-14",
+          billingMode === "monthly"
+            ? "bg-[linear-gradient(180deg,#ffffff_0%,#f7f4ff_100%)]"
+            : "bg-[linear-gradient(180deg,#ffffff_0%,#fbf1ff_100%)]",
+        )}
+      >
         <SectionHeading
           label="Packages"
           title="Packages designed for scalable authority growth"
@@ -1096,7 +1200,7 @@ function SeoPricingSection() {
 
         <div className="mt-10 grid gap-8 xl:grid-cols-3">
           {cards.map((card) => (
-            <GradientPricingCard key={`${billingMode}-${card.title}`} card={card} />
+            <GradientPricingCard key={`${billingMode}-${card.title}`} card={card} billingMode={billingMode} />
           ))}
         </div>
       </PagePanel>
@@ -1117,28 +1221,50 @@ function AuthorityProgramsSection() {
 
         <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-[0.95fr_0.95fr_1fr_1.18fr] xl:items-stretch">
           {authorityPrograms.map((card, index) => (
-            <ProgramPricingCard key={card.title} card={card} premium={index === authorityPrograms.length - 1} />
+            <ProgramPricingCard key={card.title} card={card} index={index} premium={index === authorityPrograms.length - 1} />
           ))}
         </div>
 
         <motion.div {...revealProps} className="mt-8">
-          <SurfaceCard className="p-6 sm:p-7">
-            <div className="grid gap-6 md:grid-cols-[1.05fr_0.95fr] md:items-center">
-              <div>
+          <SurfaceCard className="overflow-hidden p-0">
+            <div className="grid md:grid-cols-[1.1fr_0.9fr]">
+              <div className="bg-[linear-gradient(135deg,#faf8ff_0%,#eef3ff_100%)] p-6 sm:p-7">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6f5dff]">Optional add-on</p>
                 <h3 className="mt-3 text-[20px] font-display font-semibold leading-[1.3] tracking-[-0.02em] text-[#171929]">Content Engine</h3>
                 <p className="mt-3 max-w-2xl text-[15px] leading-[1.6] text-[#5d617b]">
-                  $2,000 per month for a structured content layer supporting authority positioning, comparison visibility, and AI discovery.
+                  A structured content layer supporting authority positioning, comparison visibility, and AI discovery.
                 </p>
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                  {[
+                    "Content strategy blueprint",
+                    "5 expert content pieces per month",
+                    "Authority positioning topics",
+                    "Structured for AI discovery",
+                  ].map((item) => (
+                    <div key={item} className="rounded-full border border-[#ddd7ef] bg-white px-4 py-2 text-[13px] font-medium text-[#4f5471]">
+                      {item}
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="rounded-[18px] border border-[#e7e3f4] bg-[linear-gradient(135deg,#faf8ff_0%,#eef2ff_100%)] p-5">
-                <div className="text-4xl font-display font-bold tracking-[-0.04em] text-[#171929]">$2,000</div>
-                <p className="mt-2 text-sm text-[#6a6f8a]">per month</p>
-                <div className="mt-5 space-y-2 text-[15px] leading-[1.6] text-[#565a75]">
-                  <p>Content strategy blueprint</p>
-                  <p>5 expert content pieces per month</p>
-                  <p>Authority positioning topics</p>
-                  <p>Structured content designed for AI discovery</p>
+              <div className="bg-[linear-gradient(145deg,#1a1a53_0%,#3d39aa_58%,#5b6eff_100%)] p-6 text-white sm:p-7">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/68">Monthly add-on</p>
+                <div className="mt-3 text-5xl font-display font-bold tracking-[-0.05em]">$2,000</div>
+                <p className="mt-2 text-[14px] text-white/72">per month</p>
+                <p className="mt-4 text-[14px] leading-[1.6] text-white/74">
+                  Built for teams that need compounding authority content to support both AI and search visibility programs.
+                </p>
+                <div className="mt-6">
+                  <Button
+                    asChild
+                    variant="ghost"
+                    className="h-11 rounded-full bg-white px-5 text-sm font-semibold text-[#352f96] shadow-[0_16px_34px_rgba(255,255,255,0.14)] transition-all duration-300 hover:bg-white/92"
+                  >
+                    <Link href="/contact-us?service=authority-pr&program=content-engine">
+                      Add Content Engine
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -1146,33 +1272,6 @@ function AuthorityProgramsSection() {
         </motion.div>
       </PagePanel>
     </SectionWrap>
-  );
-}
-
-function DiagramFlowNode({
-  title,
-  description,
-  Icon,
-  dark = false,
-}: {
-  title: string;
-  description: string;
-  Icon: LucideIcon;
-  dark?: boolean;
-}) {
-  return (
-    <div
-      className={cn(
-        "relative rounded-[18px] border px-5 py-5 shadow-[0_16px_34px_rgba(24,31,62,0.08)]",
-        dark ? "border-white/12 bg-white/8 text-white shadow-none" : "border-[#e8e3f4] bg-white text-[#171929]",
-      )}
-    >
-      <div className={cn("flex h-11 w-11 items-center justify-center rounded-full", dark ? "bg-white/10 text-white" : "bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff]")}>
-        <Icon className="h-5 w-5" />
-      </div>
-      <h3 className={cn("mt-4 text-[18px] font-display font-semibold leading-[1.3]", dark ? "text-white" : "text-[#171929]")}>{title}</h3>
-      <p className={cn("mt-2 text-[14px] leading-[1.6]", dark ? "text-white/70" : "text-[#61657f]")}>{description}</p>
-    </div>
   );
 }
 
@@ -1197,15 +1296,15 @@ function BlueprintSection() {
             </div>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2">
             {blueprintItems.map((item) => (
               <motion.div key={item.title} {...revealProps} whileHover={{ y: -6 }}>
-                <SurfaceCard hoverLift className="h-full p-6">
+                <SurfaceCard hoverLift className="h-full min-h-[160px] p-5 sm:p-6">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff] transition-transform duration-300 group-hover:scale-110">
                     <item.Icon className="h-5 w-5" />
                   </div>
-                  <h3 className="mt-5 text-[17px] font-display font-semibold leading-[1.35] tracking-[-0.02em] text-[#171929]">{item.title}</h3>
-                  <p className="mt-3 text-[14px] leading-[1.6] text-[#5f637d]">{item.description}</p>
+                  <h3 className="mt-4 text-[16px] font-display font-semibold leading-[1.35] tracking-[-0.02em] text-[#171929]">{item.title}</h3>
+                  <p className="mt-2 text-[13px] leading-[1.55] text-[#5f637d]">{item.description}</p>
                 </SurfaceCard>
               </motion.div>
             ))}
@@ -1242,7 +1341,7 @@ function BuildSignalsSection() {
 
   return (
     <SectionWrap>
-      <PagePanel tone="white">
+      <PagePanel tone="gradient">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
             <SectionHeading
@@ -1280,10 +1379,10 @@ function BuildSignalsSection() {
 
 function CompoundingAuthoritySection() {
   const nodes = [
-    { title: "E-E-A-T Signals", Icon: ShieldCheck, position: "left-0 top-1/2 -translate-y-1/2" },
-    { title: "Editorial Authority", Icon: Newspaper, position: "left-1/2 top-0 -translate-x-1/2" },
-    { title: "Search Rankings", Icon: TrendingUp, position: "right-0 top-1/2 -translate-y-1/2" },
-    { title: "AI Recommendations", Icon: Bot, position: "bottom-0 left-1/2 -translate-x-1/2" },
+    { title: "Editorial Authority", Icon: Newspaper, position: "col-[2] row-[1]" },
+    { title: "Search Rankings", Icon: TrendingUp, position: "col-[3] row-[2]" },
+    { title: "AI Recommendations", Icon: Bot, position: "col-[2] row-[3]" },
+    { title: "E-E-A-T Signals", Icon: ShieldCheck, position: "col-[1] row-[2]" },
   ] as const;
 
   return (
@@ -1301,35 +1400,37 @@ function CompoundingAuthoritySection() {
             </div>
           </div>
 
-          <div className="relative mx-auto h-[360px] w-full max-w-[520px]">
-            <div className="absolute left-1/2 top-1/2 h-[1px] w-[62%] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,rgba(111,93,255,0),rgba(111,93,255,0.42),rgba(111,93,255,0))]" />
-            <div className="absolute left-1/2 top-1/2 h-[62%] w-[1px] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(180deg,rgba(111,93,255,0),rgba(111,93,255,0.42),rgba(77,146,255,0))]" />
-            <motion.div
-              animate={{ scale: [1, 1.05, 1] }}
-              transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute left-1/2 top-1/2 flex h-32 w-32 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[linear-gradient(135deg,#6f5dff_0%,#4d92ff_100%)] text-white shadow-[0_24px_54px_rgba(99,90,255,0.28)]"
-            >
-              <div className="text-center">
-                <div className="text-[13px] font-semibold uppercase tracking-[0.18em] text-white/72">Core outcome</div>
-                <div className="mt-2 text-[1.1rem] font-display font-semibold leading-[1.2]">Compounding authority</div>
-              </div>
-            </motion.div>
-            {nodes.map((node, index) => (
+          <div className="relative mx-auto w-full max-w-[560px] rounded-[22px] border border-[#ece7f4] bg-[linear-gradient(180deg,#fcfbff_0%,#f5f4ff_100%)] p-6 shadow-[0_18px_38px_rgba(24,31,62,0.08)]">
+            <div className="absolute left-1/2 top-1/2 h-[1px] w-[66%] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,rgba(111,93,255,0.1),rgba(111,93,255,0.42),rgba(111,93,255,0.1))]" />
+            <div className="absolute left-1/2 top-1/2 h-[66%] w-[1px] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(180deg,rgba(111,93,255,0.1),rgba(111,93,255,0.42),rgba(77,146,255,0.12))]" />
+            <div className="relative grid h-[360px] grid-cols-3 grid-rows-3 items-center justify-items-center">
+              {nodes.map((node, index) => (
+                <motion.div
+                  key={node.title}
+                  animate={{ y: [0, -4, 0] }}
+                  transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut", delay: index * 0.28 }}
+                  className={cn(
+                    "flex h-[70px] w-[120px] items-center gap-2 rounded-[14px] border border-[#e4def3] bg-white px-2.5 py-2 text-[#171929] shadow-[0_16px_34px_rgba(24,31,62,0.08)] sm:h-[84px] sm:w-[148px] sm:gap-3 sm:rounded-[16px] sm:px-4 sm:py-3",
+                    node.position,
+                  )}
+                >
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff] sm:h-9 sm:w-9">
+                    <node.Icon className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
+                  </span>
+                  <span className="text-[11px] font-semibold leading-[1.25] sm:text-[13px] sm:leading-[1.3]">{node.title}</span>
+                </motion.div>
+              ))}
               <motion.div
-                key={node.title}
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 4.6, repeat: Infinity, ease: "easeInOut", delay: index * 0.4 }}
-                className={cn(
-                  "absolute flex min-h-[82px] min-w-[158px] items-center gap-3 rounded-[18px] border border-[#e7e2f3] bg-white px-4 py-4 text-[#171929] shadow-[0_18px_38px_rgba(24,31,62,0.08)]",
-                  node.position,
-                )}
+                animate={{ scale: [1, 1.04, 1] }}
+                transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
+                className="col-[2] row-[2] flex h-32 w-32 items-center justify-center rounded-full bg-[linear-gradient(135deg,#6f5dff_0%,#4d92ff_100%)] text-white shadow-[0_24px_54px_rgba(99,90,255,0.28)]"
               >
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff]">
-                  <node.Icon className="h-5 w-5" />
-                </span>
-                <span className="text-[15px] font-semibold leading-[1.35]">{node.title}</span>
+                <div className="text-center">
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/72">Core outcome</div>
+                  <div className="mt-2 text-[1rem] font-display font-semibold leading-[1.2]">Compounding authority</div>
+                </div>
               </motion.div>
-            ))}
+            </div>
           </div>
         </div>
       </PagePanel>
