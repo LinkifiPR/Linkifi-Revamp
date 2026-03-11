@@ -19,48 +19,20 @@ type Props = {
   showFeatured: boolean;
 };
 
-const COLLECTION_THEME: Record<
-  CollectionKind,
-  {
-    pageAura: string;
-    heroBackground: string;
-    chip: string;
-    cardBorder: string;
-    cardGlow: string;
-    featuredFrame: string;
-    primaryButton: string;
-    secondaryChip: string;
-  }
-> = {
-  blog: {
-    pageAura:
-      "bg-[radial-gradient(circle_at_18%_0%,rgba(107,92,241,0.16),transparent_34%),radial-gradient(circle_at_88%_8%,rgba(72,179,255,0.14),transparent_32%)]",
-    heroBackground:
-      "bg-[radial-gradient(circle_at_16%_24%,rgba(120,105,255,0.32),transparent_26%),radial-gradient(circle_at_84%_10%,rgba(74,176,255,0.18),transparent_24%),linear-gradient(135deg,#0e122b_0%,#2a1d96_47%,#15183b_100%)]",
-    chip: "bg-[#f3f0ff] text-[#5c4de0] border-[#ded6ff]",
-    cardBorder: "border-[#e8e3ff]",
-    cardGlow: "hover:shadow-[0_24px_58px_rgba(61,52,181,0.18)]",
-    featuredFrame:
-      "bg-[linear-gradient(130deg,rgba(118,102,255,0.58),rgba(77,185,255,0.38),rgba(255,255,255,0.72))]",
-    primaryButton:
-      "bg-[linear-gradient(135deg,#1f2457_0%,#5a4dbf_52%,#7e91ff_100%)] shadow-[0_18px_38px_rgba(83,74,196,0.32)] hover:shadow-[0_22px_44px_rgba(83,74,196,0.42)]",
-    secondaryChip: "border-[#d8d2ff] bg-[#f3f0ff] text-[#5245c7]",
-  },
-  "case-study": {
-    pageAura:
-      "bg-[radial-gradient(circle_at_16%_2%,rgba(53,193,147,0.15),transparent_34%),radial-gradient(circle_at_88%_10%,rgba(111,95,255,0.16),transparent_34%)]",
-    heroBackground:
-      "bg-[radial-gradient(circle_at_22%_12%,rgba(95,214,164,0.22),transparent_26%),radial-gradient(circle_at_86%_16%,rgba(110,94,255,0.26),transparent_26%),linear-gradient(135deg,#071526_0%,#111e4d_44%,#1c155a_100%)]",
-    chip: "bg-[#ecfff8] text-[#0f8f63] border-[#bdeed8]",
-    cardBorder: "border-[#d9efe7]",
-    cardGlow: "hover:shadow-[0_24px_58px_rgba(14,131,97,0.16)]",
-    featuredFrame:
-      "bg-[linear-gradient(130deg,rgba(72,186,140,0.48),rgba(116,101,255,0.4),rgba(255,255,255,0.76))]",
-    primaryButton:
-      "bg-[linear-gradient(135deg,#0f2d44_0%,#1d7363_50%,#6374ff_100%)] shadow-[0_18px_38px_rgba(19,109,95,0.32)] hover:shadow-[0_22px_44px_rgba(19,109,95,0.42)]",
-    secondaryChip: "border-[#bdeed8] bg-[#ecfff8] text-[#0f8f63]",
-  },
-};
+const COLLECTION_THEME = {
+  pageAura:
+    "bg-[radial-gradient(circle_at_14%_0%,rgba(106,89,255,0.18),transparent_34%),radial-gradient(circle_at_86%_8%,rgba(72,185,255,0.16),transparent_30%),radial-gradient(circle_at_50%_38%,rgba(215,87,197,0.08),transparent_36%)]",
+  heroBackground:
+    "bg-[radial-gradient(circle_at_16%_20%,rgba(128,109,255,0.34),transparent_24%),radial-gradient(circle_at_84%_14%,rgba(75,190,255,0.22),transparent_24%),linear-gradient(135deg,#091127_0%,#241c7c_48%,#0f1738_100%)]",
+  chip: "bg-[#f3f0ff] text-[#5c4de0] border-[#ded6ff]",
+  cardBorder: "border-[#e4defd]",
+  cardGlow: "hover:shadow-[0_28px_68px_rgba(67,57,186,0.2)]",
+  featuredFrame:
+    "bg-[linear-gradient(130deg,rgba(119,101,255,0.64),rgba(74,186,255,0.34),rgba(255,255,255,0.76))]",
+  primaryButton:
+    "bg-[linear-gradient(135deg,#161b4a_0%,#5a4dbf_48%,#58b8ff_100%)] shadow-[0_18px_38px_rgba(83,74,196,0.34)] hover:shadow-[0_22px_46px_rgba(83,74,196,0.44)]",
+  secondaryChip: "border-[#d8d2ff] bg-[#f3f0ff] text-[#5245c7]",
+} as const;
 
 function estimateReadMinutes(entry: CmsEntrySummary): number {
   const raw = `${entry.title} ${entry.excerpt}`.trim();
@@ -152,7 +124,7 @@ export function CmsCollectionShowcase({
   totalEntries,
   showFeatured,
 }: Props) {
-  const theme = COLLECTION_THEME[kind];
+  const theme = COLLECTION_THEME;
   const featured = showFeatured ? entries[0] : null;
   const secondary = showFeatured ? entries.slice(1) : entries;
   const hasEntries = entries.length > 0;
