@@ -55,6 +55,7 @@ type PricingCardData = {
   cadence?: string;
   price: string;
   priceDetail?: string;
+  perLink?: string;
   description?: string;
   bullets: string[];
   ctaLabel: string;
@@ -91,7 +92,7 @@ const trustLogos = [
     width: 520,
     height: 90,
     className: "h-8 w-auto sm:h-9",
-    filterClass: "opacity-95",
+    filterClass: "opacity-100",
   },
   {
     src: "/publication-logos/forbes.png",
@@ -99,7 +100,7 @@ const trustLogos = [
     width: 280,
     height: 90,
     className: "h-10 w-auto sm:h-11",
-    filterClass: "opacity-95",
+    filterClass: "opacity-100",
   },
   {
     src: "/publication-logos/guardian.png",
@@ -107,7 +108,7 @@ const trustLogos = [
     width: 320,
     height: 95,
     className: "h-7 w-auto sm:h-8",
-    filterClass: "opacity-95",
+    filterClass: "opacity-100",
   },
   {
     src: "/publication-logos/healthline.png",
@@ -115,7 +116,7 @@ const trustLogos = [
     width: 360,
     height: 70,
     className: "h-7 w-auto sm:h-8",
-    filterClass: "opacity-95",
+    filterClass: "opacity-100",
   },
   {
     src: "/publication-logos/bbc.svg",
@@ -123,7 +124,7 @@ const trustLogos = [
     width: 112,
     height: 40,
     className: "h-6 w-auto sm:h-7",
-    filterClass: "invert opacity-90",
+    filterClass: "invert",
   },
   {
     src: "/publication-logos/daily-express-clean.png",
@@ -131,7 +132,7 @@ const trustLogos = [
     width: 3816,
     height: 454,
     className: "h-4 w-auto sm:h-5",
-    filterClass: "invert opacity-90",
+    filterClass: "invert",
   },
   {
     src: "/publication-logos/wsj-clean.png",
@@ -139,7 +140,7 @@ const trustLogos = [
     width: 3690,
     height: 2091,
     className: "h-6 w-auto sm:h-7",
-    filterClass: "invert opacity-90",
+    filterClass: "invert",
   },
   {
     src: "/publication-logos/hubspot-clean.png",
@@ -147,7 +148,7 @@ const trustLogos = [
     width: 800,
     height: 232,
     className: "h-6 w-auto sm:h-7",
-    filterClass: "invert opacity-90",
+    filterClass: "invert",
   },
 ] as const;
 
@@ -278,6 +279,7 @@ const seoMonthlyPackages: PricingCardData[] = [
     cadence: "6 monthly payments",
     price: "$1,375",
     priceDetail: "per month",
+    perLink: "$825 per link",
     bullets: [
       "DR 50-95 PR Links",
       "Guaranteed Average DR 70+",
@@ -293,6 +295,7 @@ const seoMonthlyPackages: PricingCardData[] = [
     cadence: "6 monthly payments",
     price: "$2,667",
     priceDetail: "per month",
+    perLink: "$800 per link",
     bullets: [
       "DR 50-95 PR Links",
       "Guaranteed Average DR 70+",
@@ -309,6 +312,7 @@ const seoMonthlyPackages: PricingCardData[] = [
     cadence: "12 monthly payments",
     price: "$3,125",
     priceDetail: "per month",
+    perLink: "$750 per link",
     bullets: [
       "DR 50-95 PR Links",
       "Guaranteed Average DR 70+",
@@ -325,6 +329,7 @@ const seoOneTimePackages: PricingCardData[] = [
   {
     title: "5 Links",
     price: "$4,250",
+    perLink: "$850 per link",
     description: "One-time campaign burst for high-authority editorial placements.",
     bullets: [
       "DR 50-95 PR Links",
@@ -339,6 +344,7 @@ const seoOneTimePackages: PricingCardData[] = [
   {
     title: "10 Links",
     price: "$8,250",
+    perLink: "$825 per link",
     description: "Expanded one-off package for heavier authority acceleration.",
     bullets: [
       "DR 50-95 PR Links",
@@ -354,6 +360,7 @@ const seoOneTimePackages: PricingCardData[] = [
   {
     title: "20 Links",
     price: "$16,000",
+    perLink: "$800 per link",
     description: "High-volume one-time package for stronger editorial authority.",
     bullets: [
       "DR 50-95 PR Links",
@@ -667,9 +674,8 @@ function TrustArchitecture() {
   return (
     <section className="relative py-14">
       <div className="relative left-1/2 w-screen -translate-x-1/2 border-y border-[#141d52] bg-[linear-gradient(130deg,#13194c_0%,#25348b_48%,#33439a_100%)] py-16 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),inset_0_-1px_0_rgba(255,255,255,0.08)]">
-        <div className="pointer-events-none absolute inset-0 opacity-[0.11] [background-image:linear-gradient(rgba(181,196,255,0.42)_1px,transparent_1px),linear-gradient(90deg,rgba(181,196,255,0.42)_1px,transparent_1px)] [background-size:52px_52px]" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-[radial-gradient(circle_at_top,rgba(173,146,255,0.34),transparent_68%)]" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-[radial-gradient(circle_at_bottom,rgba(109,143,255,0.26),transparent_72%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))]" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(173,146,255,0.22),transparent_70%)]" />
         <div className={`relative z-10 ${heroContainerClass}`}>
           <div className="mx-auto max-w-4xl text-center">
             <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#f4f1ff] [text-shadow:0_1px_0_rgba(8,10,28,0.35)]">Trusted by journalists at</p>
@@ -678,20 +684,13 @@ function TrustArchitecture() {
             </h3>
           </div>
           <div className="mt-10 grid gap-4 sm:grid-cols-4">
-            {trustLogos.map((logo, index) => (
+            {trustLogos.map((logo) => (
               <motion.div
                 key={logo.alt}
                 {...revealProps}
                 whileHover={{ y: -5, scale: 1.012 }}
-                animate={{ y: [0, -1.5, 0] }}
-                transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut", delay: index * 0.14 }}
               >
-                <div className="group relative flex h-[78px] items-center justify-center overflow-hidden rounded-[16px] border border-white/24 bg-[linear-gradient(140deg,rgba(255,255,255,0.17),rgba(255,255,255,0.06))] px-4 backdrop-blur-sm transition-all duration-300 hover:border-[#d5c8ff] hover:shadow-[0_0_0_1px_rgba(199,188,255,0.56),0_18px_40px_rgba(56,63,168,0.38)]">
-                  <motion.div
-                    className="pointer-events-none absolute -right-5 -top-5 h-16 w-16 rounded-full bg-[radial-gradient(circle,rgba(191,167,255,0.56),transparent_70%)] blur-xl"
-                    animate={{ opacity: [0.22, 0.62, 0.22], scale: [0.9, 1.08, 0.9] }}
-                    transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut", delay: index * 0.2 }}
-                  />
+                <div className="group relative flex h-[78px] items-center justify-center overflow-hidden rounded-[16px] border border-white/24 bg-[linear-gradient(140deg,rgba(255,255,255,0.16),rgba(255,255,255,0.06))] px-4 backdrop-blur-sm transition-all duration-300 hover:border-[#d5c8ff] hover:shadow-[0_0_0_1px_rgba(199,188,255,0.5),0_16px_30px_rgba(56,63,168,0.28)]">
                   <Image
                     src={logo.src}
                     alt={logo.alt}
@@ -1087,6 +1086,7 @@ function GradientPricingCard({
             <div className="mt-8">
               <div className="text-[2.75rem] font-display font-bold leading-none tracking-[-0.05em]">{card.price}</div>
               {card.priceDetail ? <p className="mt-2 text-[15px] leading-[1.6] text-white/62">{card.priceDetail}</p> : null}
+              {card.perLink ? <p className="mt-2 text-[16px] font-semibold leading-[1.4] text-white/86">{card.perLink}</p> : null}
               {card.description ? <p className="mt-3 h-[3.2rem] overflow-hidden text-[15px] leading-[1.6] text-white/76">{card.description}</p> : null}
             </div>
 
