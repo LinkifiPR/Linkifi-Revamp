@@ -311,12 +311,12 @@ const authorityMontageLinkedInEmbeds = [
   {
     src: "https://www.linkedin.com/embed/feed/update/urn:li:share:7338918000508452868?collapsed=1",
     title: "LinkedIn embedded post one",
-    height: 549,
+    height: 560,
   },
   {
     src: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7313091093405794304",
     title: "LinkedIn embedded post two",
-    height: 943,
+    height: 760,
   },
 ] as const;
 
@@ -1125,72 +1125,69 @@ function MontageFrame({
   return (
     <motion.div
       {...revealProps}
-      whileHover={{ y: -2 }}
-      className={cn(
-        "relative overflow-hidden rounded-[22px] bg-[linear-gradient(145deg,#ffffff_0%,#f7f8ff_100%)] shadow-[0_12px_26px_rgba(24,31,62,0.08)]",
-        className,
-      )}
+      whileHover={{ y: -4, scale: 1.005 }}
+      className={cn("relative mb-4 break-inside-avoid lg:mb-5", className)}
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(129,111,255,0.1),transparent_36%),radial-gradient(circle_at_bottom_left,rgba(96,164,255,0.09),transparent_34%)]" />
-      <div className="relative z-10">{children}</div>
+      {children}
     </motion.div>
   );
 }
 
-function YoutubeMontageCard({ title, src }: { title: string; src: string }) {
+function YoutubeMontageCard({
+  title,
+  src,
+  className,
+}: {
+  title: string;
+  src: string;
+  className?: string;
+}) {
   return (
-    <MontageFrame className="p-2 sm:p-3">
-      <div className="overflow-hidden rounded-[18px] bg-[#101322] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08),0_18px_34px_rgba(19,24,49,0.34)]">
-        <div className="aspect-video w-full">
-          <iframe
-            title={title}
-            src={src}
-            loading="lazy"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-            className="h-full w-full"
-          />
+    <MontageFrame className={className}>
+      <div className="relative overflow-hidden rounded-[26px] bg-[#0c1229] p-2 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08),0_26px_50px_rgba(16,22,46,0.42)]">
+        <div className="pointer-events-none absolute inset-x-7 top-0 h-10 bg-[linear-gradient(180deg,rgba(164,185,255,0.24),transparent)]" />
+        <div className="overflow-hidden rounded-[18px] border border-white/10 bg-black">
+          <div className="aspect-video w-full">
+            <iframe
+              title={title}
+              src={src}
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              className="h-full w-full"
+            />
+          </div>
         </div>
       </div>
     </MontageFrame>
   );
 }
 
-function PublicationTile({
+function TabletPublicationCard({
   src,
   alt,
   className,
-  imageClassName,
+  screenClassName,
 }: {
   src: string;
   alt: string;
   className?: string;
-  imageClassName?: string;
+  screenClassName?: string;
 }) {
   return (
-    <MontageFrame className={cn("p-2 sm:p-3", className)}>
-      <div className="overflow-hidden rounded-[18px] bg-white shadow-[0_14px_30px_rgba(24,31,62,0.1)]">
-        <Image
-          src={src}
-          alt={alt}
-          width={1244}
-          height={1500}
-          className={cn("h-[14.5rem] w-full object-cover object-top sm:h-[16.5rem]", imageClassName)}
-        />
-      </div>
-    </MontageFrame>
-  );
-}
-
-function TabletPublicationCard({ src, alt }: { src: string; alt: string }) {
-  return (
-    <MontageFrame className="bg-[linear-gradient(145deg,#f6f7ff_0%,#f0f2ff_100%)] p-2 sm:p-3">
-      <div className="relative rounded-[30px] border border-[#2b3255] bg-[linear-gradient(180deg,#212844_0%,#12162f_100%)] p-3 shadow-[0_24px_44px_rgba(12,16,34,0.45)] sm:p-4">
-        <div className="absolute left-1/2 top-2 h-1.5 w-20 -translate-x-1/2 rounded-full bg-white/20" />
-        <div className="absolute right-1.5 top-1/2 h-10 w-1 -translate-y-1/2 rounded-full bg-white/20" />
-        <div className="overflow-hidden rounded-[22px] border border-[#3d4678] bg-black shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]">
-          <Image src={src} alt={alt} width={1244} height={1500} className="h-[20rem] w-full object-cover object-top sm:h-[24rem]" />
+    <MontageFrame className={className}>
+      <div className="relative rounded-[34px] border border-[#364173] bg-[linear-gradient(180deg,#22294f_0%,#171d39_52%,#10142b_100%)] p-3 shadow-[0_30px_58px_rgba(16,21,44,0.4)] sm:p-4">
+        <div className="absolute left-1/2 top-2.5 h-1.5 w-20 -translate-x-1/2 rounded-full bg-white/25" />
+        <div className="absolute right-2 top-1/2 h-12 w-1 -translate-y-1/2 rounded-full bg-white/20" />
+        <div className="overflow-hidden rounded-[24px] border border-[#47548f] bg-[#090d1f] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]">
+          <Image
+            src={src}
+            alt={alt}
+            width={1244}
+            height={1500}
+            className={cn("h-[18rem] w-full object-cover object-top sm:h-[22rem]", screenClassName)}
+          />
         </div>
       </div>
     </MontageFrame>
@@ -1201,22 +1198,31 @@ function LinkedInEmbedCard({
   src,
   title,
   height,
+  className,
 }: {
   src: string;
   title: string;
   height: number;
+  className?: string;
 }) {
   return (
-    <MontageFrame className="p-2 sm:p-3">
-      <div className="overflow-hidden rounded-[18px] bg-white shadow-[0_14px_30px_rgba(24,31,62,0.1)]">
-        <iframe
-          src={src}
-          title={title}
-          loading="lazy"
-          allowFullScreen
-          className="w-full border-0"
-          style={{ height }}
-        />
+    <MontageFrame className={className}>
+      <div className="overflow-hidden rounded-[24px] bg-[linear-gradient(180deg,#fefeff_0%,#f3f5ff_100%)] p-2 shadow-[0_22px_42px_rgba(24,31,62,0.16)]">
+        <div className="overflow-hidden rounded-[18px] border border-[#e4e7f8] bg-white">
+          <div className="flex items-center gap-1.5 border-b border-[#edf0ff] px-3 py-2">
+            <span className="h-2 w-2 rounded-full bg-[#ff6c67]" />
+            <span className="h-2 w-2 rounded-full bg-[#ffd66b]" />
+            <span className="h-2 w-2 rounded-full bg-[#6fd08c]" />
+          </div>
+          <iframe
+            src={src}
+            title={title}
+            loading="lazy"
+            allowFullScreen
+            className="block w-full border-0 bg-white"
+            style={{ height }}
+          />
+        </div>
       </div>
     </MontageFrame>
   );
@@ -1233,48 +1239,59 @@ function AuthorityProofMontageSection() {
           </h2>
         </div>
 
-        <div className="mt-8 grid gap-4 xl:grid-cols-[1.08fr_0.92fr] xl:gap-5">
-          <div className="grid gap-4 xl:gap-5">
-            <YoutubeMontageCard title={authorityMontageYouTube[0].title} src={authorityMontageYouTube[0].src} />
-            <div className="grid gap-4 md:grid-cols-2 xl:gap-5">
-              <PublicationTile
-                src={authorityMontagePublications[1].src}
-                alt={authorityMontagePublications[1].alt}
-              />
-              <PublicationTile
-                src={authorityMontagePublications[2].src}
-                alt={authorityMontagePublications[2].alt}
-              />
-            </div>
-            <LinkedInEmbedCard
-              src={authorityMontageLinkedInEmbeds[0].src}
-              title={authorityMontageLinkedInEmbeds[0].title}
-              height={authorityMontageLinkedInEmbeds[0].height}
-            />
-          </div>
-
-          <div className="grid gap-4 xl:gap-5">
-            <TabletPublicationCard
-              src={authorityMontagePublications[0].src}
-              alt={authorityMontagePublications[0].alt}
-            />
-            <YoutubeMontageCard title={authorityMontageYouTube[1].title} src={authorityMontageYouTube[1].src} />
-            <LinkedInEmbedCard
-              src={authorityMontageLinkedInEmbeds[1].src}
-              title={authorityMontageLinkedInEmbeds[1].title}
-              height={authorityMontageLinkedInEmbeds[1].height}
-            />
-            <div className="grid gap-4 md:grid-cols-2 xl:gap-5">
-              <PublicationTile
-                src={authorityMontagePublications[3].src}
-                alt={authorityMontagePublications[3].alt}
-              />
-              <PublicationTile
-                src={authorityMontagePublications[4].src}
-                alt={authorityMontagePublications[4].alt}
-              />
-            </div>
-          </div>
+        <div className="mt-10 columns-1 gap-4 md:columns-2 lg:gap-5">
+          <YoutubeMontageCard
+            title={authorityMontageYouTube[0].title}
+            src={authorityMontageYouTube[0].src}
+            className="md:rotate-[-0.6deg]"
+          />
+          <TabletPublicationCard
+            src={authorityMontagePublications[0].src}
+            alt={authorityMontagePublications[0].alt}
+            className="md:rotate-[0.7deg]"
+            screenClassName="h-[16rem] sm:h-[19rem] lg:h-[21rem]"
+          />
+          <LinkedInEmbedCard
+            src={authorityMontageLinkedInEmbeds[0].src}
+            title={authorityMontageLinkedInEmbeds[0].title}
+            height={authorityMontageLinkedInEmbeds[0].height}
+            className="md:rotate-[0.4deg]"
+          />
+          <TabletPublicationCard
+            src={authorityMontagePublications[1].src}
+            alt={authorityMontagePublications[1].alt}
+            className="md:rotate-[-0.5deg]"
+            screenClassName="h-[16rem] sm:h-[18rem] lg:h-[20rem]"
+          />
+          <YoutubeMontageCard
+            title={authorityMontageYouTube[1].title}
+            src={authorityMontageYouTube[1].src}
+            className="md:rotate-[0.45deg]"
+          />
+          <TabletPublicationCard
+            src={authorityMontagePublications[2].src}
+            alt={authorityMontagePublications[2].alt}
+            className="md:rotate-[0.65deg]"
+            screenClassName="h-[16rem] sm:h-[19rem] lg:h-[21rem]"
+          />
+          <LinkedInEmbedCard
+            src={authorityMontageLinkedInEmbeds[1].src}
+            title={authorityMontageLinkedInEmbeds[1].title}
+            height={authorityMontageLinkedInEmbeds[1].height}
+            className="md:rotate-[-0.4deg]"
+          />
+          <TabletPublicationCard
+            src={authorityMontagePublications[3].src}
+            alt={authorityMontagePublications[3].alt}
+            className="md:rotate-[-0.35deg]"
+            screenClassName="h-[16rem] sm:h-[19rem] lg:h-[21rem]"
+          />
+          <TabletPublicationCard
+            src={authorityMontagePublications[4].src}
+            alt={authorityMontagePublications[4].alt}
+            className="md:rotate-[0.55deg]"
+            screenClassName="h-[16rem] sm:h-[19rem] lg:h-[21rem]"
+          />
         </div>
       </PagePanel>
     </SectionWrap>
