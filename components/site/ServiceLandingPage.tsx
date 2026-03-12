@@ -819,6 +819,9 @@ function SeoHeroVisual() {
                 "Brand authority",
                 "Topical entity alignment",
                 "Citation consistency",
+                "Editorial link quality",
+                "Topical coverage depth",
+                "Brand mention frequency",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-3 rounded-2xl border border-[#ece8f5] bg-[#faf9ff] px-4 py-3">
                   <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#efebff] text-[#6f5dff]">
