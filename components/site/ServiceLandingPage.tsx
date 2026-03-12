@@ -273,6 +273,48 @@ const authorityProofCards: ProofCardData[] = [
   },
 ];
 
+const authorityMontageYouTube = [
+  {
+    title: "Podcast Interview Feature",
+    src: "https://www.youtube-nocookie.com/embed/FeOVshlGeug",
+  },
+  {
+    title: "Client Story Spotlight",
+    src: "https://www.youtube-nocookie.com/embed/JgSHNM2iVBk",
+  },
+] as const;
+
+const authorityMontagePublications = [
+  {
+    title: "Saga Magazine",
+    src: "/authority-montage/processed/saga-magazine.jpg",
+    alt: "Saga Magazine feature screenshot",
+  },
+  {
+    title: "Eat This, Not That!",
+    src: "/authority-montage/processed/eat-this-not-that.jpg",
+    alt: "Eat This Not That feature screenshot",
+  },
+  {
+    title: "BBC Travel",
+    src: "/authority-montage/processed/bbc-travel.jpg",
+    alt: "BBC Travel feature screenshot",
+  },
+  {
+    title: "Fodor's Travel",
+    src: "/authority-montage/processed/fodors-travel.jpg",
+    alt: "Fodor's Travel feature screenshot",
+  },
+  {
+    title: "Entrepreneur UK",
+    src: "/authority-montage/processed/entrepreneur-uk.jpg",
+    alt: "Entrepreneur UK feature screenshot",
+  },
+] as const;
+
+const authorityLinkedInFeatureUrl =
+  "https://www.linkedin.com/posts/ebramlett_it-was-a-blast-to-sit-with-a-great-friend-activity-7325454379845582851-OaKE";
+
 const seoMonthlyPackages: PricingCardData[] = [
   {
     title: "10 Links",
@@ -1068,6 +1110,178 @@ function ProofCard({ item }: { item: ProofCardData }) {
   );
 }
 
+function MontageFrame({
+  className,
+  children,
+}: {
+  className?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <motion.div
+      {...revealProps}
+      whileHover={{ y: -4 }}
+      className={cn(
+        "relative overflow-hidden rounded-[22px] border border-[#e4def4] bg-[linear-gradient(145deg,#ffffff_0%,#f5f7ff_100%)] shadow-[0_18px_38px_rgba(24,31,62,0.08)]",
+        className,
+      )}
+    >
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(129,111,255,0.14),transparent_36%),radial-gradient(circle_at_bottom_left,rgba(96,164,255,0.12),transparent_34%)]" />
+      <div className="relative z-10">{children}</div>
+    </motion.div>
+  );
+}
+
+function YoutubeMontageCard({ title, src }: { title: string; src: string }) {
+  return (
+    <MontageFrame>
+      <div className="flex items-center justify-between border-b border-[#ebe6f6] px-4 py-3 sm:px-5">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6558d8]">{title}</p>
+        <span className="rounded-full border border-[#d9d3f4] bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#494e77]">
+          YouTube
+        </span>
+      </div>
+      <div className="p-3 sm:p-4">
+        <div className="overflow-hidden rounded-[16px] border border-[#ddd9ed] bg-[#111527] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08),0_20px_34px_rgba(19,24,49,0.34)]">
+          <div className="aspect-video w-full">
+            <iframe
+              title={title}
+              src={src}
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              className="h-full w-full"
+            />
+          </div>
+        </div>
+      </div>
+    </MontageFrame>
+  );
+}
+
+function PublicationTile({
+  title,
+  src,
+  alt,
+  className,
+}: {
+  title: string;
+  src: string;
+  alt: string;
+  className?: string;
+}) {
+  return (
+    <MontageFrame className={className}>
+      <div className="relative overflow-hidden rounded-[20px] p-3 sm:p-4">
+        <div className="overflow-hidden rounded-[16px] border border-[#e2deef] bg-white shadow-[0_14px_30px_rgba(24,31,62,0.1)]">
+          <Image src={src} alt={alt} width={1244} height={1500} className="h-[14rem] w-full object-cover object-top sm:h-[16rem]" />
+        </div>
+        <div className="pointer-events-none absolute inset-x-6 bottom-6 rounded-[12px] border border-white/70 bg-white/88 px-3 py-2 backdrop-blur-[3px] sm:inset-x-7">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#59618f]">{title}</p>
+        </div>
+      </div>
+    </MontageFrame>
+  );
+}
+
+function TabletPublicationCard({ title, src, alt }: { title: string; src: string; alt: string }) {
+  return (
+    <MontageFrame className="bg-[linear-gradient(145deg,#f6f7ff_0%,#f0f2ff_100%)] p-3 sm:p-4">
+      <div className="relative rounded-[30px] border border-[#2b3255] bg-[linear-gradient(180deg,#212844_0%,#12162f_100%)] p-3 shadow-[0_24px_44px_rgba(12,16,34,0.45)] sm:p-4">
+        <div className="absolute left-1/2 top-2 h-1.5 w-20 -translate-x-1/2 rounded-full bg-white/20" />
+        <div className="absolute right-1.5 top-1/2 h-10 w-1 -translate-y-1/2 rounded-full bg-white/20" />
+        <div className="overflow-hidden rounded-[22px] border border-[#3d4678] bg-black shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]">
+          <Image src={src} alt={alt} width={1244} height={1500} className="h-[20rem] w-full object-cover object-top sm:h-[24rem]" />
+        </div>
+      </div>
+      <p className="mt-3 text-center text-[11px] font-semibold uppercase tracking-[0.2em] text-[#4f5a93]">{title}</p>
+    </MontageFrame>
+  );
+}
+
+function LinkedInSpotlightCard() {
+  return (
+    <MontageFrame className="h-full">
+      <div className="p-5 sm:p-6">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6167d7]">LinkedIn Feature</p>
+        <h3 className="mt-3 text-[1.35rem] font-display font-semibold tracking-[-0.03em] text-[#171929]">
+          Executive interview spotlight published to social audiences.
+        </h3>
+        <p className="mt-3 text-[14px] leading-[1.7] text-[#5a607e]">
+          This campaign drove authority beyond publications by converting media momentum into personal-brand credibility and distribution.
+        </p>
+        <Link
+          href={authorityLinkedInFeatureUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#d8d3ef] bg-white px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.15em] text-[#404a74] shadow-[0_12px_24px_rgba(24,31,62,0.08)] transition-colors hover:border-[#cbc3ea] hover:bg-[#f9f8ff]"
+        >
+          View LinkedIn post
+          <Link2 className="h-4 w-4" />
+        </Link>
+      </div>
+    </MontageFrame>
+  );
+}
+
+function AuthorityProofMontageSection() {
+  return (
+    <SectionWrap>
+      <PagePanel tone="white">
+        <div className="mx-auto max-w-4xl text-center">
+          <Eyebrow>Proof</Eyebrow>
+          <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
+            Results from real authority campaigns
+          </h2>
+        </div>
+
+        <div className="mt-10 grid gap-6 xl:grid-cols-[1.08fr_0.92fr]">
+          <div className="grid gap-6">
+            <YoutubeMontageCard title={authorityMontageYouTube[0].title} src={authorityMontageYouTube[0].src} />
+            <div className="grid gap-6 md:grid-cols-2">
+              <PublicationTile
+                title={authorityMontagePublications[1].title}
+                src={authorityMontagePublications[1].src}
+                alt={authorityMontagePublications[1].alt}
+              />
+              <PublicationTile
+                title={authorityMontagePublications[2].title}
+                src={authorityMontagePublications[2].src}
+                alt={authorityMontagePublications[2].alt}
+              />
+            </div>
+            <LinkedInSpotlightCard />
+          </div>
+
+          <div className="grid gap-6">
+            <TabletPublicationCard
+              title={authorityMontagePublications[0].title}
+              src={authorityMontagePublications[0].src}
+              alt={authorityMontagePublications[0].alt}
+            />
+            <YoutubeMontageCard title={authorityMontageYouTube[1].title} src={authorityMontageYouTube[1].src} />
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-1">
+              <PublicationTile
+                title={authorityMontagePublications[3].title}
+                src={authorityMontagePublications[3].src}
+                alt={authorityMontagePublications[3].alt}
+                className="xl:rotate-[-1.2deg]"
+              />
+              <PublicationTile
+                title={authorityMontagePublications[4].title}
+                src={authorityMontagePublications[4].src}
+                alt={authorityMontagePublications[4].alt}
+                className="xl:rotate-[1.1deg]"
+              />
+            </div>
+          </div>
+        </div>
+      </PagePanel>
+    </SectionWrap>
+  );
+}
+
 function ProofSection({ cards }: { cards: ProofCardData[] }) {
   return (
     <SectionWrap>
@@ -1807,7 +2021,7 @@ function AuthorityLandingContent() {
 
       <BlueprintSection />
       <BuildSignalsSection />
-      <ProofSection cards={authorityProofCards} />
+      <AuthorityProofMontageSection />
       <AuthorityProgramsSection />
 
       <SectionWrap className="pb-12">
