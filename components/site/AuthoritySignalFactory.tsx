@@ -24,7 +24,7 @@ export function AuthoritySignalFactory({ className }: { className?: string }) {
         className,
       )}
     >
-      <div className="factory-motion-overlay pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(157,123,255,0.16),transparent_42%),radial-gradient(circle_at_82%_66%,rgba(91,108,255,0.16),transparent_45%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(157,123,255,0.16),transparent_42%),radial-gradient(circle_at_82%_66%,rgba(91,108,255,0.16),transparent_45%)]" />
 
       <svg viewBox="0 0 900 320" className="relative z-10 h-full w-full" aria-label="Authority Signal Factory diagram">
         <defs>
@@ -291,8 +291,8 @@ export function AuthoritySignalFactory({ className }: { className?: string }) {
 
       <style jsx>{`
         @media (prefers-reduced-motion: reduce) {
-          .factory-motion-overlay {
-            opacity: 0.3;
+          :global(.authority-factory-soften) {
+            opacity: 0.8;
           }
         }
       `}</style>

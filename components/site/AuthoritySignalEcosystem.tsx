@@ -17,7 +17,7 @@ export function AuthoritySignalEcosystem({ className }: { className?: string }) 
 
   return (
     <div className={cn("relative rounded-[24px] border border-white/12 bg-white/6 p-6 backdrop-blur-sm", className)}>
-      <div className="ecosystem-motion-overlay pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_20%,rgba(135,153,255,0.22),transparent_42%),radial-gradient(circle_at_80%_76%,rgba(157,123,255,0.18),transparent_45%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_20%,rgba(135,153,255,0.22),transparent_42%),radial-gradient(circle_at_80%_76%,rgba(157,123,255,0.18),transparent_45%)]" />
 
       <svg viewBox="0 0 760 320" className="relative z-10 h-full w-full" aria-label="Signal Creatures Carry Authority diagram">
         <defs>
@@ -206,8 +206,8 @@ export function AuthoritySignalEcosystem({ className }: { className?: string }) 
 
       <style jsx>{`
         @media (prefers-reduced-motion: reduce) {
-          .ecosystem-motion-overlay {
-            opacity: 0.3;
+          :global(.authority-ecosystem-reduce) {
+            transition: none !important;
           }
         }
       `}</style>
