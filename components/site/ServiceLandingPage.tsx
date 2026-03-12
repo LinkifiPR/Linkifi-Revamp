@@ -670,6 +670,71 @@ function HeroSignalPill({ children }: { children: React.ReactNode }) {
   );
 }
 
+function WavingFlag({ country, delay = 0 }: { country: "us" | "uk"; delay?: number }) {
+  const FlagGraphic = country === "us" ? UnitedStatesFlagGraphic : UnitedKingdomFlagGraphic;
+
+  return (
+    <div className="flex h-full items-center justify-center">
+      <div className="relative pl-2">
+        <span className="absolute inset-y-2 left-0 w-[3px] rounded-full bg-[linear-gradient(180deg,#dce5ff_0%,#a5bcff_45%,#dce5ff_100%)] shadow-[0_0_0_1px_rgba(255,255,255,0.8),0_10px_20px_rgba(62,78,142,0.2)]" />
+        <motion.div
+          animate={{ y: [0, -5, 0], rotate: [0.7, -0.5, 0.7] }}
+          transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut", delay }}
+          className="relative h-[72px] w-[136px] overflow-hidden rounded-r-[18px] rounded-bl-[10px] border border-white/90 bg-white shadow-[0_16px_30px_rgba(28,35,67,0.16)]"
+        >
+          <motion.div
+            animate={{ x: [0, 2, -1, 0], rotateY: [0, -11, 6, 0], skewY: [0, -1.1, 0.9, 0] }}
+            transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut", delay }}
+            className="absolute inset-0 origin-left"
+            style={{ transformStyle: "preserve-3d" }}
+          >
+            <FlagGraphic />
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(110deg,rgba(255,255,255,0.2)_0%,rgba(255,255,255,0.02)_35%,rgba(15,24,52,0.12)_68%,rgba(255,255,255,0.08)_100%)] mix-blend-soft-light" />
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-3 bg-[linear-gradient(90deg,rgba(18,27,56,0.22),transparent)]" />
+          </motion.div>
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
+function UnitedStatesFlagGraphic() {
+  const stripeHeight = 100 / 13;
+
+  return (
+    <svg viewBox="0 0 190 100" aria-hidden="true" className="absolute inset-0 h-full w-full">
+      <rect width="190" height="100" fill="#b22234" />
+      {Array.from({ length: 6 }).map((_, index) => (
+        <rect key={index} y={stripeHeight * (index * 2 + 1)} width="190" height={stripeHeight} fill="#ffffff" />
+      ))}
+      <rect width="76" height={stripeHeight * 7} fill="#3c3b6e" />
+      {Array.from({ length: 9 }).map((_, row) =>
+        Array.from({ length: row % 2 === 0 ? 6 : 5 }).map((__, column) => (
+          <circle
+            key={`${row}-${column}`}
+            cx={row % 2 === 0 ? 7 + column * 12 : 13 + column * 12}
+            cy={6 + row * 5.8}
+            r="1.5"
+            fill="#ffffff"
+          />
+        )),
+      )}
+    </svg>
+  );
+}
+
+function UnitedKingdomFlagGraphic() {
+  return (
+    <svg viewBox="0 0 60 30" aria-hidden="true" className="absolute inset-0 h-full w-full">
+      <rect width="60" height="30" fill="#012169" />
+      <path d="M0 0 L60 30 M60 0 L0 30" stroke="#ffffff" strokeWidth="6" />
+      <path d="M0 0 L60 30 M60 0 L0 30" stroke="#c8102e" strokeWidth="3.4" />
+      <path d="M30 0 V30 M0 15 H60" stroke="#ffffff" strokeWidth="10" />
+      <path d="M30 0 V30 M0 15 H60" stroke="#c8102e" strokeWidth="6.2" />
+    </svg>
+  );
+}
+
 function TrustArchitecture() {
   return (
     <section className="relative py-14">
@@ -768,10 +833,9 @@ function SeoHeroVisual() {
           <div className="grid gap-4">
             <SurfaceCard className="border-[#d4cdf9] bg-[linear-gradient(140deg,#f5f0ff_0%,#ecefff_100%)] p-5 sm:p-6">
               <div className="flex items-center justify-between gap-3">
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6f5dff]">Average authority</p>
-                <span className="inline-flex items-center gap-2 rounded-full border border-[#d7cdf9] bg-white/90 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#5a4dbf] shadow-[0_12px_24px_rgba(24,31,62,0.06)]">
-                  <Image src="/publication-logos/ahrefs.png" alt="Ahrefs" width={28} height={34} className="h-5 w-auto object-contain" />
-                  DR
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6f5dff]">Average domain rating</p>
+                <span className="inline-flex items-center justify-center rounded-[14px] border border-[#d7cdf9] bg-white px-3 py-2 shadow-[0_0_0_4px_rgba(111,93,255,0.11),0_14px_26px_rgba(95,84,198,0.2)]">
+                  <Image src="/publication-logos/ahrefs.png" alt="Ahrefs" width={52} height={62} className="h-8 w-auto object-contain drop-shadow-[0_6px_10px_rgba(232,110,10,0.35)]" />
                 </span>
               </div>
               <p className="mt-3 text-[2rem] font-display font-bold tracking-[-0.04em] text-[#171929]">DR 70+</p>
@@ -779,41 +843,13 @@ function SeoHeroVisual() {
             </SurfaceCard>
             <SurfaceCard className="border-[#cfe0ff] bg-[linear-gradient(140deg,#edf5ff_0%,#f4f6ff_100%)] p-5 sm:p-6">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6f5dff]">Publication footprint</p>
-              <div className="mt-4 grid grid-cols-2 gap-3">
-                <div className="rounded-[18px] border border-[#cfdfff] bg-white/88 p-3 shadow-[0_14px_28px_rgba(24,31,62,0.06)]">
-                  <div className="flex items-center gap-3">
-                    <span
-                      aria-hidden="true"
-                      className="h-10 w-10 shrink-0 rounded-full border border-white/80 shadow-[0_8px_18px_rgba(44,78,164,0.18)]"
-                      style={{
-                        background:
-                          "radial-gradient(circle at 28% 28%, #2348a5 0 33%, transparent 34%), repeating-linear-gradient(180deg, #c6283f 0 11%, #ffffff 11% 22%)",
-                      }}
-                    />
-                    <div>
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6f5dff]">Market</p>
-                      <p className="text-[1rem] font-display font-semibold tracking-[-0.02em] text-[#171929]">United States</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="rounded-[18px] border border-[#d6d3ff] bg-white/88 p-3 shadow-[0_14px_28px_rgba(24,31,62,0.06)]">
-                  <div className="flex items-center gap-3">
-                    <span
-                      aria-hidden="true"
-                      className="h-10 w-10 shrink-0 rounded-full border border-white/80 shadow-[0_8px_18px_rgba(58,76,164,0.18)]"
-                      style={{
-                        background:
-                          "linear-gradient(90deg, transparent 0 40%, #ffffff 40% 60%, transparent 60% 100%), linear-gradient(180deg, transparent 0 40%, #ffffff 40% 60%, transparent 60% 100%), linear-gradient(90deg, transparent 0 44%, #d62d45 44% 56%, transparent 56% 100%), linear-gradient(180deg, transparent 0 44%, #d62d45 44% 56%, transparent 56% 100%), #2448a6",
-                      }}
-                    />
-                    <div>
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6f5dff]">Market</p>
-                      <p className="text-[1rem] font-display font-semibold tracking-[-0.02em] text-[#171929]">United Kingdom</p>
-                    </div>
-                  </div>
+              <div className="relative mt-4 h-[160px] overflow-hidden rounded-[20px] border border-[#d8e4ff] bg-[linear-gradient(140deg,rgba(255,255,255,0.84),rgba(239,245,255,0.92))]">
+                <div className="pointer-events-none absolute inset-x-6 top-2 h-[110px] bg-[radial-gradient(circle_at_20%_50%,rgba(77,146,255,0.16),transparent_45%),radial-gradient(circle_at_80%_50%,rgba(111,93,255,0.18),transparent_45%)]" />
+                <div className="relative z-10 grid h-full grid-cols-2 items-center gap-2 px-4 sm:px-5">
+                  <WavingFlag country="us" delay={0} />
+                  <WavingFlag country="uk" delay={0.35} />
                 </div>
               </div>
-              <p className="mt-3 text-[14px] leading-[1.6] text-[#656982]">Editorial opportunities aligned with search trust and commercial authority goals across both markets.</p>
             </SurfaceCard>
           </div>
         </div>
