@@ -674,7 +674,7 @@ function WavingFlag({ country, delay = 0 }: { country: "us" | "uk"; delay?: numb
   const FlagGraphic = country === "us" ? UnitedStatesFlagGraphic : UnitedKingdomFlagGraphic;
 
   return (
-    <div className="flex h-full items-center justify-center">
+    <div className="flex items-center justify-center">
       <div className="relative pl-2">
         <span className="absolute inset-y-2 left-0 w-[3px] rounded-full bg-[linear-gradient(180deg,#dce5ff_0%,#a5bcff_45%,#dce5ff_100%)] shadow-[0_0_0_1px_rgba(255,255,255,0.8),0_10px_20px_rgba(62,78,142,0.2)]" />
         <motion.div
@@ -843,9 +843,9 @@ function SeoHeroVisual() {
             </SurfaceCard>
             <SurfaceCard className="border-[#cfe0ff] bg-[linear-gradient(140deg,#edf5ff_0%,#f4f6ff_100%)] p-5 sm:p-6">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6f5dff]">Publication footprint</p>
-              <div className="relative mt-4 h-[160px] overflow-hidden rounded-[20px] border border-[#d8e4ff] bg-[linear-gradient(140deg,rgba(255,255,255,0.84),rgba(239,245,255,0.92))]">
-                <div className="pointer-events-none absolute inset-x-6 top-2 h-[110px] bg-[radial-gradient(circle_at_20%_50%,rgba(77,146,255,0.16),transparent_45%),radial-gradient(circle_at_80%_50%,rgba(111,93,255,0.18),transparent_45%)]" />
-                <div className="relative z-10 grid h-full grid-cols-2 items-center gap-2 px-4 sm:px-5">
+              <div className="relative mt-4 h-[214px] overflow-hidden rounded-[20px] border border-[#d8e4ff] bg-[linear-gradient(140deg,rgba(255,255,255,0.84),rgba(239,245,255,0.92))]">
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_22%,rgba(77,146,255,0.16),transparent_44%),radial-gradient(circle_at_50%_78%,rgba(111,93,255,0.2),transparent_44%)]" />
+                <div className="relative z-10 flex h-full flex-col items-center justify-center gap-4 px-4 py-4 sm:gap-5">
                   <WavingFlag country="us" delay={0} />
                   <WavingFlag country="uk" delay={0.35} />
                 </div>
