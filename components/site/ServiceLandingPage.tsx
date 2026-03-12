@@ -670,6 +670,185 @@ function HeroSignalPill({ children }: { children: React.ReactNode }) {
   );
 }
 
+function PublicationFootprintCard() {
+  return (
+    <SurfaceCard className="border-[#cfe0ff] bg-[linear-gradient(145deg,#edf5ff_0%,#f3f1ff_44%,#eef5ff_100%)] p-5 sm:p-6">
+      <div className="flex items-start justify-between gap-4">
+        <div className="max-w-[17rem]">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6f5dff]">Publication footprint</p>
+          <h4 className="mt-3 text-[1.45rem] font-display font-bold tracking-[-0.04em] text-[#171929] sm:text-[1.65rem]">
+            Coverage built for both sides of the Atlantic.
+          </h4>
+        </div>
+        <span className="inline-flex shrink-0 items-center rounded-full border border-[#d7d9ff] bg-white/92 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#5b5ec6] shadow-[0_12px_24px_rgba(24,31,62,0.06)]">
+          US + UK
+        </span>
+      </div>
+
+      <div className="mt-5 grid gap-3">
+        <MarketCoverageCard
+          name="United States"
+          label="Editorial market"
+          description="National, business, tech and consumer titles matched to commercially relevant commentary angles."
+          chips={["National press", "Revenue-aligned angles"]}
+          accentLabelClassName="text-[#4d92ff]"
+          cardClassName="border-[#d5e3ff] bg-[linear-gradient(135deg,rgba(255,255,255,0.98),rgba(236,244,255,0.94))]"
+          chipClassName="border-[#d7e3ff] bg-white/90 text-[#3455a5]"
+          delay={0.1}
+          FlagGraphic={UnitedStatesFlag}
+        />
+        <MarketCoverageCard
+          name="United Kingdom"
+          label="Editorial market"
+          description="UK newsroom outreach calibrated for search trust, authority growth and in-market relevance."
+          chips={["UK media targets", "Search trust signals"]}
+          accentLabelClassName="text-[#6f5dff]"
+          cardClassName="border-[#dfd9ff] bg-[linear-gradient(135deg,rgba(255,255,255,0.98),rgba(244,239,255,0.94))]"
+          chipClassName="border-[#e3dcff] bg-white/90 text-[#5648bf]"
+          delay={0.45}
+          FlagGraphic={UnitedKingdomFlag}
+        />
+      </div>
+
+      <div className="mt-4 rounded-[18px] border border-[#d8e4ff] bg-[linear-gradient(135deg,rgba(255,255,255,0.94),rgba(244,248,255,0.94))] px-4 py-4 shadow-[0_16px_34px_rgba(24,31,62,0.06)]">
+        <p className="text-[14px] leading-[1.7] text-[#555b77]">
+          Editorial opportunities aligned with search trust and commercial authority goals across both markets.
+        </p>
+      </div>
+    </SurfaceCard>
+  );
+}
+
+function MarketCoverageCard({
+  name,
+  label,
+  description,
+  chips,
+  accentLabelClassName,
+  cardClassName,
+  chipClassName,
+  delay,
+  FlagGraphic,
+}: {
+  name: string;
+  label: string;
+  description: string;
+  chips: string[];
+  accentLabelClassName: string;
+  cardClassName: string;
+  chipClassName: string;
+  delay: number;
+  FlagGraphic: () => React.ReactNode;
+}) {
+  return (
+    <div
+      className={cn(
+        "relative overflow-hidden rounded-[22px] border p-4 shadow-[0_18px_32px_rgba(24,31,62,0.08)]",
+        cardClassName,
+      )}
+    >
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.72),transparent_42%),radial-gradient(circle_at_bottom_right,rgba(111,93,255,0.08),transparent_36%)]" />
+      <div className="relative z-10 flex flex-col gap-4 sm:flex-row sm:items-center">
+        <AnimatedFlyingFlag delay={delay} FlagGraphic={FlagGraphic} />
+
+        <div className="min-w-0">
+          <p className={cn("text-[11px] font-semibold uppercase tracking-[0.22em]", accentLabelClassName)}>{label}</p>
+          <p className="mt-2 text-[1.15rem] font-display font-semibold tracking-[-0.03em] text-[#171929]">{name}</p>
+          <p className="mt-2 text-[13px] leading-[1.65] text-[#575d79]">{description}</p>
+        </div>
+      </div>
+
+      <div className="relative z-10 mt-4 flex flex-wrap gap-2">
+        {chips.map((chip) => (
+          <span
+            key={chip}
+            className={cn(
+              "inline-flex items-center rounded-full border px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.17em] shadow-[0_10px_18px_rgba(24,31,62,0.05)]",
+              chipClassName,
+            )}
+          >
+            {chip}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function AnimatedFlyingFlag({
+  delay,
+  FlagGraphic,
+}: {
+  delay: number;
+  FlagGraphic: () => React.ReactNode;
+}) {
+  return (
+    <div className="relative shrink-0 pl-3">
+      <span className="absolute inset-y-1 left-0 w-[4px] rounded-full bg-[linear-gradient(180deg,#dbe3ff_0%,#95aefc_48%,#c5d1ff_100%)] shadow-[0_0_0_1px_rgba(255,255,255,0.72),0_10px_20px_rgba(72,88,159,0.2)]" />
+
+      <motion.div
+        animate={{ y: [0, -7, 0], rotate: [2, 0, 2] }}
+        transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut", delay }}
+        className="relative"
+        style={{ perspective: 1200 }}
+      >
+        <motion.div
+          animate={{ rotateY: [0, -16, 8, 0], skewY: [0, -1.2, 0.8, 0], x: [0, 3, -1, 0] }}
+          transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut", delay }}
+          className="relative h-[62px] w-[118px] origin-left overflow-hidden rounded-r-[18px] rounded-bl-[8px] border border-white/78 bg-white shadow-[0_18px_30px_rgba(24,31,62,0.14)]"
+          style={{ transformStyle: "preserve-3d" }}
+        >
+          <FlagGraphic />
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(112deg,rgba(255,255,255,0.24)_0%,rgba(255,255,255,0.02)_22%,rgba(22,28,54,0.12)_48%,rgba(255,255,255,0.04)_68%,rgba(10,16,36,0.18)_100%)] mix-blend-soft-light" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-4 bg-[linear-gradient(90deg,rgba(16,22,44,0.18),transparent)]" />
+          <div className="pointer-events-none absolute -bottom-4 left-3 right-2 h-6 rounded-full bg-[radial-gradient(circle,rgba(82,102,190,0.22),transparent_72%)] blur-[8px]" />
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+}
+
+function UnitedStatesFlag() {
+  const stripeHeight = 100 / 13;
+
+  return (
+    <svg viewBox="0 0 190 100" aria-hidden="true" className="absolute inset-0 h-full w-full">
+      <rect width="190" height="100" fill="#b22234" />
+      {Array.from({ length: 6 }).map((_, index) => (
+        <rect key={index} y={stripeHeight * (index * 2 + 1)} width="190" height={stripeHeight} fill="#ffffff" />
+      ))}
+      <rect width="76" height={stripeHeight * 7} fill="#3c3b6e" />
+      {Array.from({ length: 9 }).map((_, row) =>
+        Array.from({ length: row % 2 === 0 ? 6 : 5 }).map((__, column) => (
+          <circle
+            key={`${row}-${column}`}
+            cx={row % 2 === 0 ? 7 + column * 12 : 13 + column * 12}
+            cy={6 + row * 5.8}
+            r="1.55"
+            fill="#ffffff"
+          />
+        )),
+      )}
+    </svg>
+  );
+}
+
+function UnitedKingdomFlag() {
+  return (
+    <svg viewBox="0 0 60 30" aria-hidden="true" className="absolute inset-0 h-full w-full">
+      <rect width="60" height="30" fill="#012169" />
+      <rect x="-8" y="11.5" width="76" height="7" fill="#ffffff" transform="rotate(26.565 30 15)" />
+      <rect x="-8" y="11.5" width="76" height="7" fill="#ffffff" transform="rotate(-26.565 30 15)" />
+      <rect x="-8" y="12.9" width="76" height="3.4" fill="#c8102e" transform="rotate(26.565 30 15)" />
+      <rect x="-8" y="12.9" width="76" height="3.4" fill="#c8102e" transform="rotate(-26.565 30 15)" />
+      <rect x="24" width="12" height="30" fill="#ffffff" />
+      <rect y="9" width="60" height="12" fill="#ffffff" />
+      <rect x="26.4" width="7.2" height="30" fill="#c8102e" />
+      <rect y="11.4" width="60" height="7.2" fill="#c8102e" />
+    </svg>
+  );
+}
+
 function TrustArchitecture() {
   return (
     <section className="relative py-14">
@@ -777,44 +956,7 @@ function SeoHeroVisual() {
               <p className="mt-3 text-[2rem] font-display font-bold tracking-[-0.04em] text-[#171929]">DR 70+</p>
               <p className="mt-2 text-[14px] leading-[1.6] text-[#656982]">We guarantee average DR70+ links across all of our link packages.</p>
             </SurfaceCard>
-            <SurfaceCard className="border-[#cfe0ff] bg-[linear-gradient(140deg,#edf5ff_0%,#f4f6ff_100%)] p-5 sm:p-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6f5dff]">Publication footprint</p>
-              <div className="mt-4 grid grid-cols-2 gap-3">
-                <div className="rounded-[18px] border border-[#cfdfff] bg-white/88 p-3 shadow-[0_14px_28px_rgba(24,31,62,0.06)]">
-                  <div className="flex items-center gap-3">
-                    <span
-                      aria-hidden="true"
-                      className="h-10 w-10 shrink-0 rounded-full border border-white/80 shadow-[0_8px_18px_rgba(44,78,164,0.18)]"
-                      style={{
-                        background:
-                          "radial-gradient(circle at 28% 28%, #2348a5 0 33%, transparent 34%), repeating-linear-gradient(180deg, #c6283f 0 11%, #ffffff 11% 22%)",
-                      }}
-                    />
-                    <div>
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6f5dff]">Market</p>
-                      <p className="text-[1rem] font-display font-semibold tracking-[-0.02em] text-[#171929]">United States</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="rounded-[18px] border border-[#d6d3ff] bg-white/88 p-3 shadow-[0_14px_28px_rgba(24,31,62,0.06)]">
-                  <div className="flex items-center gap-3">
-                    <span
-                      aria-hidden="true"
-                      className="h-10 w-10 shrink-0 rounded-full border border-white/80 shadow-[0_8px_18px_rgba(58,76,164,0.18)]"
-                      style={{
-                        background:
-                          "linear-gradient(90deg, transparent 0 40%, #ffffff 40% 60%, transparent 60% 100%), linear-gradient(180deg, transparent 0 40%, #ffffff 40% 60%, transparent 60% 100%), linear-gradient(90deg, transparent 0 44%, #d62d45 44% 56%, transparent 56% 100%), linear-gradient(180deg, transparent 0 44%, #d62d45 44% 56%, transparent 56% 100%), #2448a6",
-                      }}
-                    />
-                    <div>
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6f5dff]">Market</p>
-                      <p className="text-[1rem] font-display font-semibold tracking-[-0.02em] text-[#171929]">United Kingdom</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <p className="mt-3 text-[14px] leading-[1.6] text-[#656982]">Editorial opportunities aligned with search trust and commercial authority goals across both markets.</p>
-            </SurfaceCard>
+            <PublicationFootprintCard />
           </div>
         </div>
       </div>
