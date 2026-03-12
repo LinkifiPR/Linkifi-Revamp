@@ -32,6 +32,8 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { SiteFooter, SiteHeader } from "@/components/site/SiteChrome";
+import { AuthoritySignalFactory } from "@/components/site/AuthoritySignalFactory";
+import { AuthoritySignalEcosystem } from "@/components/site/AuthoritySignalEcosystem";
 
 type ServicePage = "seo" | "authority";
 type BillingMode = "monthly" | "oneTime";
@@ -862,13 +864,6 @@ function SeoHeroVisual() {
 }
 
 function AuthorityHeroVisual() {
-  const nodes = [
-    { title: "Editorial media", Icon: Newspaper, position: "col-[2] row-[1]" },
-    { title: "AI citations", Icon: Bot, position: "col-[3] row-[2]" },
-    { title: "Search visibility", Icon: TrendingUp, position: "col-[2] row-[3]" },
-    { title: "Comparison surfaces", Icon: Radar, position: "col-[1] row-[2]" },
-  ] as const;
-
   return (
     <div className="relative">
       <motion.div
@@ -894,70 +889,11 @@ function AuthorityHeroVisual() {
             </div>
           </div>
 
-          <div className="relative mt-8 h-[17rem] overflow-hidden rounded-[20px] border border-[#e4e0f4] bg-white px-6 py-6 sm:h-[18rem]">
-            <div className="absolute left-1/2 top-1/2 h-[1px] w-[64%] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,rgba(111,93,255,0.1),rgba(111,93,255,0.4),rgba(77,146,255,0.12))]" />
-            <div className="absolute left-1/2 top-1/2 h-[64%] w-[1px] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(180deg,rgba(111,93,255,0.1),rgba(111,93,255,0.42),rgba(77,146,255,0.14))]" />
-            <div className="relative grid h-full grid-cols-3 grid-rows-3 items-center justify-items-center">
-              {nodes.map((node, index) => (
-                <motion.div
-                  key={node.title}
-                  animate={{ y: [0, -4, 0] }}
-                  transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut", delay: index * 0.28 }}
-                  className={cn(
-                    "flex h-[68px] w-[96px] flex-col items-center justify-center rounded-[14px] border border-[#e6e2f3] bg-white px-2.5 py-2 text-center shadow-[0_14px_30px_rgba(24,31,62,0.08)] sm:h-[74px] sm:w-[130px] sm:rounded-[16px] sm:px-3 sm:py-3",
-                    node.position,
-                  )}
-                >
-                  <node.Icon className="h-4 w-4 text-[#6f5dff]" />
-                  <span className="mt-1 text-[10px] font-semibold leading-[1.25] text-[#2f3450] sm:text-[12px]">{node.title}</span>
-                </motion.div>
-              ))}
-              <motion.div
-                animate={{ scale: [1, 1.04, 1] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className="col-[2] row-[2] flex h-28 w-28 items-center justify-center rounded-full bg-[linear-gradient(135deg,#6f5dff_0%,#4d92ff_100%)] shadow-[0_22px_52px_rgba(99,90,255,0.28)]"
-              >
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-[#6f5dff] shadow-[inset_0_0_0_1px_rgba(111,93,255,0.14)]">
-                  <BrainCircuit className="h-7 w-7" />
-                </div>
-              </motion.div>
-            </div>
+          <div className="mt-8 h-[17rem] sm:h-[18rem]">
+            <AuthoritySignalFactory className="h-full w-full" />
           </div>
         </div>
       </SurfaceCard>
-    </div>
-  );
-}
-
-function DarkSignalDiagram({ destinations }: { destinations: string[] }) {
-  return (
-    <div className="relative rounded-[24px] border border-white/12 bg-white/6 p-6 backdrop-blur-sm">
-      <div className="grid gap-4 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-        <div className="relative rounded-[20px] border border-white/12 bg-white/8 p-5 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)]">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/58">Core signal</p>
-          <h3 className="mt-3 text-[1.75rem] font-display font-bold leading-[1.1] tracking-[-0.04em]">Authority signals</h3>
-          <p className="mt-3 text-[15px] leading-[1.6] text-white/72">
-            Editorial proof, credible expertise, and structured authority assets flow into the systems shaping discovery.
-          </p>
-        </div>
-
-        <div className="relative grid gap-4">
-          <div className="pointer-events-none absolute bottom-6 left-0 top-6 hidden w-10 border-t border-white/16 lg:block" />
-          {destinations.map((item, index) => (
-            <motion.div
-              key={item}
-              animate={{ x: [0, 3, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: index * 0.35 }}
-              className="relative rounded-[18px] border border-white/12 bg-white/8 px-5 py-4 text-[15px] font-medium leading-[1.5] text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)]"
-            >
-              <span className="mb-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/10">
-                <CheckCircle2 className="h-4 w-4" />
-              </span>
-              <div>{item}</div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
     </div>
   );
 }
@@ -998,13 +934,7 @@ function DarkHighlightPanel({
             </div>
           </div>
 
-          <DarkSignalDiagram
-            destinations={[
-              "Search engines",
-              "AI assistants",
-              "Editorial recommendations",
-            ]}
-          />
+          <AuthoritySignalEcosystem />
         </div>
       </PagePanel>
     </motion.div>
