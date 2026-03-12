@@ -159,9 +159,9 @@ const seoHeroStats: StatItem[] = [
 ];
 
 const authorityHeroStats: StatItem[] = [
-  { value: "150+", label: "authority campaigns delivered" },
-  { value: "10-20", label: "AI citation surfaces mapped" },
-  { value: "$17M+", label: "revenue influenced" },
+  { value: "175+", label: "authority campaigns delivered" },
+  { value: "25%+", label: "average AI visibility increase" },
+  { value: "400+", label: "podcast and speaking events booked" },
 ];
 
 const seoFeatureCards: FeatureCardData[] = [
