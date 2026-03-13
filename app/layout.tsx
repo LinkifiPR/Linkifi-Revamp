@@ -108,7 +108,7 @@ export default function RootLayout({
             gtag('config', 'G-V5RGLHQ7W5');
           `}
         </Script>
-        <Script id="meta-pixel-init" strategy="afterInteractive">
+        <Script id="meta-pixel-init" strategy="beforeInteractive">
           {`
             !function(f,b,e,v,n,t,s){
               if(f.fbq)return;
@@ -138,6 +138,15 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${plusJakarta.variable} ${caveat.variable} font-sans antialiased`}
       >
+        <noscript>
+          <img
+            alt=""
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            src="https://www.facebook.com/tr?id=1173118473123111&ev=PageView&noscript=1"
+          />
+        </noscript>
         <MetaPixelPageViewTracker />
         {children}
       </body>
