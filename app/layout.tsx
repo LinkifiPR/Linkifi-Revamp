@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Plus_Jakarta_Sans, Caveat } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const inter = Inter({
@@ -85,6 +86,34 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          id="leadconnector-widget-loader"
+          src="https://widgets.leadconnectorhq.com/loader.js"
+          data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"
+          data-widget-id="692ed101617509fd4395444e"
+          strategy="afterInteractive"
+        />
+        <Script
+          id="google-gtag-src"
+          src="https://www.googletagmanager.com/gtag/js?id=G-V5RGLHQ7W5"
+          strategy="afterInteractive"
+        />
+        <Script id="google-gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-V5RGLHQ7W5');
+          `}
+        </Script>
+        <Script
+          id="clearbit-tags"
+          src="https://tag.clearbitscripts.com/v1/pk_f2aefa5c8fd1bd2d23a69b6c4b47fe6a/tags.js"
+          referrerPolicy="strict-origin-when-cross-origin"
+          strategy="afterInteractive"
+        />
+      </head>
       <body
         className={`${inter.variable} ${plusJakarta.variable} ${caveat.variable} font-sans antialiased`}
       >
