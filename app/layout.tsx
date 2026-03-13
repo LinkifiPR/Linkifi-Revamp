@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Plus_Jakarta_Sans, Caveat } from "next/font/google";
 import Script from "next/script";
+import { MetaPixelPageViewTracker } from "@/components/site/MetaPixelPageViewTracker";
 import "./globals.css";
 
 const inter = Inter({
@@ -137,6 +138,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${plusJakarta.variable} ${caveat.variable} font-sans antialiased`}
       >
+        <MetaPixelPageViewTracker />
         {children}
       </body>
     </html>
