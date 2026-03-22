@@ -1,7 +1,7 @@
 "use client";
 
 import Script from "next/script";
-import { ArrowRight, CalendarDays, CheckCircle2, Sparkles } from "lucide-react";
+import { ArrowRight, CalendarDays, CheckCircle2, PhoneCall, Sparkles } from "lucide-react";
 import { SiteFooter, SiteHeader } from "@/components/site/SiteChrome";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
@@ -17,10 +17,11 @@ type ContactPageClientProps = {
 };
 
 const BOOKING_URL = "https://book.linkifi.io/widget/bookings/pr-discovery-call";
-const CALENDLY_URL = "https://calendly.com/linkifi/15min";
 const GHL_FORM_URL = "https://book.linkifi.io/widget/form/KFBG3jsCxHxKTdzgOici";
 const GHL_FORM_ID = "KFBG3jsCxHxKTdzgOici";
 const GHL_IFRAME_ID = "inline-KFBG3jsCxHxKTdzgOici";
+const BOOKING_IFRAME_ID = "R5FU8aNuJJQCDOGyD6j1_1774199086592";
+const BOOKING_WIDGET_URL = "https://book.linkifi.io/widget/booking/R5FU8aNuJJQCDOGyD6j1";
 
 const faqItems = [
   {
@@ -126,21 +127,25 @@ export function ContactPageClient({ initialContext }: ContactPageClientProps) {
                   <div className="rounded-[1.2rem] border border-[#e6e9f4] bg-white p-4 shadow-[0_12px_30px_rgba(35,45,85,0.07)]">
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#3c5cff]" />
-                      <p className="text-sm leading-7 text-[#4e5472]">The form is live and ready for full enquiries.</p>
-                    </div>
-                  </div>
-                  <div className="rounded-[1.2rem] border border-[#e6e9f4] bg-white p-4 shadow-[0_12px_30px_rgba(35,45,85,0.07)]">
-                    <div className="flex items-start gap-3">
-                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#3c5cff]" />
                       <p className="text-sm leading-7 text-[#4e5472]">
-                        You can include campaign goals, timing, and service context in one place.
+                        Share the essentials and we will review the right next step for your campaign.
                       </p>
                     </div>
                   </div>
                   <div className="rounded-[1.2rem] border border-[#e6e9f4] bg-white p-4 shadow-[0_12px_30px_rgba(35,45,85,0.07)]">
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#3c5cff]" />
-                      <p className="text-sm leading-7 text-[#4e5472]">Prefer to talk first? A discovery-call option is right below.</p>
+                      <p className="text-sm leading-7 text-[#4e5472]">
+                        Use the form to share your goals, timing, and any package or service context that matters.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="rounded-[1.2rem] border border-[#e6e9f4] bg-white p-4 shadow-[0_12px_30px_rgba(35,45,85,0.07)]">
+                    <div className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#3c5cff]" />
+                      <p className="text-sm leading-7 text-[#4e5472]">
+                        If a live conversation is the better move, you can book a call straight below.
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -187,39 +192,75 @@ export function ContactPageClient({ initialContext }: ContactPageClientProps) {
           <Script src="https://book.linkifi.io/js/form_embed.js" strategy="afterInteractive" />
         </section>
 
-        <section className="border-y border-[#e7ebf7] bg-white">
-          <div className="container mx-auto px-6 py-12">
-            <div className="rounded-[1.8rem] border border-[#e5e9f7] bg-[linear-gradient(135deg,#ffffff_0%,#f6f8ff_100%)] p-6 shadow-[0_20px_52px_rgba(31,44,84,0.09)] sm:p-8 lg:flex lg:items-center lg:justify-between lg:gap-8">
-              <div className="max-w-2xl">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#6f7698]">Next step</p>
-                <h2 className="mt-3 text-3xl font-display font-bold tracking-[-0.03em] text-[#0f1230]">
-                  Book a discovery call.
-                </h2>
-                <p className="mt-4 text-base leading-8 text-[#4f5779]">
-                  Want to move faster? Pick a slot and we will map your highest-leverage authority path.
-                </p>
+        <section className="border-y border-[#e7ebf7] bg-[linear-gradient(180deg,#ffffff_0%,#f5f8ff_100%)]">
+          <div className="container mx-auto px-6 py-12 sm:py-14">
+            <div className="grid gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:items-start">
+              <div className="relative overflow-hidden rounded-[2rem] border border-[#dfe7fb] bg-[radial-gradient(circle_at_18%_14%,rgba(138,190,255,0.24),transparent_34%),linear-gradient(145deg,#ffffff_0%,#eef4ff_100%)] p-6 shadow-[0_24px_60px_rgba(39,60,122,0.12)] sm:p-8">
+                <div className="pointer-events-none absolute -right-10 top-12 h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(100,161,255,0.28),transparent_68%)] animate-pulse" />
+                <div className="pointer-events-none absolute bottom-16 left-10 h-[2px] w-24 bg-[linear-gradient(90deg,rgba(70,125,255,0.18),rgba(70,125,255,0.9))] lg:w-36" />
+                <div className="pointer-events-none absolute bottom-[59px] left-[7.2rem] h-3 w-3 rounded-full border-2 border-[#4a78ff] bg-white animate-pulse lg:left-[10.2rem]" />
+
+                <div className="relative">
+                  <div className="flex items-center gap-4">
+                    <div className="relative flex h-16 w-16 items-center justify-center rounded-[1.4rem] bg-[linear-gradient(145deg,#3f68ff_0%,#73b5ff_100%)] text-white shadow-[0_20px_40px_rgba(56,108,255,0.28)]">
+                      <div className="absolute inset-0 rounded-[1.4rem] bg-white/20 animate-pulse" />
+                      <PhoneCall className="relative z-10 h-7 w-7" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#6a7296]">Book a call</p>
+                      <h2 className="mt-2 text-3xl font-display font-bold tracking-[-0.03em] text-[#0f1230]">
+                        Prefer to talk it through?
+                      </h2>
+                    </div>
+                  </div>
+
+                  <p className="mt-6 max-w-xl text-base leading-8 text-[#4e5779] sm:text-lg">
+                    Choose a time for a discovery call and we will walk through your goals, current authority
+                    position, and the best next move for Linkifi support.
+                  </p>
+
+                  <div className="mt-8 space-y-4">
+                    <div className="rounded-[1.2rem] border border-white/80 bg-white/78 p-4 backdrop-blur-sm">
+                      <p className="text-sm leading-7 text-[#49526f]">Best if you want quick strategic clarity instead of back-and-forth email.</p>
+                    </div>
+                    <div className="rounded-[1.2rem] border border-white/80 bg-white/78 p-4 backdrop-blur-sm">
+                      <p className="text-sm leading-7 text-[#49526f]">Bring your site, your goals, and what success should look like over the next quarter.</p>
+                    </div>
+                  </div>
+
+                  <div className="mt-8">
+                    <Button
+                      asChild
+                      className="h-auto rounded-full bg-[#2f52de] px-6 py-3 text-sm font-semibold text-white shadow-[0_16px_34px_rgba(47,82,222,0.24)] hover:bg-[#2847c4]"
+                    >
+                      <a href={BOOKING_URL} target="_blank" rel="noreferrer">
+                        <CalendarDays className="mr-2 h-4 w-4" />
+                        Open booking page
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </a>
+                    </Button>
+                  </div>
+                </div>
               </div>
 
-              <div className="mt-6 flex flex-wrap gap-3 lg:mt-0">
-                <Button
-                  asChild
-                  className="h-auto rounded-full bg-[#2f52de] px-6 py-3 text-sm font-semibold text-white hover:bg-[#2847c4]"
-                >
-                  <a href={BOOKING_URL} target="_blank" rel="noreferrer">
-                    <CalendarDays className="mr-2 h-4 w-4" />
-                    Book discovery call
-                  </a>
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  className="h-auto rounded-full border-[#d8deef] bg-white px-6 py-3 text-sm font-semibold text-[#1b2142] hover:bg-[#f5f8ff]"
-                >
-                  <a href={CALENDLY_URL} target="_blank" rel="noreferrer">
-                    Quick intro call
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
+              <div className="overflow-hidden rounded-[2rem] border border-[#e2e8f8] bg-white shadow-[0_28px_70px_rgba(30,49,101,0.12)]">
+                <div className="border-b border-[#edf1fb] bg-[linear-gradient(180deg,#fbfdff_0%,#f4f8ff_100%)] px-6 py-5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#6e7698]">Discovery calendar</p>
+                  <h3 className="mt-2 text-2xl font-display font-bold tracking-[-0.03em] text-[#111433]">
+                    Pick a time that works for you.
+                  </h3>
+                </div>
+
+                <div className="bg-white p-2 sm:p-3">
+                  <iframe
+                    src={BOOKING_WIDGET_URL}
+                    style={{ width: "100%", border: "none", overflow: "hidden" }}
+                    scrolling="no"
+                    id={BOOKING_IFRAME_ID}
+                    className="min-h-[760px] w-full border-0"
+                    title="Linkifi discovery call booking"
+                  />
+                </div>
               </div>
             </div>
           </div>
