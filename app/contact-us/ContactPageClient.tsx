@@ -158,8 +158,8 @@ export function ContactPageClient({ initialContext }: ContactPageClientProps) {
                     </div>
                   </div>
 
-                  <div className="mt-6 rounded-[1.35rem] border border-[#e2e8f7] bg-[linear-gradient(180deg,#f8faff_0%,#f2f6ff_100%)] p-2 sm:p-3">
-                    <div className="h-[980px] overflow-hidden rounded-[1.05rem] border border-[#dce4f6] bg-white sm:h-[860px] lg:h-[760px]">
+                  <div className="mt-6 overflow-hidden rounded-[1.35rem] border border-[#e2e8f7] bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
+                    <div className="h-[920px] overflow-hidden bg-white sm:h-[820px] lg:h-[700px]">
                       <iframe
                         src={GHL_FORM_URL}
                         className="h-full w-full border-0"
@@ -173,7 +173,7 @@ export function ContactPageClient({ initialContext }: ContactPageClientProps) {
                         data-deactivation-type="neverDeactivate"
                         data-deactivation-value=""
                         data-form-name="Enquiry - New Website"
-                        data-height="760"
+                        data-height="700"
                         data-layout-iframe-id={GHL_IFRAME_ID}
                         data-form-id={GHL_FORM_ID}
                         title="Enquiry - New Website"
