@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { ContactPageClient, type ContactPageContext } from "@/app/contact-us/ContactPageClient";
-import { hasContactEmailConfig } from "@/lib/contact-email";
 
 type SearchParams = Promise<{
   service?: string | string[];
@@ -33,5 +32,5 @@ export default async function ContactUsPage({ searchParams }: { searchParams: Se
     program: readQueryValue(params.program),
   };
 
-  return <ContactPageClient initialContext={context} isEmailConfigured={hasContactEmailConfig()} />;
+  return <ContactPageClient initialContext={context} />;
 }
