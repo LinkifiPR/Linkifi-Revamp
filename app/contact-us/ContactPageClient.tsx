@@ -101,12 +101,12 @@ export function ContactPageClient({ initialContext }: ContactPageClientProps) {
                 </div>
 
                 <h1 className="mt-6 text-[2.8rem] font-display font-bold leading-[0.95] tracking-[-0.05em] text-[#0f1230] sm:text-[3.8rem]">
-                  Premium enquiry flow. Cleaner experience.
+                  Tell us where you want to grow next.
                 </h1>
 
                 <p className="mt-6 text-lg leading-8 text-[#4f5779] sm:text-xl">
-                  Submit your enquiry directly through the embedded GHL form, then jump into a discovery
-                  conversation when you are ready.
+                  Share your goals and current priorities in the contact form, and our team will come back with
+                  clear next steps.
                 </p>
 
                 {contextTags.length > 0 ? (
@@ -126,25 +126,21 @@ export function ContactPageClient({ initialContext }: ContactPageClientProps) {
                   <div className="rounded-[1.2rem] border border-[#e6e9f4] bg-white p-4 shadow-[0_12px_30px_rgba(35,45,85,0.07)]">
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#3c5cff]" />
-                      <p className="text-sm leading-7 text-[#4e5472]">
-                        Form submission is now handled by GHL directly via your embedded widget.
-                      </p>
+                      <p className="text-sm leading-7 text-[#4e5472]">The form is live and ready for full enquiries.</p>
                     </div>
                   </div>
                   <div className="rounded-[1.2rem] border border-[#e6e9f4] bg-white p-4 shadow-[0_12px_30px_rgba(35,45,85,0.07)]">
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#3c5cff]" />
                       <p className="text-sm leading-7 text-[#4e5472]">
-                        Styled to feel native to Linkifi with a bright, premium, high-clarity layout.
+                        You can include campaign goals, timing, and service context in one place.
                       </p>
                     </div>
                   </div>
                   <div className="rounded-[1.2rem] border border-[#e6e9f4] bg-white p-4 shadow-[0_12px_30px_rgba(35,45,85,0.07)]">
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#3c5cff]" />
-                      <p className="text-sm leading-7 text-[#4e5472]">
-                        Discovery-call CTA remains prominent directly below the form section.
-                      </p>
+                      <p className="text-sm leading-7 text-[#4e5472]">Prefer to talk first? A discovery-call option is right below.</p>
                     </div>
                   </div>
                 </div>
@@ -155,18 +151,15 @@ export function ContactPageClient({ initialContext }: ContactPageClientProps) {
                 <div className="relative p-5 sm:p-7">
                   <div className="flex flex-wrap items-end justify-between gap-4">
                     <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#6f7799]">Embedded form</p>
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#6f7799]">Contact form</p>
                       <h2 className="mt-2 text-3xl font-display font-bold tracking-[-0.03em] text-[#111433]">
-                        Enquiry - New Website
+                        Start your enquiry
                       </h2>
                     </div>
-                    <span className="rounded-full border border-[#d9e4ff] bg-[#f0f5ff] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#2d51df]">
-                      GHL
-                    </span>
                   </div>
 
                   <div className="mt-6 rounded-[1.35rem] border border-[#e2e8f7] bg-[linear-gradient(180deg,#f8faff_0%,#f2f6ff_100%)] p-2 sm:p-3">
-                    <div className="h-[666px] overflow-hidden rounded-[1.05rem] border border-[#dce4f6] bg-white">
+                    <div className="h-[940px] overflow-visible rounded-[1.05rem] border border-[#dce4f6] bg-white sm:h-[900px] lg:h-[860px]">
                       <iframe
                         src={GHL_FORM_URL}
                         className="h-full w-full border-0"
@@ -180,7 +173,7 @@ export function ContactPageClient({ initialContext }: ContactPageClientProps) {
                         data-deactivation-type="neverDeactivate"
                         data-deactivation-value=""
                         data-form-name="Enquiry - New Website"
-                        data-height="666"
+                        data-height="940"
                         data-layout-iframe-id={GHL_IFRAME_ID}
                         data-form-id={GHL_FORM_ID}
                         title="Enquiry - New Website"
