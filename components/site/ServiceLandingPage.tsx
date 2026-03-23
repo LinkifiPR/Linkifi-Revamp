@@ -1230,10 +1230,71 @@ function LinkedInEmbedCard({
   );
 }
 
+function BbcTravelFeatureCard({ className }: { className?: string }) {
+  return (
+    <MontageFrame className={className}>
+      <div className="group relative overflow-hidden rounded-[30px] border border-[#d7e9d4] bg-[linear-gradient(180deg,#ffffff_0%,#f6fff3_42%,#edf7ee_100%)] p-3 shadow-[0_32px_64px_rgba(30,57,40,0.18)]">
+        <div className="pointer-events-none absolute -left-14 top-10 h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(96,190,112,0.2),transparent_72%)] blur-2xl" />
+        <div className="pointer-events-none absolute right-0 top-0 h-36 w-36 rounded-full bg-[radial-gradient(circle,rgba(123,207,156,0.22),transparent_68%)] blur-3xl" />
+        <div className="pointer-events-none absolute inset-x-10 top-0 h-12 bg-[linear-gradient(180deg,rgba(132,214,144,0.18),transparent)]" />
+
+        <div className="relative overflow-hidden rounded-[22px] border border-[#dce9d7] bg-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.8)]">
+          <Image
+            src="/authority-montage/raw/bbc-2.png"
+            alt="BBC Travel screenshot about Switzerland's most liveable cities"
+            width={1687}
+            height={1412}
+            className="h-auto w-full transition duration-700 group-hover:scale-[1.02]"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),transparent_18%,rgba(21,34,24,0.04)_74%,rgba(21,34,24,0.14)_100%)]" />
+          <div className="absolute left-4 top-4 rounded-full border border-[#b8d9b2] bg-white/92 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#2f6a36] shadow-[0_12px_28px_rgba(30,57,40,0.14)] backdrop-blur">
+            BBC Travel
+          </div>
+          <div className="absolute bottom-4 left-4 rounded-full border border-white/45 bg-white/88 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#32553a] shadow-[0_12px_28px_rgba(30,57,40,0.16)] backdrop-blur">
+            Editorial feature
+          </div>
+        </div>
+      </div>
+    </MontageFrame>
+  );
+}
+
+function NewsChannelFeatureCard({ className }: { className?: string }) {
+  return (
+    <MontageFrame className={className}>
+      <div className="group relative overflow-hidden rounded-[30px] border border-[#cfd8fb] bg-[linear-gradient(180deg,#f4f7ff_0%,#ebf0ff_48%,#e3ebff_100%)] p-3 shadow-[0_32px_64px_rgba(37,53,110,0.18)]">
+        <div className="pointer-events-none absolute -right-10 top-16 h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(45,110,255,0.18),transparent_70%)] blur-3xl" />
+        <div className="pointer-events-none absolute -left-10 bottom-6 h-32 w-32 rounded-full bg-[radial-gradient(circle,rgba(239,70,74,0.16),transparent_72%)] blur-3xl" />
+        <div className="pointer-events-none absolute inset-x-8 top-0 h-12 bg-[linear-gradient(180deg,rgba(80,118,255,0.18),transparent)]" />
+
+        <div className="relative overflow-hidden rounded-[22px] border border-[#d7def8] bg-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.8)]">
+          <Image
+            src="/authority-montage/raw/news channel 6.png"
+            alt="News Channel 6 screenshot about veterans finding it difficult to acquire home loans"
+            width={1946}
+            height={1422}
+            className="h-auto w-full transition duration-700 group-hover:scale-[1.02]"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),transparent_18%,rgba(24,33,63,0.04)_76%,rgba(24,33,63,0.14)_100%)]" />
+          <div className="absolute left-4 top-4 rounded-full border border-[#c7d4ff] bg-white/92 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#29489c] shadow-[0_12px_28px_rgba(37,53,110,0.14)] backdrop-blur">
+            Broadcast feature
+          </div>
+          <div className="absolute bottom-4 left-4 rounded-full border border-white/35 bg-[linear-gradient(135deg,rgba(29,58,141,0.92),rgba(201,29,44,0.92))] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-white shadow-[0_14px_30px_rgba(38,56,115,0.18)]">
+            News Channel 6
+          </div>
+        </div>
+      </div>
+    </MontageFrame>
+  );
+}
+
 function AuthorityProofMontageSection() {
   return (
     <SectionWrap>
-      <PagePanel tone="white">
+      <PagePanel
+        tone="white"
+        className="overflow-hidden bg-[radial-gradient(circle_at_14%_18%,rgba(109,92,255,0.12),transparent_28%),radial-gradient(circle_at_84%_16%,rgba(59,162,255,0.14),transparent_24%),radial-gradient(circle_at_50%_100%,rgba(91,191,114,0.08),transparent_32%),linear-gradient(180deg,#ffffff_0%,#fbfbff_100%)]"
+      >
         <div className="mx-auto max-w-4xl text-center">
           <Eyebrow>Proof</Eyebrow>
           <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
@@ -1241,59 +1302,55 @@ function AuthorityProofMontageSection() {
           </h2>
         </div>
 
-        <div className="mt-10 columns-1 gap-4 md:columns-2 lg:gap-5">
-          <YoutubeMontageCard
-            title={authorityMontageYouTube[0].title}
-            src={authorityMontageYouTube[0].src}
-            className="md:rotate-[-0.6deg]"
-          />
-          <TabletPublicationCard
-            src={authorityMontagePublications[0].src}
-            alt={authorityMontagePublications[0].alt}
-            className="md:rotate-[0.7deg]"
-            screenClassName="h-[16rem] sm:h-[19rem] lg:h-[21rem]"
-          />
-          <LinkedInEmbedCard
-            src={authorityMontageLinkedInEmbeds[0].src}
-            title={authorityMontageLinkedInEmbeds[0].title}
-            height={authorityMontageLinkedInEmbeds[0].height}
-            className="md:rotate-[0.4deg]"
-          />
-          <TabletPublicationCard
-            src={authorityMontagePublications[1].src}
-            alt={authorityMontagePublications[1].alt}
-            className="md:rotate-[-0.5deg]"
-            screenClassName="h-[16rem] sm:h-[18rem] lg:h-[20rem]"
-          />
-          <YoutubeMontageCard
-            title={authorityMontageYouTube[1].title}
-            src={authorityMontageYouTube[1].src}
-            className="md:rotate-[0.45deg]"
-          />
-          <TabletPublicationCard
-            src={authorityMontagePublications[2].src}
-            alt={authorityMontagePublications[2].alt}
-            className="md:rotate-[0.65deg]"
-            screenClassName="h-[16rem] sm:h-[19rem] lg:h-[21rem]"
-          />
-          <LinkedInEmbedCard
-            src={authorityMontageLinkedInEmbeds[1].src}
-            title={authorityMontageLinkedInEmbeds[1].title}
-            height={authorityMontageLinkedInEmbeds[1].height}
-            className="md:rotate-[-0.4deg]"
-          />
-          <TabletPublicationCard
-            src={authorityMontagePublications[3].src}
-            alt={authorityMontagePublications[3].alt}
-            className="md:rotate-[-0.35deg]"
-            screenClassName="h-[16rem] sm:h-[19rem] lg:h-[21rem]"
-          />
-          <TabletPublicationCard
-            src={authorityMontagePublications[4].src}
-            alt={authorityMontagePublications[4].alt}
-            className="md:rotate-[0.55deg]"
-            screenClassName="h-[16rem] sm:h-[19rem] lg:h-[21rem]"
-          />
+        <div className="relative mt-10">
+          <div className="pointer-events-none absolute -left-16 top-10 h-48 w-48 rounded-full bg-[radial-gradient(circle,rgba(110,93,255,0.16),transparent_72%)] blur-3xl" />
+          <div className="pointer-events-none absolute -right-12 top-1/4 h-52 w-52 rounded-full bg-[radial-gradient(circle,rgba(71,174,255,0.18),transparent_70%)] blur-3xl" />
+          <div className="pointer-events-none absolute left-1/3 top-1/2 h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(111,197,120,0.12),transparent_72%)] blur-3xl" />
+
+          <div className="relative columns-1 gap-4 md:columns-2 lg:gap-5">
+            <YoutubeMontageCard
+              title={authorityMontageYouTube[0].title}
+              src={authorityMontageYouTube[0].src}
+              className="md:rotate-[-0.6deg]"
+            />
+            <TabletPublicationCard
+              src={authorityMontagePublications[0].src}
+              alt={authorityMontagePublications[0].alt}
+              className="md:rotate-[0.7deg]"
+              screenClassName="h-[16rem] sm:h-[19rem] lg:h-[21rem]"
+            />
+            <LinkedInEmbedCard
+              src={authorityMontageLinkedInEmbeds[0].src}
+              title={authorityMontageLinkedInEmbeds[0].title}
+              height={authorityMontageLinkedInEmbeds[0].height}
+              className="md:rotate-[0.4deg]"
+            />
+            <TabletPublicationCard
+              src={authorityMontagePublications[1].src}
+              alt={authorityMontagePublications[1].alt}
+              className="md:rotate-[-0.5deg]"
+              screenClassName="h-[16rem] sm:h-[18rem] lg:h-[20rem]"
+            />
+            <YoutubeMontageCard
+              title={authorityMontageYouTube[1].title}
+              src={authorityMontageYouTube[1].src}
+              className="md:rotate-[0.45deg]"
+            />
+            <BbcTravelFeatureCard className="md:rotate-[0.65deg]" />
+            <NewsChannelFeatureCard className="md:rotate-[-0.4deg]" />
+            <TabletPublicationCard
+              src={authorityMontagePublications[3].src}
+              alt={authorityMontagePublications[3].alt}
+              className="md:rotate-[-0.35deg]"
+              screenClassName="h-[16rem] sm:h-[19rem] lg:h-[21rem]"
+            />
+            <TabletPublicationCard
+              src={authorityMontagePublications[4].src}
+              alt={authorityMontagePublications[4].alt}
+              className="md:rotate-[0.55deg]"
+              screenClassName="h-[16rem] sm:h-[19rem] lg:h-[21rem]"
+            />
+          </div>
         </div>
       </PagePanel>
     </SectionWrap>
