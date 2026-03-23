@@ -535,13 +535,15 @@ function SectionWrap({
   children,
   containerClass = pageContainerClass,
   className,
+  id,
 }: {
   children: React.ReactNode;
   containerClass?: string;
   className?: string;
+  id?: string;
 }) {
   return (
-    <section className={cn("py-4 md:py-5", className)}>
+    <section id={id} className={cn("py-4 md:py-5", className)}>
       <div className={containerClass}>{children}</div>
     </section>
   );
@@ -1570,7 +1572,7 @@ function SeoPricingSection() {
 
 function AuthorityProgramsSection() {
   return (
-    <SectionWrap>
+    <SectionWrap id="programs" className="scroll-mt-8 md:scroll-mt-10">
       <PagePanel tone="gradient" className="lg:p-14">
         <SectionHeading
           label="Monthly Programs"
