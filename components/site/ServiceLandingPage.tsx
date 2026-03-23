@@ -275,11 +275,13 @@ const authorityProofCards: ProofCardData[] = [
 
 const authorityMontageYouTube = [
   {
-    src: "https://www.youtube-nocookie.com/embed/FeOVshlGeug",
+    href: "https://www.youtube.com/watch?v=FeOVshlGeug",
+    thumbnailSrc: "https://i.ytimg.com/vi/FeOVshlGeug/hqdefault.jpg",
     title: "Authority PR YouTube feature one",
   },
   {
-    src: "https://www.youtube-nocookie.com/embed/JgSHNM2iVBk",
+    href: "https://www.youtube.com/watch?v=JgSHNM2iVBk",
+    thumbnailSrc: "https://i.ytimg.com/vi/JgSHNM2iVBk/hqdefault.jpg",
     title: "Authority PR YouTube feature two",
   },
 ] as const;
@@ -304,19 +306,6 @@ const authorityMontagePublications = [
   {
     src: "/authority-montage/processed/entrepreneur-uk.jpg",
     alt: "Entrepreneur UK feature screenshot",
-  },
-] as const;
-
-const authorityMontageLinkedInEmbeds = [
-  {
-    src: "https://www.linkedin.com/embed/feed/update/urn:li:share:7338918000508452868?collapsed=1",
-    title: "LinkedIn embedded post one",
-    height: 500,
-  },
-  {
-    src: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7313091093405794304",
-    title: "LinkedIn embedded post two",
-    height: 760,
   },
 ] as const;
 
@@ -1137,89 +1126,75 @@ function MontageFrame({
 
 function YoutubeMontageCard({
   title,
-  src,
+  href,
+  thumbnailSrc,
   className,
 }: {
   title: string;
-  src: string;
+  href: string;
+  thumbnailSrc: string;
   className?: string;
 }) {
   return (
     <MontageFrame className={className}>
-      <div className="relative overflow-hidden rounded-[22px] bg-[linear-gradient(135deg,#d6ddff_0%,#dfeaff_42%,#e6f8f4_100%)] p-[1px] shadow-[0_14px_28px_rgba(28,39,79,0.12)]">
-        <div className="overflow-hidden rounded-[21px] bg-[#0f1532] p-[5px]">
-          <div className="aspect-video w-full">
-            <div className="overflow-hidden rounded-[16px] border border-white/10 bg-black">
-              <iframe
-                title={title}
-                src={src}
+      <a href={href} target="_blank" rel="noreferrer" className="block">
+        <div className="relative overflow-hidden rounded-[20px] bg-[linear-gradient(135deg,#d7ddf1_0%,#e4ebfb_48%,#eef7f4_100%)] p-[1px] shadow-[0_12px_24px_rgba(28,39,79,0.1)]">
+          <div className="overflow-hidden rounded-[19px] bg-white p-1.5">
+            <div className="overflow-hidden rounded-[14px] border border-[#e8edf8] bg-[#edf2fb]">
+              <img
+                src={thumbnailSrc}
+                alt={title}
                 loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-                className="h-full w-full"
+                className="h-[13.75rem] w-full object-cover sm:h-[15rem] lg:h-[16rem]"
               />
             </div>
           </div>
         </div>
-      </div>
+      </a>
     </MontageFrame>
   );
 }
 
-function TabletPublicationCard({
+function ScreenshotMontageCard({
   src,
   alt,
   className,
   screenClassName,
+  tone = "cool",
 }: {
   src: string;
   alt: string;
   className?: string;
   screenClassName?: string;
+  tone?: "cool" | "mint" | "rose";
 }) {
+  const toneClasses =
+    tone === "mint"
+      ? {
+          frame: "bg-[linear-gradient(135deg,#dceddd_0%,#e9f5ee_48%,#eef6ff_100%)]",
+          border: "border-[#e5efe9]",
+        }
+      : tone === "rose"
+        ? {
+            frame: "bg-[linear-gradient(135deg,#dde3ff_0%,#eef0ff_44%,#ffe8ea_100%)]",
+            border: "border-[#ebeef8]",
+          }
+        : {
+            frame: "bg-[linear-gradient(135deg,#d7ddf1_0%,#e4ebfb_48%,#eef7f4_100%)]",
+            border: "border-[#e8edf8]",
+          };
+
   return (
     <MontageFrame className={className}>
-      <div className="relative overflow-hidden rounded-[22px] bg-[linear-gradient(135deg,#d6ddff_0%,#deebff_44%,#e4f7f3_100%)] p-[1px] shadow-[0_14px_28px_rgba(28,39,79,0.11)]">
-        <div className="overflow-hidden rounded-[21px] bg-white p-[5px]">
-          <div className="overflow-hidden rounded-[16px] border border-[#edf1fb] bg-white">
+      <div className={cn("relative overflow-hidden rounded-[20px] p-[1px] shadow-[0_12px_24px_rgba(28,39,79,0.1)]", toneClasses.frame)}>
+        <div className="overflow-hidden rounded-[19px] bg-white p-1.5">
+          <div className={cn("overflow-hidden rounded-[14px] bg-white", toneClasses.border, "border")}>
             <Image
               src={src}
               alt={alt}
               width={1244}
               height={1500}
-              className={cn("h-[14.5rem] w-full object-cover object-top sm:h-[16rem] lg:h-[17rem]", screenClassName)}
-            />
-          </div>
-        </div>
-      </div>
-    </MontageFrame>
-  );
-}
-
-function LinkedInEmbedCard({
-  src,
-  title,
-  height,
-  className,
-}: {
-  src: string;
-  title: string;
-  height: number;
-  className?: string;
-}) {
-  return (
-    <MontageFrame className={className}>
-      <div className="relative overflow-hidden rounded-[22px] bg-[linear-gradient(135deg,#d6ddff_0%,#deebff_44%,#e4f7f3_100%)] p-[1px] shadow-[0_14px_28px_rgba(28,39,79,0.11)]">
-        <div className="overflow-hidden rounded-[21px] bg-white p-[5px]">
-          <div className="overflow-hidden rounded-[16px] border border-[#edf1fb] bg-white">
-            <iframe
-              src={src}
-              title={title}
-              loading="lazy"
-              allowFullScreen
-              className="block w-full border-0 bg-white"
-              style={{ height }}
+              className={cn("h-[13.75rem] w-full object-cover object-top sm:h-[15rem] lg:h-[16rem]", screenClassName)}
             />
           </div>
         </div>
@@ -1230,41 +1205,25 @@ function LinkedInEmbedCard({
 
 function BbcTravelFeatureCard({ className }: { className?: string }) {
   return (
-    <MontageFrame className={className}>
-      <div className="group relative overflow-hidden rounded-[22px] bg-[linear-gradient(135deg,#d8efe0_0%,#dff1e8_36%,#e2f0ff_100%)] p-[1px] shadow-[0_14px_28px_rgba(39,73,50,0.11)]">
-        <div className="overflow-hidden rounded-[21px] bg-white p-[5px]">
-          <div className="overflow-hidden rounded-[16px] border border-[#e7f2ea] bg-white">
-            <Image
-              src="/authority-montage/raw/bbc-2.png"
-              alt="BBC Travel screenshot about Switzerland's most liveable cities"
-              width={1687}
-              height={1412}
-              className="h-auto w-full transition duration-500 group-hover:scale-[1.01]"
-            />
-          </div>
-        </div>
-      </div>
-    </MontageFrame>
+    <ScreenshotMontageCard
+      src="/authority-montage/raw/bbc-2.png"
+      alt="BBC Travel screenshot about Switzerland's most liveable cities"
+      className={className}
+      tone="mint"
+      screenClassName="h-[13.75rem] sm:h-[15rem] lg:h-[16rem]"
+    />
   );
 }
 
 function NewsChannelFeatureCard({ className }: { className?: string }) {
   return (
-    <MontageFrame className={className}>
-      <div className="group relative overflow-hidden rounded-[22px] bg-[linear-gradient(135deg,#dbe2ff_0%,#e6ebff_42%,#ffe3e6_100%)] p-[1px] shadow-[0_14px_28px_rgba(43,58,111,0.11)]">
-        <div className="overflow-hidden rounded-[21px] bg-white p-[5px]">
-          <div className="overflow-hidden rounded-[16px] border border-[#eceffc] bg-white">
-            <Image
-              src="/authority-montage/raw/news channel 6.png"
-              alt="News Channel 6 screenshot about veterans finding it difficult to acquire home loans"
-              width={1946}
-              height={1422}
-              className="h-auto w-full transition duration-500 group-hover:scale-[1.01]"
-            />
-          </div>
-        </div>
-      </div>
-    </MontageFrame>
+    <ScreenshotMontageCard
+      src="/authority-montage/raw/news channel 6.png"
+      alt="News Channel 6 screenshot about veterans finding it difficult to acquire home loans"
+      className={className}
+      tone="rose"
+      screenClassName="h-[13.75rem] sm:h-[15rem] lg:h-[16rem]"
+    />
   );
 }
 
@@ -1273,7 +1232,7 @@ function AuthorityProofMontageSection() {
     <SectionWrap>
       <PagePanel
         tone="white"
-        className="overflow-hidden bg-[radial-gradient(circle_at_14%_18%,rgba(109,92,255,0.08),transparent_26%),radial-gradient(circle_at_84%_16%,rgba(59,162,255,0.08),transparent_22%),linear-gradient(180deg,#ffffff_0%,#f9fbff_100%)]"
+        className="overflow-hidden bg-[radial-gradient(circle_at_50%_0%,rgba(130,173,255,0.07),transparent_28%),linear-gradient(180deg,#ffffff_0%,#f9fbff_100%)]"
       >
         <div className="mx-auto max-w-4xl text-center">
           <Eyebrow>Proof</Eyebrow>
@@ -1285,43 +1244,27 @@ function AuthorityProofMontageSection() {
         <div className="relative mt-10">
           <div className="pointer-events-none absolute left-1/2 top-4 h-36 w-36 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(130,173,255,0.1),transparent_72%)] blur-3xl" />
 
-          <div className="relative mx-auto max-w-[920px]">
-            <div className="grid gap-3 sm:gap-4 md:grid-cols-2">
+          <div className="relative mx-auto max-w-[1060px]">
+            <div className="grid gap-4 md:grid-cols-2 lg:gap-5">
               <YoutubeMontageCard
                 title={authorityMontageYouTube[0].title}
-                src={authorityMontageYouTube[0].src}
+                href={authorityMontageYouTube[0].href}
+                thumbnailSrc={authorityMontageYouTube[0].thumbnailSrc}
               />
               <YoutubeMontageCard
                 title={authorityMontageYouTube[1].title}
-                src={authorityMontageYouTube[1].src}
+                href={authorityMontageYouTube[1].href}
+                thumbnailSrc={authorityMontageYouTube[1].thumbnailSrc}
               />
               <BbcTravelFeatureCard />
               <NewsChannelFeatureCard />
-              <TabletPublicationCard
-                src={authorityMontagePublications[0].src}
-                alt={authorityMontagePublications[0].alt}
-                screenClassName="h-[14.5rem] sm:h-[16rem] lg:h-[17rem]"
-              />
-              <LinkedInEmbedCard
-                src={authorityMontageLinkedInEmbeds[0].src}
-                title={authorityMontageLinkedInEmbeds[0].title}
-                height={authorityMontageLinkedInEmbeds[0].height}
-              />
-              <TabletPublicationCard
-                src={authorityMontagePublications[1].src}
-                alt={authorityMontagePublications[1].alt}
-                screenClassName="h-[14.5rem] sm:h-[16rem] lg:h-[17rem]"
-              />
-              <TabletPublicationCard
-                src={authorityMontagePublications[3].src}
-                alt={authorityMontagePublications[3].alt}
-                screenClassName="h-[14.5rem] sm:h-[16rem] lg:h-[17rem]"
-              />
-              <TabletPublicationCard
+              <ScreenshotMontageCard
                 src={authorityMontagePublications[4].src}
                 alt={authorityMontagePublications[4].alt}
-                className="md:col-span-2"
-                screenClassName="h-[14.5rem] sm:h-[15.5rem] lg:h-[16rem]"
+              />
+              <ScreenshotMontageCard
+                src={authorityMontagePublications[1].src}
+                alt={authorityMontagePublications[1].alt}
               />
             </div>
           </div>
