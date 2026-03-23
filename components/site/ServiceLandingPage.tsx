@@ -1214,14 +1214,14 @@ function LinkedInEmbedCard({
       <div className="relative overflow-hidden rounded-[30px] bg-[linear-gradient(140deg,#8f97ff_0%,#81b7ff_38%,#7fd6ff_64%,#8fe3c7_100%)] p-[1px] shadow-[0_26px_56px_rgba(31,45,95,0.2)]">
         <div className="overflow-hidden rounded-[29px] bg-[linear-gradient(180deg,#f8f9ff_0%,#edf2ff_100%)] p-2 sm:p-2.5">
           <div className="overflow-hidden rounded-[20px] border border-white/85 bg-white shadow-[inset_0_0_0_1px_rgba(120,147,230,0.12)]">
-          <iframe
-            src={src}
-            title={title}
-            loading="lazy"
-            allowFullScreen
-            className="block w-full border-0 bg-white"
-            style={{ height }}
-          />
+            <iframe
+              src={src}
+              title={title}
+              loading="lazy"
+              allowFullScreen
+              className="block w-full border-0 bg-white"
+              style={{ height }}
+            />
           </div>
         </div>
       </div>
