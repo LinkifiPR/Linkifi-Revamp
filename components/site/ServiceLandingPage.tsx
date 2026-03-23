@@ -311,7 +311,7 @@ const authorityMontageLinkedInEmbeds = [
   {
     src: "https://www.linkedin.com/embed/feed/update/urn:li:share:7338918000508452868?collapsed=1",
     title: "LinkedIn embedded post one",
-    height: 560,
+    height: 500,
   },
   {
     src: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7313091093405794304",
@@ -1127,7 +1127,7 @@ function MontageFrame({
   return (
     <motion.div
       {...revealProps}
-      whileHover={{ y: -4, scale: 1.004 }}
+      whileHover={{ y: -3, scale: 1.002 }}
       className={cn("relative h-full", className)}
     >
       {children}
@@ -1146,11 +1146,10 @@ function YoutubeMontageCard({
 }) {
   return (
     <MontageFrame className={className}>
-      <div className="relative overflow-hidden rounded-[30px] bg-[linear-gradient(140deg,#6f77ff_0%,#74a6ff_36%,#73c6ff_62%,#7fdcb9_100%)] p-[1px] shadow-[0_24px_52px_rgba(31,43,90,0.24)]">
-        <div className="overflow-hidden rounded-[29px] bg-[linear-gradient(180deg,#131a3b_0%,#0b1028_100%)] p-2 sm:p-2.5">
-          <div className="pointer-events-none absolute inset-x-8 top-0 h-12 bg-[linear-gradient(180deg,rgba(182,201,255,0.24),transparent)]" />
+      <div className="relative overflow-hidden rounded-[22px] bg-[linear-gradient(135deg,#d6ddff_0%,#dfeaff_42%,#e6f8f4_100%)] p-[1px] shadow-[0_14px_28px_rgba(28,39,79,0.12)]">
+        <div className="overflow-hidden rounded-[21px] bg-[#0f1532] p-[5px]">
           <div className="aspect-video w-full">
-            <div className="overflow-hidden rounded-[20px] border border-white/14 bg-black">
+            <div className="overflow-hidden rounded-[16px] border border-white/10 bg-black">
               <iframe
                 title={title}
                 src={src}
@@ -1181,15 +1180,15 @@ function TabletPublicationCard({
 }) {
   return (
     <MontageFrame className={className}>
-      <div className="relative overflow-hidden rounded-[30px] bg-[linear-gradient(130deg,#6d79ff_0%,#78adff_35%,#82d4ff_63%,#89dec8_100%)] p-[1px] shadow-[0_26px_56px_rgba(31,45,95,0.2)]">
-        <div className="overflow-hidden rounded-[29px] bg-[linear-gradient(180deg,#f8faff_0%,#eef3ff_100%)] p-2 sm:p-2.5">
-          <div className="overflow-hidden rounded-[20px] border border-white/80 bg-white shadow-[inset_0_0_0_1px_rgba(120,147,230,0.1)]">
+      <div className="relative overflow-hidden rounded-[22px] bg-[linear-gradient(135deg,#d6ddff_0%,#deebff_44%,#e4f7f3_100%)] p-[1px] shadow-[0_14px_28px_rgba(28,39,79,0.11)]">
+        <div className="overflow-hidden rounded-[21px] bg-white p-[5px]">
+          <div className="overflow-hidden rounded-[16px] border border-[#edf1fb] bg-white">
             <Image
               src={src}
               alt={alt}
               width={1244}
               height={1500}
-              className={cn("h-[18rem] w-full object-cover object-top sm:h-[22rem]", screenClassName)}
+              className={cn("h-[14.5rem] w-full object-cover object-top sm:h-[16rem] lg:h-[17rem]", screenClassName)}
             />
           </div>
         </div>
@@ -1211,9 +1210,9 @@ function LinkedInEmbedCard({
 }) {
   return (
     <MontageFrame className={className}>
-      <div className="relative overflow-hidden rounded-[30px] bg-[linear-gradient(140deg,#8f97ff_0%,#81b7ff_38%,#7fd6ff_64%,#8fe3c7_100%)] p-[1px] shadow-[0_26px_56px_rgba(31,45,95,0.2)]">
-        <div className="overflow-hidden rounded-[29px] bg-[linear-gradient(180deg,#f8f9ff_0%,#edf2ff_100%)] p-2 sm:p-2.5">
-          <div className="overflow-hidden rounded-[20px] border border-white/85 bg-white shadow-[inset_0_0_0_1px_rgba(120,147,230,0.12)]">
+      <div className="relative overflow-hidden rounded-[22px] bg-[linear-gradient(135deg,#d6ddff_0%,#deebff_44%,#e4f7f3_100%)] p-[1px] shadow-[0_14px_28px_rgba(28,39,79,0.11)]">
+        <div className="overflow-hidden rounded-[21px] bg-white p-[5px]">
+          <div className="overflow-hidden rounded-[16px] border border-[#edf1fb] bg-white">
             <iframe
               src={src}
               title={title}
@@ -1232,15 +1231,15 @@ function LinkedInEmbedCard({
 function BbcTravelFeatureCard({ className }: { className?: string }) {
   return (
     <MontageFrame className={className}>
-      <div className="group relative overflow-hidden rounded-[30px] bg-[linear-gradient(130deg,#66bf7d_0%,#89dca6_30%,#7bc9ff_64%,#7a89ff_100%)] p-[1px] shadow-[0_30px_62px_rgba(34,63,44,0.2)]">
-        <div className="overflow-hidden rounded-[29px] bg-[linear-gradient(180deg,#fcfffd_0%,#edf7f1_100%)] p-2 sm:p-2.5">
-          <div className="overflow-hidden rounded-[20px] border border-white/85 bg-white shadow-[inset_0_0_0_1px_rgba(109,176,131,0.18)]">
+      <div className="group relative overflow-hidden rounded-[22px] bg-[linear-gradient(135deg,#d8efe0_0%,#dff1e8_36%,#e2f0ff_100%)] p-[1px] shadow-[0_14px_28px_rgba(39,73,50,0.11)]">
+        <div className="overflow-hidden rounded-[21px] bg-white p-[5px]">
+          <div className="overflow-hidden rounded-[16px] border border-[#e7f2ea] bg-white">
             <Image
               src="/authority-montage/raw/bbc-2.png"
               alt="BBC Travel screenshot about Switzerland's most liveable cities"
               width={1687}
               height={1412}
-              className="h-auto w-full transition duration-700 group-hover:scale-[1.015]"
+              className="h-auto w-full transition duration-500 group-hover:scale-[1.01]"
             />
           </div>
         </div>
@@ -1252,15 +1251,15 @@ function BbcTravelFeatureCard({ className }: { className?: string }) {
 function NewsChannelFeatureCard({ className }: { className?: string }) {
   return (
     <MontageFrame className={className}>
-      <div className="group relative overflow-hidden rounded-[30px] bg-[linear-gradient(130deg,#3555ca_0%,#5c8cff_32%,#8cb0ff_56%,#ef5660_100%)] p-[1px] shadow-[0_30px_62px_rgba(37,53,110,0.22)]">
-        <div className="overflow-hidden rounded-[29px] bg-[linear-gradient(180deg,#f8f9ff_0%,#eef2ff_100%)] p-2 sm:p-2.5">
-          <div className="overflow-hidden rounded-[20px] border border-white/85 bg-white shadow-[inset_0_0_0_1px_rgba(112,138,224,0.16)]">
+      <div className="group relative overflow-hidden rounded-[22px] bg-[linear-gradient(135deg,#dbe2ff_0%,#e6ebff_42%,#ffe3e6_100%)] p-[1px] shadow-[0_14px_28px_rgba(43,58,111,0.11)]">
+        <div className="overflow-hidden rounded-[21px] bg-white p-[5px]">
+          <div className="overflow-hidden rounded-[16px] border border-[#eceffc] bg-white">
             <Image
               src="/authority-montage/raw/news channel 6.png"
               alt="News Channel 6 screenshot about veterans finding it difficult to acquire home loans"
               width={1946}
               height={1422}
-              className="h-auto w-full transition duration-700 group-hover:scale-[1.015]"
+              className="h-auto w-full transition duration-500 group-hover:scale-[1.01]"
             />
           </div>
         </div>
@@ -1274,7 +1273,7 @@ function AuthorityProofMontageSection() {
     <SectionWrap>
       <PagePanel
         tone="white"
-        className="overflow-hidden bg-[radial-gradient(circle_at_14%_18%,rgba(109,92,255,0.12),transparent_28%),radial-gradient(circle_at_84%_16%,rgba(59,162,255,0.14),transparent_24%),radial-gradient(circle_at_50%_100%,rgba(91,191,114,0.09),transparent_34%),linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)]"
+        className="overflow-hidden bg-[radial-gradient(circle_at_14%_18%,rgba(109,92,255,0.08),transparent_26%),radial-gradient(circle_at_84%_16%,rgba(59,162,255,0.08),transparent_22%),linear-gradient(180deg,#ffffff_0%,#f9fbff_100%)]"
       >
         <div className="mx-auto max-w-4xl text-center">
           <Eyebrow>Proof</Eyebrow>
@@ -1284,33 +1283,24 @@ function AuthorityProofMontageSection() {
         </div>
 
         <div className="relative mt-10">
-          <div className="pointer-events-none absolute -left-16 top-10 h-48 w-48 rounded-full bg-[radial-gradient(circle,rgba(110,93,255,0.16),transparent_72%)] blur-3xl" />
-          <div className="pointer-events-none absolute -right-12 top-1/4 h-52 w-52 rounded-full bg-[radial-gradient(circle,rgba(71,174,255,0.18),transparent_70%)] blur-3xl" />
-          <div className="pointer-events-none absolute left-1/3 top-1/2 h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(111,197,120,0.12),transparent_72%)] blur-3xl" />
+          <div className="pointer-events-none absolute left-1/2 top-4 h-36 w-36 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(130,173,255,0.1),transparent_72%)] blur-3xl" />
 
-          <div className="relative mx-auto max-w-[1080px]">
-            <div className="rounded-[34px] border border-[#d8e0f5] bg-[linear-gradient(180deg,#f8fbff_0%,#eff4ff_100%)] p-4 shadow-[0_26px_56px_rgba(31,45,95,0.12)] sm:p-5">
-              <div className="grid gap-4 md:grid-cols-2 md:gap-5">
-                <YoutubeMontageCard
-                  title={authorityMontageYouTube[0].title}
-                  src={authorityMontageYouTube[0].src}
-                  className="md:-translate-y-0.5"
-                />
-                <YoutubeMontageCard
-                  title={authorityMontageYouTube[1].title}
-                  src={authorityMontageYouTube[1].src}
-                  className="md:translate-y-0.5"
-                />
-              </div>
-            </div>
-
-            <div className="mt-6 grid gap-4 md:grid-cols-2 lg:gap-5">
+          <div className="relative mx-auto max-w-[920px]">
+            <div className="grid gap-3 sm:gap-4 md:grid-cols-2">
+              <YoutubeMontageCard
+                title={authorityMontageYouTube[0].title}
+                src={authorityMontageYouTube[0].src}
+              />
+              <YoutubeMontageCard
+                title={authorityMontageYouTube[1].title}
+                src={authorityMontageYouTube[1].src}
+              />
               <BbcTravelFeatureCard />
               <NewsChannelFeatureCard />
               <TabletPublicationCard
                 src={authorityMontagePublications[0].src}
                 alt={authorityMontagePublications[0].alt}
-                screenClassName="h-[16rem] sm:h-[19rem] lg:h-[20rem]"
+                screenClassName="h-[14.5rem] sm:h-[16rem] lg:h-[17rem]"
               />
               <LinkedInEmbedCard
                 src={authorityMontageLinkedInEmbeds[0].src}
@@ -1320,18 +1310,18 @@ function AuthorityProofMontageSection() {
               <TabletPublicationCard
                 src={authorityMontagePublications[1].src}
                 alt={authorityMontagePublications[1].alt}
-                screenClassName="h-[16rem] sm:h-[18rem] lg:h-[20rem]"
+                screenClassName="h-[14.5rem] sm:h-[16rem] lg:h-[17rem]"
               />
               <TabletPublicationCard
                 src={authorityMontagePublications[3].src}
                 alt={authorityMontagePublications[3].alt}
-                screenClassName="h-[16rem] sm:h-[19rem] lg:h-[20rem]"
+                screenClassName="h-[14.5rem] sm:h-[16rem] lg:h-[17rem]"
               />
               <TabletPublicationCard
                 src={authorityMontagePublications[4].src}
                 alt={authorityMontagePublications[4].alt}
                 className="md:col-span-2"
-                screenClassName="h-[17rem] sm:h-[20rem] lg:h-[23rem]"
+                screenClassName="h-[14.5rem] sm:h-[15.5rem] lg:h-[16rem]"
               />
             </div>
           </div>
