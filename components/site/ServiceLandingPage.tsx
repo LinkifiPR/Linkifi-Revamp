@@ -220,27 +220,28 @@ const seoPerformanceTimeline = buildTimelinePoints(2022, 0, 2026, 2);
 const seoPerformanceStories: SeoPerformanceStory[] = [
   {
     id: "gardening",
-    label: "Gardening website",
+    label: "Gardening business",
     metricLabel: "Organic traffic",
     startIndex: 14,
     values: interpolateSeries(
       [
-        [0, 1480],
-        [3, 1980],
-        [6, 2380],
-        [9, 1710],
-        [12, 1540],
-        [14, 1680],
-        [18, 3250],
-        [21, 4680],
-        [24, 3920],
-        [28, 6120],
-        [31, 7880],
-        [34, 6940],
-        [38, 10450],
-        [41, 12680],
-        [45, 11240],
-        [50, 15920],
+        [0, 1240],
+        [3, 1820],
+        [6, 2310],
+        [9, 1640],
+        [12, 1360],
+        [14, 1510],
+        [17, 3140],
+        [20, 4680],
+        [23, 3890],
+        [26, 6120],
+        [29, 7480],
+        [32, 6540],
+        [35, 9280],
+        [39, 11880],
+        [43, 10320],
+        [46, 14140],
+        [50, 17120],
       ],
       seoPerformanceTimeline.length,
     ),
@@ -252,44 +253,46 @@ const seoPerformanceStories: SeoPerformanceStory[] = [
     startIndex: 20,
     values: interpolateSeries(
       [
-        [0, 5220],
-        [4, 5480],
-        [8, 5030],
-        [12, 5710],
-        [16, 5280],
-        [20, 5520],
-        [24, 9680],
-        [28, 8420],
-        [32, 14180],
-        [36, 12840],
-        [40, 20550],
-        [44, 18220],
-        [47, 26280],
-        [50, 23840],
+        [0, 4680],
+        [4, 4860],
+        [8, 4520],
+        [12, 5030],
+        [16, 4710],
+        [20, 4980],
+        [23, 7440],
+        [26, 6980],
+        [29, 12280],
+        [32, 10840],
+        [35, 16420],
+        [38, 14810],
+        [41, 23140],
+        [44, 20980],
+        [47, 30120],
+        [50, 26680],
       ],
       seoPerformanceTimeline.length,
     ),
   },
   {
     id: "real-estate",
-    label: "Real estate brokerage firm",
+    label: "Real estate firm",
     metricLabel: "Visibility index",
     startIndex: 22,
     values: interpolateSeries(
       [
-        [0, 980],
-        [5, 1040],
-        [10, 1110],
-        [15, 1180],
-        [19, 1230],
-        [22, 1290],
-        [26, 1760],
-        [30, 2380],
-        [34, 3120],
-        [38, 4280],
-        [42, 4860],
-        [46, 6180],
-        [50, 7040],
+        [0, 940],
+        [6, 1010],
+        [12, 1080],
+        [18, 1160],
+        [22, 1210],
+        [25, 1540],
+        [29, 1820],
+        [33, 2540],
+        [36, 2660],
+        [40, 3840],
+        [43, 3980],
+        [46, 5220],
+        [50, 6040],
       ],
       seoPerformanceTimeline.length,
     ),
@@ -301,19 +304,19 @@ const seoPerformanceStories: SeoPerformanceStory[] = [
     startIndex: 12,
     values: interpolateSeries(
       [
-        [0, 760],
-        [4, 810],
-        [8, 870],
-        [12, 940],
-        [15, 2140],
-        [18, 2980],
-        [22, 3220],
-        [27, 4460],
-        [32, 4720],
-        [37, 6180],
-        [42, 6640],
-        [46, 8180],
-        [50, 9010],
+        [0, 720],
+        [4, 770],
+        [8, 840],
+        [12, 910],
+        [15, 2360],
+        [18, 3180],
+        [22, 3540],
+        [26, 4260],
+        [30, 4610],
+        [35, 5660],
+        [39, 6120],
+        [44, 7460],
+        [50, 8720],
       ],
       seoPerformanceTimeline.length,
     ),
@@ -1541,9 +1544,9 @@ function SeoPerformanceGraph({
   onHoveredIndexChange: (index: number | null) => void;
 }) {
   const chartId = useId().replace(/:/g, "");
-  const chartWidth = 920;
-  const chartHeight = 470;
-  const chartPadding = { top: 34, right: 22, bottom: 46, left: 18 };
+  const chartWidth = 1120;
+  const chartHeight = 560;
+  const chartPadding = { top: 34, right: 28, bottom: 52, left: 20 };
   const plotWidth = chartWidth - chartPadding.left - chartPadding.right;
   const plotHeight = chartHeight - chartPadding.top - chartPadding.bottom;
   const baselineY = chartPadding.top + plotHeight;
@@ -1576,8 +1579,7 @@ function SeoPerformanceGraph({
     <div className="rounded-[28px] border border-[#e4e8f3] bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] p-4 shadow-[0_24px_56px_rgba(24,31,62,0.08)] sm:p-5 lg:p-6 xl:p-7">
       <div className="flex flex-col gap-3 border-b border-[#eceef6] pb-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#73816f]">{story.metricLabel}</p>
-          <h3 className="mt-2 text-[1.5rem] font-display font-semibold leading-[1.1] tracking-[-0.04em] text-[#171929] sm:text-[1.7rem]">
+          <h3 className="text-[1.5rem] font-display font-semibold leading-[1.1] tracking-[-0.04em] text-[#171929] sm:text-[1.75rem]">
             {story.label}
           </h3>
           <p className="mt-2 max-w-2xl text-[14px] leading-[1.6] text-[#626780]">
@@ -1611,11 +1613,11 @@ function SeoPerformanceGraph({
 
         {hoveredPoint && hoveredValue !== null && hoveredTimelineLabel ? (
           <motion.div
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 6 }}
+            initial={false}
+            animate={{ opacity: 1, left: `${tooltipLeft}%`, top: `${tooltipTop}%` }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
             className="pointer-events-none absolute z-20 hidden rounded-[18px] border border-[#dce5ef] bg-white/96 px-4 py-3 shadow-[0_18px_34px_rgba(24,31,62,0.12)] backdrop-blur sm:block"
-            style={{ left: `${tooltipLeft}%`, top: `${tooltipTop}%`, transform: "translate(-50%, -100%)" }}
+            style={{ transform: "translate(-50%, -100%)" }}
           >
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#7a8098]">
               {hoveredTimelineLabel}
@@ -1728,16 +1730,27 @@ function SeoPerformanceGraph({
 
           {hoveredPoint && hoveredValue !== null ? (
             <>
-              <line
-                x1={hoveredPoint.x}
+              <motion.line
+                initial={false}
+                animate={{ x1: hoveredPoint.x, x2: hoveredPoint.x }}
+                transition={{ duration: 0.16, ease: "easeOut" }}
                 y1={chartPadding.top}
-                x2={hoveredPoint.x}
                 y2={baselineY}
                 stroke="#d5dbe9"
                 strokeDasharray="4 8"
               />
-              <circle cx={hoveredPoint.x} cy={hoveredPoint.y} r="12" fill={hoveredIsPostCampaign ? "rgba(22,149,109,0.14)" : "rgba(183,188,203,0.16)"} />
-              <circle cx={hoveredPoint.x} cy={hoveredPoint.y} r="5.5" fill={hoveredIsPostCampaign ? postCampaignColor : preCampaignColor} />
+              <motion.circle
+                initial={false}
+                animate={{ cx: hoveredPoint.x, cy: hoveredPoint.y, r: 12.5 }}
+                transition={{ duration: 0.16, ease: "easeOut" }}
+                fill={hoveredIsPostCampaign ? "rgba(22,149,109,0.14)" : "rgba(183,188,203,0.16)"}
+              />
+              <motion.circle
+                initial={false}
+                animate={{ cx: hoveredPoint.x, cy: hoveredPoint.y, r: 5.8 }}
+                transition={{ duration: 0.16, ease: "easeOut" }}
+                fill={hoveredIsPostCampaign ? postCampaignColor : preCampaignColor}
+              />
             </>
           ) : null}
 
@@ -1782,11 +1795,12 @@ function SeoPerformanceStorySection() {
   useEffect(() => {
     const fromValues = animatedValuesRef.current;
     const toValues = activeStory.values;
-    const duration = 420;
+    const duration = 560;
     let animationFrame = 0;
     let startTime: number | null = null;
 
-    const easeOutCubic = (progress: number) => 1 - (1 - progress) ** 3;
+    const easeInOutCubic = (progress: number) =>
+      progress < 0.5 ? 4 * progress ** 3 : 1 - ((-2 * progress + 2) ** 3) / 2;
 
     setHoveredIndex(null);
 
@@ -1796,7 +1810,7 @@ function SeoPerformanceStorySection() {
       }
 
       const progress = Math.min((timestamp - startTime) / duration, 1);
-      const easedProgress = easeOutCubic(progress);
+      const easedProgress = easeInOutCubic(progress);
 
       setAnimatedValues(
         fromValues.map((value, index) => value + (toValues[index] - value) * easedProgress),
@@ -1824,13 +1838,13 @@ function SeoPerformanceStorySection() {
             Results you can see, not just read
           </h2>
           <p className="mt-4 text-[18px] leading-[1.6] text-[#5a5d79]">
-            Editorial authority compounds over time. Switch between company types to see how real visibility trajectories changed after campaign launch.
+            Editorial authority compounds over time. Switch between case studies to see how real visibility trajectories changed after campaign launch.
           </p>
         </div>
 
-        <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(220px,0.26fr)_minmax(0,0.74fr)] lg:gap-8 xl:grid-cols-[minmax(220px,0.24fr)_minmax(0,0.76fr)]">
-          <div className="rounded-[24px] border border-[#e7eaf1] bg-[linear-gradient(180deg,#fbfcff_0%,#f5f7fb_100%)] p-3 shadow-[0_18px_40px_rgba(24,31,62,0.06)] sm:p-4">
-            <p className="px-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#7a8098]">Select company type</p>
+        <div className="mt-10 grid gap-6 lg:grid-cols-[minmax(150px,0.15fr)_minmax(0,0.85fr)] lg:gap-7 xl:grid-cols-[minmax(150px,0.14fr)_minmax(0,0.86fr)]">
+          <div className="rounded-[22px] border border-[#e7eaf1] bg-[linear-gradient(180deg,#fbfcff_0%,#f5f7fb_100%)] p-3 shadow-[0_18px_40px_rgba(24,31,62,0.06)]">
+            <p className="px-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#7a8098]">Select case study</p>
             <div className="mt-4 space-y-2">
               {seoPerformanceStories.map((story, index) => {
                 const isActive = index === activeStoryIndex;
@@ -1841,14 +1855,13 @@ function SeoPerformanceStorySection() {
                     type="button"
                     onClick={() => setActiveStoryIndex(index)}
                     className={cn(
-                      "w-full rounded-[16px] border px-4 py-3.5 text-left transition-all duration-300",
+                      "w-full rounded-[14px] border px-3.5 py-3 text-left transition-all duration-300",
                       isActive
                         ? "border-[#dce8df] bg-white text-[#171929] shadow-[0_14px_30px_rgba(24,31,62,0.08)]"
                         : "border-transparent bg-transparent text-[#666c83] hover:border-[#e2e7f0] hover:bg-white/72 hover:text-[#171929]",
                     )}
                   >
-                    <span className="text-[1rem] font-semibold tracking-[-0.02em]">{story.label}</span>
-                    <span className="mt-1 block text-[12px] text-[#7c8299]">{story.metricLabel}</span>
+                    <span className="text-[15px] font-semibold leading-[1.35] tracking-[-0.02em]">{story.label}</span>
                   </button>
                 );
               })}
