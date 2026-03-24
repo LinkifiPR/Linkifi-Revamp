@@ -222,19 +222,25 @@ const seoPerformanceStories: SeoPerformanceStory[] = [
     id: "gardening",
     label: "Gardening website",
     metricLabel: "Organic traffic",
-    startIndex: 16,
+    startIndex: 14,
     values: interpolateSeries(
       [
-        [0, 1850],
-        [5, 2140],
-        [11, 1720],
-        [16, 1980],
-        [21, 3420],
-        [27, 5220],
-        [33, 7810],
-        [39, 10780],
-        [45, 13860],
-        [50, 16680],
+        [0, 1480],
+        [3, 1980],
+        [6, 2380],
+        [9, 1710],
+        [12, 1540],
+        [14, 1680],
+        [18, 3250],
+        [21, 4680],
+        [24, 3920],
+        [28, 6120],
+        [31, 7880],
+        [34, 6940],
+        [38, 10450],
+        [41, 12680],
+        [45, 11240],
+        [50, 15920],
       ],
       seoPerformanceTimeline.length,
     ),
@@ -243,18 +249,23 @@ const seoPerformanceStories: SeoPerformanceStory[] = [
     id: "ecommerce",
     label: "E-commerce store",
     metricLabel: "Organic traffic",
-    startIndex: 18,
+    startIndex: 20,
     values: interpolateSeries(
       [
-        [0, 4210],
-        [6, 4680],
-        [12, 4390],
-        [18, 4810],
-        [24, 8720],
-        [30, 12940],
-        [36, 17680],
-        [42, 22850],
-        [50, 28940],
+        [0, 5220],
+        [4, 5480],
+        [8, 5030],
+        [12, 5710],
+        [16, 5280],
+        [20, 5520],
+        [24, 9680],
+        [28, 8420],
+        [32, 14180],
+        [36, 12840],
+        [40, 20550],
+        [44, 18220],
+        [47, 26280],
+        [50, 23840],
       ],
       seoPerformanceTimeline.length,
     ),
@@ -262,19 +273,23 @@ const seoPerformanceStories: SeoPerformanceStory[] = [
   {
     id: "real-estate",
     label: "Real estate brokerage firm",
-    metricLabel: "Organic traffic",
-    startIndex: 24,
+    metricLabel: "Visibility index",
+    startIndex: 22,
     values: interpolateSeries(
       [
-        [0, 1290],
-        [6, 1410],
-        [12, 1490],
-        [18, 1570],
-        [24, 1810],
-        [30, 3260],
-        [36, 5040],
-        [42, 7020],
-        [50, 9720],
+        [0, 980],
+        [5, 1040],
+        [10, 1110],
+        [15, 1180],
+        [19, 1230],
+        [22, 1290],
+        [26, 1760],
+        [30, 2380],
+        [34, 3120],
+        [38, 4280],
+        [42, 4860],
+        [46, 6180],
+        [50, 7040],
       ],
       seoPerformanceTimeline.length,
     ),
@@ -282,20 +297,23 @@ const seoPerformanceStories: SeoPerformanceStory[] = [
   {
     id: "law",
     label: "Law firm",
-    metricLabel: "Organic traffic",
-    startIndex: 15,
+    metricLabel: "Qualified visits",
+    startIndex: 12,
     values: interpolateSeries(
       [
-        [0, 910],
-        [6, 990],
-        [12, 1110],
-        [15, 1280],
-        [21, 2480],
-        [27, 3890],
-        [33, 5480],
-        [39, 7420],
-        [45, 9230],
-        [50, 11160],
+        [0, 760],
+        [4, 810],
+        [8, 870],
+        [12, 940],
+        [15, 2140],
+        [18, 2980],
+        [22, 3220],
+        [27, 4460],
+        [32, 4720],
+        [37, 6180],
+        [42, 6640],
+        [46, 8180],
+        [50, 9010],
       ],
       seoPerformanceTimeline.length,
     ),
@@ -1523,9 +1541,9 @@ function SeoPerformanceGraph({
   onHoveredIndexChange: (index: number | null) => void;
 }) {
   const chartId = useId().replace(/:/g, "");
-  const chartWidth = 760;
-  const chartHeight = 420;
-  const chartPadding = { top: 34, right: 18, bottom: 42, left: 14 };
+  const chartWidth = 920;
+  const chartHeight = 470;
+  const chartPadding = { top: 34, right: 22, bottom: 46, left: 18 };
   const plotWidth = chartWidth - chartPadding.left - chartPadding.right;
   const plotHeight = chartHeight - chartPadding.top - chartPadding.bottom;
   const baselineY = chartPadding.top + plotHeight;
@@ -1555,7 +1573,7 @@ function SeoPerformanceGraph({
   const tooltipTop = hoveredPoint ? Math.max((hoveredPoint.y / chartHeight) * 100 - 7, 10) : 14;
 
   return (
-    <div className="rounded-[28px] border border-[#e4e8f3] bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] p-4 shadow-[0_24px_56px_rgba(24,31,62,0.08)] sm:p-5 lg:p-6">
+    <div className="rounded-[28px] border border-[#e4e8f3] bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] p-4 shadow-[0_24px_56px_rgba(24,31,62,0.08)] sm:p-5 lg:p-6 xl:p-7">
       <div className="flex flex-col gap-3 border-b border-[#eceef6] pb-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#73816f]">{story.metricLabel}</p>
@@ -1579,7 +1597,7 @@ function SeoPerformanceGraph({
         </div>
       </div>
 
-      <div className="relative mt-5 overflow-hidden rounded-[24px] border border-[#edf0f7] bg-[linear-gradient(180deg,#fcfdff_0%,#f7faff_100%)] p-3 sm:p-4">
+      <div className="relative mt-5 overflow-hidden rounded-[24px] border border-[#edf0f7] bg-[linear-gradient(180deg,#fcfdff_0%,#f7faff_100%)] p-3 sm:p-4 lg:p-5">
         <motion.div
           animate={{ left: `${(startPoint.x / chartWidth) * 100}%` }}
           transition={{ duration: 0.45, ease: "easeInOut" }}
@@ -1810,8 +1828,8 @@ function SeoPerformanceStorySection() {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.34fr)_minmax(0,0.66fr)] lg:gap-10">
-          <div className="rounded-[26px] border border-[#e7eaf1] bg-[linear-gradient(180deg,#fbfcff_0%,#f5f7fb_100%)] p-4 shadow-[0_18px_40px_rgba(24,31,62,0.06)]">
+        <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(220px,0.26fr)_minmax(0,0.74fr)] lg:gap-8 xl:grid-cols-[minmax(220px,0.24fr)_minmax(0,0.76fr)]">
+          <div className="rounded-[24px] border border-[#e7eaf1] bg-[linear-gradient(180deg,#fbfcff_0%,#f5f7fb_100%)] p-3 shadow-[0_18px_40px_rgba(24,31,62,0.06)] sm:p-4">
             <p className="px-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#7a8098]">Select company type</p>
             <div className="mt-4 space-y-2">
               {seoPerformanceStories.map((story, index) => {
@@ -1823,13 +1841,14 @@ function SeoPerformanceStorySection() {
                     type="button"
                     onClick={() => setActiveStoryIndex(index)}
                     className={cn(
-                      "w-full rounded-[18px] border px-4 py-4 text-left transition-all duration-300",
+                      "w-full rounded-[16px] border px-4 py-3.5 text-left transition-all duration-300",
                       isActive
                         ? "border-[#dce8df] bg-white text-[#171929] shadow-[0_14px_30px_rgba(24,31,62,0.08)]"
                         : "border-transparent bg-transparent text-[#666c83] hover:border-[#e2e7f0] hover:bg-white/72 hover:text-[#171929]",
                     )}
                   >
                     <span className="text-[1rem] font-semibold tracking-[-0.02em]">{story.label}</span>
+                    <span className="mt-1 block text-[12px] text-[#7c8299]">{story.metricLabel}</span>
                   </button>
                 );
               })}
