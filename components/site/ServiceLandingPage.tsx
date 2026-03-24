@@ -90,6 +90,13 @@ type SeoPerformanceStory = {
   values: number[];
 };
 
+type AuthorityPerformanceStory = {
+  id: string;
+  label: string;
+  startIndex: number;
+  values: number[];
+};
+
 type TimelinePoint = {
   label: string;
   shortLabel: string;
@@ -330,6 +337,117 @@ const seoPerformanceStories: SeoPerformanceStory[] = [
         [50, 23880],
       ],
       seoPerformanceTimeline.length,
+    ),
+  },
+];
+
+const authorityPerformanceTimeline = buildTimelinePoints(2024, 11, 2026, 2);
+
+// These are intentionally independent profiles with unique start dates, scales,
+// and inflection patterns so each trajectory feels business-specific.
+const authorityPerformanceStories: AuthorityPerformanceStory[] = [
+  {
+    id: "authority-real-estate",
+    label: "Real estate brokerage firm",
+    startIndex: 2,
+    values: interpolateSeries(
+      [
+        [0, 2800],
+        [1, 2870],
+        [2, 2950],
+        [3, 3380],
+        [4, 3890],
+        [5, 4320],
+        [6, 4710],
+        [7, 5190],
+        [8, 5720],
+        [9, 6290],
+        [10, 6930],
+        [11, 7600],
+        [12, 8350],
+        [13, 9160],
+        [14, 10080],
+        [15, 11020],
+      ],
+      authorityPerformanceTimeline.length,
+    ),
+  },
+  {
+    id: "authority-mortgage",
+    label: "Mortgage firm",
+    startIndex: 9,
+    values: interpolateSeries(
+      [
+        [0, 5300],
+        [1, 5240],
+        [2, 5190],
+        [3, 5150],
+        [4, 5090],
+        [5, 5020],
+        [6, 4980],
+        [7, 5010],
+        [8, 5060],
+        [9, 5120],
+        [10, 5450],
+        [11, 5480],
+        [12, 5510],
+        [13, 7700],
+        [14, 12200],
+        [15, 18700],
+      ],
+      authorityPerformanceTimeline.length,
+    ),
+  },
+  {
+    id: "authority-marketing",
+    label: "Marketing company",
+    startIndex: 4,
+    values: interpolateSeries(
+      [
+        [0, 7600],
+        [1, 7780],
+        [2, 7920],
+        [3, 8080],
+        [4, 8280],
+        [5, 12400],
+        [6, 17200],
+        [7, 21000],
+        [8, 19800],
+        [9, 22600],
+        [10, 24400],
+        [11, 23900],
+        [12, 27800],
+        [13, 33600],
+        [14, 40200],
+        [15, 48800],
+      ],
+      authorityPerformanceTimeline.length,
+    ),
+  },
+  {
+    id: "authority-travel",
+    label: "Travel company",
+    startIndex: 10,
+    values: interpolateSeries(
+      [
+        [0, 12800],
+        [1, 14100],
+        [2, 13200],
+        [3, 15000],
+        [4, 13800],
+        [5, 16000],
+        [6, 14600],
+        [7, 15500],
+        [8, 14900],
+        [9, 15800],
+        [10, 16200],
+        [11, 17000],
+        [12, 16400],
+        [13, 23600],
+        [14, 43800],
+        [15, 81200],
+      ],
+      authorityPerformanceTimeline.length,
     ),
   },
 ];
@@ -1908,6 +2026,361 @@ function SeoPerformanceStorySection() {
   );
 }
 
+function AuthorityPerformanceGraph({
+  story,
+  values,
+  hoveredProgress,
+  onHoveredProgressChange,
+}: {
+  story: AuthorityPerformanceStory;
+  values: number[];
+  hoveredProgress: number | null;
+  onHoveredProgressChange: (progress: number | null) => void;
+}) {
+  const chartId = useId().replace(/:/g, "");
+  const chartWidth = 1180;
+  const chartHeight = 560;
+  const chartPadding = { top: 34, right: 26, bottom: 52, left: 20 };
+  const plotWidth = chartWidth - chartPadding.left - chartPadding.right;
+  const plotHeight = chartHeight - chartPadding.top - chartPadding.bottom;
+  const baselineY = chartPadding.top + plotHeight;
+  const chartMax = getNiceCeiling(Math.max(...values) * 1.08);
+  const gridLineFractions = [0, 0.5, 1];
+  const yLabels = [chartMax, chartMax / 2, 0];
+  const tickIndices = [0, 4, 8, 12, authorityPerformanceTimeline.length - 1];
+  const postCampaignColor = "#16956d";
+  const preCampaignColor = "#b7bccb";
+
+  const points = values.map((value, index) => ({
+    x: chartPadding.left + (index / (values.length - 1)) * plotWidth,
+    y: chartPadding.top + (1 - value / chartMax) * plotHeight,
+  }));
+
+  const preCampaignPoints = points.slice(0, story.startIndex + 1);
+  const postCampaignPoints = points.slice(story.startIndex);
+  const preCampaignPath = buildSmoothPath(preCampaignPoints);
+  const postCampaignPath = buildSmoothPath(postCampaignPoints);
+  const postCampaignAreaPath = buildAreaPath(postCampaignPoints, baselineY);
+  const startPoint = points[story.startIndex];
+  const hoveredRawIndex = hoveredProgress === null ? null : hoveredProgress * (values.length - 1);
+  const hoveredLowerIndex = hoveredRawIndex === null ? null : Math.floor(hoveredRawIndex);
+  const hoveredUpperIndex =
+    hoveredRawIndex === null || hoveredLowerIndex === null
+      ? null
+      : Math.min(hoveredLowerIndex + 1, values.length - 1);
+  const hoveredBlend = hoveredRawIndex === null || hoveredLowerIndex === null ? 0 : hoveredRawIndex - hoveredLowerIndex;
+  const hoveredPoint =
+    hoveredLowerIndex === null || hoveredUpperIndex === null
+      ? null
+      : {
+          x: points[hoveredLowerIndex].x + (points[hoveredUpperIndex].x - points[hoveredLowerIndex].x) * hoveredBlend,
+          y: points[hoveredLowerIndex].y + (points[hoveredUpperIndex].y - points[hoveredLowerIndex].y) * hoveredBlend,
+        };
+  const hoveredValue =
+    hoveredLowerIndex === null || hoveredUpperIndex === null
+      ? null
+      : Math.round(values[hoveredLowerIndex] + (values[hoveredUpperIndex] - values[hoveredLowerIndex]) * hoveredBlend);
+  const hoveredTimelineLabel =
+    hoveredRawIndex === null ? null : authorityPerformanceTimeline[Math.round(hoveredRawIndex)].label;
+  const hoveredIsPostCampaign = hoveredRawIndex !== null && hoveredRawIndex >= story.startIndex;
+  const tooltipLeft = hoveredPoint ? Math.min(Math.max((hoveredPoint.x / chartWidth) * 100, 14), 86) : 50;
+  const tooltipTop = hoveredPoint ? Math.max((hoveredPoint.y / chartHeight) * 100 - 7, 12) : 16;
+
+  return (
+    <div className="w-full rounded-[28px] border border-[#e3e8f2] bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] p-4 shadow-[0_24px_56px_rgba(24,31,62,0.08)] sm:p-5 lg:p-6">
+      <div className="flex flex-col gap-3 border-b border-[#eceff7] pb-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h3 className="text-[1.55rem] font-display font-semibold leading-[1.08] tracking-[-0.04em] text-[#171929] sm:text-[1.78rem]">
+            {story.label}
+          </h3>
+          <p className="mt-2 max-w-2xl text-[14px] leading-[1.6] text-[#606682]">
+            Hover the timeline to inspect how authority momentum translated into measurable traffic.
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-4 text-[12px] text-[#687089]">
+          <span className="inline-flex items-center gap-2">
+            <span className="h-[2px] w-7 rounded-full bg-[#b7bccb]" />
+            Pre-campaign
+          </span>
+          <span className="inline-flex items-center gap-2">
+            <span className="h-[2px] w-7 rounded-full bg-[#16956d]" />
+            Post-campaign
+          </span>
+        </div>
+      </div>
+
+      <div className="relative mt-5 overflow-hidden rounded-[24px] border border-[#edf0f7] bg-[linear-gradient(180deg,#fcfdff_0%,#f7faff_100%)] p-3 sm:p-4 lg:p-5">
+        <motion.div
+          animate={{ left: `${(startPoint.x / chartWidth) * 100}%` }}
+          transition={{ duration: 0.45, ease: "easeInOut" }}
+          className="pointer-events-none absolute top-4 z-10"
+          style={{ transform: "translateX(-50%)" }}
+        >
+          <div className="rounded-full border border-[#dce6df] bg-white/96 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#2a6a51] shadow-[0_10px_24px_rgba(24,31,62,0.08)]">
+            Campaign start
+          </div>
+        </motion.div>
+
+        {hoveredPoint && hoveredValue !== null && hoveredTimelineLabel ? (
+          <motion.div
+            initial={false}
+            animate={{ opacity: 1, left: `${tooltipLeft}%`, top: `${tooltipTop}%` }}
+            transition={{ duration: 0.14, ease: "easeOut" }}
+            className="pointer-events-none absolute z-20 hidden rounded-[18px] border border-[#dce5ef] bg-white/96 px-4 py-3 shadow-[0_18px_34px_rgba(24,31,62,0.12)] backdrop-blur sm:block"
+            style={{ transform: "translate(-50%, -100%)" }}
+          >
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#7a8098]">{hoveredTimelineLabel}</p>
+            <p className="mt-2 text-[1rem] font-display font-semibold tracking-[-0.03em] text-[#171929]">
+              {formatCompactMetric(hoveredValue)} total traffic
+            </p>
+          </motion.div>
+        ) : null}
+
+        <svg
+          viewBox={`0 0 ${chartWidth} ${chartHeight}`}
+          className="relative z-0 h-auto w-full"
+          onMouseMove={(event) => {
+            const bounds = event.currentTarget.getBoundingClientRect();
+            const plotLeft = (chartPadding.left / chartWidth) * bounds.width;
+            const plotWidthInPixels = (plotWidth / chartWidth) * bounds.width;
+            const rawX = event.clientX - bounds.left - plotLeft;
+            const clampedX = Math.min(Math.max(rawX, 0), plotWidthInPixels);
+            const nextProgress = clampedX / plotWidthInPixels;
+
+            onHoveredProgressChange(nextProgress);
+          }}
+          onMouseLeave={() => onHoveredProgressChange(null)}
+        >
+          <defs>
+            <linearGradient id={`${chartId}-fill`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="rgba(22,149,109,0.26)" />
+              <stop offset="68%" stopColor="rgba(22,149,109,0.09)" />
+              <stop offset="100%" stopColor="rgba(22,149,109,0)" />
+            </linearGradient>
+          </defs>
+
+          {gridLineFractions.map((fraction) => {
+            const y = chartPadding.top + fraction * plotHeight;
+
+            return (
+              <line
+                key={fraction}
+                x1={chartPadding.left}
+                y1={y}
+                x2={chartWidth - chartPadding.right}
+                y2={y}
+                stroke="#e9edf5"
+                strokeDasharray={fraction === 0 || fraction === 1 ? "0" : "5 9"}
+              />
+            );
+          })}
+
+          {yLabels.map((labelValue) => {
+            const y = chartPadding.top + (1 - labelValue / chartMax) * plotHeight;
+
+            return (
+              <text key={labelValue} x={chartPadding.left} y={y - 10} fill="#9098b0" fontSize="11" fontWeight="600">
+                {formatCompactMetric(labelValue)}
+              </text>
+            );
+          })}
+
+          <motion.line
+            animate={{ x1: startPoint.x, x2: startPoint.x }}
+            transition={{ duration: 0.45, ease: "easeInOut" }}
+            y1={chartPadding.top + 12}
+            y2={baselineY}
+            stroke="#8ea994"
+            strokeDasharray="4 7"
+            strokeWidth="1.5"
+          />
+
+          <motion.path
+            d={postCampaignAreaPath}
+            fill={`url(#${chartId}-fill)`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.38, delay: 0.96, ease: "easeOut" }}
+          />
+
+          <motion.path
+            d={preCampaignPath}
+            fill="none"
+            stroke={preCampaignColor}
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1, strokeWidth: hoveredProgress !== null ? 2.9 : 2.5 }}
+            transition={{ duration: 0.92, ease: "easeInOut" }}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+
+          <motion.path
+            d={postCampaignPath}
+            fill="none"
+            stroke={postCampaignColor}
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1, strokeWidth: hoveredProgress !== null ? 4.2 : 3.5 }}
+            transition={{ duration: 0.92, ease: "easeInOut" }}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            style={{ filter: "drop-shadow(0 0 12px rgba(22,149,109,0.18))" }}
+          />
+
+          <circle cx={startPoint.x} cy={startPoint.y} r="5.5" fill="#16956d" />
+          <circle cx={startPoint.x} cy={startPoint.y} r="10.5" fill="rgba(22,149,109,0.12)" />
+
+          {hoveredPoint && hoveredValue !== null ? (
+            <>
+              <motion.line
+                initial={false}
+                animate={{ x1: hoveredPoint.x, x2: hoveredPoint.x }}
+                transition={{ duration: 0.15, ease: "easeOut" }}
+                y1={chartPadding.top}
+                y2={baselineY}
+                stroke="#d5dbe9"
+                strokeDasharray="4 8"
+              />
+              <motion.circle
+                initial={false}
+                animate={{ cx: hoveredPoint.x, cy: hoveredPoint.y, r: 13.5 }}
+                transition={{ duration: 0.15, ease: "easeOut" }}
+                fill={hoveredIsPostCampaign ? "rgba(22,149,109,0.14)" : "rgba(183,188,203,0.16)"}
+              />
+              <motion.circle
+                initial={false}
+                animate={{ cx: hoveredPoint.x, cy: hoveredPoint.y, r: 6.2 }}
+                transition={{ duration: 0.15, ease: "easeOut" }}
+                fill={hoveredIsPostCampaign ? postCampaignColor : preCampaignColor}
+              />
+            </>
+          ) : null}
+
+          {tickIndices.map((tickIndex) => (
+            <g key={tickIndex}>
+              <line
+                x1={points[tickIndex].x}
+                y1={baselineY}
+                x2={points[tickIndex].x}
+                y2={baselineY + 8}
+                stroke="#d7ddeb"
+              />
+              <text
+                x={points[tickIndex].x}
+                y={baselineY + 24}
+                fill="#9098b0"
+                fontSize="11"
+                fontWeight="500"
+                textAnchor="middle"
+              >
+                {authorityPerformanceTimeline[tickIndex].label}
+              </text>
+            </g>
+          ))}
+        </svg>
+      </div>
+    </div>
+  );
+}
+
+function AuthorityPerformanceStorySection() {
+  const [activeStoryIndex, setActiveStoryIndex] = useState(0);
+  const activeStory = authorityPerformanceStories[activeStoryIndex];
+  const [animatedValues, setAnimatedValues] = useState(activeStory.values);
+  const animatedValuesRef = useRef(animatedValues);
+  const [hoveredProgress, setHoveredProgress] = useState<number | null>(null);
+
+  useEffect(() => {
+    animatedValuesRef.current = animatedValues;
+  }, [animatedValues]);
+
+  useEffect(() => {
+    const fromValues = animatedValuesRef.current;
+    const toValues = activeStory.values;
+    const duration = 420;
+    let animationFrame = 0;
+    let startTime: number | null = null;
+
+    const easeInOutCubic = (progress: number) =>
+      progress < 0.5 ? 4 * progress ** 3 : 1 - ((-2 * progress + 2) ** 3) / 2;
+
+    setHoveredProgress(null);
+
+    const updateFrame = (timestamp: number) => {
+      if (startTime === null) {
+        startTime = timestamp;
+      }
+
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const easedProgress = easeInOutCubic(progress);
+
+      setAnimatedValues(
+        fromValues.map((value, index) => value + (toValues[index] - value) * easedProgress),
+      );
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(updateFrame);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(updateFrame);
+
+    return () => cancelAnimationFrame(animationFrame);
+  }, [activeStory]);
+
+  return (
+    <SectionWrap>
+      <PagePanel
+        tone="white"
+        className="overflow-hidden bg-[radial-gradient(circle_at_14%_0%,rgba(110,171,255,0.12),transparent_25%),radial-gradient(circle_at_85%_16%,rgba(34,160,106,0.1),transparent_21%),linear-gradient(180deg,#ffffff_0%,#fbfdff_100%)]"
+      >
+        <div className="mx-auto max-w-4xl text-center">
+          <Eyebrow>Authority Growth</Eyebrow>
+          <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
+            Authority growth, visualised
+          </h2>
+          <p className="mt-4 text-[18px] leading-[1.6] text-[#5a5d79]">
+            Authority builds across editorial, search, and AI systems, and compounds into measurable traffic growth over time.
+          </p>
+        </div>
+
+        <div className="mt-10 grid gap-6 lg:grid-cols-[minmax(220px,0.33fr)_minmax(0,0.67fr)] lg:items-start lg:gap-7">
+          <div className="rounded-[20px] border border-[#e7ebf4] bg-[linear-gradient(180deg,#fbfcff_0%,#f5f8fd_100%)] p-3 shadow-[0_18px_36px_rgba(24,31,62,0.06)]">
+            <p className="px-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#7b8298]">Select case study</p>
+            <div className="mt-3 space-y-2">
+              {authorityPerformanceStories.map((story, index) => {
+                const isActive = index === activeStoryIndex;
+
+                return (
+                  <button
+                    key={story.id}
+                    type="button"
+                    onClick={() => setActiveStoryIndex(index)}
+                    className={cn(
+                      "w-full rounded-[12px] border px-3 py-2.5 text-left transition-all duration-300",
+                      isActive
+                        ? "border-[#dce8df] bg-white text-[#171929] shadow-[0_12px_24px_rgba(24,31,62,0.07)]"
+                        : "border-transparent bg-transparent text-[#66708a] hover:border-[#e2e7f0] hover:bg-white/76 hover:text-[#171929]",
+                    )}
+                  >
+                    <span className="text-[15px] font-semibold leading-[1.34] tracking-[-0.02em]">{story.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <AuthorityPerformanceGraph
+            story={activeStory}
+            values={animatedValues}
+            hoveredProgress={hoveredProgress}
+            onHoveredProgressChange={setHoveredProgress}
+          />
+        </div>
+      </PagePanel>
+    </SectionWrap>
+  );
+}
+
 function GradientPricingCard({
   card,
   billingMode,
@@ -2629,6 +3102,7 @@ function AuthorityLandingContent() {
       <BlueprintSection />
       <BuildSignalsSection />
       <AuthorityProofMontageSection />
+      <AuthorityPerformanceStorySection />
       <AuthorityProgramsSection />
 
       <SectionWrap className="pb-12">
