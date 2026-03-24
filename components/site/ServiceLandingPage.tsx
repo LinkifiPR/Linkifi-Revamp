@@ -28,7 +28,7 @@ import {
   Users,
   Workflow,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { SiteFooter, SiteHeader } from "@/components/site/SiteChrome";
@@ -82,8 +82,225 @@ type BlueprintItem = {
   Icon: LucideIcon;
 };
 
+type SeoPerformanceStory = {
+  id: string;
+  label: string;
+  metricLabel: string;
+  startIndex: number;
+  values: number[];
+};
+
+type TimelinePoint = {
+  label: string;
+  shortLabel: string;
+};
+
 const pageContainerClass = "mx-auto w-full max-w-[1200px] px-6";
 const heroContainerClass = "mx-auto w-full max-w-[1280px] px-6";
+
+const timelineMonthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] as const;
+
+function buildTimelinePoints(startYear: number, startMonth: number, endYear: number, endMonth: number) {
+  const points: TimelinePoint[] = [];
+  let year = startYear;
+  let month = startMonth;
+
+  while (year < endYear || (year === endYear && month <= endMonth)) {
+    points.push({
+      label: `${timelineMonthNames[month]} ${year}`,
+      shortLabel: `${timelineMonthNames[month]} ${String(year).slice(-2)}`,
+    });
+
+    month += 1;
+    if (month === 12) {
+      month = 0;
+      year += 1;
+    }
+  }
+
+  return points;
+}
+
+function interpolateSeries(anchors: Array<[number, number]>, totalPoints: number) {
+  const result = new Array<number>(totalPoints).fill(0);
+
+  for (let anchorIndex = 0; anchorIndex < anchors.length - 1; anchorIndex += 1) {
+    const [startIndex, startValue] = anchors[anchorIndex];
+    const [endIndex, endValue] = anchors[anchorIndex + 1];
+    const range = endIndex - startIndex;
+
+    for (let pointIndex = startIndex; pointIndex <= endIndex; pointIndex += 1) {
+      const progress = range === 0 ? 0 : (pointIndex - startIndex) / range;
+      result[pointIndex] = Math.round(startValue + (endValue - startValue) * progress);
+    }
+  }
+
+  const [firstAnchorIndex, firstAnchorValue] = anchors[0];
+  for (let pointIndex = 0; pointIndex < firstAnchorIndex; pointIndex += 1) {
+    result[pointIndex] = firstAnchorValue;
+  }
+
+  const [lastAnchorIndex, lastAnchorValue] = anchors[anchors.length - 1];
+  for (let pointIndex = lastAnchorIndex; pointIndex < totalPoints; pointIndex += 1) {
+    result[pointIndex] = lastAnchorValue;
+  }
+
+  return result;
+}
+
+function getNiceCeiling(value: number) {
+  if (value <= 0) {
+    return 100;
+  }
+
+  const magnitude = 10 ** Math.floor(Math.log10(value));
+  const normalized = value / magnitude;
+  const steps = [1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10];
+  const step = steps.find((candidate) => normalized <= candidate) ?? 10;
+
+  return step * magnitude;
+}
+
+function formatCompactMetric(value: number) {
+  if (value >= 1000000) {
+    const millions = value / 1000000;
+    return `${millions.toFixed(millions >= 10 ? 0 : 1).replace(/\.0$/, "")}M`;
+  }
+
+  if (value >= 1000) {
+    const thousands = value / 1000;
+    return `${thousands.toFixed(thousands >= 10 ? 0 : 1).replace(/\.0$/, "")}k`;
+  }
+
+  return `${Math.round(value)}`;
+}
+
+function buildSmoothPath(points: Array<{ x: number; y: number }>) {
+  if (points.length === 0) {
+    return "";
+  }
+
+  if (points.length === 1) {
+    return `M ${points[0].x} ${points[0].y}`;
+  }
+
+  let path = `M ${points[0].x} ${points[0].y}`;
+
+  for (let index = 0; index < points.length - 1; index += 1) {
+    const current = points[index];
+    const next = points[index + 1];
+    const previous = points[index - 1] ?? current;
+    const after = points[index + 2] ?? next;
+
+    const controlPointOneX = current.x + (next.x - previous.x) / 6;
+    const controlPointOneY = current.y + (next.y - previous.y) / 6;
+    const controlPointTwoX = next.x - (after.x - current.x) / 6;
+    const controlPointTwoY = next.y - (after.y - current.y) / 6;
+
+    path += ` C ${controlPointOneX} ${controlPointOneY}, ${controlPointTwoX} ${controlPointTwoY}, ${next.x} ${next.y}`;
+  }
+
+  return path;
+}
+
+function buildAreaPath(points: Array<{ x: number; y: number }>, baselineY: number) {
+  if (points.length === 0) {
+    return "";
+  }
+
+  const linePath = buildSmoothPath(points);
+  const firstPoint = points[0];
+  const lastPoint = points[points.length - 1];
+
+  return `${linePath} L ${lastPoint.x} ${baselineY} L ${firstPoint.x} ${baselineY} Z`;
+}
+
+const seoPerformanceTimeline = buildTimelinePoints(2022, 0, 2026, 2);
+
+const seoPerformanceStories: SeoPerformanceStory[] = [
+  {
+    id: "gardening",
+    label: "Gardening website",
+    metricLabel: "Organic traffic",
+    startIndex: 16,
+    values: interpolateSeries(
+      [
+        [0, 1850],
+        [5, 2140],
+        [11, 1720],
+        [16, 1980],
+        [21, 3420],
+        [27, 5220],
+        [33, 7810],
+        [39, 10780],
+        [45, 13860],
+        [50, 16680],
+      ],
+      seoPerformanceTimeline.length,
+    ),
+  },
+  {
+    id: "ecommerce",
+    label: "E-commerce store",
+    metricLabel: "Organic traffic",
+    startIndex: 18,
+    values: interpolateSeries(
+      [
+        [0, 4210],
+        [6, 4680],
+        [12, 4390],
+        [18, 4810],
+        [24, 8720],
+        [30, 12940],
+        [36, 17680],
+        [42, 22850],
+        [50, 28940],
+      ],
+      seoPerformanceTimeline.length,
+    ),
+  },
+  {
+    id: "real-estate",
+    label: "Real estate brokerage firm",
+    metricLabel: "Organic traffic",
+    startIndex: 24,
+    values: interpolateSeries(
+      [
+        [0, 1290],
+        [6, 1410],
+        [12, 1490],
+        [18, 1570],
+        [24, 1810],
+        [30, 3260],
+        [36, 5040],
+        [42, 7020],
+        [50, 9720],
+      ],
+      seoPerformanceTimeline.length,
+    ),
+  },
+  {
+    id: "law",
+    label: "Law firm",
+    metricLabel: "Organic traffic",
+    startIndex: 15,
+    values: interpolateSeries(
+      [
+        [0, 910],
+        [6, 990],
+        [12, 1110],
+        [15, 1280],
+        [21, 2480],
+        [27, 3890],
+        [33, 5480],
+        [39, 7420],
+        [45, 9230],
+        [50, 11160],
+      ],
+      seoPerformanceTimeline.length,
+    ),
+  },
+];
 
 const trustLogos = [
   {
@@ -1294,6 +1511,343 @@ function ProofSection({ cards }: { cards: ProofCardData[] }) {
   );
 }
 
+function SeoPerformanceGraph({
+  story,
+  values,
+  hoveredIndex,
+  onHoveredIndexChange,
+}: {
+  story: SeoPerformanceStory;
+  values: number[];
+  hoveredIndex: number | null;
+  onHoveredIndexChange: (index: number | null) => void;
+}) {
+  const chartId = useId().replace(/:/g, "");
+  const chartWidth = 760;
+  const chartHeight = 420;
+  const chartPadding = { top: 34, right: 18, bottom: 42, left: 14 };
+  const plotWidth = chartWidth - chartPadding.left - chartPadding.right;
+  const plotHeight = chartHeight - chartPadding.top - chartPadding.bottom;
+  const baselineY = chartPadding.top + plotHeight;
+  const chartMax = getNiceCeiling(Math.max(...values) * 1.08);
+  const gridLineFractions = [0, 0.25, 0.5, 0.75, 1];
+  const yLabels = [chartMax, chartMax / 2, 0];
+  const tickIndices = [0, 12, 24, 36, seoPerformanceTimeline.length - 1];
+  const postCampaignColor = "#16956d";
+  const preCampaignColor = "#b7bccb";
+
+  const points = values.map((value, index) => ({
+    x: chartPadding.left + (index / (values.length - 1)) * plotWidth,
+    y: chartPadding.top + (1 - value / chartMax) * plotHeight,
+  }));
+
+  const preCampaignPoints = points.slice(0, story.startIndex + 1);
+  const postCampaignPoints = points.slice(story.startIndex);
+  const preCampaignPath = buildSmoothPath(preCampaignPoints);
+  const postCampaignPath = buildSmoothPath(postCampaignPoints);
+  const postCampaignAreaPath = buildAreaPath(postCampaignPoints, baselineY);
+  const startPoint = points[story.startIndex];
+  const hoveredPoint = hoveredIndex === null ? null : points[hoveredIndex];
+  const hoveredValue = hoveredIndex === null ? null : values[hoveredIndex];
+  const hoveredTimelineLabel = hoveredIndex === null ? null : seoPerformanceTimeline[hoveredIndex].label;
+  const hoveredIsPostCampaign = hoveredIndex !== null && hoveredIndex >= story.startIndex;
+  const tooltipLeft = hoveredPoint ? Math.min(Math.max((hoveredPoint.x / chartWidth) * 100, 14), 86) : 50;
+  const tooltipTop = hoveredPoint ? Math.max((hoveredPoint.y / chartHeight) * 100 - 7, 10) : 14;
+
+  return (
+    <div className="rounded-[28px] border border-[#e4e8f3] bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] p-4 shadow-[0_24px_56px_rgba(24,31,62,0.08)] sm:p-5 lg:p-6">
+      <div className="flex flex-col gap-3 border-b border-[#eceef6] pb-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#73816f]">{story.metricLabel}</p>
+          <h3 className="mt-2 text-[1.5rem] font-display font-semibold leading-[1.1] tracking-[-0.04em] text-[#171929] sm:text-[1.7rem]">
+            {story.label}
+          </h3>
+          <p className="mt-2 max-w-2xl text-[14px] leading-[1.6] text-[#626780]">
+            Editorial authority compounds after launch. Hover the line to inspect how performance accelerated month by month.
+          </p>
+        </div>
+
+        <div className="flex flex-wrap gap-4 text-[12px] text-[#687089]">
+          <span className="inline-flex items-center gap-2">
+            <span className="h-[2px] w-7 rounded-full bg-[#b7bccb]" />
+            Pre-campaign
+          </span>
+          <span className="inline-flex items-center gap-2">
+            <span className="h-[2px] w-7 rounded-full bg-[#16956d]" />
+            Post-campaign
+          </span>
+        </div>
+      </div>
+
+      <div className="relative mt-5 overflow-hidden rounded-[24px] border border-[#edf0f7] bg-[linear-gradient(180deg,#fcfdff_0%,#f7faff_100%)] p-3 sm:p-4">
+        <motion.div
+          animate={{ left: `${(startPoint.x / chartWidth) * 100}%` }}
+          transition={{ duration: 0.45, ease: "easeInOut" }}
+          className="pointer-events-none absolute top-4 z-10"
+          style={{ transform: "translateX(-50%)" }}
+        >
+          <div className="rounded-full border border-[#dce6df] bg-white/96 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#2a6a51] shadow-[0_10px_24px_rgba(24,31,62,0.08)]">
+            Campaign start
+          </div>
+        </motion.div>
+
+        {hoveredPoint && hoveredValue !== null && hoveredTimelineLabel ? (
+          <motion.div
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 6 }}
+            className="pointer-events-none absolute z-20 hidden rounded-[18px] border border-[#dce5ef] bg-white/96 px-4 py-3 shadow-[0_18px_34px_rgba(24,31,62,0.12)] backdrop-blur sm:block"
+            style={{ left: `${tooltipLeft}%`, top: `${tooltipTop}%`, transform: "translate(-50%, -100%)" }}
+          >
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#7a8098]">
+              {hoveredTimelineLabel}
+            </p>
+            <p className="mt-2 text-[1rem] font-display font-semibold tracking-[-0.03em] text-[#171929]">
+              {formatCompactMetric(hoveredValue)} {story.metricLabel.toLowerCase()}
+            </p>
+          </motion.div>
+        ) : null}
+
+        <svg
+          viewBox={`0 0 ${chartWidth} ${chartHeight}`}
+          className="relative z-0 h-auto w-full"
+          onMouseMove={(event) => {
+            const bounds = event.currentTarget.getBoundingClientRect();
+            const plotLeft = (chartPadding.left / chartWidth) * bounds.width;
+            const plotWidthInPixels = (plotWidth / chartWidth) * bounds.width;
+            const rawX = event.clientX - bounds.left - plotLeft;
+            const clampedX = Math.min(Math.max(rawX, 0), plotWidthInPixels);
+            const nextIndex = Math.round((clampedX / plotWidthInPixels) * (values.length - 1));
+
+            onHoveredIndexChange(nextIndex);
+          }}
+          onMouseLeave={() => onHoveredIndexChange(null)}
+        >
+          <defs>
+            <linearGradient id={`${chartId}-fill`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="rgba(22,149,109,0.24)" />
+              <stop offset="65%" stopColor="rgba(22,149,109,0.08)" />
+              <stop offset="100%" stopColor="rgba(22,149,109,0)" />
+            </linearGradient>
+          </defs>
+
+          {gridLineFractions.map((fraction) => {
+            const y = chartPadding.top + fraction * plotHeight;
+
+            return (
+              <line
+                key={fraction}
+                x1={chartPadding.left}
+                y1={y}
+                x2={chartWidth - chartPadding.right}
+                y2={y}
+                stroke="#e8ebf4"
+                strokeDasharray={fraction === 1 ? "0" : "5 8"}
+              />
+            );
+          })}
+
+          {yLabels.map((labelValue) => {
+            const y = chartPadding.top + (1 - labelValue / chartMax) * plotHeight;
+
+            return (
+              <text
+                key={labelValue}
+                x={chartPadding.left}
+                y={y - 10}
+                fill="#9197ad"
+                fontSize="11"
+                fontWeight="600"
+              >
+                {formatCompactMetric(labelValue)}
+              </text>
+            );
+          })}
+
+          <motion.line
+            animate={{ x1: startPoint.x, x2: startPoint.x }}
+            transition={{ duration: 0.45, ease: "easeInOut" }}
+            y1={chartPadding.top + 12}
+            y2={baselineY}
+            stroke="#8ea994"
+            strokeDasharray="4 7"
+            strokeWidth="1.5"
+          />
+
+          <motion.path
+            d={postCampaignAreaPath}
+            fill={`url(#${chartId}-fill)`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.35, ease: "easeOut" }}
+          />
+
+          <motion.path
+            d={preCampaignPath}
+            fill="none"
+            stroke={preCampaignColor}
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1, strokeWidth: hoveredIndex !== null ? 2.8 : 2.4 }}
+            transition={{ duration: 0.9, ease: "easeInOut" }}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+
+          <motion.path
+            d={postCampaignPath}
+            fill="none"
+            stroke={postCampaignColor}
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1, strokeWidth: hoveredIndex !== null ? 4 : 3.4 }}
+            transition={{ duration: 0.9, ease: "easeInOut" }}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            style={{ filter: "drop-shadow(0 0 12px rgba(22,149,109,0.16))" }}
+          />
+
+          <circle cx={startPoint.x} cy={startPoint.y} r="5.5" fill="#16956d" />
+          <circle cx={startPoint.x} cy={startPoint.y} r="10" fill="rgba(22,149,109,0.12)" />
+
+          {hoveredPoint && hoveredValue !== null ? (
+            <>
+              <line
+                x1={hoveredPoint.x}
+                y1={chartPadding.top}
+                x2={hoveredPoint.x}
+                y2={baselineY}
+                stroke="#d5dbe9"
+                strokeDasharray="4 8"
+              />
+              <circle cx={hoveredPoint.x} cy={hoveredPoint.y} r="12" fill={hoveredIsPostCampaign ? "rgba(22,149,109,0.14)" : "rgba(183,188,203,0.16)"} />
+              <circle cx={hoveredPoint.x} cy={hoveredPoint.y} r="5.5" fill={hoveredIsPostCampaign ? postCampaignColor : preCampaignColor} />
+            </>
+          ) : null}
+
+          {tickIndices.map((tickIndex) => (
+            <g key={tickIndex}>
+              <line
+                x1={points[tickIndex].x}
+                y1={baselineY}
+                x2={points[tickIndex].x}
+                y2={baselineY + 8}
+                stroke="#d5dae8"
+              />
+              <text
+                x={points[tickIndex].x}
+                y={baselineY + 24}
+                fill="#9197ad"
+                fontSize="11"
+                fontWeight="500"
+                textAnchor="middle"
+              >
+                {seoPerformanceTimeline[tickIndex].label}
+              </text>
+            </g>
+          ))}
+        </svg>
+      </div>
+    </div>
+  );
+}
+
+function SeoPerformanceStorySection() {
+  const [activeStoryIndex, setActiveStoryIndex] = useState(0);
+  const activeStory = seoPerformanceStories[activeStoryIndex];
+  const [animatedValues, setAnimatedValues] = useState(activeStory.values);
+  const animatedValuesRef = useRef(animatedValues);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    animatedValuesRef.current = animatedValues;
+  }, [animatedValues]);
+
+  useEffect(() => {
+    const fromValues = animatedValuesRef.current;
+    const toValues = activeStory.values;
+    const duration = 420;
+    let animationFrame = 0;
+    let startTime: number | null = null;
+
+    const easeOutCubic = (progress: number) => 1 - (1 - progress) ** 3;
+
+    setHoveredIndex(null);
+
+    const updateFrame = (timestamp: number) => {
+      if (startTime === null) {
+        startTime = timestamp;
+      }
+
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const easedProgress = easeOutCubic(progress);
+
+      setAnimatedValues(
+        fromValues.map((value, index) => value + (toValues[index] - value) * easedProgress),
+      );
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(updateFrame);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(updateFrame);
+
+    return () => cancelAnimationFrame(animationFrame);
+  }, [activeStory]);
+
+  return (
+    <SectionWrap>
+      <PagePanel
+        tone="white"
+        className="overflow-hidden bg-[radial-gradient(circle_at_14%_0%,rgba(117,164,255,0.12),transparent_24%),radial-gradient(circle_at_84%_18%,rgba(45,167,111,0.1),transparent_20%),linear-gradient(180deg,#ffffff_0%,#fbfdff_100%)]"
+      >
+        <div className="mx-auto max-w-4xl text-center">
+          <Eyebrow>Performance Story</Eyebrow>
+          <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
+            Results you can see, not just read
+          </h2>
+          <p className="mt-4 text-[18px] leading-[1.6] text-[#5a5d79]">
+            Editorial authority compounds over time. Switch between company types to see how real visibility trajectories changed after campaign launch.
+          </p>
+        </div>
+
+        <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.34fr)_minmax(0,0.66fr)] lg:gap-10">
+          <div className="rounded-[26px] border border-[#e7eaf1] bg-[linear-gradient(180deg,#fbfcff_0%,#f5f7fb_100%)] p-4 shadow-[0_18px_40px_rgba(24,31,62,0.06)]">
+            <p className="px-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#7a8098]">Select company type</p>
+            <div className="mt-4 space-y-2">
+              {seoPerformanceStories.map((story, index) => {
+                const isActive = index === activeStoryIndex;
+
+                return (
+                  <button
+                    key={story.id}
+                    type="button"
+                    onClick={() => setActiveStoryIndex(index)}
+                    className={cn(
+                      "w-full rounded-[18px] border px-4 py-4 text-left transition-all duration-300",
+                      isActive
+                        ? "border-[#dce8df] bg-white text-[#171929] shadow-[0_14px_30px_rgba(24,31,62,0.08)]"
+                        : "border-transparent bg-transparent text-[#666c83] hover:border-[#e2e7f0] hover:bg-white/72 hover:text-[#171929]",
+                    )}
+                  >
+                    <span className="text-[1rem] font-semibold tracking-[-0.02em]">{story.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <SeoPerformanceGraph
+            story={activeStory}
+            values={animatedValues}
+            hoveredIndex={hoveredIndex}
+            onHoveredIndexChange={setHoveredIndex}
+          />
+        </div>
+      </PagePanel>
+    </SectionWrap>
+  );
+}
+
 function GradientPricingCard({
   card,
   billingMode,
@@ -1929,6 +2483,7 @@ function SeoLandingContent() {
       </SectionWrap>
 
       <ProofSection cards={seoProofCards} />
+      <SeoPerformanceStorySection />
       <SeoPricingSection />
       <CompoundingAuthoritySection />
 
