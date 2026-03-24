@@ -1673,9 +1673,9 @@ function SeoPerformanceGraph({
   onHoveredProgressChange: (progress: number | null) => void;
 }) {
   const chartId = useId().replace(/:/g, "");
-  const chartWidth = 1280;
-  const chartHeight = 620;
-  const chartPadding = { top: 30, right: 30, bottom: 54, left: 22 };
+  const chartWidth = 1180;
+  const chartHeight = 560;
+  const chartPadding = { top: 34, right: 26, bottom: 52, left: 20 };
   const plotWidth = chartWidth - chartPadding.left - chartPadding.right;
   const plotHeight = chartHeight - chartPadding.top - chartPadding.bottom;
   const baselineY = chartPadding.top + plotHeight;
@@ -1722,10 +1722,10 @@ function SeoPerformanceGraph({
   const tooltipTop = hoveredPoint ? Math.max((hoveredPoint.y / chartHeight) * 100 - 7, 10) : 14;
 
   return (
-    <div className="w-full rounded-[26px] border border-[#e4e8f3] bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] p-4 shadow-[0_24px_56px_rgba(24,31,62,0.08)] sm:p-5 lg:p-5 xl:p-6">
+    <div className="w-full rounded-[28px] border border-[#e3e8f2] bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] p-4 shadow-[0_24px_56px_rgba(24,31,62,0.08)] sm:p-5 lg:p-6">
       <div className="flex flex-col gap-3 border-b border-[#eceef6] pb-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h3 className="text-[1.48rem] font-display font-semibold leading-[1.1] tracking-[-0.04em] text-[#171929] sm:text-[1.72rem]">
+          <h3 className="text-[1.55rem] font-display font-semibold leading-[1.08] tracking-[-0.04em] text-[#171929] sm:text-[1.78rem]">
             {story.label}
           </h3>
           <p className="mt-2 max-w-2xl text-[14px] leading-[1.6] text-[#626780]">
@@ -1973,7 +1973,7 @@ function SeoPerformanceStorySection() {
   }, [activeStory]);
 
   return (
-    <SectionWrap containerClass="mx-auto w-full max-w-[1380px] px-4 sm:px-6">
+    <SectionWrap>
       <PagePanel
         tone="white"
         className="overflow-hidden bg-[radial-gradient(circle_at_14%_0%,rgba(117,164,255,0.12),transparent_24%),radial-gradient(circle_at_84%_18%,rgba(45,167,111,0.1),transparent_20%),linear-gradient(180deg,#ffffff_0%,#fbfdff_100%)]"
@@ -1988,10 +1988,10 @@ function SeoPerformanceStorySection() {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-5 lg:grid-cols-[152px_minmax(0,1fr)] lg:items-start lg:gap-6 xl:grid-cols-[162px_minmax(0,1fr)]">
-          <div className="w-full max-w-[172px] justify-self-start rounded-[16px] border border-[#e8ecf4] bg-[linear-gradient(180deg,#fbfcff_0%,#f6f8fc_100%)] p-2.5 shadow-[0_14px_28px_rgba(24,31,62,0.05)]">
-            <p className="px-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7b8299]">Select case study</p>
-            <div className="mt-2.5 space-y-1.5">
+        <div className="mt-10 grid gap-6 lg:grid-cols-[minmax(220px,0.33fr)_minmax(0,0.67fr)] lg:items-start lg:gap-7">
+          <div className="rounded-[20px] border border-[#e7ebf4] bg-[linear-gradient(180deg,#fbfcff_0%,#f5f8fd_100%)] p-3 shadow-[0_18px_36px_rgba(24,31,62,0.06)]">
+            <p className="px-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#7b8298]">Select case study</p>
+            <div className="mt-3 space-y-2">
               {seoPerformanceStories.map((story, index) => {
                 const isActive = index === activeStoryIndex;
 
@@ -2001,13 +2001,13 @@ function SeoPerformanceStorySection() {
                     type="button"
                     onClick={() => setActiveStoryIndex(index)}
                     className={cn(
-                      "w-full rounded-[10px] border px-2.5 py-2 text-left transition-all duration-200",
+                      "w-full rounded-[12px] border px-3 py-2.5 text-left transition-all duration-300",
                       isActive
-                        ? "border-[#dce8df] bg-white text-[#171929] shadow-[0_10px_20px_rgba(24,31,62,0.07)]"
+                        ? "border-[#dce8df] bg-white text-[#171929] shadow-[0_12px_24px_rgba(24,31,62,0.07)]"
                         : "border-transparent bg-transparent text-[#66708a] hover:border-[#e2e7f0] hover:bg-white/76 hover:text-[#171929]",
                     )}
                   >
-                    <span className="text-[14px] font-semibold leading-[1.34] tracking-[-0.01em]">{story.label}</span>
+                    <span className="text-[15px] font-semibold leading-[1.34] tracking-[-0.02em]">{story.label}</span>
                   </button>
                 );
               })}
