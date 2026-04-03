@@ -164,10 +164,16 @@ b44b590 Tidy proof collage JSX formatting
 - Set up this project in Cowork mode for the first time
 - Cloned the GitHub repo: https://github.com/LinkifiPR/Linkifi-Revamp
 - Explored the full project structure and tech stack
+- Investigated the Neon database connection — confirmed it is actively used via `lib/cms-repository.ts` (raw `pg` Pool, not Drizzle). Three tables: `cms_entries`, `cms_authors`, `cms_media`
+- Corrected earlier misunderstanding: Drizzle ORM / `server/storage.ts` (MemStorage) is unused legacy scaffolding from the Replit template. The real DB layer is the custom CMS repository
 - Created this CLAUDE.md file for persistent project memory
-- Pushed CLAUDE.md to the GitHub repo
+- **Code change:** Updated "View Case Studies" button hover state on homepage (`app/page.tsx`) to brand pink (`#D733A2`) background with white text and matching pink border, replacing the previous purple hover
+- Pushed all changes to GitHub → Netlify auto-deploy triggered
 
-**Status:** Project loaded and ready. No code changes made yet.
+**Key facts established:**
+- Brand pink: `#D733A2` (defined in `tailwind.config.ts` as `linkifi.pink`)
+- Database: Neon PostgreSQL, connected via `DATABASE_URL` env var (set in Netlify)
+- Deployment: Netlify at `linkifi-revamp.netlify.app`, auto-deploys on push to `main`
 
 **Next steps / open tasks:** To be defined by Christopher in next session.
 
