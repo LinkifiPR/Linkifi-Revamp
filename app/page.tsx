@@ -819,7 +819,7 @@ export default function Home() {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="h-14 px-8 rounded-full text-lg border-gray-200 text-[#535479] hover:text-[#5A4DBF] hover:bg-purple-50 w-full sm:w-auto font-medium"
+                    className="h-14 px-8 rounded-full text-lg border-gray-200 text-[#535479] hover:text-white hover:bg-[#D733A2] hover:border-[#D733A2] w-full sm:w-auto font-medium"
                     data-testid="button-hero-case-studies"
                   >
                     View Case Studies
