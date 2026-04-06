@@ -3,6 +3,7 @@
 import Script from "next/script";
 import { CheckCircle2, PhoneCall, Sparkles } from "lucide-react";
 import { SiteFooter, SiteHeader } from "@/components/site/SiteChrome";
+import { ChatWidget } from "@/components/site/ChatWidget";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export type ContactPageContext = {
@@ -84,6 +85,7 @@ export function ContactPageClient({ initialContext }: ContactPageClientProps) {
 
   return (
     <div className="min-h-screen bg-[#f8f9fe] text-[#161934]">
+      <ChatWidget />
       <div className="border-b border-[#e8e8f2] bg-white">
         <SiteHeader theme="light" />
       </div>

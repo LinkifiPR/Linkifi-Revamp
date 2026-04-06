@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
+import { ChatWidget } from "@/components/site/ChatWidget";
 import { Button } from "@/components/ui/button";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import {
@@ -658,6 +659,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white font-sans overflow-x-hidden selection:bg-[#5A4DBF]/20 selection:text-[#5A4DBF]">
       <Script src="https://platform.twitter.com/widgets.js" strategy="lazyOnload" />
+      <ChatWidget />
 
       {/* Navbar */}
       <nav className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 lg:px-8">

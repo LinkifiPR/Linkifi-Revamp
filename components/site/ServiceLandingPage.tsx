@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { ChatWidget } from "@/components/site/ChatWidget";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
@@ -3122,6 +3123,7 @@ function AuthorityLandingContent() {
 export function ServiceLandingPage({ page }: { page: ServicePage }) {
   return (
     <>
+      <ChatWidget />
       <main className="bg-[#f3f2f7] text-[#171929]">
         <div className="relative">
           <SiteHeader theme="light" />

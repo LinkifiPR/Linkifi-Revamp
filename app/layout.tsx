@@ -89,13 +89,6 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <Script
-          id="leadconnector-widget-loader"
-          src="https://widgets.leadconnectorhq.com/loader.js"
-          data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"
-          data-widget-id="692ed101617509fd4395444e"
-          strategy="afterInteractive"
-        />
-        <Script
           id="google-gtag-src"
           src="https://www.googletagmanager.com/gtag/js?id=G-V5RGLHQ7W5"
           strategy="afterInteractive"
