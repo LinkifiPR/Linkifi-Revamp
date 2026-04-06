@@ -108,7 +108,7 @@ export default function RootLayout({
             gtag('config', 'G-V5RGLHQ7W5');
           `}
         </Script>
-        <Script id="meta-pixel-init" strategy="beforeInteractive">
+        <Script id="meta-pixel-init" strategy="afterInteractive">
           {`
             !function(f,b,e,v,n,t,s){
               if(f.fbq)return;
