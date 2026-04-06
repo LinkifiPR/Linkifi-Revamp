@@ -4,7 +4,8 @@ import { CmsEntryArticle } from "@/components/cms/CmsEntryArticle";
 import { buildEntrySchemas } from "@/lib/cms-render";
 import { getCmsEntryBySlug } from "@/lib/cms-repository";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600; // Re-generate cached page at most once per hour
+export const dynamicParams = true; // Allow slugs not pre-built at deploy time
 
 type Params = { slug: string };
 

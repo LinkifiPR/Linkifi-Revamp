@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { CmsEntryCard } from "@/components/cms/CmsEntryCard";
 import { listPublishedEntriesByType } from "@/lib/cms-repository";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600; // Re-generate at most once per hour
 
 export const metadata: Metadata = {
   title: "Pages | Linkifi",
