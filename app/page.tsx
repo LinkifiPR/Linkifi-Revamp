@@ -169,28 +169,28 @@ export default function Home() {
 
   const featuredPublications = [
     {
-      src: "/publication-logos/nytimes.png",
+      src: "/publication-logos/nytimes.webp",
       alt: "The New York Times",
       width: 520,
       height: 90,
       className: "h-9 md:h-10 w-auto",
     },
     {
-      src: "/publication-logos/forbes.png",
+      src: "/publication-logos/forbes.webp",
       alt: "Forbes",
       width: 280,
       height: 90,
       className: "h-11 md:h-12 w-auto",
     },
     {
-      src: "/publication-logos/guardian.png",
+      src: "/publication-logos/guardian.webp",
       alt: "The Guardian",
       width: 320,
       height: 95,
       className: "h-8 md:h-9 w-auto",
     },
     {
-      src: "/publication-logos/healthline.png",
+      src: "/publication-logos/healthline.webp",
       alt: "healthline",
       width: 360,
       height: 70,
@@ -204,7 +204,7 @@ export default function Home() {
       className: "h-7 md:h-8 w-auto",
     },
     {
-      src: "/publication-logos/hubspot.png",
+      src: "/publication-logos/hubspot.webp",
       alt: "HubSpot",
       width: 260,
       height: 72,
@@ -218,7 +218,7 @@ export default function Home() {
       className: "h-7 md:h-8 w-auto",
     },
     {
-      src: "/publication-logos/menshealth.png",
+      src: "/publication-logos/menshealth.webp",
       alt: "MensHealth",
       width: 320,
       height: 82,
@@ -227,14 +227,14 @@ export default function Home() {
   ];
   const heroPublications = [
     {
-      src: "/publication-logos/forbes.png",
+      src: "/publication-logos/forbes.webp",
       alt: "Forbes",
       width: 280,
       height: 90,
       className: "h-6 md:h-7 w-auto",
     },
     {
-      src: "/publication-logos/healthline.png",
+      src: "/publication-logos/healthline.webp",
       alt: "healthline",
       width: 360,
       height: 70,
@@ -248,35 +248,35 @@ export default function Home() {
       className: "h-5 md:h-6 w-auto",
     },
     {
-      src: "/publication-logos/guardian.png",
+      src: "/publication-logos/guardian.webp",
       alt: "The Guardian",
       width: 320,
       height: 95,
       className: "h-7 md:h-8 w-auto",
     },
     {
-      src: "/publication-logos/daily-express-clean.png",
+      src: "/publication-logos/daily-express-clean.webp",
       alt: "Daily Express",
       width: 3816,
       height: 454,
       className: "h-4 md:h-5 w-auto",
     },
     {
-      src: "/publication-logos/wsj-clean.png",
+      src: "/publication-logos/wsj-clean.webp",
       alt: "WSJ",
       width: 3690,
       height: 2091,
       className: "h-6 md:h-7 w-auto",
     },
     {
-      src: "/publication-logos/realtor-clean.png",
+      src: "/publication-logos/realtor-clean.webp",
       alt: "realtor.com",
       width: 800,
       height: 147,
       className: "h-5 md:h-6 w-auto",
     },
     {
-      src: "/publication-logos/hubspot-clean.png",
+      src: "/publication-logos/hubspot-clean.webp",
       alt: "HubSpot",
       width: 800,
       height: 232,
@@ -368,21 +368,21 @@ export default function Home() {
       company: "UK Therapy Rooms",
       role: "Co-Founder",
       src: "/testimonials/videos/daniel-v1-720p.mp4",
-      poster: "/testimonials/posters/daniel-v1-720p.mp4.png",
+      poster: "/testimonials/posters/daniel-v1-720p.webp",
     },
     {
       name: "Joy Aumann",
       company: "LUXURYSOCALREALTY",
       role: "Co-Founder",
       src: "/testimonials/videos/joy-v1-720p.mp4",
-      poster: "/testimonials/posters/joy-v1-720p.mp4.png",
+      poster: "/testimonials/posters/joy-v1-720p.webp",
     },
     {
       name: "Amanda Leemis",
       company: "Hollydog LLC",
       role: "Editor-In-Chief",
       src: "/testimonials/videos/amanda-v1-720p.mp4",
-      poster: "/testimonials/posters/amanda-v1-720p.mp4.png",
+      poster: "/testimonials/posters/amanda-v1-720p.webp",
     },
   ] as const;
 
@@ -392,7 +392,7 @@ export default function Home() {
     "/homepage/conference/Chris3.mp4",
     "/homepage/conference/Chris4.mp4",
   ] as const;
-  const conferencePoster = "/homepage/conference/Chris1-poster.png";
+  const conferencePoster = "/homepage/conference/Chris1-poster.webp";
 
   const conferenceStats = [
     {

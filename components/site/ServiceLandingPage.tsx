@@ -455,7 +455,7 @@ const authorityPerformanceStories: AuthorityPerformanceStory[] = [
 
 const trustLogos = [
   {
-    src: "/publication-logos/nytimes.png",
+    src: "/publication-logos/nytimes.webp",
     alt: "The New York Times",
     width: 520,
     height: 90,
@@ -463,7 +463,7 @@ const trustLogos = [
     filterClass: "opacity-100",
   },
   {
-    src: "/publication-logos/forbes.png",
+    src: "/publication-logos/forbes.webp",
     alt: "Forbes",
     width: 280,
     height: 90,
@@ -471,7 +471,7 @@ const trustLogos = [
     filterClass: "opacity-100",
   },
   {
-    src: "/publication-logos/guardian.png",
+    src: "/publication-logos/guardian.webp",
     alt: "The Guardian",
     width: 320,
     height: 95,
@@ -479,7 +479,7 @@ const trustLogos = [
     filterClass: "opacity-100",
   },
   {
-    src: "/publication-logos/healthline.png",
+    src: "/publication-logos/healthline.webp",
     alt: "healthline",
     width: 360,
     height: 70,
@@ -495,7 +495,7 @@ const trustLogos = [
     filterClass: "invert",
   },
   {
-    src: "/publication-logos/daily-express-clean.png",
+    src: "/publication-logos/daily-express-clean.webp",
     alt: "Daily Express",
     width: 3816,
     height: 454,
@@ -503,7 +503,7 @@ const trustLogos = [
     filterClass: "invert",
   },
   {
-    src: "/publication-logos/wsj-clean.png",
+    src: "/publication-logos/wsj-clean.webp",
     alt: "WSJ",
     width: 3690,
     height: 2091,
@@ -511,7 +511,7 @@ const trustLogos = [
     filterClass: "invert",
   },
   {
-    src: "/publication-logos/hubspot-clean.png",
+    src: "/publication-logos/hubspot-clean.webp",
     alt: "HubSpot",
     width: 800,
     height: 232,
@@ -656,23 +656,23 @@ const authorityMontageYouTube = [
 
 const authorityMontagePublications = [
   {
-    src: "/authority-montage/processed/saga-magazine.jpg",
+    src: "/authority-montage/processed/saga-magazine.webp",
     alt: "Saga Magazine feature screenshot",
   },
   {
-    src: "/authority-montage/processed/eat-this-not-that.jpg",
+    src: "/authority-montage/processed/eat-this-not-that.webp",
     alt: "Eat This Not That feature screenshot",
   },
   {
-    src: "/authority-montage/processed/bbc-travel.jpg",
+    src: "/authority-montage/processed/bbc-travel.webp",
     alt: "BBC Travel feature screenshot",
   },
   {
-    src: "/authority-montage/processed/fodors-travel.jpg",
+    src: "/authority-montage/processed/fodors-travel.webp",
     alt: "Fodor's Travel feature screenshot",
   },
   {
-    src: "/authority-montage/processed/entrepreneur-uk.jpg",
+    src: "/authority-montage/processed/entrepreneur-uk.webp",
     alt: "Entrepreneur UK feature screenshot",
   },
 ] as const;

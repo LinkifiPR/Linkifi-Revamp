@@ -109,22 +109,22 @@ const teamMembers: TeamMember[] = [
   {
     id: "agustin",
     name: "Agustin",
-    portrait: { src: "/team/agustin.jpg", mode: "photo", objectPosition: "50% 21%", tint: 0.78, softMask: true },
+    portrait: { src: "/team/agustin.webp", mode: "photo", objectPosition: "50% 21%", tint: 0.78, softMask: true },
   },
   {
     id: "dani",
     name: "Dani",
-    portrait: { src: "/team/dani-b.png", mode: "photo", objectPosition: "50% 16%", tint: 0.76, softMask: true },
+    portrait: { src: "/team/dani-b.webp", mode: "photo", objectPosition: "50% 16%", tint: 0.76, softMask: true },
   },
   {
     id: "dani-d",
     name: "Dani D",
-    portrait: { src: "/team/dani-d.jpg", mode: "photo", objectPosition: "50% 18%", tint: 0.82, softMask: true },
+    portrait: { src: "/team/dani-d.webp", mode: "photo", objectPosition: "50% 18%", tint: 0.82, softMask: true },
   },
   {
     id: "mateos",
     name: "Mateos",
-    portrait: { src: "/team/mateos.jpg", mode: "photo", objectPosition: "50% 18%", tint: 0.84, softMask: true },
+    portrait: { src: "/team/mateos.webp", mode: "photo", objectPosition: "50% 18%", tint: 0.84, softMask: true },
   },
   {
     id: "dario",
