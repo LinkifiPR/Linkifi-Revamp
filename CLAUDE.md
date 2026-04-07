@@ -286,4 +286,28 @@ b44b590 Tidy proof collage JSX formatting
 
 ---
 
-*Last updated: 2026-04-06 | Updated by: Claude (Cowork)*
+### Session 4 — 2026-04-07
+
+**Context:** Follow-up from Session 3. New GTmetrix report showed 63% performance / 94% structure / 2.25MB page size. Two remaining GTmetrix action items: remove Twitter widget (user declined) and add preconnect hints (done).
+
+**What we did:**
+
+**Fix 9 — Preconnect hints for Google Ad domains**
+- Added to `<head>` in `app/layout.tsx`:
+  ```html
+  <link rel="preconnect" href="https://googleads.g.doubleclick.net" />
+  <link rel="preconnect" href="https://www.google.com" />
+  ```
+- GTmetrix flagged these as "Preconnect to required origins — Potential savings of 145ms"
+- Preconnect hints tell the browser to resolve DNS + open a TCP connection to these origins before they're actually needed, eliminating connection latency when Google Ads scripts load
+
+**Pushed to GitHub → Netlify auto-deploy triggered**
+
+**Next steps / open tasks:**
+- Run a new GTmetrix report to measure impact
+- Deeper JS performance: the primary TTI bottleneck is `app/page.tsx` (2,000+ lines, 53 Framer Motion animations, single client component). Consider splitting into lazy-loaded sections with `dynamic(() => import(...), { ssr: false })` for below-fold content
+- Consider removing the legacy `/client` Vite directory if confirmed unused in production
+
+---
+
+*Last updated: 2026-04-07 | Updated by: Claude (Cowork)*
