@@ -937,6 +937,7 @@ export default function Home() {
                       alt={publication.alt}
                       width={publication.width}
                       height={publication.height}
+                      sizes="(max-width: 768px) 60px, 100px"
                       className={`${publication.className} max-w-full hero-publication-logo hero-publication-pulse`}
                       style={{ animationDelay: `${index * 0.3}s` }}
                     />
@@ -995,6 +996,7 @@ export default function Home() {
                       alt="VirtualStaging.com"
                       width={180}
                       height={50}
+                      sizes="180px"
                       className="h-10 md:h-12 w-auto object-contain logo-stylized"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-[#D733A2]/0 via-[#D733A2]/20 to-[#D733A2]/0 opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
@@ -1005,6 +1007,7 @@ export default function Home() {
                       alt="Wealth of Geeks"
                       width={200}
                       height={50}
+                      sizes="200px"
                       className="h-8 md:h-10 w-auto object-contain logo-stylized"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-[#D733A2]/0 via-[#D733A2]/20 to-[#D733A2]/0 opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
@@ -1015,6 +1018,7 @@ export default function Home() {
                       alt="SweatBlock"
                       width={160}
                       height={50}
+                      sizes="160px"
                       className="h-8 md:h-10 w-auto object-contain logo-stylized"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-[#D733A2]/0 via-[#D733A2]/20 to-[#D733A2]/0 opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
@@ -1025,6 +1029,7 @@ export default function Home() {
                       alt="Rudis Wrestling"
                       width={140}
                       height={50}
+                      sizes="140px"
                       className="h-10 md:h-12 w-auto object-contain logo-stylized"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-[#D733A2]/0 via-[#D733A2]/20 to-[#D733A2]/0 opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
@@ -1035,6 +1040,7 @@ export default function Home() {
                       alt="Netify"
                       width={120}
                       height={50}
+                      sizes="120px"
                       className="h-10 md:h-12 w-auto object-contain logo-stylized"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-[#D733A2]/0 via-[#D733A2]/20 to-[#D733A2]/0 opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
@@ -1045,6 +1051,7 @@ export default function Home() {
                       alt="US Therapy Rooms"
                       width={200}
                       height={50}
+                      sizes="200px"
                       className="h-8 md:h-10 w-auto object-contain logo-stylized"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-[#D733A2]/0 via-[#D733A2]/20 to-[#D733A2]/0 opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
@@ -1095,6 +1102,7 @@ export default function Home() {
                         alt={publication.alt}
                         width={publication.width}
                         height={publication.height}
+                        sizes="(max-width: 768px) 80px, 160px"
                         className={`${publication.className} publication-logo`}
                       />
                     </div>
@@ -1236,6 +1244,7 @@ export default function Home() {
                               alt="Linkifi"
                               width={86}
                               height={26}
+                              sizes="86px"
                               className="h-6 w-auto object-contain opacity-95"
                             />
                           </div>
