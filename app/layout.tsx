@@ -88,6 +88,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net" />
+        <link rel="preconnect" href="https://www.google.com" />
         <Script
           id="google-gtag-src"
           src="https://www.googletagmanager.com/gtag/js?id=G-V5RGLHQ7W5"
