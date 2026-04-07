@@ -175,8 +175,67 @@ b44b590 Tidy proof collage JSX formatting
 - Database: Neon PostgreSQL, connected via `DATABASE_URL` env var (set in Netlify)
 - Deployment: Netlify at `linkifi-revamp.netlify.app`, auto-deploys on push to `main`
 
-**Next steps / open tasks:** To be defined by Christopher in next session.
+**Next steps / open tasks:** Continue performance fixes from Session 2.
 
 ---
 
-*Last updated: 2026-04-03 | Updated by: Claude (Cowork)*
+### Session 2 — 2026-04-06
+
+**Context:** Full performance audit based on GTmetrix report (62% score, 9.3s load, 9.2s TTI, 1.1s TBT). Identified 8 priority fixes. Implemented Fixes 1–5 this session.
+
+**What we did:**
+
+**Fix 1 — ISR on blog/case study/pages routes**
+- Replaced `export const dynamic = "force-dynamic"` with `export const revalidate = 3600` on:
+  - `app/blog/[slug]/page.tsx`
+  - `app/case-studies/[slug]/page.tsx`
+  - `app/pages/[slug]/page.tsx`
+  - `app/pages/page.tsx`
+- Pages now served from Netlify CDN cache, refreshed in background every hour
+- Expected impact: blog/case study TTI drops dramatically
+
+**Fix 2 — Meta Pixel script strategy**
+- Changed `strategy="beforeInteractive"` → `strategy="afterInteractive"` in `app/layout.tsx`
+- Facebook pixel was blocking the entire page before any rendering could begin
+- Tracking still fires correctly, just no longer blocks users
+
+**Fix 3 — Scoped chat widget to marketing pages only**
+- Created `components/site/ChatWidget.tsx` component
+- Removed LeadConnector script from root `app/layout.tsx`
+- Added `<ChatWidget />` to: homepage, `ServiceLandingPage`, `ContactPageClient`
+- Chat widget was still appearing on blog/team pages due to GoHighLevel injecting at domain level
+- Fixed by creating layout files with CSS suppression:
+  - `app/blog/layout.tsx` — hides widget on all blog pages (current + future)
+  - `app/case-studies/layout.tsx` — hides widget on all case study pages (current + future)
+  - `app/team/layout.tsx` — hides widget on team page
+- CSS used: `chat-widget { display: none !important; }`
+
+**Fix 4 — Netlify cache headers (done separately by Christopher)**
+
+**Fix 5 — Convert and compress images to WebP**
+- Converted 27 PNG/JPG files to WebP using Pillow (quality 75–85)
+- Total saved: ~5MB
+- Key wins:
+  - `Chris1-poster.png`: 778KB → 34KB (744KB saved)
+  - `dani-b.png`: 1.3MB → 37KB (1.25MB saved)
+  - `amanda/joy/daniel testimonial posters`: ~1.25MB → ~52KB combined
+  - Team photos (agustin, dani-d, mateos): ~1.5MB → ~605KB
+  - Authority montage images: ~1.6MB → ~710KB
+  - Publication logos (11 logos): ~353KB → ~162KB
+- Updated all code references in `app/page.tsx`, `app/team/page.tsx`, `components/site/ServiceLandingPage.tsx`
+
+**Key facts established:**
+- GoHighLevel/LeadConnector chat widget is injected at domain level (not via Netlify snippet injection — that section is empty)
+- The CSS tag selector `chat-widget { display: none !important; }` reliably hides it per-route
+- Next.js layout files in a route segment apply to ALL pages in that segment automatically
+- Blog/case study pages were on `force-dynamic` — every visitor triggered a live DB query
+- `lib/cms-repository.ts` is the real DB layer (raw `pg` Pool), Drizzle is unused legacy
+
+**Remaining performance fixes to implement:**
+- Fix 6: Add `sizes` props to `<Image>` components missing them on homepage
+- Fix 7: Compress conference videos (Chris2–4 are 4–11MB each)
+- Fix 8: Remove unused CSS/JS (365KB unused JS, 30KB unused CSS identified by GTmetrix)
+
+---
+
+*Last updated: 2026-04-06 | Updated by: Claude (Cowork)*
