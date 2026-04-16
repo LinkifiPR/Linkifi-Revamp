@@ -361,10 +361,10 @@ function BuiltForSketch({ title }: { title: string }) {
   if (title === "Brands") {
     return (
       <svg viewBox="0 0 90 56" aria-hidden="true" className="h-10 w-16">
-        <path d="M10 22 H80 L74 14 H16 Z" fill="none" stroke="#7a72be" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M18 22 V44 H72 V22" fill="none" stroke="#7a72be" strokeWidth="2.2" strokeLinecap="round" />
-        <path d="M34 44 V30 H56 V44" fill="none" stroke="#7a72be" strokeWidth="2.2" strokeLinecap="round" />
-        <path d="M8 12 C20 8, 34 9, 46 12 C58 15, 72 16, 82 12" fill="none" stroke="#b09ef2" strokeWidth="2" strokeLinecap="round" />
+        <path d="M10 22 H80 L74 14 H16 Z" fill="none" stroke="#5f729c" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M18 22 V44 H72 V22" fill="none" stroke="#5f729c" strokeWidth="2.2" strokeLinecap="round" />
+        <path d="M34 44 V30 H56 V44" fill="none" stroke="#5f729c" strokeWidth="2.2" strokeLinecap="round" />
+        <path d="M8 12 C20 8, 34 9, 46 12 C58 15, 72 16, 82 12" fill="none" stroke="#8ca8d8" strokeWidth="2" strokeLinecap="round" />
       </svg>
     );
   }
@@ -372,18 +372,18 @@ function BuiltForSketch({ title }: { title: string }) {
   if (title === "Founders") {
     return (
       <svg viewBox="0 0 90 56" aria-hidden="true" className="h-10 w-16">
-        <circle cx="45" cy="18" r="8" fill="none" stroke="#7a72be" strokeWidth="2.2" />
-        <path d="M27 44 C30 32, 38 28, 45 28 C52 28, 60 32, 63 44" fill="none" stroke="#7a72be" strokeWidth="2.2" strokeLinecap="round" />
-        <path d="M23 15 L18 12 M67 15 L72 12 M45 8 V4" fill="none" stroke="#b09ef2" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="45" cy="18" r="8" fill="none" stroke="#5f729c" strokeWidth="2.2" />
+        <path d="M27 44 C30 32, 38 28, 45 28 C52 28, 60 32, 63 44" fill="none" stroke="#5f729c" strokeWidth="2.2" strokeLinecap="round" />
+        <path d="M23 15 L18 12 M67 15 L72 12 M45 8 V4" fill="none" stroke="#8ca8d8" strokeWidth="2" strokeLinecap="round" />
       </svg>
     );
   }
 
   return (
     <svg viewBox="0 0 90 56" aria-hidden="true" className="h-10 w-16">
-      <path d="M14 18 H58 C63 18,66 21,66 26 V34 C66 39,63 42,58 42 H42 L34 48 V42 H14 C9 42,6 39,6 34 V26 C6 21,9 18,14 18 Z" fill="none" stroke="#7a72be" strokeWidth="2.2" strokeLinejoin="round" />
-      <path d="M45 15 L47 19 L51 19 L48 22 L49 26 L45 24 L41 26 L42 22 L39 19 L43 19 Z" fill="none" stroke="#b09ef2" strokeWidth="2" strokeLinejoin="round" />
-      <path d="M20 27 H48 M20 33 H40" fill="none" stroke="#7a72be" strokeWidth="2" strokeLinecap="round" />
+      <path d="M14 18 H58 C63 18,66 21,66 26 V34 C66 39,63 42,58 42 H42 L34 48 V42 H14 C9 42,6 39,6 34 V26 C6 21,9 18,14 18 Z" fill="none" stroke="#5f729c" strokeWidth="2.2" strokeLinejoin="round" />
+      <path d="M45 15 L47 19 L51 19 L48 22 L49 26 L45 24 L41 26 L42 22 L39 19 L43 19 Z" fill="none" stroke="#8ca8d8" strokeWidth="2" strokeLinejoin="round" />
+      <path d="M20 27 H48 M20 33 H40" fill="none" stroke="#5f729c" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
@@ -476,21 +476,23 @@ export function AuthorityPrDeckPage() {
                 </div>
               </div>
 
-              <div className="relative z-10 mx-auto mt-7 w-full max-w-[920px] overflow-hidden rounded-[20px] border border-[#ddd7f3] bg-[linear-gradient(145deg,#fbfaff_0%,#f4f7ff_100%)] p-4 shadow-[0_18px_36px_rgba(29,38,83,0.12)] sm:p-5">
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(201,173,255,0.24),transparent_32%),radial-gradient(circle_at_88%_84%,rgba(161,220,255,0.18),transparent_34%)]" />
+              <div className="relative z-10 mx-auto mt-6 w-full max-w-[820px] overflow-hidden border border-[#d8ddec] bg-[linear-gradient(145deg,#f8faff_0%,#edf2fb_100%)] p-3 shadow-[0_16px_32px_rgba(34,45,80,0.11)] [clip-path:polygon(16px_0,calc(100%-16px)_0,100%_16px,100%_calc(100%-16px),calc(100%-16px)_100%,16px_100%,0_calc(100%-16px),0_16px)] sm:p-4">
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(170,193,236,0.22),transparent_34%),radial-gradient(circle_at_88%_84%,rgba(168,185,219,0.18),transparent_36%)]" />
+                <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(111,128,172,0.13)_1px,transparent_1px),linear-gradient(90deg,rgba(111,128,172,0.13)_1px,transparent_1px)] [background-size:18px_18px]" />
                 <div className="relative">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6b5fb3]">Built for</p>
-                  <div className="mt-3 grid gap-3 md:grid-cols-3">
+                  <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[#5d6b95]">Built for</p>
+                  <div className="mt-2.5 grid gap-2.5 md:grid-cols-3">
                     {builtFor.map((item) => (
                       <div
                         key={item.title}
-                        className="rounded-[16px] border border-[#e3def3] bg-[linear-gradient(150deg,#ffffff_0%,#f7f6ff_100%)] p-4 shadow-[0_10px_22px_rgba(38,47,92,0.08)] transition-transform duration-300 hover:-translate-y-0.5"
+                        className="relative border border-[#d7deef] bg-[linear-gradient(155deg,#ffffff_0%,#f4f7ff_100%)] p-3.5 shadow-[0_10px_20px_rgba(35,46,84,0.08)] transition-transform duration-300 hover:-translate-y-0.5 [clip-path:polygon(12px_0,calc(100%-12px)_0,100%_12px,100%_calc(100%-12px),calc(100%-12px)_100%,12px_100%,0_calc(100%-12px),0_12px)]"
                       >
-                        <span className="inline-flex items-center justify-center rounded-[12px] border border-[#e8e3f5] bg-[linear-gradient(135deg,#fff8fe_0%,#f4f8ff_100%)] px-2 py-1 shadow-[0_8px_16px_rgba(64,74,122,0.1)]">
+                        <div className="pointer-events-none absolute right-2 top-2 h-[2px] w-10 bg-[linear-gradient(90deg,transparent,#8ca8d8)]" />
+                        <span className="inline-flex items-center justify-center border border-[#dde4f2] bg-[linear-gradient(135deg,#fdfdff_0%,#eef4ff_100%)] px-2 py-1 shadow-[0_7px_14px_rgba(64,74,122,0.1)] [clip-path:polygon(8px_0,calc(100%-8px)_0,100%_8px,100%_calc(100%-8px),calc(100%-8px)_100%,8px_100%,0_calc(100%-8px),0_8px)]">
                           <BuiltForSketch title={item.title} />
                         </span>
-                        <h3 className="mt-3 text-[22px] font-display font-semibold tracking-[-0.03em] text-[#242948]">{item.title}</h3>
-                        <p className="mt-1.5 text-[14px] leading-[1.6] text-[#616785]">{item.description}</p>
+                        <h3 className="mt-2.5 font-mono text-[17px] font-semibold uppercase tracking-[0.08em] text-[#243152]">{item.title}</h3>
+                        <p className="mt-1 text-[13px] leading-[1.5] text-[#5f6787]">{item.description}</p>
                       </div>
                     ))}
                   </div>
