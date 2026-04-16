@@ -18,6 +18,7 @@ import {
   ShieldCheck,
   Sparkles,
   Target,
+  Tv,
   UserRound,
   Users,
 } from "lucide-react";
@@ -391,39 +392,32 @@ export function AuthorityPrDeckPage() {
                 </div>
 
                 <div className="relative mx-auto w-full max-w-[600px]">
-                  <div className="pointer-events-none absolute right-4 top-2 z-20 sm:right-8 sm:top-3">
-                    <div className="inline-flex rounded-full border border-[#f4b4df] bg-[#fff2fb] px-4 py-2 text-[12px] font-semibold tracking-[0.02em] text-[#c71585] shadow-[0_14px_28px_rgba(199,52,146,0.2)] sm:text-[13px]">
+                  <div className="pointer-events-none absolute right-4 top-3 z-20 sm:right-8 sm:top-4">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-[#ff9de1] bg-[linear-gradient(135deg,#fff0fb_0%,#ffe2f5_100%)] px-2 py-1.5 text-[12px] font-semibold tracking-[0.02em] text-[#c71585] shadow-[0_14px_28px_rgba(199,52,146,0.28)] sm:text-[13px]">
+                      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[linear-gradient(135deg,#ff49bf_0%,#ff8ad9_100%)] text-white shadow-[0_0_0_3px_rgba(255,73,191,0.2),0_10px_20px_rgba(199,52,146,0.35)] motion-safe:animate-[pulse_4.8s_ease-in-out_infinite]">
+                        <Tv className="h-3.5 w-3.5" />
+                      </span>
                       Our Client on TV
-                    </div>
-                    <div className="ml-8 mt-1 sm:ml-10">
-                      <svg
-                        viewBox="0 0 86 68"
-                        aria-hidden="true"
-                        className="h-[56px] w-[86px] motion-safe:animate-bounce"
-                      >
-                        <path
-                          d="M8 8 C 48 5, 72 24, 54 50"
-                          fill="none"
-                          stroke="#ff3fb4"
-                          strokeWidth="4"
-                          strokeLinecap="round"
-                        />
-                        <path
-                          d="M54 50 L47 42 M54 50 L64 44"
-                          fill="none"
-                          stroke="#ff3fb4"
-                          strokeWidth="4"
-                          strokeLinecap="round"
-                        />
-                      </svg>
                     </div>
                   </div>
                   <div className="pointer-events-none absolute -inset-8 bg-[radial-gradient(circle,rgba(111,93,255,0.2)_0%,rgba(111,93,255,0)_66%)]" />
-                  <div className="relative rounded-[30px] border border-[#d8d2f0] bg-[linear-gradient(170deg,#f5f3ff_0%,#f9fbff_54%,#ffffff_100%)] p-4 shadow-[0_36px_72px_rgba(32,40,82,0.22)] sm:p-5">
-                    <div className="rounded-[24px] border border-[#2e355f] bg-[linear-gradient(180deg,#232c57_0%,#11172f_100%)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_12px_28px_rgba(9,12,32,0.38)] sm:p-5">
-                      <div className="relative aspect-[16/10] overflow-hidden rounded-[18px] border border-white/15 bg-[#060815]">
+                  <div className="relative rounded-[32px] border border-[#ece7ff] bg-[linear-gradient(155deg,#f7f4ff_0%,#ffffff_42%,#eef7ff_100%)] p-4 shadow-[0_38px_80px_rgba(16,24,58,0.28)] sm:p-5">
+                    <div className="pointer-events-none absolute inset-x-12 top-2 h-1 rounded-full bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.85),transparent)]" />
+                    <div className="rounded-[26px] border border-[#1f2d6c] bg-[linear-gradient(170deg,#24377d_0%,#141c44_52%,#0c1129_100%)] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),inset_0_-1px_0_rgba(255,255,255,0.08),0_14px_34px_rgba(8,12,34,0.5)] sm:p-4">
+                      <div className="mb-2 flex items-center justify-between px-1">
+                        <div className="flex items-center gap-1.5">
+                          <span className="h-2 w-2 rounded-full bg-[#ff5f6e]" />
+                          <span className="h-2 w-2 rounded-full bg-[#ffc149]" />
+                          <span className="h-2 w-2 rounded-full bg-[#57d769]" />
+                        </div>
+                        <span className="inline-flex items-center gap-1 rounded-full border border-[#6ddcff66] bg-[#0d1f4f] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#89e9ff]">
+                          <span className="h-1.5 w-1.5 rounded-full bg-[#54f2ff] shadow-[0_0_10px_rgba(84,242,255,0.9)] motion-safe:animate-[pulse_3.8s_ease-in-out_infinite]" />
+                          Live
+                        </span>
+                      </div>
+                      <div className="relative aspect-[16/10] overflow-hidden rounded-[16px] border border-[#77d7ff66] bg-[#03061a] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08),0_0_0_1px_rgba(115,219,255,0.2)]">
                         <video
-                          className="h-full w-full object-cover"
+                          className="h-full w-full object-cover saturate-[1.14] contrast-[1.1] brightness-[1.03]"
                           autoPlay
                           loop
                           muted
@@ -434,11 +428,19 @@ export function AuthorityPrDeckPage() {
                         >
                           <source src={heroVideoSrc} type="video/mp4" />
                         </video>
-                        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_0%,rgba(161,141,255,0.36),transparent_34%),radial-gradient(circle_at_92%_100%,rgba(63,132,255,0.28),transparent_30%)] mix-blend-screen" />
-                        <div className="pointer-events-none absolute inset-x-6 top-3 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.62),transparent)]" />
+                        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_2%,rgba(255,101,197,0.22),transparent_36%),radial-gradient(circle_at_92%_100%,rgba(63,222,255,0.24),transparent_32%)] mix-blend-screen" />
+                        <div className="pointer-events-none absolute inset-x-6 top-2 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.62),transparent)]" />
+                      </div>
+                      <div className="mt-3 flex items-center justify-between px-1">
+                        <div className="h-1.5 w-20 rounded-full bg-[repeating-linear-gradient(90deg,rgba(156,210,255,0.9)_0_4px,rgba(81,110,174,0.2)_4px_7px)] opacity-80" />
+                        <div className="flex items-center gap-2">
+                          <span className="h-2.5 w-2.5 rounded-full bg-[#3fd7ff] shadow-[0_0_10px_rgba(63,215,255,0.85)]" />
+                          <span className="h-2.5 w-2.5 rounded-full bg-[#8f6bff] shadow-[0_0_10px_rgba(143,107,255,0.85)]" />
+                        </div>
                       </div>
                     </div>
-                    <div className="mx-auto mt-4 h-2 w-28 rounded-full bg-[linear-gradient(90deg,rgba(22,29,58,0.14),rgba(22,29,58,0.32),rgba(22,29,58,0.14))] shadow-[0_8px_16px_rgba(16,22,48,0.18)]" />
+                    <div className="mx-auto mt-3 h-2 w-12 rounded-full bg-[linear-gradient(180deg,#d2d8ee_0%,#bac3de_100%)] shadow-[0_6px_12px_rgba(40,48,88,0.22)]" />
+                    <div className="mx-auto mt-2 h-3 w-36 rounded-full bg-[linear-gradient(180deg,#e9edf9_0%,#c8d1ea_100%)] shadow-[0_10px_18px_rgba(26,36,78,0.24)]" />
                   </div>
                   <div className="mt-4 flex flex-wrap items-center gap-3 text-[12px] font-medium text-[#4d5474] sm:text-[13px]">
                     <span className="inline-flex items-center gap-2 rounded-full border border-[#dfdbf1] bg-white px-3 py-1.5 shadow-[0_10px_22px_rgba(24,31,62,0.08)]">
