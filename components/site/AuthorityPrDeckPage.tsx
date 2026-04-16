@@ -278,6 +278,7 @@ const momentumChart = createChartGeometry(momentumSeries);
 
 const pageContainerClass = "mx-auto w-full max-w-[1200px] px-6";
 const heroContainerClass = "mx-auto w-full max-w-[1280px] px-6";
+const heroVideoSrc = "/homepage/HERO/Hero%20Video%20%281%29.mp4";
 
 function SectionWrap({
   children,
@@ -367,7 +368,7 @@ export function AuthorityPrDeckPage() {
             <Panel className="overflow-hidden bg-[radial-gradient(circle_at_14%_0%,rgba(144,122,255,0.18),transparent_26%),radial-gradient(circle_at_88%_10%,rgba(79,155,255,0.12),transparent_24%),linear-gradient(180deg,#ffffff_0%,#fbfbff_100%)] lg:p-14">
               <div className="pointer-events-none absolute inset-0 opacity-[0.28] [background-image:linear-gradient(rgba(117,110,174,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(117,110,174,0.12)_1px,transparent_1px)] [background-size:54px_54px]" />
 
-              <div className="relative z-10 grid gap-10 lg:grid-cols-[0.98fr_1.02fr] lg:items-center lg:gap-14">
+              <div className="relative z-10 grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-14">
                 <div>
                   <Eyebrow>A Linkifi Service</Eyebrow>
                   <h1 className="mt-6 text-balance text-5xl font-display font-bold tracking-[-0.055em] text-[#171929] sm:text-6xl md:text-7xl">
@@ -389,43 +390,77 @@ export function AuthorityPrDeckPage() {
                   </div>
                 </div>
 
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-[20px] border border-[#ddd6f4] bg-white p-5 shadow-[0_16px_34px_rgba(24,31,62,0.08)] sm:col-span-2">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6f5dff]">Built for</p>
-                    <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                      {builtFor.map((item) => (
-                        <div key={item.title} className="rounded-[14px] border border-[#ece8f6] bg-[#faf9ff] px-3 py-3">
-                          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#efebff] text-[#6f5dff]">
-                            <item.Icon className="h-4 w-4" />
-                          </span>
-                          <div className="mt-2 text-[15px] font-semibold text-[#171929]">{item.title}</div>
-                          <p className="mt-1 text-[13px] leading-[1.5] text-[#626780]">{item.description}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="rounded-[20px] border border-[#e4def4] bg-white p-5 shadow-[0_16px_34px_rgba(24,31,62,0.08)]">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6f5dff]">Main promise</p>
-                    <p className="mt-3 text-[16px] font-medium leading-[1.55] text-[#303554]">
-                      We help clients become more visible, more trusted, and more recognized so they own more authority in their market.
-                    </p>
-                  </div>
-
-                  <div className="rounded-[20px] border border-[#d8d0f6] bg-[linear-gradient(140deg,#f8f5ff_0%,#eef2ff_100%)] p-5 shadow-[0_16px_34px_rgba(24,31,62,0.08)]">
-                    <div className="flex items-center gap-3">
-                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,#6f5dff_0%,#4d92ff_100%)] text-white shadow-[0_14px_28px_rgba(95,84,198,0.28)]">
-                        <Crown className="h-5 w-5" />
-                      </span>
-                      <div>
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6f5dff]">End state</p>
-                        <p className="mt-1 text-[16px] font-semibold text-[#171929]">Category authority</p>
+                <div className="relative mx-auto w-full max-w-[600px]">
+                  <div className="pointer-events-none absolute -inset-8 bg-[radial-gradient(circle,rgba(111,93,255,0.2)_0%,rgba(111,93,255,0)_66%)]" />
+                  <div className="relative rounded-[30px] border border-[#d8d2f0] bg-[linear-gradient(170deg,#f5f3ff_0%,#f9fbff_54%,#ffffff_100%)] p-3 shadow-[0_36px_72px_rgba(32,40,82,0.22)] sm:p-4">
+                    <div className="rounded-[24px] border border-[#2e355f] bg-[linear-gradient(180deg,#232c57_0%,#11172f_100%)] p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_12px_28px_rgba(9,12,32,0.38)] sm:p-3">
+                      <div className="relative aspect-[16/10] overflow-hidden rounded-[18px] border border-white/15 bg-[#060815]">
+                        <video
+                          className="h-full w-full object-cover"
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          preload="auto"
+                          disablePictureInPicture
+                          aria-label="Authority PR hero video"
+                        >
+                          <source src={heroVideoSrc} type="video/mp4" />
+                        </video>
+                        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_0%,rgba(161,141,255,0.36),transparent_34%),radial-gradient(circle_at_92%_100%,rgba(63,132,255,0.28),transparent_30%)] mix-blend-screen" />
+                        <div className="pointer-events-none absolute inset-x-6 top-3 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.62),transparent)]" />
                       </div>
                     </div>
-                    <p className="mt-3 text-[14px] leading-[1.6] text-[#576082]">
-                      Become the brand people recognize, the expert people quote, and the company people trust.
-                    </p>
+                    <div className="mx-auto mt-4 h-2 w-28 rounded-full bg-[linear-gradient(90deg,rgba(22,29,58,0.14),rgba(22,29,58,0.32),rgba(22,29,58,0.14))] shadow-[0_8px_16px_rgba(16,22,48,0.18)]" />
                   </div>
+                  <div className="mt-4 flex flex-wrap items-center gap-3 text-[12px] font-medium text-[#4d5474] sm:text-[13px]">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-[#dfdbf1] bg-white px-3 py-1.5 shadow-[0_10px_22px_rgba(24,31,62,0.08)]">
+                      <span className="h-2 w-2 rounded-full bg-[#4ad26f] shadow-[0_0_10px_rgba(74,210,111,0.8)]" />
+                      Live authority reel
+                    </span>
+                    <span className="inline-flex items-center rounded-full border border-[#dfdbf1] bg-white px-3 py-1.5 shadow-[0_10px_22px_rgba(24,31,62,0.08)]">
+                      Optimized autoplay loop
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative z-10 mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-[1.2fr_0.8fr_0.8fr]">
+                <div className="rounded-[20px] border border-[#ddd6f4] bg-white p-5 shadow-[0_16px_34px_rgba(24,31,62,0.08)] md:col-span-2 xl:col-span-1">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6f5dff]">Built for</p>
+                  <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                    {builtFor.map((item) => (
+                      <div key={item.title} className="rounded-[14px] border border-[#ece8f6] bg-[#faf9ff] px-3 py-3">
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#efebff] text-[#6f5dff]">
+                          <item.Icon className="h-4 w-4" />
+                        </span>
+                        <div className="mt-2 text-[15px] font-semibold text-[#171929]">{item.title}</div>
+                        <p className="mt-1 text-[13px] leading-[1.5] text-[#626780]">{item.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="rounded-[20px] border border-[#e4def4] bg-white p-5 shadow-[0_16px_34px_rgba(24,31,62,0.08)]">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6f5dff]">Main promise</p>
+                  <p className="mt-3 text-[16px] font-medium leading-[1.55] text-[#303554]">
+                    We help clients become more visible, more trusted, and more recognized so they own more authority in their market.
+                  </p>
+                </div>
+
+                <div className="rounded-[20px] border border-[#d8d0f6] bg-[linear-gradient(140deg,#f8f5ff_0%,#eef2ff_100%)] p-5 shadow-[0_16px_34px_rgba(24,31,62,0.08)]">
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,#6f5dff_0%,#4d92ff_100%)] text-white shadow-[0_14px_28px_rgba(95,84,198,0.28)]">
+                      <Crown className="h-5 w-5" />
+                    </span>
+                    <div>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6f5dff]">End state</p>
+                      <p className="mt-1 text-[16px] font-semibold text-[#171929]">Category authority</p>
+                    </div>
+                  </div>
+                  <p className="mt-3 text-[14px] leading-[1.6] text-[#576082]">
+                    Become the brand people recognize, the expert people quote, and the company people trust.
+                  </p>
                 </div>
               </div>
             </Panel>
