@@ -116,6 +116,16 @@ const builtFor: IconItem[] = [
     description: "Who want to be quoted, trusted, and remembered.",
     Icon: BadgeCheck,
   },
+  {
+    title: "CEOs",
+    description: "Who want to shape industry narrative, build personal authority, and become the face of their company in the media.",
+    Icon: Crown,
+  },
+  {
+    title: "Spokespeople",
+    description: "Who represent their brand publicly and need consistent, credible media exposure to build trust and recognition.",
+    Icon: Megaphone,
+  },
 ];
 
 const promisePillars: IconItem[] = [
@@ -379,6 +389,27 @@ function BuiltForSketch({ title }: { title: string }) {
     );
   }
 
+  if (title === "CEOs") {
+    return (
+      <svg viewBox="0 0 90 56" aria-hidden="true" className="h-10 w-16">
+        <path d="M30 16 L38 8 L45 16 L52 8 L60 16 V20 H30 Z" fill="none" stroke="#5f729c" strokeWidth="2.2" strokeLinejoin="round" />
+        <path d="M45 22 C37 22, 31 27, 31 36 V44 H59 V36 C59 27,53 22,45 22 Z" fill="none" stroke="#5f729c" strokeWidth="2.2" strokeLinejoin="round" />
+        <path d="M45 27 V34" fill="none" stroke="#8ca8d8" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    );
+  }
+
+  if (title === "Spokespeople") {
+    return (
+      <svg viewBox="0 0 90 56" aria-hidden="true" className="h-10 w-16">
+        <path d="M16 30 L34 24 V40 L16 34 Z" fill="none" stroke="#5f729c" strokeWidth="2.2" strokeLinejoin="round" />
+        <path d="M34 26 L44 20 V44 L34 38" fill="none" stroke="#5f729c" strokeWidth="2.2" strokeLinejoin="round" />
+        <path d="M48 24 C52 27, 52 37, 48 40" fill="none" stroke="#8ca8d8" strokeWidth="2" strokeLinecap="round" />
+        <path d="M55 20 C61 26, 61 38, 55 44" fill="none" stroke="#8ca8d8" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    );
+  }
+
   return (
     <svg viewBox="0 0 90 56" aria-hidden="true" className="h-10 w-16">
       <path d="M14 18 H58 C63 18,66 21,66 26 V34 C66 39,63 42,58 42 H42 L34 48 V42 H14 C9 42,6 39,6 34 V26 C6 21,9 18,14 18 Z" fill="none" stroke="#5f729c" strokeWidth="2.2" strokeLinejoin="round" />
@@ -476,12 +507,12 @@ export function AuthorityPrDeckPage() {
                 </div>
               </div>
 
-              <div className="relative z-10 mx-auto mt-6 w-full max-w-[820px] overflow-hidden border border-[#d8ddec] bg-[linear-gradient(145deg,#f8faff_0%,#edf2fb_100%)] p-3 shadow-[0_16px_32px_rgba(34,45,80,0.11)] [clip-path:polygon(16px_0,calc(100%-16px)_0,100%_16px,100%_calc(100%-16px),calc(100%-16px)_100%,16px_100%,0_calc(100%-16px),0_16px)] sm:p-4">
+              <div className="relative z-10 mx-auto mt-6 w-full max-w-[1100px] overflow-hidden border border-[#d8ddec] bg-[linear-gradient(145deg,#f8faff_0%,#edf2fb_100%)] p-3 shadow-[0_16px_32px_rgba(34,45,80,0.11)] [clip-path:polygon(16px_0,calc(100%-16px)_0,100%_16px,100%_calc(100%-16px),calc(100%-16px)_100%,16px_100%,0_calc(100%-16px),0_16px)] sm:p-4">
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(170,193,236,0.22),transparent_34%),radial-gradient(circle_at_88%_84%,rgba(168,185,219,0.18),transparent_36%)]" />
                 <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(111,128,172,0.13)_1px,transparent_1px),linear-gradient(90deg,rgba(111,128,172,0.13)_1px,transparent_1px)] [background-size:18px_18px]" />
                 <div className="relative">
                   <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[#5d6b95]">Built for</p>
-                  <div className="mt-2.5 grid gap-2.5 md:grid-cols-3">
+                  <div className="mt-2.5 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-5">
                     {builtFor.map((item) => (
                       <div
                         key={item.title}
