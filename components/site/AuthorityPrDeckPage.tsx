@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import {
+  ArrowDown,
   ArrowRight,
   BadgeCheck,
   BarChart3,
@@ -391,6 +392,14 @@ export function AuthorityPrDeckPage() {
                 </div>
 
                 <div className="relative mx-auto w-full max-w-[600px]">
+                  <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-[calc(100%+8px)]">
+                    <div className="rounded-full border border-[#d7d1ef] bg-white/95 px-4 py-2 text-[12px] font-semibold tracking-[0.02em] text-[#3a3f62] shadow-[0_14px_28px_rgba(24,31,62,0.12)] sm:text-[13px]">
+                      Our Client on TV
+                    </div>
+                    <div className="mt-1.5 flex justify-center">
+                      <ArrowDown className="h-6 w-6 animate-bounce text-[#6f5dff]" />
+                    </div>
+                  </div>
                   <div className="pointer-events-none absolute -inset-8 bg-[radial-gradient(circle,rgba(111,93,255,0.2)_0%,rgba(111,93,255,0)_66%)]" />
                   <div className="relative rounded-[30px] border border-[#d8d2f0] bg-[linear-gradient(170deg,#f5f3ff_0%,#f9fbff_54%,#ffffff_100%)] p-4 shadow-[0_36px_72px_rgba(32,40,82,0.22)] sm:p-5">
                     <div className="rounded-[24px] border border-[#2e355f] bg-[linear-gradient(180deg,#232c57_0%,#11172f_100%)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_12px_28px_rgba(9,12,32,0.38)] sm:p-5">
