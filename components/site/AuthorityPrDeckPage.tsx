@@ -1,11 +1,13 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import type { ReactNode } from "react";
+import { motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
   BadgeCheck,
-  BarChart3,
-  Building2,
   CheckCircle2,
   Crown,
   Eye,
@@ -26,11 +28,45 @@ import { ChatWidget } from "@/components/site/ChatWidget";
 import { SiteFooter, SiteHeader } from "@/components/site/SiteChrome";
 import { cn } from "@/lib/utils";
 
-type IconItem = {
+type Tone = "ink" | "amber" | "sea" | "rose" | "plum";
+type Shape = "circle" | "diamond" | "pill";
+
+type StoryCard = {
   title: string;
   description: string;
   Icon: LucideIcon;
+  tone: Tone;
+  shape: Shape;
+  className?: string;
+  dark?: boolean;
 };
+
+type ProcessStep = {
+  step: string;
+  title: string;
+  description: string;
+  Icon: LucideIcon;
+  tone: Tone;
+  shape: Shape;
+};
+
+type PlacementCard = {
+  title: string;
+  description: string;
+  Icon: LucideIcon;
+  tone: Tone;
+  shape: Shape;
+};
+
+const pageContainerClass = "mx-auto w-full max-w-[1220px] px-6";
+const heroContainerClass = "mx-auto w-full max-w-[1300px] px-6";
+
+const revealProps = {
+  initial: { opacity: 0, y: 28 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.18 },
+  transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+} as const;
 
 const trustLogos = [
   {
@@ -99,137 +135,198 @@ const trustLogos = [
   },
 ] as const;
 
-const builtFor: IconItem[] = [
-  {
-    title: "Brands",
-    description: "That want to become the go-to name in their category.",
-    Icon: Building2,
-  },
-  {
-    title: "Founders",
-    description: "Who want to be seen as recognized industry voices.",
-    Icon: UserRound,
-  },
-  {
-    title: "Experts",
-    description: "Who want to be quoted, trusted, and remembered.",
-    Icon: BadgeCheck,
-  },
-];
+const builtFor = [
+  { label: "Brands", tone: "amber" as const },
+  { label: "Founders", tone: "sea" as const },
+  { label: "Experts", tone: "rose" as const },
+] as const;
 
-const promisePillars: IconItem[] = [
+const promisePillars = [
   {
     title: "More visible",
-    description: "Show up in the spaces that shape perception and reputation.",
+    description: "Show up in the places that shape perception, trust, and reputation.",
     Icon: Eye,
+    tone: "amber" as const,
+    shape: "pill" as const,
   },
   {
     title: "More trusted",
-    description: "Build third-party validation through earned media credibility.",
+    description: "Build the kind of third-party validation that makes people trust you faster.",
     Icon: ShieldCheck,
+    tone: "sea" as const,
+    shape: "diamond" as const,
   },
   {
     title: "More recognized",
     description: "Become the brand people recognize and the expert people quote.",
     Icon: Crown,
+    tone: "ink" as const,
+    shape: "circle" as const,
   },
-];
+] as const;
 
-const authorityOutcomes: IconItem[] = [
+const outcomeCards: StoryCard[] = [
   {
     title: "Become the go-to expert in your industry",
-    description: "Be the first name people think of when the topic comes up.",
+    description: "Build the kind of visibility that makes your name the default reference point in your market.",
     Icon: BadgeCheck,
+    tone: "amber",
+    shape: "diamond",
+    className: "md:col-span-3 bg-[#fff8ee]",
   },
   {
-    title: "Build stronger authority in your market",
-    description: "Increase your perceived expertise and category leadership.",
-    Icon: Target,
+    title: "Own more category mindshare",
+    description: "This is not about getting mentions. It is about dominating more of the conversation in your space.",
+    Icon: Crown,
+    tone: "sea",
+    shape: "pill",
+    className: "md:col-span-3 bg-[#0f1738]",
+    dark: true,
   },
   {
-    title: "Dominate more of the conversation in your space",
-    description: "Expand your share of voice in high-trust channels.",
-    Icon: Megaphone,
-  },
-  {
-    title: "Raise founder and spokesperson profile",
-    description: "Position leadership as credible voices people want to hear from.",
-    Icon: UserRound,
-  },
-  {
-    title: "Strengthen trust with customers and partners",
-    description: "Earn the kind of media presence that accelerates trust decisions.",
+    title: "Build trust with customers, partners, and media",
+    description: "Earned media helps people see you as credible, established, and worth paying attention to.",
     Icon: Users,
+    tone: "sea",
+    shape: "circle",
+    className: "md:col-span-2 bg-[#e8f6f1]",
   },
   {
-    title: "Stand out from competitors through credibility",
-    description: "Win mindshare with authority, not noise.",
+    title: "Raise the profile of founders and spokespeople",
+    description: "Position the right voice as a recognized industry presence in the channels that matter.",
+    Icon: UserRound,
+    tone: "rose",
+    shape: "diamond",
+    className: "md:col-span-2 bg-[#fff0ec]",
+  },
+  {
+    title: "Stand out through credible media presence",
+    description: "Become the company people trust, not just another logo in the category.",
     Icon: CheckCircle2,
+    tone: "plum",
+    shape: "pill",
+    className: "md:col-span-2 bg-[#f4efff]",
   },
 ];
 
-const authorityFlow = [
+const processSteps: ProcessStep[] = [
   {
-    title: "Positioning and authority angle",
-    description: "Define the narrative that turns your expertise into media relevance.",
+    step: "Step 1",
+    title: "Authority positioning",
+    description: "We sharpen the angle, narrative, and expertise story that the market should associate with your name.",
     Icon: Target,
+    tone: "amber",
+    shape: "diamond",
   },
   {
+    step: "Step 2",
     title: "Proactive pitching",
-    description: "Pitch interviews, features, bylines, and op-eds to target outlets.",
+    description: "We pitch interviews, features, bylines, and opinion-led stories to the outlets that shape how your category thinks.",
     Icon: Newspaper,
+    tone: "ink",
+    shape: "circle",
   },
   {
+    step: "Step 3",
     title: "Reactive opportunity capture",
-    description: "Respond to journalist requests and timely commentary openings.",
+    description: "We move on journalist requests, expert commentary, and timely moments when your voice should be in the conversation.",
     Icon: MessageCircle,
+    tone: "sea",
+    shape: "pill",
   },
   {
+    step: "Step 4",
     title: "Third-party validation",
-    description: "Secure earned placements that strengthen market trust.",
+    description: "Coverage lands across publications, interviews, podcasts, and quoted expert placements that compound trust.",
     Icon: Quote,
+    tone: "rose",
+    shape: "diamond",
   },
   {
+    step: "Step 5",
     title: "Compounding authority",
-    description: "Convert visibility into recognition, trust, and category mindshare.",
-    Icon: BadgeCheck,
+    description: "Visibility becomes recognition, recognition becomes trust, and trust becomes category authority.",
+    Icon: Crown,
+    tone: "amber",
+    shape: "circle",
   },
 ] as const;
 
-const placements: IconItem[] = [
-  { title: "Reputable publications", description: "Coverage where credibility compounds.", Icon: Newspaper },
-  { title: "Industry and news interviews", description: "Voice-led exposure in trusted channels.", Icon: MessageCircle },
-  { title: "Podcast appearances", description: "Deeper storytelling with engaged audiences.", Icon: Mic2 },
-  { title: "Expert commentary opportunities", description: "Fast-response thought leadership moments.", Icon: Megaphone },
-  { title: "Quoted expert placements", description: "High-trust citations in relevant articles.", Icon: Quote },
-  { title: "Bylines and contributed articles", description: "Controlled narrative in third-party media.", Icon: PenSquare },
-  { title: "Opinion pieces and op-eds", description: "Clear perspective leadership on category topics.", Icon: PenSquare },
-  { title: "Timely media opportunities", description: "Visibility tied to live industry conversations.", Icon: Sparkles },
-];
-
-const coverageMix: IconItem[] = [
-  { title: "Publication features", description: "Feature-led visibility", Icon: Newspaper },
-  { title: "Interviews", description: "Founder and expert interviews", Icon: MessageCircle },
-  { title: "Podcast placements", description: "Authority voice distribution", Icon: Mic2 },
-  { title: "Expert commentary", description: "Fast-turn media contribution", Icon: Megaphone },
-  { title: "Quoted expert opportunities", description: "Credibility citations", Icon: Quote },
-  { title: "Bylines", description: "Thought leadership articles", Icon: PenSquare },
-  { title: "Op-eds", description: "Perspective-led authority", Icon: PenSquare },
-  { title: "Other authority-building coverage", description: "Strategic editorial opportunities", Icon: Sparkles },
-];
-
-const cadence = [
-  "Week 1: story angles and positioning updates",
-  "Week 2: proactive pitching to priority outlets",
-  "Week 3: interview and commentary follow-through",
-  "Week 4: placement consolidation and next wave setup",
+const placementCards: PlacementCard[] = [
+  {
+    title: "Reputable publications",
+    description: "Earned visibility in the outlets people already trust.",
+    Icon: Newspaper,
+    tone: "ink",
+    shape: "circle",
+  },
+  {
+    title: "Industry and news interviews",
+    description: "Voice-led exposure that raises the profile of the client and the spokesperson.",
+    Icon: MessageCircle,
+    tone: "amber",
+    shape: "pill",
+  },
+  {
+    title: "Podcast appearances",
+    description: "Longer-form placements that deepen credibility and narrative control.",
+    Icon: Mic2,
+    tone: "sea",
+    shape: "diamond",
+  },
+  {
+    title: "Expert commentary opportunities",
+    description: "The right quote in the right story can shift perception quickly.",
+    Icon: Megaphone,
+    tone: "rose",
+    shape: "circle",
+  },
+  {
+    title: "Quoted expert placements",
+    description: "Fast, credible authority reinforcement inside relevant industry coverage.",
+    Icon: Quote,
+    tone: "plum",
+    shape: "diamond",
+  },
+  {
+    title: "Bylines and contributed articles",
+    description: "Thought leadership that puts your expertise in front of the right audience.",
+    Icon: PenSquare,
+    tone: "amber",
+    shape: "pill",
+  },
+  {
+    title: "Opinion pieces and op-eds",
+    description: "Clear perspective-building around the themes your market cares about.",
+    Icon: PenSquare,
+    tone: "sea",
+    shape: "circle",
+  },
+  {
+    title: "Timely media opportunities",
+    description: "Visibility tied to live conversations when your voice should be present.",
+    Icon: Sparkles,
+    tone: "rose",
+    shape: "pill",
+  },
 ] as const;
 
-const audienceCards = [
-  { title: "Founders", description: "Who want to raise their personal profile and be seen as leaders." },
-  { title: "Brands", description: "That want to become more trusted and recognized in their category." },
-  { title: "Experts", description: "Who want to become the go-to voice in their market." },
-  { title: "Companies", description: "That want more than mentions and need real authority growth." },
+const coverageMix = [
+  "Publication features",
+  "Interviews",
+  "Podcast placements",
+  "Expert commentary",
+  "Quoted expert opportunities",
+  "Bylines",
+  "Op-eds",
+  "Other authority-building coverage",
+] as const;
+
+const monthCadence = [
+  { label: "Angles", description: "story development and positioning", tone: "amber" as const },
+  { label: "Pitch", description: "outreach to priority targets", tone: "ink" as const },
+  { label: "Respond", description: "requests and commentary openings", tone: "sea" as const },
+  { label: "Compound", description: "placement follow-through and next wave", tone: "rose" as const },
 ] as const;
 
 const proofImages = [
@@ -251,44 +348,35 @@ const proofImages = [
   },
 ] as const;
 
-function createChartGeometry(values: number[]) {
-  const chartWidth = 660;
-  const chartHeight = 300;
-  const padding = { top: 24, right: 20, bottom: 36, left: 20 };
-  const plotWidth = chartWidth - padding.left - padding.right;
-  const plotHeight = chartHeight - padding.top - padding.bottom;
-  const baselineY = padding.top + plotHeight;
-  const max = Math.max(...values) * 1.08;
-
-  const points = values.map((value, index) => ({
-    x: padding.left + (index / (values.length - 1)) * plotWidth,
-    y: padding.top + (1 - value / max) * plotHeight,
-  }));
-
-  const linePath = points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`).join(" ");
-  const areaPath = `${linePath} L ${points[points.length - 1].x} ${baselineY} L ${points[0].x} ${baselineY} Z`;
-
-  return { chartWidth, chartHeight, points, linePath, areaPath, baselineY };
-}
-
-const momentumSeries = [18, 22, 26, 32, 40, 51, 60, 71, 82, 91];
-const momentumLabels = ["Launch", "Month 2", "Month 4", "Month 6", "Month 9", "Month 12"] as const;
-const momentumTickIndices = [0, 2, 4, 6, 8, 9] as const;
-const momentumChart = createChartGeometry(momentumSeries);
-
-const pageContainerClass = "mx-auto w-full max-w-[1200px] px-6";
-const heroContainerClass = "mx-auto w-full max-w-[1280px] px-6";
+const audienceCards = [
+  {
+    title: "Founders",
+    description: "Who want to raise their personal profile and be seen as recognized leaders.",
+  },
+  {
+    title: "Brands",
+    description: "That want to become the go-to name in their market and category.",
+  },
+  {
+    title: "Experts",
+    description: "Who want to be quoted, trusted, and remembered in the spaces that matter.",
+  },
+  {
+    title: "Companies",
+    description: "That want more than mentions and need real authority growth.",
+  },
+] as const;
 
 function SectionWrap({
   children,
   className,
-  id,
   containerClass = pageContainerClass,
+  id,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
-  id?: string;
   containerClass?: string;
+  id?: string;
 }) {
   return (
     <section id={id} className={cn("py-4 md:py-5", className)}>
@@ -297,43 +385,28 @@ function SectionWrap({
   );
 }
 
-function Panel({ children, className }: { children: React.ReactNode; className?: string }) {
-  return (
-    <div
-      className={cn(
-        "relative overflow-hidden rounded-[20px] border border-[#e8e3f3] bg-white p-8 shadow-[0_28px_60px_rgba(24,31,62,0.08)] sm:p-10 lg:p-12",
-        className,
-      )}
-    >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(149,122,255,0.12),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(87,157,255,0.08),transparent_24%)]" />
-      <div className="pointer-events-none absolute inset-x-12 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(123,99,255,0.18),transparent)]" />
-      <div className="relative z-10">{children}</div>
-    </div>
-  );
-}
-
-function Eyebrow({ children, dark = false }: { children: React.ReactNode; dark?: boolean }) {
+function Eyebrow({ children, inverted = false }: { children: ReactNode; inverted?: boolean }) {
   return (
     <span
       className={cn(
         "inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em]",
-        dark
-          ? "border border-white/18 bg-white/10 text-white/88"
-          : "border border-[#dedaf0] bg-white text-[#60539d] shadow-[0_12px_28px_rgba(89,84,165,0.08)]",
+        inverted
+          ? "border border-white/16 bg-white/10 text-white/88"
+          : "border border-[#d8cfbf] bg-white/80 text-[#6d5a32] shadow-[0_12px_26px_rgba(52,42,22,0.08)]",
       )}
     >
-      <Sparkles className={cn("h-3.5 w-3.5", dark ? "text-white/90" : "text-[#6f5dff]")} />
+      <Sparkles className={cn("h-3.5 w-3.5", inverted ? "text-white/90" : "text-[#b6782f]")} />
       {children}
     </span>
   );
 }
 
-function PrimaryExternalButton({ href, label }: { href: string; label: string }) {
+function PrimaryButton({ href, label }: { href: string; label: string }) {
   return (
     <Button
       asChild
       variant="ghost"
-      className="h-12 rounded-full bg-[linear-gradient(135deg,#6f5dff_0%,#5a4dbf_52%,#4d92ff_100%)] px-6 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(103,89,255,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_0_6px_rgba(111,93,255,0.12),0_24px_46px_rgba(103,89,255,0.34)] sm:h-14 sm:px-7 sm:text-base"
+      className="h-12 rounded-full bg-[linear-gradient(135deg,#0d1837_0%,#22376f_56%,#2f7c8a_100%)] px-6 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(16,24,56,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_0_6px_rgba(22,41,94,0.1),0_24px_46px_rgba(16,24,56,0.34)] sm:h-14 sm:px-7 sm:text-base"
     >
       <a href={href} target="_blank" rel="noreferrer">
         {label}
@@ -343,15 +416,141 @@ function PrimaryExternalButton({ href, label }: { href: string; label: string })
   );
 }
 
-function SecondaryButton({ href, label }: { href: string; label: string }) {
+function SecondaryButton({ href, label, dark = false }: { href: string; label: string; dark?: boolean }) {
   return (
     <Button
       asChild
       variant="ghost"
-      className="h-12 rounded-full border border-[#d8d3eb] bg-white px-6 text-sm font-semibold text-[#252846] shadow-[0_16px_34px_rgba(24,31,62,0.06)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f7f4ff] hover:shadow-[0_0_0_5px_rgba(111,93,255,0.08),0_18px_38px_rgba(24,31,62,0.08)] sm:h-14 sm:px-7 sm:text-base"
+      className={cn(
+        "h-12 rounded-full px-6 text-sm font-semibold transition-all duration-300 sm:h-14 sm:px-7 sm:text-base",
+        dark
+          ? "border border-white/16 bg-white/10 text-white hover:-translate-y-0.5 hover:bg-white/14"
+          : "border border-[#d6cebf] bg-white text-[#1f2945] shadow-[0_16px_34px_rgba(24,31,62,0.06)] hover:-translate-y-0.5 hover:bg-[#faf5ed] hover:shadow-[0_0_0_5px_rgba(182,120,47,0.08),0_18px_38px_rgba(24,31,62,0.08)]",
+      )}
     >
       <Link href={href}>{label}</Link>
     </Button>
+  );
+}
+
+function IconShell({
+  Icon,
+  tone,
+  shape,
+  className,
+}: {
+  Icon: LucideIcon;
+  tone: Tone;
+  shape: Shape;
+  className?: string;
+}) {
+  const toneClassMap = {
+    ink: "bg-[linear-gradient(135deg,#10193a_0%,#27447e_100%)] text-white shadow-[0_16px_30px_rgba(16,25,58,0.22)]",
+    amber: "bg-[linear-gradient(135deg,#f1be74_0%,#d37b34_100%)] text-[#24140a] shadow-[0_16px_30px_rgba(196,118,46,0.24)]",
+    sea: "bg-[linear-gradient(135deg,#b8f0df_0%,#2b8f81_100%)] text-[#08211d] shadow-[0_16px_30px_rgba(43,143,129,0.2)]",
+    rose: "bg-[linear-gradient(135deg,#ffd9cf_0%,#b85e4a_100%)] text-[#2f0f08] shadow-[0_16px_30px_rgba(184,94,74,0.2)]",
+    plum: "bg-[linear-gradient(135deg,#efe0ff_0%,#7253b8_100%)] text-[#1f1435] shadow-[0_16px_30px_rgba(114,83,184,0.18)]",
+  } as const;
+
+  return (
+    <div
+      className={cn(
+        "relative inline-flex items-center justify-center",
+        shape === "circle" && "h-14 w-14 rounded-full",
+        shape === "diamond" && "h-14 w-14 rotate-45 rounded-[18px]",
+        shape === "pill" && "h-12 w-[4.1rem] rounded-[18px]",
+        toneClassMap[tone],
+        className,
+      )}
+    >
+      <Icon className={cn("h-5 w-5", shape === "diamond" && "-rotate-45")} />
+    </div>
+  );
+}
+
+function StoryCardBlock({ item }: { item: StoryCard }) {
+  return (
+    <motion.div {...revealProps} className={cn("rounded-[24px] border p-6 shadow-[0_18px_36px_rgba(24,31,62,0.08)]", item.className, item.dark ? "border-[#23325b]" : "border-[#e3d8c6]")}>
+      <IconShell Icon={item.Icon} tone={item.tone} shape={item.shape} />
+      <h3 className={cn("mt-5 text-[1.35rem] font-display font-bold leading-[1.1] tracking-[-0.03em]", item.dark ? "text-white" : "text-[#111729]")}>
+        {item.title}
+      </h3>
+      <p className={cn("mt-3 text-[15px] leading-[1.7]", item.dark ? "text-white/72" : "text-[#5e6476]")}>{item.description}</p>
+    </motion.div>
+  );
+}
+
+function PlacementBlock({ item, index }: { item: PlacementCard; index: number }) {
+  const backgroundClass = [
+    "bg-white/8 border-white/12",
+    "bg-[#153a3d]/42 border-[#3e7a74]/40",
+    "bg-[#4f2d20]/38 border-[#8b5a45]/45",
+    "bg-[#2b2452]/42 border-[#62529f]/42",
+  ][index % 4];
+
+  return (
+    <motion.div
+      {...revealProps}
+      transition={{ ...revealProps.transition, delay: index * 0.05 }}
+      className={cn("rounded-[20px] border p-5 backdrop-blur-sm", backgroundClass)}
+    >
+      <IconShell Icon={item.Icon} tone={item.tone} shape={item.shape} className="scale-90" />
+      <h3 className="mt-4 text-[18px] font-display font-semibold leading-[1.25] tracking-[-0.02em] text-white">{item.title}</h3>
+      <p className="mt-3 text-[14px] leading-[1.65] text-white/70">{item.description}</p>
+    </motion.div>
+  );
+}
+
+function FloatingAudienceChip({
+  label,
+  tone,
+  className,
+}: {
+  label: string;
+  tone: Tone;
+  className?: string;
+}) {
+  const chipClass = {
+    amber: "bg-[#fff1da] text-[#7a4a17] border-[#efcb97]",
+    sea: "bg-[#dff4ee] text-[#0d5d54] border-[#8bcabd]",
+    rose: "bg-[#ffe6df] text-[#92422f] border-[#e2a28f]",
+    ink: "bg-[#ebf0ff] text-[#213663] border-[#b6c3ea]",
+    plum: "bg-[#efe7ff] text-[#5a4095] border-[#ccbdf2]",
+  } as const;
+
+  return (
+    <motion.div
+      animate={{ y: [0, -8, 0] }}
+      transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
+      className={cn("rounded-full border px-4 py-2 text-sm font-semibold shadow-[0_14px_26px_rgba(22,30,60,0.1)]", chipClass[tone], className)}
+    >
+      {label}
+    </motion.div>
+  );
+}
+
+function ScrollingLogos() {
+  const loop = [...trustLogos, ...trustLogos];
+
+  return (
+    <div className="mt-10 overflow-hidden">
+      <div className="flex w-max gap-4 animate-scroll-left pr-4">
+        {loop.map((logo, index) => (
+          <div
+            key={`${logo.alt}-${index}`}
+            className="flex h-[86px] min-w-[170px] items-center justify-center rounded-[18px] border border-white/16 bg-white/8 px-5 backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] sm:min-w-[220px]"
+          >
+            <Image
+              src={logo.src}
+              alt={logo.alt}
+              width={logo.width}
+              height={logo.height}
+              className={cn("object-contain", logo.className, logo.filterClass)}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -359,429 +558,542 @@ export function AuthorityPrDeckPage() {
   return (
     <>
       <ChatWidget />
-      <main className="bg-[#f3f2f7] text-[#171929]">
+      <main className="overflow-x-hidden bg-[#f4efe7] text-[#171929]">
         <div className="relative">
           <SiteHeader theme="light" />
 
           <SectionWrap containerClass={heroContainerClass} className="pt-5">
-            <Panel className="overflow-hidden bg-[radial-gradient(circle_at_14%_0%,rgba(144,122,255,0.18),transparent_26%),radial-gradient(circle_at_88%_10%,rgba(79,155,255,0.12),transparent_24%),linear-gradient(180deg,#ffffff_0%,#fbfbff_100%)] lg:p-14">
-              <div className="pointer-events-none absolute inset-0 opacity-[0.28] [background-image:linear-gradient(rgba(117,110,174,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(117,110,174,0.12)_1px,transparent_1px)] [background-size:54px_54px]" />
+            <div className="relative overflow-hidden rounded-[34px] border border-[#dfd4c2] bg-[linear-gradient(135deg,#fbf6ee_0%,#eef4ff_48%,#fff0da_100%)] px-8 py-10 shadow-[0_30px_70px_rgba(44,38,26,0.12)] sm:px-10 lg:px-14 lg:py-14">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_18%,rgba(212,136,61,0.12),transparent_25%),radial-gradient(circle_at_86%_16%,rgba(33,95,120,0.12),transparent_24%),radial-gradient(circle_at_60%_80%,rgba(114,83,184,0.08),transparent_28%)]" />
+              <div className="pointer-events-none absolute inset-0 opacity-[0.12] [background-image:linear-gradient(rgba(21,28,48,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(21,28,48,0.14)_1px,transparent_1px)] [background-size:54px_54px]" />
 
-              <div className="relative z-10 grid gap-10 lg:grid-cols-[0.98fr_1.02fr] lg:items-center lg:gap-14">
-                <div>
-                  <Eyebrow>A Linkifi Service</Eyebrow>
-                  <h1 className="mt-6 text-balance text-5xl font-display font-bold tracking-[-0.055em] text-[#171929] sm:text-6xl md:text-7xl">
+              <div className="relative z-10 grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+                <motion.div {...revealProps}>
+                  <Eyebrow>Traditional PR, built for authority</Eyebrow>
+                  <h1 className="mt-6 max-w-3xl text-balance text-5xl font-display font-bold leading-[0.95] tracking-[-0.055em] text-[#101729] sm:text-6xl md:text-7xl">
                     Authority PR
                   </h1>
-                  <p className="mt-5 max-w-2xl text-balance text-xl leading-relaxed text-[#4e526d] sm:text-2xl">
-                    Become the go-to expert and go-to brand in your market.
+                  <p className="mt-5 max-w-2xl text-balance text-[1.3rem] leading-[1.45] text-[#30384f] sm:text-[1.6rem]">
+                    Become the go-to expert and the go-to brand in your market.
                   </p>
-                  <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[#5b5f79]">
-                    Traditional PR for brands, founders, and spokespeople who want to dominate mindshare, strengthen trust, and build category authority through earned media.
+                  <p className="mt-6 max-w-2xl text-[17px] leading-[1.75] text-[#58607a]">
+                    We use earned media to help clients dominate mindshare, strengthen trust, and become the name people already see as credible, established, and worth paying attention to.
                   </p>
 
                   <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                    <PrimaryExternalButton
-                      href="https://book.linkifi.io/widget/bookings/pr-discovery-call"
-                      label="Book Discovery Call"
-                    />
-                    <SecondaryButton href="#flow" label="See The Authority Flow" />
+                    <PrimaryButton href="https://book.linkifi.io/widget/bookings/pr-discovery-call" label="Book Discovery Call" />
+                    <SecondaryButton href="#delivery-flow" label="See The Delivery Flow" />
                   </div>
-                </div>
 
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-[20px] border border-[#ddd6f4] bg-white p-5 shadow-[0_16px_34px_rgba(24,31,62,0.08)] sm:col-span-2">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6f5dff]">Built for</p>
-                    <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                      {builtFor.map((item) => (
-                        <div key={item.title} className="rounded-[14px] border border-[#ece8f6] bg-[#faf9ff] px-3 py-3">
-                          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#efebff] text-[#6f5dff]">
-                            <item.Icon className="h-4 w-4" />
-                          </span>
-                          <div className="mt-2 text-[15px] font-semibold text-[#171929]">{item.title}</div>
-                          <p className="mt-1 text-[13px] leading-[1.5] text-[#626780]">{item.description}</p>
+                  <div className="mt-8 flex flex-wrap gap-3">
+                    {promisePillars.map((item) => (
+                      <div
+                        key={item.title}
+                        className="inline-flex items-center gap-3 rounded-full border border-[#ddd2bf] bg-white/75 px-4 py-2.5 text-sm font-medium text-[#28324d] shadow-[0_12px_22px_rgba(44,38,26,0.08)] backdrop-blur"
+                      >
+                        <IconShell Icon={item.Icon} tone={item.tone} shape={item.shape} className="h-9 w-9 min-w-9 scale-[0.68] rounded-full" />
+                        {item.title}
+                      </div>
+                    ))}
+                  </div>
+
+                  <p className="mt-8 max-w-xl text-[1.75rem] leading-none text-[#b6632a] font-handwritten rotate-[-2deg]">
+                    This is not about getting mentions. It is about owning more authority.
+                  </p>
+                </motion.div>
+
+                <motion.div
+                  {...revealProps}
+                  transition={{ ...revealProps.transition, delay: 0.08 }}
+                  className="relative min-h-[34rem] sm:min-h-[38rem]"
+                >
+                  <motion.div
+                    animate={{ y: [0, -8, 0] }}
+                    transition={{ duration: 5.4, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute right-0 top-0 z-30 flex flex-col gap-3"
+                  >
+                    {builtFor.map((item, index) => (
+                      <FloatingAudienceChip
+                        key={item.label}
+                        label={item.label}
+                        tone={item.tone}
+                        className={cn(index === 0 && "mr-10", index === 1 && "mr-2", index === 2 && "mr-14")}
+                      />
+                    ))}
+                  </motion.div>
+
+                  <motion.div
+                    animate={{ rotate: [-2, 0, -2], y: [0, -6, 0] }}
+                    transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute left-0 top-0 z-20 w-[56%] overflow-hidden rounded-[28px] border border-[#d6ccbc] bg-white p-2 shadow-[0_28px_50px_rgba(44,38,26,0.16)]"
+                  >
+                    <div className="overflow-hidden rounded-[22px] border border-[#ece5d9]">
+                      <Image
+                        src={proofImages[0].src}
+                        alt={proofImages[0].alt}
+                        width={1244}
+                        height={1500}
+                        className="h-[18rem] w-full object-cover object-top sm:h-[20rem]"
+                      />
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    animate={{ rotate: [3, 1, 3], y: [0, -10, 0] }}
+                    transition={{ duration: 6.4, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+                    className="absolute bottom-[5.5rem] left-[8%] z-20 w-[34%] overflow-hidden rounded-[24px] border border-[#d6ccbc] bg-white p-2 shadow-[0_24px_44px_rgba(44,38,26,0.14)]"
+                  >
+                    <div className="overflow-hidden rounded-[18px] border border-[#ece5d9]">
+                      <Image
+                        src={proofImages[1].src}
+                        alt={proofImages[1].alt}
+                        width={1244}
+                        height={1500}
+                        className="h-[10rem] w-full object-cover object-top sm:h-[11rem]"
+                      />
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    animate={{ rotate: [-1, 2, -1], y: [0, -7, 0] }}
+                    transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+                    className="absolute right-[5%] top-[8rem] z-10 w-[36%] overflow-hidden rounded-[24px] border border-[#d6ccbc] bg-white p-2 shadow-[0_24px_44px_rgba(44,38,26,0.14)]"
+                  >
+                    <div className="overflow-hidden rounded-[18px] border border-[#ece5d9]">
+                      <Image
+                        src={proofImages[2].src}
+                        alt={proofImages[2].alt}
+                        width={1244}
+                        height={1500}
+                        className="h-[11rem] w-full object-cover object-top sm:h-[12rem]"
+                      />
+                    </div>
+                  </motion.div>
+
+                  <div className="absolute inset-x-0 bottom-0 z-0 rounded-[30px] bg-[linear-gradient(145deg,#0d1737_0%,#1f2e63_52%,#2d6662_100%)] p-7 text-white shadow-[0_28px_60px_rgba(17,24,50,0.26)] sm:p-8">
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/64">Authority result</p>
+                        <h2 className="mt-3 max-w-md text-[2rem] font-display font-bold leading-[1.02] tracking-[-0.05em] sm:text-[2.3rem]">
+                          Own more mindshare in the places people already trust.
+                        </h2>
+                      </div>
+                      <IconShell Icon={Crown} tone="amber" shape="diamond" />
+                    </div>
+                    <div className="mt-6 grid gap-3 sm:grid-cols-3">
+                      {[
+                        "Seen in trusted media",
+                        "Heard in relevant conversations",
+                        "Remembered as the authority",
+                      ].map((item, index) => (
+                        <div
+                          key={item}
+                          className={cn(
+                            "rounded-[18px] border px-4 py-4 text-sm leading-[1.55]",
+                            index === 0 && "border-white/12 bg-white/10",
+                            index === 1 && "border-[#8dcfbb]/20 bg-[#1f6b63]/26",
+                            index === 2 && "border-[#f0c082]/20 bg-[#915e28]/20",
+                          )}
+                        >
+                          {item}
                         </div>
                       ))}
                     </div>
                   </div>
-
-                  <div className="rounded-[20px] border border-[#e4def4] bg-white p-5 shadow-[0_16px_34px_rgba(24,31,62,0.08)]">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6f5dff]">Main promise</p>
-                    <p className="mt-3 text-[16px] font-medium leading-[1.55] text-[#303554]">
-                      We help clients become more visible, more trusted, and more recognized so they own more authority in their market.
-                    </p>
-                  </div>
-
-                  <div className="rounded-[20px] border border-[#d8d0f6] bg-[linear-gradient(140deg,#f8f5ff_0%,#eef2ff_100%)] p-5 shadow-[0_16px_34px_rgba(24,31,62,0.08)]">
-                    <div className="flex items-center gap-3">
-                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,#6f5dff_0%,#4d92ff_100%)] text-white shadow-[0_14px_28px_rgba(95,84,198,0.28)]">
-                        <Crown className="h-5 w-5" />
-                      </span>
-                      <div>
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6f5dff]">End state</p>
-                        <p className="mt-1 text-[16px] font-semibold text-[#171929]">Category authority</p>
-                      </div>
-                    </div>
-                    <p className="mt-3 text-[14px] leading-[1.6] text-[#576082]">
-                      Become the brand people recognize, the expert people quote, and the company people trust.
-                    </p>
-                  </div>
-                </div>
+                </motion.div>
               </div>
-            </Panel>
+            </div>
           </SectionWrap>
 
           <section className="relative py-14">
-            <div className="relative left-1/2 w-screen -translate-x-1/2 border-y border-[#141d52] bg-[linear-gradient(130deg,#13194c_0%,#25348b_48%,#33439a_100%)] py-16 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),inset_0_-1px_0_rgba(255,255,255,0.08)]">
-              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))]" />
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(173,146,255,0.22),transparent_70%)]" />
-              <div className={`relative z-10 ${heroContainerClass}`}>
-                <div className="mx-auto max-w-4xl text-center">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#f4f1ff] [text-shadow:0_1px_0_rgba(8,10,28,0.35)]">
-                    Trusted by journalists at
+            <div className="relative left-1/2 w-screen -translate-x-1/2 bg-[linear-gradient(120deg,#0d1431_0%,#162453_44%,#27456f_100%)] py-16 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),inset_0_-1px_0_rgba(255,255,255,0.08)]">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_20%,rgba(255,196,107,0.16),transparent_24%),radial-gradient(circle_at_90%_18%,rgba(97,210,191,0.12),transparent_22%)]" />
+              <div className={heroContainerClass}>
+                <motion.div {...revealProps} className="relative z-10 mx-auto max-w-4xl text-center">
+                  <Eyebrow inverted>Seen In The Right Places</Eyebrow>
+                  <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.1] tracking-[-0.045em] text-white sm:text-[2.5rem]">
+                    The channels that shape perception, trust, and reputation
+                  </h2>
+                  <p className="mt-4 text-[17px] leading-[1.7] text-white/70">
+                    Authority PR is about getting clients seen, heard, and quoted in the places that move market perception.
                   </p>
-                  <h3 className="mt-3 text-balance font-display text-[2rem] font-bold tracking-[-0.04em] text-white sm:text-[2.4rem]">
-                    The places that shape perception, trust, and reputation
-                  </h3>
-                </div>
-                <div className="mt-10 grid gap-4 sm:grid-cols-4">
-                  {trustLogos.map((logo) => (
-                    <div key={logo.alt} className="group relative flex h-[78px] items-center justify-center overflow-hidden rounded-[16px] border border-white/24 bg-[linear-gradient(140deg,rgba(255,255,255,0.16),rgba(255,255,255,0.06))] px-4 backdrop-blur-sm transition-all duration-300 hover:border-[#d5c8ff] hover:shadow-[0_0_0_1px_rgba(199,188,255,0.5),0_16px_30px_rgba(56,63,168,0.28)]">
-                      <Image
-                        src={logo.src}
-                        alt={logo.alt}
-                        width={logo.width}
-                        height={logo.height}
-                        className={cn("relative z-10 object-contain transition-opacity duration-300 group-hover:opacity-100", logo.className, logo.filterClass)}
-                      />
-                    </div>
-                  ))}
-                </div>
+                  <ScrollingLogos />
+                </motion.div>
               </div>
             </div>
           </section>
 
           <SectionWrap>
-            <Panel>
-              <div className="max-w-4xl">
-                <Eyebrow>Main Promise</Eyebrow>
-                <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
-                  Authority PR helps clients become more visible, more trusted, and more recognized
-                </h2>
-              </div>
-              <div className="mt-9 grid gap-6 md:grid-cols-3">
-                {promisePillars.map((item) => (
-                  <div key={item.title} className="rounded-[18px] border border-[#e8e5f3] bg-white p-7 shadow-[0_18px_36px_rgba(24,31,62,0.08)]">
-                    <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff] shadow-[inset_0_0_0_1px_rgba(111,93,255,0.08)]">
-                      <item.Icon className="h-5 w-5" />
-                    </span>
-                    <h3 className="mt-5 text-[20px] font-display font-semibold tracking-[-0.02em] text-[#171929]">{item.title}</h3>
-                    <p className="mt-3 text-[15px] leading-[1.6] text-[#61657f]">{item.description}</p>
+            <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+              <motion.div
+                {...revealProps}
+                className="relative overflow-hidden rounded-[30px] bg-[linear-gradient(135deg,#0f1738_0%,#1a2953_54%,#28435f_100%)] p-8 text-white shadow-[0_26px_58px_rgba(15,23,56,0.22)] sm:p-10"
+              >
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(255,196,107,0.14),transparent_26%),radial-gradient(circle_at_78%_20%,rgba(97,210,191,0.12),transparent_24%)]" />
+                <div className="relative z-10">
+                  <Eyebrow inverted>Main Promise</Eyebrow>
+                  <h2 className="mt-5 max-w-xl text-balance text-[2rem] font-display font-bold leading-[1.02] tracking-[-0.05em] sm:text-[2.35rem]">
+                    We help clients become more visible, more trusted, and more recognized.
+                  </h2>
+                  <p className="mt-5 max-w-xl text-[17px] leading-[1.75] text-white/72">
+                    Another way to say it: we help clients become the brand people recognize, the expert people quote, and the company people trust.
+                  </p>
+                  <div className="mt-8 rounded-[22px] border border-white/12 bg-white/8 px-5 py-5">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/56">Not the goal</p>
+                    <p className="mt-2 text-[18px] leading-[1.55] text-white/76">Random mentions or vanity press.</p>
+                    <div className="mt-5 h-px bg-white/10" />
+                    <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/56">The real goal</p>
+                    <p className="mt-2 text-[18px] leading-[1.55] text-white">Dominate mindshare and build category authority through earned media.</p>
                   </div>
-                ))}
-              </div>
-            </Panel>
-          </SectionWrap>
+                  <p className="mt-8 text-[1.75rem] leading-none text-[#ffd197] font-handwritten rotate-[-1deg]">
+                    Visibility is the input. Trust is the outcome.
+                  </p>
+                </div>
+              </motion.div>
 
-          <SectionWrap>
-            <Panel className="bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)]">
-              <Eyebrow>What It Helps You Do</Eyebrow>
-              <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
-                Show up like a leader and dominate more of the conversation in your space
-              </h2>
-              <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                {authorityOutcomes.map((item) => (
-                  <div key={item.title} className="rounded-[18px] border border-[#e8e5f3] bg-white p-7 shadow-[0_18px_36px_rgba(24,31,62,0.08)]">
-                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff] shadow-[inset_0_0_0_1px_rgba(111,93,255,0.08)]">
-                      <item.Icon className="h-5 w-5" />
-                    </span>
-                    <h3 className="mt-4 text-[18px] font-display font-semibold leading-[1.35] tracking-[-0.02em] text-[#171929]">{item.title}</h3>
-                    <p className="mt-3 text-[15px] leading-[1.6] text-[#61657f]">{item.description}</p>
-                  </div>
-                ))}
-              </div>
-            </Panel>
-          </SectionWrap>
-
-          <SectionWrap id="flow" className="scroll-mt-8 md:scroll-mt-10">
-            <Panel>
-              <Eyebrow>How It Stacks Up</Eyebrow>
-              <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
-                A scrollable authority flow from positioning to compounding recognition
-              </h2>
-              <p className="mt-4 max-w-3xl text-[18px] leading-[1.6] text-[#5a5d79]">
-                On mobile, scroll horizontally to follow the full stack. On desktop, the full flow is visible in one sequence.
-              </p>
-
-              <div className="mt-10 overflow-x-auto pb-4">
-                <div className="flex min-w-max snap-x snap-mandatory gap-4 md:grid md:min-w-0 md:grid-cols-5 md:gap-4">
-                  {authorityFlow.map((item, index) => (
-                    <div key={item.title} className="relative w-[250px] snap-center md:w-auto">
-                      <div className="h-full rounded-[18px] border border-[#e8e5f3] bg-white p-5 shadow-[0_14px_30px_rgba(24,31,62,0.08)]">
-                        <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6f5dff]">Step {index + 1}</span>
-                        <span className="mt-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff]">
-                          <item.Icon className="h-5 w-5" />
-                        </span>
-                        <h3 className="mt-4 text-[16px] font-display font-semibold leading-[1.35] tracking-[-0.02em] text-[#171929]">{item.title}</h3>
-                        <p className="mt-3 text-[14px] leading-[1.6] text-[#61657f]">{item.description}</p>
+              <motion.div
+                {...revealProps}
+                transition={{ ...revealProps.transition, delay: 0.08 }}
+                className="rounded-[30px] border border-[#dfd4c2] bg-[#fffaf2] p-8 shadow-[0_24px_52px_rgba(44,38,26,0.08)] sm:p-10"
+              >
+                <Eyebrow>What This Builds</Eyebrow>
+                <div className="mt-8 space-y-5">
+                  {promisePillars.map((item, index) => (
+                    <div
+                      key={item.title}
+                      className={cn(
+                        "flex gap-4 rounded-[20px] border p-5",
+                        index === 0 && "border-[#ecd9b7] bg-[#fff2dd]",
+                        index === 1 && "border-[#cde4dd] bg-[#e8f6f1]",
+                        index === 2 && "border-[#d7d0ea] bg-[#f1ecfb]",
+                      )}
+                    >
+                      <IconShell Icon={item.Icon} tone={item.tone} shape={item.shape} />
+                      <div>
+                        <h3 className="text-[1.15rem] font-display font-bold tracking-[-0.02em] text-[#12192b]">{item.title}</h3>
+                        <p className="mt-2 text-[15px] leading-[1.65] text-[#5e6476]">{item.description}</p>
                       </div>
-                      {index < authorityFlow.length - 1 ? (
-                        <div className="pointer-events-none absolute -right-3 top-1/2 hidden -translate-y-1/2 md:block">
-                          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#ddd7f0] bg-white text-[#6f5dff] shadow-[0_8px_18px_rgba(24,31,62,0.08)]">
-                            <ArrowRight className="h-4 w-4" />
-                          </span>
-                        </div>
-                      ) : null}
                     </div>
                   ))}
                 </div>
-              </div>
-            </Panel>
+              </motion.div>
+            </div>
           </SectionWrap>
 
           <SectionWrap>
-            <Panel className="bg-[linear-gradient(180deg,#fbfbff_0%,#f3f4fb_100%)]">
-              <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-                <div>
-                  <Eyebrow>Authority Momentum</Eyebrow>
-                  <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
-                    How sustained authority work compounds over time
+            <motion.div {...revealProps} className="rounded-[30px] border border-[#dfd4c2] bg-[#fbf6ee] p-8 shadow-[0_24px_52px_rgba(44,38,26,0.08)] sm:p-10 lg:p-12">
+              <Eyebrow>What It Helps You Do</Eyebrow>
+              <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.08] tracking-[-0.05em] text-[#111729] sm:text-[2.35rem]">
+                Show up like a leader, own more of the conversation, and stand out through credibility
+              </h2>
+              <div className="mt-10 grid gap-4 md:grid-cols-6">
+                {outcomeCards.map((item) => (
+                  <StoryCardBlock key={item.title} item={item} />
+                ))}
+              </div>
+            </motion.div>
+          </SectionWrap>
+
+          <SectionWrap id="delivery-flow" className="scroll-mt-10 md:scroll-mt-12">
+            <div className="grid gap-10 lg:grid-cols-[0.4fr_0.6fr]">
+              <div className="lg:sticky lg:top-28 lg:self-start">
+                <motion.div {...revealProps} className="rounded-[30px] border border-[#dfd4c2] bg-[linear-gradient(145deg,#fef8ef_0%,#f5eee2_100%)] p-8 shadow-[0_22px_48px_rgba(44,38,26,0.08)] sm:p-10">
+                  <Eyebrow>Scroll-Led Delivery</Eyebrow>
+                  <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.05] tracking-[-0.05em] text-[#111729] sm:text-[2.3rem]">
+                    The authority flow from positioning to compounding recognition
                   </h2>
-                  <p className="mt-4 text-[18px] leading-[1.6] text-[#5a5d79]">
-                    This is a model of the growth curve we are building toward: stronger recognition, stronger trust, and stronger category positioning.
+                  <p className="mt-5 text-[16px] leading-[1.75] text-[#5b6276]">
+                    This is the rhythm behind the service. Each stage feeds the next so visibility becomes trust instead of isolated media wins.
                   </p>
-
-                  <div className="mt-7 rounded-[20px] border border-[#e3e6f2] bg-white p-4 shadow-[0_16px_34px_rgba(24,31,62,0.08)] sm:p-5">
-                    <div className="mb-4 flex items-center justify-between gap-3 border-b border-[#ebedf5] pb-3">
-                      <div className="text-[13px] font-semibold uppercase tracking-[0.2em] text-[#6f5dff]">Authority index</div>
-                      <span className="inline-flex items-center gap-2 rounded-full border border-[#dde2ef] bg-[#f8f9ff] px-3 py-1 text-[12px] font-medium text-[#4d5474]">
-                        <BarChart3 className="h-3.5 w-3.5 text-[#6f5dff]" />
-                        Direction of travel
-                      </span>
-                    </div>
-                    <svg viewBox={`0 0 ${momentumChart.chartWidth} ${momentumChart.chartHeight}`} className="h-[17rem] w-full sm:h-[18rem]">
-                      {[0, 0.25, 0.5, 0.75, 1].map((fraction) => {
-                        const y = 24 + (momentumChart.baselineY - 24) * fraction;
-                        return (
-                          <line
-                            key={fraction}
-                            x1="20"
-                            x2={momentumChart.chartWidth - 20}
-                            y1={y}
-                            y2={y}
-                            stroke="#e8ebf4"
-                            strokeDasharray="4 6"
-                          />
-                        );
-                      })}
-
-                      <path d={momentumChart.areaPath} fill="url(#authorityArea)" opacity="0.9" />
-                      <path d={momentumChart.linePath} fill="none" stroke="#5b49d1" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-
-                      {momentumChart.points.map((point, index) => (
-                        <circle key={index} cx={point.x} cy={point.y} r="4.2" fill="#5b49d1" />
-                      ))}
-
-                      {momentumTickIndices.map((tickIndex, idx) => (
-                        <text
-                          key={tickIndex}
-                          x={momentumChart.points[tickIndex].x}
-                          y={momentumChart.baselineY + 22}
-                          textAnchor="middle"
-                          fill="#8a90a8"
-                          fontSize="11"
-                          fontWeight="500"
-                        >
-                          {momentumLabels[idx]}
-                        </text>
-                      ))}
-
-                      <defs>
-                        <linearGradient id="authorityArea" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#6f5dff" stopOpacity="0.3" />
-                          <stop offset="100%" stopColor="#6f5dff" stopOpacity="0.03" />
-                        </linearGradient>
-                      </defs>
-                    </svg>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="rounded-[18px] border border-[#e8e5f3] bg-white p-5 shadow-[0_12px_26px_rgba(24,31,62,0.06)]">
-                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6f5dff]">What moves the graph</p>
-                    <ul className="mt-4 space-y-3">
-                      {[
-                        "Consistent earned placements",
-                        "Founder and expert visibility",
-                        "Third-party trust reinforcement",
-                        "Narrative consistency in high-trust channels",
-                      ].map((item) => (
-                        <li key={item} className="flex items-start gap-3 text-[14px] leading-[1.6] text-[#58607f]">
-                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#6f5dff]" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="rounded-[18px] border border-[#e4ddf8] bg-[linear-gradient(140deg,#f8f5ff_0%,#eef2ff_100%)] p-5 shadow-[0_12px_26px_rgba(24,31,62,0.06)]">
-                    <p className="text-[15px] leading-[1.6] text-[#3f4563]">
+                  <div className="mt-8 rounded-[22px] border border-[#ddd2bf] bg-white px-5 py-5">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#916326]">Simple explanation</p>
+                    <p className="mt-3 text-[17px] leading-[1.7] text-[#28324d]">
                       We help clients become the go-to name in their space by getting them seen, heard, and quoted in the right places.
                     </p>
                   </div>
-                </div>
+                </motion.div>
               </div>
-            </Panel>
-          </SectionWrap>
 
-          <SectionWrap>
-            <Panel>
-              <Eyebrow>How We Build Authority</Eyebrow>
-              <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
-                Earned visibility in the places that matter
-              </h2>
-              <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                {placements.map((item) => (
-                  <div key={item.title} className="rounded-[16px] border border-[#e8e5f3] bg-white p-5 shadow-[0_12px_26px_rgba(24,31,62,0.06)]">
-                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff]">
-                      <item.Icon className="h-5 w-5" />
-                    </span>
-                    <h3 className="mt-4 text-[16px] font-display font-semibold leading-[1.35] text-[#171929]">{item.title}</h3>
-                    <p className="mt-2 text-[14px] leading-[1.6] text-[#61657f]">{item.description}</p>
-                  </div>
-                ))}
-              </div>
-            </Panel>
-          </SectionWrap>
-
-          <SectionWrap id="included" className="scroll-mt-8 md:scroll-mt-10">
-            <Panel className="bg-[linear-gradient(180deg,#ffffff_0%,#f7f4ff_100%)]">
-              <Eyebrow>What Is Included</Eyebrow>
-              <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
-                A stronger engagement structure, not just a single pricing card
-              </h2>
-
-              <div className="mt-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+              <div className="relative pl-8 sm:pl-10">
+                <div className="pointer-events-none absolute left-3 top-2 bottom-2 w-[2px] bg-[linear-gradient(180deg,#d5934a_0%,#375f84_35%,#2c8a7c_68%,#b86655_100%)] sm:left-5" />
                 <div className="space-y-6">
-                  <div className="rounded-[20px] border border-[#d8cef8] bg-[linear-gradient(145deg,#1a1655_0%,#473aaa_58%,#5d6fff_100%)] p-6 text-white shadow-[0_22px_52px_rgba(77,65,183,0.3)]">
-                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/72">Engagement model</p>
-                    <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                      <div className="rounded-[14px] border border-white/18 bg-white/10 px-4 py-4">
-                        <p className="text-[11px] uppercase tracking-[0.16em] text-white/70">Fee</p>
-                        <p className="mt-2 text-[1.9rem] font-display font-bold tracking-[-0.04em]">$5,000</p>
-                        <p className="mt-1 text-[13px] text-white/72">per month</p>
-                      </div>
-                      <div className="rounded-[14px] border border-white/18 bg-white/10 px-4 py-4">
-                        <p className="text-[11px] uppercase tracking-[0.16em] text-white/70">Target output</p>
-                        <p className="mt-2 text-[1.9rem] font-display font-bold tracking-[-0.04em]">~3-4</p>
-                        <p className="mt-1 text-[13px] text-white/72">pieces per month</p>
-                      </div>
-                    </div>
-                    <p className="mt-5 rounded-[12px] border border-white/16 bg-white/10 px-3 py-2 text-[13px] leading-[1.55] text-white/82">
-                      Coverage is a target, not a guarantee, because PR outcomes depend on editorial discretion and third-party acceptance.
-                    </p>
-                  </div>
-
-                  <div className="rounded-[20px] border border-[#e8e5f3] bg-white p-6 shadow-[0_18px_36px_rgba(24,31,62,0.08)]">
-                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6f5dff]">Monthly operating cadence</p>
-                    <div className="mt-4 space-y-3">
-                      {cadence.map((item) => (
-                        <div key={item} className="flex items-start gap-3 rounded-[12px] border border-[#ece8f6] bg-[#faf9ff] px-3 py-2.5">
-                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#6f5dff]" />
-                          <p className="text-[14px] leading-[1.55] text-[#58607f]">{item}</p>
+                  {processSteps.map((item, index) => (
+                    <motion.div
+                      key={item.title}
+                      initial={{ opacity: 0, x: index % 2 === 0 ? 28 : -28 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, amount: 0.25 }}
+                      transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
+                      className={cn("relative", index % 2 === 1 && "lg:ml-12")}
+                    >
+                      <span className="absolute -left-[2.15rem] top-8 h-5 w-5 rounded-full border-[4px] border-[#f4efe7] bg-[#d5934a] sm:-left-[2.55rem]" />
+                      <div
+                        className={cn(
+                          "rounded-[24px] border p-6 shadow-[0_20px_40px_rgba(24,31,62,0.08)]",
+                          index === 0 && "border-[#ecd9b7] bg-[#fff2dd]",
+                          index === 1 && "border-[#d4d9e8] bg-[#0f1738] text-white",
+                          index === 2 && "border-[#cde4dd] bg-[#e8f6f1]",
+                          index === 3 && "border-[#efcec5] bg-[#fff0ec]",
+                          index === 4 && "border-[#d8d0ea] bg-[#f1ecfb]",
+                        )}
+                      >
+                        <div className="flex items-start justify-between gap-4">
+                          <div>
+                            <p className={cn("text-[11px] font-semibold uppercase tracking-[0.2em]", index === 1 ? "text-white/56" : "text-[#8b6233]")}>{item.step}</p>
+                            <h3 className={cn("mt-3 text-[1.45rem] font-display font-bold leading-[1.08] tracking-[-0.03em]", index === 1 ? "text-white" : "text-[#111729]")}>
+                              {item.title}
+                            </h3>
+                          </div>
+                          <IconShell Icon={item.Icon} tone={item.tone} shape={item.shape} />
                         </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="rounded-[20px] border border-[#e8e5f3] bg-white p-6 shadow-[0_18px_36px_rgba(24,31,62,0.08)]">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6f5dff]">Coverage may include a mix of</p>
-                  <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                    {coverageMix.map((item) => (
-                      <div key={item.title} className="rounded-[14px] border border-[#ece8f6] bg-[#faf9ff] px-4 py-3">
-                        <div className="flex items-center gap-2">
-                          <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#efebff] text-[#6f5dff]">
-                            <item.Icon className="h-4 w-4" />
-                          </span>
-                          <span className="text-[14px] font-semibold text-[#2f3450]">{item.title}</span>
-                        </div>
-                        <p className="mt-2 text-[13px] leading-[1.55] text-[#626780]">{item.description}</p>
+                        <p className={cn("mt-4 max-w-xl text-[15px] leading-[1.75]", index === 1 ? "text-white/72" : "text-[#5d6476]")}>{item.description}</p>
                       </div>
-                    ))}
-                  </div>
-                  <p className="mt-5 text-[14px] leading-[1.7] text-[#646882]">
-                    SEO and AI visibility gains can happen downstream, but the primary objective is authority and brand credibility.
-                  </p>
-                </div>
-              </div>
-            </Panel>
-          </SectionWrap>
-
-          <SectionWrap>
-            <Panel>
-              <Eyebrow>Who It Is For</Eyebrow>
-              <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
-                Built for brands that want real market authority
-              </h2>
-              <p className="mt-4 text-[18px] leading-[1.6] text-[#5a5d79]">
-                The brands that win are not the loudest. They are the ones people already trust.
-              </p>
-
-              <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-                {audienceCards.map((item) => (
-                  <div key={item.title} className="rounded-[18px] border border-[#e8e5f3] bg-white p-6 shadow-[0_18px_36px_rgba(24,31,62,0.08)]">
-                    <h3 className="text-[20px] font-display font-semibold leading-[1.2] tracking-[-0.02em] text-[#171929]">{item.title}</h3>
-                    <p className="mt-3 text-[15px] leading-[1.6] text-[#61657f]">{item.description}</p>
-                  </div>
-                ))}
-              </div>
-            </Panel>
-          </SectionWrap>
-
-          <SectionWrap>
-            <Panel>
-              <Eyebrow>Proof</Eyebrow>
-              <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
-                Real authority coverage in market-facing publications
-              </h2>
-              <div className="mt-10 grid gap-4 md:grid-cols-2">
-                {proofImages.map((item) => (
-                  <div key={item.src} className="overflow-hidden rounded-[20px] border border-[#e8edf8] bg-white p-1.5 shadow-[0_12px_24px_rgba(28,39,79,0.1)]">
-                    <div className="overflow-hidden rounded-[14px] border border-[#e8edf8] bg-[#edf2fb]">
-                      <Image
-                        src={item.src}
-                        alt={item.alt}
-                        width={1244}
-                        height={1500}
-                        className="h-[13.75rem] w-full object-cover object-top sm:h-[15rem] lg:h-[16rem]"
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Panel>
-          </SectionWrap>
-
-          <SectionWrap className="pb-12">
-            <div className="relative overflow-hidden rounded-[20px] bg-[linear-gradient(130deg,#090d22_0%,#111a44_50%,#17275e_100%)] p-10 text-white shadow-[0_34px_88px_rgba(8,11,29,0.32)] sm:p-12">
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(115,93,255,0.24),transparent_30%),radial-gradient(circle_at_82%_18%,rgba(87,157,255,0.14),transparent_26%)]" />
-              <div className="relative z-10 mx-auto max-w-3xl text-center">
-                <Eyebrow dark>Next Step</Eyebrow>
-                <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-white sm:text-[2.25rem] md:text-[2.5rem]">
-                  Let&apos;s build your authority
-                </h2>
-                <p className="mt-4 text-[18px] leading-[1.6] text-white/72">
-                  If you want to become the go-to expert in your industry, let&apos;s talk about fit, positioning, and opportunities.
-                </p>
-                <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-                  <PrimaryExternalButton
-                    href="https://book.linkifi.io/widget/bookings/pr-discovery-call"
-                    label="Book Discovery Call"
-                  />
-                  <SecondaryButton href="/contact-us" label="Talk to the Team" />
+                    </motion.div>
+                  ))}
                 </div>
               </div>
             </div>
+          </SectionWrap>
+
+          <SectionWrap>
+            <motion.div
+              {...revealProps}
+              className="relative overflow-hidden rounded-[32px] bg-[linear-gradient(135deg,#0d1431_0%,#162453_42%,#27456f_72%,#37504e_100%)] p-8 text-white shadow-[0_30px_70px_rgba(13,20,49,0.26)] sm:p-10 lg:p-12"
+            >
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(255,196,107,0.14),transparent_22%),radial-gradient(circle_at_84%_22%,rgba(97,210,191,0.12),transparent_24%),radial-gradient(circle_at_58%_82%,rgba(255,153,119,0.1),transparent_26%)]" />
+              <div className="relative z-10 grid gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:items-start">
+                <div>
+                  <Eyebrow inverted>Where Authority Gets Built</Eyebrow>
+                  <h2 className="mt-5 max-w-lg text-balance text-[2rem] font-display font-bold leading-[1.05] tracking-[-0.05em] text-white sm:text-[2.35rem]">
+                    Earned visibility in the channels that create trust and shape perception
+                  </h2>
+                  <p className="mt-5 max-w-lg text-[16px] leading-[1.75] text-white/72">
+                    We build authority by securing earned visibility across reputable third-party channels including publications, podcasts, interviews, bylines, op-eds, and expert commentary.
+                  </p>
+                  <p className="mt-8 text-[1.7rem] leading-none text-[#ffd197] font-handwritten rotate-[-1deg]">
+                    Authority grows where other people validate you.
+                  </p>
+                </div>
+
+                <div className="grid gap-4 md:grid-cols-2">
+                  {placementCards.map((item, index) => (
+                    <PlacementBlock key={item.title} item={item} index={index} />
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </SectionWrap>
+
+          <SectionWrap id="included" className="scroll-mt-10 md:scroll-mt-12">
+            <div className="grid gap-6 lg:grid-cols-[0.42fr_0.58fr]">
+              <div className="lg:sticky lg:top-28 lg:self-start">
+                <motion.div
+                  {...revealProps}
+                  className="overflow-hidden rounded-[30px] bg-[linear-gradient(145deg,#0f1738_0%,#1f2d62_60%,#285c5c_100%)] p-8 text-white shadow-[0_28px_60px_rgba(15,23,56,0.24)] sm:p-10"
+                >
+                  <Eyebrow inverted>The Engagement</Eyebrow>
+                  <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.04] tracking-[-0.05em] text-white sm:text-[2.25rem]">
+                    Structured like a retained authority-building engine
+                  </h2>
+                  <div className="mt-8 grid gap-4">
+                    <div className="rounded-[22px] border border-white/16 bg-white/10 p-5">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/58">Fee</p>
+                      <div className="mt-2 text-[3rem] font-display font-bold leading-none tracking-[-0.06em]">$5,000</div>
+                      <p className="mt-2 text-[14px] text-white/72">per month</p>
+                    </div>
+                    <div className="rounded-[22px] border border-white/16 bg-white/10 p-5">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/58">Target output</p>
+                      <div className="mt-2 text-[3rem] font-display font-bold leading-none tracking-[-0.06em]">3-4</div>
+                      <p className="mt-2 text-[14px] text-white/72">pieces of coverage per month</p>
+                    </div>
+                  </div>
+                  <div className="mt-8 rounded-[22px] border border-white/16 bg-white/8 p-5">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/56">Important note</p>
+                    <p className="mt-3 text-[15px] leading-[1.7] text-white/78">
+                      This is a target, not a guarantee, because PR outcomes depend on editorial discretion and third-party acceptance.
+                    </p>
+                  </div>
+                </motion.div>
+              </div>
+
+              <div className="space-y-6">
+                <motion.div
+                  {...revealProps}
+                  transition={{ ...revealProps.transition, delay: 0.08 }}
+                  className="rounded-[30px] border border-[#dfd4c2] bg-[#fffaf2] p-8 shadow-[0_24px_52px_rgba(44,38,26,0.08)] sm:p-10"
+                >
+                  <Eyebrow>Coverage Mix</Eyebrow>
+                  <h3 className="mt-5 text-[1.85rem] font-display font-bold leading-[1.08] tracking-[-0.04em] text-[#111729]">
+                    Coverage can flex across the formats that build authority best
+                  </h3>
+                  <div className="mt-8 flex flex-wrap gap-3">
+                    {coverageMix.map((item, index) => (
+                      <div
+                        key={item}
+                        className={cn(
+                          "inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-semibold shadow-[0_12px_22px_rgba(44,38,26,0.05)]",
+                          index % 4 === 0 && "border-[#efcf9e] bg-[#fff1da] text-[#7a4a17]",
+                          index % 4 === 1 && "border-[#c6e0d9] bg-[#e8f6f1] text-[#0f5f55]",
+                          index % 4 === 2 && "border-[#ecc4b8] bg-[#fff0ec] text-[#92422f]",
+                          index % 4 === 3 && "border-[#d7cbed] bg-[#f1ecfb] text-[#5c4297]",
+                        )}
+                      >
+                        <CheckCircle2 className="h-4 w-4" />
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  {...revealProps}
+                  transition={{ ...revealProps.transition, delay: 0.12 }}
+                  className="rounded-[30px] border border-[#dfd4c2] bg-[linear-gradient(145deg,#fbf6ee_0%,#f1ece5_100%)] p-8 shadow-[0_24px_52px_rgba(44,38,26,0.08)] sm:p-10"
+                >
+                  <Eyebrow>Monthly Rhythm</Eyebrow>
+                  <div className="mt-8 grid gap-4 md:grid-cols-4">
+                    {monthCadence.map((item, index) => (
+                      <div key={item.label} className="rounded-[22px] border border-[#ddd2bf] bg-white p-4 shadow-[0_12px_24px_rgba(44,38,26,0.05)]">
+                        <div
+                          className={cn(
+                            "h-2 rounded-full",
+                            index === 0 && "bg-[linear-gradient(90deg,#f1be74_0%,#d37b34_100%)]",
+                            index === 1 && "bg-[linear-gradient(90deg,#10193a_0%,#27447e_100%)]",
+                            index === 2 && "bg-[linear-gradient(90deg,#b8f0df_0%,#2b8f81_100%)]",
+                            index === 3 && "bg-[linear-gradient(90deg,#ffd9cf_0%,#b85e4a_100%)]",
+                          )}
+                        />
+                        <h3 className="mt-4 text-[17px] font-display font-bold tracking-[-0.02em] text-[#111729]">{item.label}</h3>
+                        <p className="mt-2 text-[14px] leading-[1.6] text-[#5e6476]">{item.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="mt-8 rounded-[18px] border border-[#ddd2bf] bg-white px-5 py-4 text-[15px] leading-[1.7] text-[#434c66] shadow-[0_12px_24px_rgba(44,38,26,0.04)]">
+                    SEO and AI visibility can happen downstream, but the service is built first and foremost to increase authority, recognition, and trust in-market.
+                  </p>
+                </motion.div>
+              </div>
+            </div>
+          </SectionWrap>
+
+          <SectionWrap>
+            <div className="grid gap-6 lg:grid-cols-[1.02fr_0.98fr] lg:items-start">
+              <motion.div
+                {...revealProps}
+                className="relative min-h-[34rem] overflow-hidden rounded-[32px] border border-[#dfd4c2] bg-[linear-gradient(145deg,#efe6d6_0%,#f7f2ea_42%,#eef4ff_100%)] p-8 shadow-[0_24px_54px_rgba(44,38,26,0.08)] sm:p-10"
+              >
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(184,94,74,0.09),transparent_22%),radial-gradient(circle_at_80%_18%,rgba(43,143,129,0.08),transparent_22%)]" />
+                <div className="relative z-10">
+                  <Eyebrow>Proof</Eyebrow>
+                  <h2 className="mt-5 max-w-lg text-balance text-[2rem] font-display font-bold leading-[1.05] tracking-[-0.05em] text-[#111729] sm:text-[2.25rem]">
+                    Real authority coverage that looks and feels market-facing
+                  </h2>
+                </div>
+
+                <motion.div
+                  animate={{ y: [0, -6, 0] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute left-8 top-[9.5rem] z-20 w-[55%] overflow-hidden rounded-[26px] border border-[#d6ccbc] bg-white p-2 shadow-[0_26px_44px_rgba(44,38,26,0.16)]"
+                >
+                  <div className="overflow-hidden rounded-[20px] border border-[#ece5d9]">
+                    <Image
+                      src={proofImages[0].src}
+                      alt={proofImages[0].alt}
+                      width={1244}
+                      height={1500}
+                      className="h-[15rem] w-full object-cover object-top sm:h-[17rem]"
+                    />
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  animate={{ y: [0, -9, 0], rotate: [2, 0, 2] }}
+                  transition={{ duration: 6.8, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+                  className="absolute right-8 top-[14rem] z-10 w-[33%] overflow-hidden rounded-[24px] border border-[#d6ccbc] bg-white p-2 shadow-[0_20px_36px_rgba(44,38,26,0.12)]"
+                >
+                  <div className="overflow-hidden rounded-[18px] border border-[#ece5d9]">
+                    <Image
+                      src={proofImages[1].src}
+                      alt={proofImages[1].alt}
+                      width={1244}
+                      height={1500}
+                      className="h-[10rem] w-full object-cover object-top"
+                    />
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  animate={{ y: [0, -5, 0], rotate: [-3, -1, -3] }}
+                  transition={{ duration: 7.1, repeat: Infinity, ease: "easeInOut", delay: 0.7 }}
+                  className="absolute bottom-8 left-[17%] z-30 w-[35%] overflow-hidden rounded-[24px] border border-[#d6ccbc] bg-white p-2 shadow-[0_20px_36px_rgba(44,38,26,0.12)]"
+                >
+                  <div className="overflow-hidden rounded-[18px] border border-[#ece5d9]">
+                    <Image
+                      src={proofImages[2].src}
+                      alt={proofImages[2].alt}
+                      width={1244}
+                      height={1500}
+                      className="h-[10rem] w-full object-cover object-top"
+                    />
+                  </div>
+                </motion.div>
+              </motion.div>
+
+              <motion.div
+                {...revealProps}
+                transition={{ ...revealProps.transition, delay: 0.08 }}
+                className="rounded-[32px] border border-[#dfd4c2] bg-white p-8 shadow-[0_24px_54px_rgba(44,38,26,0.08)] sm:p-10"
+              >
+                <Eyebrow>Who It Is For</Eyebrow>
+                <h2 className="mt-5 max-w-xl text-balance text-[2rem] font-display font-bold leading-[1.06] tracking-[-0.05em] text-[#111729] sm:text-[2.25rem]">
+                  Built for brands that want real market authority, not just more noise
+                </h2>
+                <div className="mt-8 space-y-4">
+                  {audienceCards.map((item, index) => (
+                    <div
+                      key={item.title}
+                      className={cn(
+                        "rounded-[20px] border p-5",
+                        index === 0 && "border-[#ecd9b7] bg-[#fff2dd]",
+                        index === 1 && "border-[#cde4dd] bg-[#e8f6f1]",
+                        index === 2 && "border-[#efcec5] bg-[#fff0ec]",
+                        index === 3 && "border-[#d7cbed] bg-[#f1ecfb]",
+                      )}
+                    >
+                      <h3 className="text-[18px] font-display font-bold tracking-[-0.02em] text-[#111729]">{item.title}</h3>
+                      <p className="mt-2 text-[15px] leading-[1.65] text-[#5e6476]">{item.description}</p>
+                    </div>
+                  ))}
+                </div>
+                <p className="mt-8 text-[1.65rem] leading-none text-[#b6632a] font-handwritten rotate-[-1deg]">
+                  The brands that win are the ones people already trust.
+                </p>
+              </motion.div>
+            </div>
+          </SectionWrap>
+
+          <SectionWrap className="pb-12">
+            <motion.div
+              {...revealProps}
+              className="relative overflow-hidden rounded-[34px] bg-[linear-gradient(130deg,#0b122d_0%,#121f49_48%,#1f5360_100%)] p-10 text-white shadow-[0_34px_88px_rgba(8,11,29,0.32)] sm:p-12"
+            >
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(255,196,107,0.18),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(97,210,191,0.14),transparent_24%)]" />
+              <div className="relative z-10 grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+                <div>
+                  <Eyebrow inverted>Next Step</Eyebrow>
+                  <h2 className="mt-5 max-w-xl text-balance text-[2rem] font-display font-bold leading-[1.06] tracking-[-0.05em] text-white sm:text-[2.4rem]">
+                    Let&apos;s build the kind of authority your market cannot ignore
+                  </h2>
+                  <p className="mt-5 max-w-xl text-[17px] leading-[1.75] text-white/72">
+                    If you want to become the go-to expert or the go-to brand in your industry, the next step is a conversation about fit, positioning, and opportunities.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-4 lg:items-start">
+                  <PrimaryButton href="https://book.linkifi.io/widget/bookings/pr-discovery-call" label="Book Discovery Call" />
+                  <SecondaryButton href="/contact-us" label="Talk To The Team" dark />
+                </div>
+              </div>
+            </motion.div>
           </SectionWrap>
         </div>
       </main>
