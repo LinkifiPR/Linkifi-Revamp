@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import {
-  ArrowDown,
   ArrowRight,
   BadgeCheck,
   BarChart3,
@@ -279,7 +278,7 @@ const momentumChart = createChartGeometry(momentumSeries);
 
 const pageContainerClass = "mx-auto w-full max-w-[1200px] px-6";
 const heroContainerClass = "mx-auto w-full max-w-[1280px] px-6";
-const heroVideoSrc = "/homepage/HERO/authority-pr-hero.mp4";
+const heroVideoSrc = "/homepage/HERO/hero1.mp4";
 
 function SectionWrap({
   children,
@@ -392,12 +391,31 @@ export function AuthorityPrDeckPage() {
                 </div>
 
                 <div className="relative mx-auto w-full max-w-[600px]">
-                  <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-[calc(100%+8px)]">
-                    <div className="rounded-full border border-[#d7d1ef] bg-white/95 px-4 py-2 text-[12px] font-semibold tracking-[0.02em] text-[#3a3f62] shadow-[0_14px_28px_rgba(24,31,62,0.12)] sm:text-[13px]">
+                  <div className="pointer-events-none absolute right-4 top-2 z-20 sm:right-8 sm:top-3">
+                    <div className="inline-flex rounded-full border border-[#f4b4df] bg-[#fff2fb] px-4 py-2 text-[12px] font-semibold tracking-[0.02em] text-[#c71585] shadow-[0_14px_28px_rgba(199,52,146,0.2)] sm:text-[13px]">
                       Our Client on TV
                     </div>
-                    <div className="mt-1.5 flex justify-center">
-                      <ArrowDown className="h-6 w-6 animate-bounce text-[#6f5dff]" />
+                    <div className="ml-8 mt-1 sm:ml-10">
+                      <svg
+                        viewBox="0 0 86 68"
+                        aria-hidden="true"
+                        className="h-[56px] w-[86px] motion-safe:animate-bounce"
+                      >
+                        <path
+                          d="M8 8 C 48 5, 72 24, 54 50"
+                          fill="none"
+                          stroke="#ff3fb4"
+                          strokeWidth="4"
+                          strokeLinecap="round"
+                        />
+                        <path
+                          d="M54 50 L47 42 M54 50 L64 44"
+                          fill="none"
+                          stroke="#ff3fb4"
+                          strokeWidth="4"
+                          strokeLinecap="round"
+                        />
+                      </svg>
                     </div>
                   </div>
                   <div className="pointer-events-none absolute -inset-8 bg-[radial-gradient(circle,rgba(111,93,255,0.2)_0%,rgba(111,93,255,0)_66%)]" />
