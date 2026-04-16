@@ -465,19 +465,8 @@ export function AuthorityPrDeckPage() {
                   <div className="pointer-events-none absolute -inset-8 bg-[radial-gradient(circle,rgba(111,93,255,0.2)_0%,rgba(111,93,255,0)_66%)]" />
                   <div className="relative rounded-[32px] border border-[#ece7ff] bg-[linear-gradient(155deg,#f7f4ff_0%,#ffffff_42%,#eef7ff_100%)] p-4 shadow-[0_38px_80px_rgba(16,24,58,0.28)] sm:p-5">
                     <div className="pointer-events-none absolute inset-x-12 top-2 h-1 rounded-full bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.85),transparent)]" />
-                    <div className="rounded-[26px] border border-[#1f2d6c] bg-[linear-gradient(170deg,#24377d_0%,#141c44_52%,#0c1129_100%)] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),inset_0_-1px_0_rgba(255,255,255,0.08),0_14px_34px_rgba(8,12,34,0.5)] sm:p-4">
-                      <div className="mb-2 flex items-center justify-between px-1">
-                        <div className="flex items-center gap-1.5">
-                          <span className="h-2 w-2 rounded-full bg-[#ff5f6e]" />
-                          <span className="h-2 w-2 rounded-full bg-[#ffc149]" />
-                          <span className="h-2 w-2 rounded-full bg-[#57d769]" />
-                        </div>
-                        <span className="inline-flex items-center gap-1 rounded-full border border-[#6ddcff66] bg-[#0d1f4f] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#89e9ff]">
-                          <span className="h-1.5 w-1.5 rounded-full bg-[#54f2ff] shadow-[0_0_10px_rgba(84,242,255,0.9)] motion-safe:animate-[pulse_3.8s_ease-in-out_infinite]" />
-                          Live
-                        </span>
-                      </div>
-                      <div className="relative aspect-[16/10] overflow-hidden rounded-[16px] border border-[#77d7ff66] bg-[#03061a] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08),0_0_0_1px_rgba(115,219,255,0.2)]">
+                    <div className="rounded-[28px] border border-[#2e3557] bg-[linear-gradient(168deg,#2a3156_0%,#1a203b_58%,#121728_100%)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.16),inset_0_-1px_0_rgba(255,255,255,0.06),0_16px_36px_rgba(8,12,34,0.52)] sm:p-5">
+                      <div className="relative aspect-[16/10] overflow-hidden rounded-[18px] border-[3px] border-[#0c1328] bg-[#02040f] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.07),0_0_0_1px_rgba(95,122,186,0.32)]">
                         <video
                           className="h-full w-full object-cover saturate-[1.14] contrast-[1.1] brightness-[1.03]"
                           autoPlay
@@ -491,18 +480,22 @@ export function AuthorityPrDeckPage() {
                           <source src={heroVideoSrc} type="video/mp4" />
                         </video>
                         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_2%,rgba(255,101,197,0.22),transparent_36%),radial-gradient(circle_at_92%_100%,rgba(63,222,255,0.24),transparent_32%)] mix-blend-screen" />
-                        <div className="pointer-events-none absolute inset-x-6 top-2 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.62),transparent)]" />
+                        <div className="pointer-events-none absolute inset-y-0 left-0 w-[18%] bg-[linear-gradient(90deg,rgba(255,255,255,0.14),transparent)]" />
+                        <div className="pointer-events-none absolute inset-x-6 top-2 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.56),transparent)]" />
                       </div>
-                      <div className="mt-3 flex items-center justify-between px-1">
-                        <div className="h-1.5 w-20 rounded-full bg-[repeating-linear-gradient(90deg,rgba(156,210,255,0.9)_0_4px,rgba(81,110,174,0.2)_4px_7px)] opacity-80" />
-                        <div className="flex items-center gap-2">
-                          <span className="h-2.5 w-2.5 rounded-full bg-[#3fd7ff] shadow-[0_0_10px_rgba(63,215,255,0.85)]" />
-                          <span className="h-2.5 w-2.5 rounded-full bg-[#8f6bff] shadow-[0_0_10px_rgba(143,107,255,0.85)]" />
+                      <div className="mt-3 flex items-center justify-between px-2">
+                        <div className="h-1.5 w-24 rounded-full bg-[repeating-linear-gradient(90deg,rgba(156,210,255,0.75)_0_4px,rgba(81,110,174,0.24)_4px_7px)] opacity-75" />
+                        <span className="rounded-full border border-[#5f77b3] bg-[#121b37] px-2 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-[#b7d4ff]">
+                          Linkifi TV
+                        </span>
+                        <div className="flex items-center gap-1.5">
+                          <span className="h-3 w-3 rounded-full border border-[#6f85bb] bg-[#1f2b4d]" />
+                          <span className="h-3 w-3 rounded-full border border-[#6f85bb] bg-[#1f2b4d]" />
                         </div>
                       </div>
                     </div>
-                    <div className="mx-auto mt-3 h-2 w-12 rounded-full bg-[linear-gradient(180deg,#d2d8ee_0%,#bac3de_100%)] shadow-[0_6px_12px_rgba(40,48,88,0.22)]" />
-                    <div className="mx-auto mt-2 h-3 w-36 rounded-full bg-[linear-gradient(180deg,#e9edf9_0%,#c8d1ea_100%)] shadow-[0_10px_18px_rgba(26,36,78,0.24)]" />
+                    <div className="mx-auto mt-3 h-3 w-14 rounded-[999px] bg-[linear-gradient(180deg,#cfd7ee_0%,#b8c4e0_100%)] shadow-[0_7px_12px_rgba(40,48,88,0.24)]" />
+                    <div className="mx-auto mt-1.5 h-4 w-44 rounded-[999px] border border-[#b7c3e4] bg-[linear-gradient(180deg,#eef3ff_0%,#c9d4ec_100%)] shadow-[0_10px_18px_rgba(26,36,78,0.26)]" />
                   </div>
                 </div>
               </div>
