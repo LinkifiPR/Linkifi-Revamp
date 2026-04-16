@@ -357,6 +357,37 @@ function SecondaryButton({ href, label }: { href: string; label: string }) {
   );
 }
 
+function BuiltForSketch({ title }: { title: string }) {
+  if (title === "Brands") {
+    return (
+      <svg viewBox="0 0 90 56" aria-hidden="true" className="h-10 w-16">
+        <path d="M10 22 H80 L74 14 H16 Z" fill="none" stroke="#7a72be" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M18 22 V44 H72 V22" fill="none" stroke="#7a72be" strokeWidth="2.2" strokeLinecap="round" />
+        <path d="M34 44 V30 H56 V44" fill="none" stroke="#7a72be" strokeWidth="2.2" strokeLinecap="round" />
+        <path d="M8 12 C20 8, 34 9, 46 12 C58 15, 72 16, 82 12" fill="none" stroke="#b09ef2" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    );
+  }
+
+  if (title === "Founders") {
+    return (
+      <svg viewBox="0 0 90 56" aria-hidden="true" className="h-10 w-16">
+        <circle cx="45" cy="18" r="8" fill="none" stroke="#7a72be" strokeWidth="2.2" />
+        <path d="M27 44 C30 32, 38 28, 45 28 C52 28, 60 32, 63 44" fill="none" stroke="#7a72be" strokeWidth="2.2" strokeLinecap="round" />
+        <path d="M23 15 L18 12 M67 15 L72 12 M45 8 V4" fill="none" stroke="#b09ef2" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 90 56" aria-hidden="true" className="h-10 w-16">
+      <path d="M14 18 H58 C63 18,66 21,66 26 V34 C66 39,63 42,58 42 H42 L34 48 V42 H14 C9 42,6 39,6 34 V26 C6 21,9 18,14 18 Z" fill="none" stroke="#7a72be" strokeWidth="2.2" strokeLinejoin="round" />
+      <path d="M45 15 L47 19 L51 19 L48 22 L49 26 L45 24 L41 26 L42 22 L39 19 L43 19 Z" fill="none" stroke="#b09ef2" strokeWidth="2" strokeLinejoin="round" />
+      <path d="M20 27 H48 M20 33 H40" fill="none" stroke="#7a72be" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export function AuthorityPrDeckPage() {
   return (
     <>
@@ -445,22 +476,21 @@ export function AuthorityPrDeckPage() {
                 </div>
               </div>
 
-              <div className="relative z-10 mt-8 overflow-hidden rounded-[24px] border border-[#cec5ff] bg-[linear-gradient(130deg,#11143c_0%,#1c2f7a_42%,#4f2f9f_100%)] p-6 shadow-[0_24px_56px_rgba(22,30,78,0.38)] sm:p-8">
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_20%,rgba(255,93,201,0.26),transparent_32%),radial-gradient(circle_at_88%_82%,rgba(90,225,255,0.22),transparent_34%)]" />
-                <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.7),transparent)]" />
+              <div className="relative z-10 mx-auto mt-7 w-full max-w-[920px] overflow-hidden rounded-[20px] border border-[#ddd7f3] bg-[linear-gradient(145deg,#fbfaff_0%,#f4f7ff_100%)] p-4 shadow-[0_18px_36px_rgba(29,38,83,0.12)] sm:p-5">
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(201,173,255,0.24),transparent_32%),radial-gradient(circle_at_88%_84%,rgba(161,220,255,0.18),transparent_34%)]" />
                 <div className="relative">
-                  <p className="text-[12px] font-semibold uppercase tracking-[0.22em] text-white/80">Built for</p>
-                  <div className="mt-5 grid gap-4 md:grid-cols-3">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6b5fb3]">Built for</p>
+                  <div className="mt-3 grid gap-3 md:grid-cols-3">
                     {builtFor.map((item) => (
                       <div
                         key={item.title}
-                        className="rounded-[18px] border border-white/24 bg-[linear-gradient(145deg,rgba(255,255,255,0.2)_0%,rgba(255,255,255,0.1)_100%)] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_16px_28px_rgba(8,13,40,0.24)] backdrop-blur-sm transition-transform duration-300 hover:-translate-y-1"
+                        className="rounded-[16px] border border-[#e3def3] bg-[linear-gradient(150deg,#ffffff_0%,#f7f6ff_100%)] p-4 shadow-[0_10px_22px_rgba(38,47,92,0.08)] transition-transform duration-300 hover:-translate-y-0.5"
                       >
-                        <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,#fff2fd_0%,#ffd4ef_48%,#d9f5ff_100%)] text-[#5f32b9] shadow-[0_10px_20px_rgba(19,24,67,0.34)]">
-                          <item.Icon className="h-5 w-5" />
+                        <span className="inline-flex items-center justify-center rounded-[12px] border border-[#e8e3f5] bg-[linear-gradient(135deg,#fff8fe_0%,#f4f8ff_100%)] px-2 py-1 shadow-[0_8px_16px_rgba(64,74,122,0.1)]">
+                          <BuiltForSketch title={item.title} />
                         </span>
-                        <h3 className="mt-4 text-[20px] font-display font-semibold tracking-[-0.02em] text-white">{item.title}</h3>
-                        <p className="mt-2 text-[14px] leading-[1.65] text-[#ece9ff]">{item.description}</p>
+                        <h3 className="mt-3 text-[22px] font-display font-semibold tracking-[-0.03em] text-[#242948]">{item.title}</h3>
+                        <p className="mt-1.5 text-[14px] leading-[1.6] text-[#616785]">{item.description}</p>
                       </div>
                     ))}
                   </div>
