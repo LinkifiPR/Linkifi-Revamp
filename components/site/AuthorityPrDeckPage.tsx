@@ -442,54 +442,28 @@ export function AuthorityPrDeckPage() {
                     <div className="mx-auto mt-3 h-2 w-12 rounded-full bg-[linear-gradient(180deg,#d2d8ee_0%,#bac3de_100%)] shadow-[0_6px_12px_rgba(40,48,88,0.22)]" />
                     <div className="mx-auto mt-2 h-3 w-36 rounded-full bg-[linear-gradient(180deg,#e9edf9_0%,#c8d1ea_100%)] shadow-[0_10px_18px_rgba(26,36,78,0.24)]" />
                   </div>
-                  <div className="mt-4 flex flex-wrap items-center gap-3 text-[12px] font-medium text-[#4d5474] sm:text-[13px]">
-                    <span className="inline-flex items-center gap-2 rounded-full border border-[#dfdbf1] bg-white px-3 py-1.5 shadow-[0_10px_22px_rgba(24,31,62,0.08)]">
-                      <span className="h-2 w-2 rounded-full bg-[#4ad26f] shadow-[0_0_10px_rgba(74,210,111,0.8)]" />
-                      Live authority reel
-                    </span>
-                    <span className="inline-flex items-center rounded-full border border-[#dfdbf1] bg-white px-3 py-1.5 shadow-[0_10px_22px_rgba(24,31,62,0.08)]">
-                      Optimized autoplay loop
-                    </span>
-                  </div>
                 </div>
               </div>
 
-              <div className="relative z-10 mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-[1.2fr_0.8fr_0.8fr]">
-                <div className="rounded-[20px] border border-[#ddd6f4] bg-white p-5 shadow-[0_16px_34px_rgba(24,31,62,0.08)] md:col-span-2 xl:col-span-1">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6f5dff]">Built for</p>
-                  <div className="mt-4 grid gap-3 sm:grid-cols-3">
+              <div className="relative z-10 mt-8 overflow-hidden rounded-[24px] border border-[#cec5ff] bg-[linear-gradient(130deg,#11143c_0%,#1c2f7a_42%,#4f2f9f_100%)] p-6 shadow-[0_24px_56px_rgba(22,30,78,0.38)] sm:p-8">
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_20%,rgba(255,93,201,0.26),transparent_32%),radial-gradient(circle_at_88%_82%,rgba(90,225,255,0.22),transparent_34%)]" />
+                <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.7),transparent)]" />
+                <div className="relative">
+                  <p className="text-[12px] font-semibold uppercase tracking-[0.22em] text-white/80">Built for</p>
+                  <div className="mt-5 grid gap-4 md:grid-cols-3">
                     {builtFor.map((item) => (
-                      <div key={item.title} className="rounded-[14px] border border-[#ece8f6] bg-[#faf9ff] px-3 py-3">
-                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#efebff] text-[#6f5dff]">
-                          <item.Icon className="h-4 w-4" />
+                      <div
+                        key={item.title}
+                        className="rounded-[18px] border border-white/24 bg-[linear-gradient(145deg,rgba(255,255,255,0.2)_0%,rgba(255,255,255,0.1)_100%)] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_16px_28px_rgba(8,13,40,0.24)] backdrop-blur-sm transition-transform duration-300 hover:-translate-y-1"
+                      >
+                        <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,#fff2fd_0%,#ffd4ef_48%,#d9f5ff_100%)] text-[#5f32b9] shadow-[0_10px_20px_rgba(19,24,67,0.34)]">
+                          <item.Icon className="h-5 w-5" />
                         </span>
-                        <div className="mt-2 text-[15px] font-semibold text-[#171929]">{item.title}</div>
-                        <p className="mt-1 text-[13px] leading-[1.5] text-[#626780]">{item.description}</p>
+                        <h3 className="mt-4 text-[20px] font-display font-semibold tracking-[-0.02em] text-white">{item.title}</h3>
+                        <p className="mt-2 text-[14px] leading-[1.65] text-[#ece9ff]">{item.description}</p>
                       </div>
                     ))}
                   </div>
-                </div>
-
-                <div className="rounded-[20px] border border-[#e4def4] bg-white p-5 shadow-[0_16px_34px_rgba(24,31,62,0.08)]">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6f5dff]">Main promise</p>
-                  <p className="mt-3 text-[16px] font-medium leading-[1.55] text-[#303554]">
-                    We help clients become more visible, more trusted, and more recognized so they own more authority in their market.
-                  </p>
-                </div>
-
-                <div className="rounded-[20px] border border-[#d8d0f6] bg-[linear-gradient(140deg,#f8f5ff_0%,#eef2ff_100%)] p-5 shadow-[0_16px_34px_rgba(24,31,62,0.08)]">
-                  <div className="flex items-center gap-3">
-                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,#6f5dff_0%,#4d92ff_100%)] text-white shadow-[0_14px_28px_rgba(95,84,198,0.28)]">
-                      <Crown className="h-5 w-5" />
-                    </span>
-                    <div>
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6f5dff]">End state</p>
-                      <p className="mt-1 text-[16px] font-semibold text-[#171929]">Category authority</p>
-                    </div>
-                  </div>
-                  <p className="mt-3 text-[14px] leading-[1.6] text-[#576082]">
-                    Become the brand people recognize, the expert people quote, and the company people trust.
-                  </p>
                 </div>
               </div>
             </Panel>
