@@ -278,7 +278,7 @@ const momentumChart = createChartGeometry(momentumSeries);
 
 const pageContainerClass = "mx-auto w-full max-w-[1200px] px-6";
 const heroContainerClass = "mx-auto w-full max-w-[1280px] px-6";
-const heroVideoSrc = "/homepage/HERO/Hero%20Video%20%281%29.mp4";
+const heroVideoSrc = "/homepage/HERO/authority-pr-hero.mp4";
 
 function SectionWrap({
   children,
