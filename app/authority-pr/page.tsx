@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { ServiceLandingPage } from "@/components/site/ServiceLandingPage";
+import { AuthorityPrDeckPage } from "@/components/site/AuthorityPrDeckPage";
 
 export const metadata: Metadata = {
   title: "Authority PR | Linkifi",
   description:
-    "Build brand authority that influences search engines, AI systems, editorial media, and human audiences.",
+    "Traditional PR for brands, founders, and spokespeople who want to build real authority in their market.",
   alternates: {
     canonical: "https://linkifi.io/authority-pr",
   },
 };
 
 export default function AuthorityPrPage() {
-  return <ServiceLandingPage page="authority" />;
+  return <AuthorityPrDeckPage />;
 }
