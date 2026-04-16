@@ -392,8 +392,8 @@ export function AuthorityPrDeckPage() {
 
                 <div className="relative mx-auto w-full max-w-[600px]">
                   <div className="pointer-events-none absolute -inset-8 bg-[radial-gradient(circle,rgba(111,93,255,0.2)_0%,rgba(111,93,255,0)_66%)]" />
-                  <div className="relative rounded-[30px] border border-[#d8d2f0] bg-[linear-gradient(170deg,#f5f3ff_0%,#f9fbff_54%,#ffffff_100%)] p-3 shadow-[0_36px_72px_rgba(32,40,82,0.22)] sm:p-4">
-                    <div className="rounded-[24px] border border-[#2e355f] bg-[linear-gradient(180deg,#232c57_0%,#11172f_100%)] p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_12px_28px_rgba(9,12,32,0.38)] sm:p-3">
+                  <div className="relative rounded-[30px] border border-[#d8d2f0] bg-[linear-gradient(170deg,#f5f3ff_0%,#f9fbff_54%,#ffffff_100%)] p-4 shadow-[0_36px_72px_rgba(32,40,82,0.22)] sm:p-5">
+                    <div className="rounded-[24px] border border-[#2e355f] bg-[linear-gradient(180deg,#232c57_0%,#11172f_100%)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_12px_28px_rgba(9,12,32,0.38)] sm:p-5">
                       <div className="relative aspect-[16/10] overflow-hidden rounded-[18px] border border-white/15 bg-[#060815]">
                         <video
                           className="h-full w-full object-cover"
