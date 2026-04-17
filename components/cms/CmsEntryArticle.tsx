@@ -264,6 +264,7 @@ export function CmsEntryArticle({ entry }: Props) {
       .filter((block) => typeof block.id === "string" && block.id.length > 0)
       .map((block) => [block.id as string, block]),
   );
+  const blockIndexByRef = new Map(entry.content.map((block, index) => [block, index] as const));
   const remainingBlocks = entry.content.filter((block) => !block.id || !inlineBlockIds.has(block.id));
   const toc = [...bodyRender.toc, ...buildTocFromBlocks(entry.content)];
   const readMinutes = estimateReadMinutes(entry);
@@ -390,7 +391,11 @@ export function CmsEntryArticle({ entry }: Props) {
                       return null;
                     }
 
-                    return <div key={`block-${part.blockId}`}>{renderCmsBlock(block, index)}</div>;
+                    return (
+                      <div key={`block-${part.blockId}`}>
+                        {renderCmsBlock(block, blockIndexByRef.get(block) ?? index)}
+                      </div>
+                    );
                   })}
                 </div>
               ) : bodyRender.html ? (
@@ -399,7 +404,10 @@ export function CmsEntryArticle({ entry }: Props) {
 
               {remainingBlocks.length > 0 ? (
                 <div className={bodyRender.html || inlineParts.length > 0 ? "mt-8" : ""}>
-                  <CmsBlocksRenderer blocks={remainingBlocks} />
+                  <CmsBlocksRenderer
+                    blocks={remainingBlocks}
+                    getBlockIndex={(block, fallbackIndex) => blockIndexByRef.get(block) ?? fallbackIndex}
+                  />
                 </div>
               ) : null}
             </div>

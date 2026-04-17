@@ -4,6 +4,7 @@ import { getBlockHeadingId } from "@/lib/cms-render";
 
 type Props = {
   blocks: CmsBlock[];
+  getBlockIndex?: (block: CmsBlock, fallbackIndex: number) => number;
 };
 
 function splitStatLabel(label: string): [string, string] {
@@ -220,6 +221,10 @@ export function renderCmsBlock(block: CmsBlock, index: number) {
   );
 }
 
-export function CmsBlocksRenderer({ blocks }: Props) {
-  return <div className="space-y-7">{blocks.map((block, index) => renderCmsBlock(block, index))}</div>;
+export function CmsBlocksRenderer({ blocks, getBlockIndex }: Props) {
+  return (
+    <div className="space-y-7">
+      {blocks.map((block, index) => renderCmsBlock(block, getBlockIndex?.(block, index) ?? index))}
+    </div>
+  );
 }
