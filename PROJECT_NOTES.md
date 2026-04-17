@@ -1,12 +1,12 @@
 # Linkifi Revamp - Project Notes
 
-Last updated: 2026-04-16 21:41 BST
+Last updated: 2026-04-17 11:34 BST
 
 ## Current state
 - Project path: `/Users/chrispanteli/Desktop/CODEX/LINKIFI REVAMP`
 - Branch: `main`
-- Local HEAD: `ed02f99644400f88001bbbb9a751f42247d9ee8a`
-- Latest pushed commit message: `Add CEOs and spokespeople cards to built-for strip`
+- Local HEAD: `e1e222773ea44b63617547979c399ae3a11dee45`
+- Latest pushed commit message: `Compact CMS TOC layout and widen left column`
 - Sync status: local `main` and `origin/main` are aligned (`0 ahead / 0 behind`)
 
 ## Shared assistant instruction files
@@ -15,7 +15,7 @@ Last updated: 2026-04-16 21:41 BST
 - `AGENTS.md` - Codex wrapper pointing to shared docs
 - `PROJECT_NOTES.md` (this file) - environment/runtime/auth continuity details
 
-## Known local untracked files (as of 2026-04-16)
+## Known local untracked files (as of 2026-04-17)
 - `public/authority-montage/raw/IMG_0585.jpg`
 - `public/authority-montage/raw/IMG_0586.jpg`
 - `public/authority-montage/raw/IMG_0587.jpg`
@@ -31,6 +31,27 @@ Last updated: 2026-04-16 21:41 BST
 - `public/team/Mat\303\255as.jpg`
 - `public/team/Nick Biggs.webp`
 - `public/team/processed/_test/`
+
+## 2026-04-17 CMS article TOC navigation fixes (blog + case studies)
+Scope:
+- `components/cms/CmsTableOfContents.tsx`
+- `components/cms/CmsEntryArticle.tsx`
+- `components/cms/CmsBlocksRenderer.tsx`
+
+Implemented and shipped:
+- Converted the left TOC into a client scrollspy menu that tracks the active heading while scrolling.
+- Added automatic TOC list scrolling so the active item stays visible as the page moves.
+- Kept TOC fully usable in viewport with internal vertical scrolling on desktop sticky layout.
+- Fixed heading ID/index consistency for mixed CMS content so TOC links match rendered heading anchors.
+- Added a compact pass for the TOC visual treatment:
+  - wider left column
+  - smaller text
+  - tighter spacing/padding
+  - denser card proportions
+
+Recent shipped commits for this rollout:
+- `8e6b5bd` Fix CMS article TOC scrollspy sync and sticky menu behavior
+- `e1e2227` Compact CMS TOC layout and widen left column
 
 ## 2026-04-16 `/authority-pr` rollout summary
 Primary file touched across all iterations:
@@ -69,7 +90,7 @@ Recent shipped commits for this rollout:
 Run exactly:
 
 ```bash
-cd "/Users/chrispanteli/Desktop/LINKIFI REVAMP"
+cd "/Users/chrispanteli/Desktop/CODEX/LINKIFI REVAMP"
 git status -sb
 git remote -v
 git fetch origin
@@ -109,7 +130,7 @@ git push origin main
 Use this at the start of each new session:
 
 ```text
-Project path: /Users/chrispanteli/Desktop/LINKIFI REVAMP
+Project path: /Users/chrispanteli/Desktop/CODEX/LINKIFI REVAMP
 Goal for this thread: <replace with exact task>
 Assistant: <Claude or Codex>
 Constraints:
@@ -118,10 +139,10 @@ Constraints:
 - Run: npx next build and npm run check before commit
 - Commit and push to main when done
 Read first:
-- /Users/chrispanteli/Desktop/LINKIFI REVAMP/AI_COLLABORATION.md
-- /Users/chrispanteli/Desktop/LINKIFI REVAMP/PROJECT_NOTES.md
-- /Users/chrispanteli/Desktop/LINKIFI REVAMP/CLAUDE.md (if Claude)
-- /Users/chrispanteli/Desktop/LINKIFI REVAMP/AGENTS.md (if Codex)
+- /Users/chrispanteli/Desktop/CODEX/LINKIFI REVAMP/AI_COLLABORATION.md
+- /Users/chrispanteli/Desktop/CODEX/LINKIFI REVAMP/PROJECT_NOTES.md
+- /Users/chrispanteli/Desktop/CODEX/LINKIFI REVAMP/CLAUDE.md (if Claude)
+- /Users/chrispanteli/Desktop/CODEX/LINKIFI REVAMP/AGENTS.md (if Codex)
 ```
 
 ## Notes for continuity
