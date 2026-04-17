@@ -271,10 +271,10 @@ export function CmsEntryArticle({ entry }: Props) {
   const publishedDate = formatPublishedDate(entry.publishedAt);
   const contentGridClass = entry.author
     ? toc.length > 0
-      ? "xl:grid-cols-[220px_minmax(0,1fr)_280px]"
+      ? "xl:grid-cols-[252px_minmax(0,1fr)_280px]"
       : "xl:grid-cols-[minmax(0,1fr)_280px]"
     : toc.length > 0
-      ? "xl:grid-cols-[220px_minmax(0,1fr)]"
+      ? "xl:grid-cols-[252px_minmax(0,1fr)]"
       : "";
 
   return (

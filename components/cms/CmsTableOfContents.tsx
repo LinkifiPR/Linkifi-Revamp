@@ -156,17 +156,17 @@ export function CmsTableOfContents({ items }: Props) {
   }
 
   return (
-    <aside className="overflow-hidden rounded-[1.9rem] border border-[#e8e4ff] bg-[linear-gradient(180deg,#ffffff,#fbfaff)] shadow-[0_18px_44px_rgba(35,29,91,0.06)] xl:flex xl:max-h-[calc(100vh-7rem)] xl:flex-col">
+    <aside className="overflow-hidden rounded-[1.65rem] border border-[#e8e4ff] bg-[linear-gradient(180deg,#ffffff,#fbfaff)] shadow-[0_16px_38px_rgba(35,29,91,0.06)] xl:flex xl:max-h-[calc(100vh-6.5rem)] xl:flex-col">
       <div className="h-1 w-full bg-[linear-gradient(90deg,#6d5dff,#48b5ff,#6d5dff)] opacity-70" />
-      <div className="border-b border-[#ece8ff] bg-[linear-gradient(135deg,#f8f5ff,#ffffff)] px-5 py-4">
-        <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#6e69a6]">
+      <div className="border-b border-[#ece8ff] bg-[linear-gradient(135deg,#f8f5ff,#ffffff)] px-4 py-3">
+        <p className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#6e69a6]">
           <span className="h-2 w-2 rounded-full bg-[#6d5dff]" />
           On This Page
         </p>
       </div>
-      <ul className="space-y-2 px-4 py-4 text-sm xl:min-h-0 xl:flex-1 xl:overflow-y-auto">
+      <ul className="space-y-1.5 px-3 py-3 text-[12px] leading-[1.28] xl:min-h-0 xl:flex-1 xl:overflow-y-auto">
         {orderedItems.map((item) => (
-          <li key={item.id} className={item.level === 2 ? "" : item.level === 3 ? "pl-4" : "pl-7"}>
+          <li key={item.id} className={item.level === 2 ? "" : item.level === 3 ? "pl-3" : "pl-5"}>
             <a
               href={`#${item.id}`}
               ref={(node) => {
@@ -178,9 +178,9 @@ export function CmsTableOfContents({ items }: Props) {
               }}
               aria-current={item.id === activeId ? "location" : undefined}
               onClick={() => setActiveId(item.id)}
-              className={`block rounded-2xl px-3 py-2.5 transition-all duration-200 ${
+              className={`block rounded-xl px-2.5 py-1.5 font-medium transition-all duration-200 ${
                 item.id === activeId
-                  ? "bg-[#f1edff] text-[#4d40da] shadow-[inset_0_0_0_1px_rgba(116,94,255,0.22)]"
+                  ? "bg-[#f1edff] text-[#4d40da] shadow-[inset_0_0_0_1px_rgba(116,94,255,0.2)]"
                   : "text-[#444774] hover:bg-[#f5f2ff] hover:text-[#4d40da] hover:translate-x-0.5"
               }`}
             >
