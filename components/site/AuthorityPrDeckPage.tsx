@@ -710,13 +710,10 @@ export function AuthorityPrDeckPage() {
               <div className="pointer-events-none absolute -right-14 bottom-6 h-32 w-32 rounded-full border border-[#c4b6ff]/70" />
 
               <div className="relative z-10 p-8 sm:p-10 lg:p-12">
-                <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex flex-wrap items-center gap-3">
                   <span className="inline-flex items-center gap-2 rounded-full border border-[#d0dbf4] bg-white/90 px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.13em] text-[#334474] shadow-[0_10px_22px_rgba(23,36,74,0.12)]">
                     <Sparkles className="h-3.5 w-3.5 text-[#6b80ff]" />
                     How It Stacks Up
-                  </span>
-                  <span className="inline-flex items-center rounded-full border border-[#cad7f5] bg-white/80 px-3 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-[#4f6196] shadow-[0_8px_18px_rgba(23,36,74,0.1)]">
-                    5-Stage Authority Signal Path
                   </span>
                 </div>
 
@@ -724,7 +721,7 @@ export function AuthorityPrDeckPage() {
                   A scrollable authority flow from positioning to compounding recognition
                 </h2>
                 <p className="mt-4 max-w-3xl text-[18px] leading-[1.6] text-[#505b80]">
-                  On mobile, swipe through the signal path. On desktop, the entire stack stays visible with animated progression cues.
+                  On mobile, scroll horizontally to follow the full stack. On desktop, the full flow is visible in one sequence.
                 </p>
 
                 <div className="relative mt-10 overflow-x-auto pb-4">
