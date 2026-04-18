@@ -446,11 +446,35 @@ export function AuthorityPrDeckPage() {
 
                       <div className="mt-5 rounded-[16px] border border-[#dde6f8] bg-white/88 p-4 shadow-[0_14px_28px_rgba(27,40,78,0.08)]">
                         <div className="flex h-24 items-end gap-2">
-                          {[24, 38, 50, 66, 82].map((height, index) => (
+                          {[
+                            {
+                              height: 24,
+                              barClass: "bg-[linear-gradient(180deg,#a7bcff_0%,#6f8ef4_100%)] shadow-[0_8px_18px_rgba(92,118,206,0.24)]",
+                            },
+                            {
+                              height: 38,
+                              barClass: "bg-[linear-gradient(180deg,#bad0ff_0%,#7ea1f3_100%)] shadow-[0_8px_18px_rgba(99,129,207,0.24)]",
+                            },
+                            {
+                              height: 50,
+                              barClass: "bg-[linear-gradient(180deg,#f2c4e4_0%,#9b8ff0_100%)] shadow-[0_8px_18px_rgba(137,112,199,0.24)]",
+                            },
+                            {
+                              height: 66,
+                              barClass: "bg-[linear-gradient(180deg,#a3beff_0%,#5f84ee_100%)] shadow-[0_8px_18px_rgba(80,112,196,0.24)]",
+                            },
+                            {
+                              height: 82,
+                              barClass: "bg-[linear-gradient(180deg,#c8d8ff_0%,#7d9def_100%)] shadow-[0_8px_18px_rgba(100,127,198,0.24)]",
+                            },
+                          ].map((bar, index) => (
                             <span
                               key={`authority-bar-${index}`}
-                              className="w-full rounded-t-[8px] bg-[linear-gradient(180deg,#8ba4ff_0%,#5c7df2_100%)] shadow-[0_8px_18px_rgba(70,95,184,0.22)]"
-                              style={{ height: `${height}%` }}
+                              className={cn("w-full origin-bottom rounded-t-[8px] will-change-transform motion-reduce:[animation:none]", bar.barClass)}
+                              style={{
+                                height: `${bar.height}%`,
+                                animation: `authorityBarRisePulse ${3.1 + index * 0.18}s ease-in-out ${index * 0.22}s infinite`,
+                              }}
                             />
                           ))}
                         </div>

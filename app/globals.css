@@ -1852,6 +1852,22 @@ img[src$=".svg"].publication-logo {
   border-color: rgba(205, 233, 255, 0.12);
 }
 
+@keyframes authorityBarRisePulse {
+  0%,
+  100% {
+    transform: scaleY(0.68);
+    opacity: 0.78;
+  }
+  42% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  68% {
+    transform: scaleY(0.84);
+    opacity: 0.9;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .how-panel-gradient,
   .how-panel-rim,
