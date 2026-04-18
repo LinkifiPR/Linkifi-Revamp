@@ -833,65 +833,98 @@ export function AuthorityPrDeckPage() {
             </Panel>
           </SectionWrap>
 
-          <SectionWrap id="included" className="scroll-mt-8 md:scroll-mt-10">
-            <Panel className="bg-[linear-gradient(180deg,#ffffff_0%,#f7f4ff_100%)]">
-              <Eyebrow>What Is Included</Eyebrow>
-              <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
-                A stronger engagement structure, not just a single pricing card
-              </h2>
+          <SectionWrap id="included" className="scroll-mt-8 md:scroll-mt-10" containerClass="w-full">
+            <Panel className="overflow-hidden rounded-none border-x-0 border-[#e7d7f7] bg-[linear-gradient(128deg,#fff8fd_0%,#f1f3ff_50%,#ffeef9_100%)] p-0 sm:p-0 lg:p-0">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_14%,rgba(255,102,197,0.18),transparent_34%),radial-gradient(circle_at_86%_82%,rgba(131,152,255,0.2),transparent_34%)]" />
+              <div className="pointer-events-none absolute inset-0 opacity-35 [background-image:linear-gradient(rgba(154,137,194,0.15)_1px,transparent_1px),linear-gradient(90deg,rgba(154,137,194,0.15)_1px,transparent_1px)] [background-size:22px_22px]" />
+              <div className="pointer-events-none absolute -left-10 top-8 h-24 w-24 rounded-full border border-[#efb9e4]/70" />
+              <div className="pointer-events-none absolute -right-14 bottom-8 h-32 w-32 rounded-full border border-[#c7b9ff]/70" />
 
-              <div className="mt-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-                <div className="space-y-6">
-                  <div className="rounded-[20px] border border-[#d8cef8] bg-[linear-gradient(145deg,#1a1655_0%,#473aaa_58%,#5d6fff_100%)] p-6 text-white shadow-[0_22px_52px_rgba(77,65,183,0.3)]">
-                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/72">Engagement model</p>
-                    <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                      <div className="rounded-[14px] border border-white/18 bg-white/10 px-4 py-4">
-                        <p className="text-[11px] uppercase tracking-[0.16em] text-white/70">Fee</p>
-                        <p className="mt-2 text-[1.9rem] font-display font-bold tracking-[-0.04em]">$5,000</p>
-                        <p className="mt-1 text-[13px] text-white/72">per month</p>
-                      </div>
-                      <div className="rounded-[14px] border border-white/18 bg-white/10 px-4 py-4">
-                        <p className="text-[11px] uppercase tracking-[0.16em] text-white/70">Target output</p>
-                        <p className="mt-2 text-[1.9rem] font-display font-bold tracking-[-0.04em]">~3-4</p>
-                        <p className="mt-1 text-[13px] text-white/72">pieces per month</p>
-                      </div>
+              <div className={cn("relative z-10 py-8 sm:py-10 lg:py-12", heroContainerClass)}>
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-[#efc8e8] bg-[linear-gradient(135deg,#fff6fc_0%,#ffebf7_100%)] px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#bc3388] shadow-[0_10px_22px_rgba(124,45,105,0.16)]">
+                    <Sparkles className="h-3.5 w-3.5 text-[#ff4db8]" />
+                    What Is Included
+                  </span>
+                  <span className="inline-flex items-center rounded-full border border-[#dacff6] bg-white/90 px-3 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-[#5a6097] shadow-[0_8px_18px_rgba(35,45,88,0.1)]">
+                    Prices starting from $5,000/month
+                  </span>
+                </div>
+
+                <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#241d3d] sm:text-[2.125rem] md:text-[2.25rem]">
+                  Authority PR engagement built for sustained credibility
+                </h2>
+                <p className="mt-4 max-w-3xl text-[18px] leading-[1.6] text-[#625c80]">
+                  A focused monthly model that combines strategic positioning, proactive outreach, and credible placements to build trust that compounds.
+                </p>
+
+                <div className="mt-10 grid gap-6 lg:grid-cols-[0.82fr_1.18fr]">
+                  <div className="rounded-[22px] border border-[#f0c9e7] bg-[linear-gradient(145deg,#1c154f_0%,#5137ab_54%,#df3e9f_100%)] p-6 text-white shadow-[0_26px_56px_rgba(93,45,137,0.34)] sm:p-7">
+                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/74">Starting investment</p>
+                    <div className="mt-4 flex items-end gap-2">
+                      <span className="text-[2.65rem] font-display font-bold leading-[1] tracking-[-0.04em]">$5,000</span>
+                      <span className="pb-1 text-[15px] font-medium text-white/78">per month</span>
                     </div>
-                    <p className="mt-5 rounded-[12px] border border-white/16 bg-white/10 px-3 py-2 text-[13px] leading-[1.55] text-white/82">
-                      Coverage is a target, not a guarantee, because PR outcomes depend on editorial discretion and third-party acceptance.
-                    </p>
-                  </div>
+                    <p className="mt-3 text-[14px] leading-[1.55] text-white/84">Typical target output: around 3-4 pieces of earned coverage per month.</p>
 
-                  <div className="rounded-[20px] border border-[#e8e5f3] bg-white p-6 shadow-[0_18px_36px_rgba(24,31,62,0.08)]">
-                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6f5dff]">Monthly operating cadence</p>
-                    <div className="mt-4 space-y-3">
-                      {cadence.map((item) => (
-                        <div key={item} className="flex items-start gap-3 rounded-[12px] border border-[#ece8f6] bg-[#faf9ff] px-3 py-2.5">
-                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#6f5dff]" />
-                          <p className="text-[14px] leading-[1.55] text-[#58607f]">{item}</p>
+                    <div className="mt-5 grid gap-2.5">
+                      {[
+                        "Strategic positioning and message refinement",
+                        "Proactive pitching and reactive media opportunities",
+                        "Continuous authority signal reinforcement",
+                      ].map((point) => (
+                        <div key={point} className="flex items-start gap-2.5 rounded-[12px] border border-white/18 bg-white/10 px-3 py-2">
+                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#ffd4ef]" />
+                          <span className="text-[13px] leading-[1.5] text-white/88">{point}</span>
                         </div>
                       ))}
                     </div>
-                  </div>
-                </div>
 
-                <div className="rounded-[20px] border border-[#e8e5f3] bg-white p-6 shadow-[0_18px_36px_rgba(24,31,62,0.08)]">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6f5dff]">Coverage may include a mix of</p>
-                  <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                    {coverageMix.map((item) => (
-                      <div key={item.title} className="rounded-[14px] border border-[#ece8f6] bg-[#faf9ff] px-4 py-3">
-                        <div className="flex items-center gap-2">
-                          <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#efebff] text-[#6f5dff]">
-                            <item.Icon className="h-4 w-4" />
-                          </span>
-                          <span className="text-[14px] font-semibold text-[#2f3450]">{item.title}</span>
-                        </div>
-                        <p className="mt-2 text-[13px] leading-[1.55] text-[#626780]">{item.description}</p>
-                      </div>
-                    ))}
+                    <Button
+                      asChild
+                      variant="ghost"
+                      className="mt-6 h-12 w-full rounded-full border border-[#ffd1ee] bg-[linear-gradient(135deg,#ff4db8_0%,#d34eff_56%,#7f97ff_100%)] px-6 text-sm font-semibold text-white shadow-[0_20px_38px_rgba(153,56,145,0.34)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_0_6px_rgba(255,77,184,0.16),0_26px_46px_rgba(111,78,204,0.36)] sm:h-14 sm:text-base"
+                    >
+                      <a href="https://book.linkifi.io/widget/bookings/pr-discovery-call" target="_blank" rel="noreferrer">
+                        Book a Call
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </a>
+                    </Button>
+
+                    <p className="mt-4 text-[12px] leading-[1.5] text-white/72">
+                      Coverage is a target, not a guarantee, because outcomes depend on editorial discretion and third-party acceptance.
+                    </p>
                   </div>
-                  <p className="mt-5 text-[14px] leading-[1.7] text-[#646882]">
-                    SEO and AI visibility gains can happen downstream, but the primary objective is authority and brand credibility.
-                  </p>
+
+                  <div className="space-y-4">
+                    <div className="rounded-[18px] border border-[#eadff4] bg-white/90 p-5 shadow-[0_16px_34px_rgba(27,32,64,0.1)] backdrop-blur-sm">
+                      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8c4a97]">Monthly operating cadence</p>
+                      <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                        {cadence.map((item) => (
+                          <div key={item} className="rounded-[12px] border border-[#efe6f8] bg-[linear-gradient(145deg,#fff8fc_0%,#f7f8ff_100%)] px-3 py-2.5 text-[13px] leading-[1.5] text-[#635b82]">
+                            {item}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="rounded-[18px] border border-[#eadff4] bg-white/90 p-5 shadow-[0_16px_34px_rgba(27,32,64,0.1)] backdrop-blur-sm">
+                      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8c4a97]">Coverage may include</p>
+                      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                        {coverageMix.slice(0, 6).map((item) => (
+                          <div key={item.title} className="rounded-[12px] border border-[#eee5f8] bg-[linear-gradient(145deg,#fff9fd_0%,#f7f9ff_100%)] px-3 py-2.5">
+                            <div className="flex items-center gap-2">
+                              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[linear-gradient(135deg,#fff0fb_0%,#ecefff_100%)] text-[#c13d95]">
+                                <item.Icon className="h-4 w-4" />
+                              </span>
+                              <span className="text-[13px] font-semibold text-[#352f54]">{item.title}</span>
+                            </div>
+                            <p className="mt-1.5 text-[12px] leading-[1.5] text-[#6c6688]">{item.description}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </Panel>
