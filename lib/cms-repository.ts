@@ -100,9 +100,12 @@ export type CmsMediaBinaryRecord = {
 };
 
 export class CmsRepositoryError extends Error {
-  code: "NOT_FOUND" | "SLUG_EXISTS" | "CONFIG" | "INVALID_AUTHOR";
+  code: "NOT_FOUND" | "SLUG_EXISTS" | "CONFIG" | "INVALID_AUTHOR" | "INVALID_IMAGE_URL";
 
-  constructor(code: "NOT_FOUND" | "SLUG_EXISTS" | "CONFIG" | "INVALID_AUTHOR", message: string) {
+  constructor(
+    code: "NOT_FOUND" | "SLUG_EXISTS" | "CONFIG" | "INVALID_AUTHOR" | "INVALID_IMAGE_URL",
+    message: string,
+  ) {
     super(message);
     this.code = code;
   }
@@ -408,6 +411,69 @@ function normalizeAuthorId(authorId?: string | null): string | null {
   return trimmed || null;
 }
 
+const cmsMediaUrlPattern = /^\/api\/media\/[a-z0-9-]+$/i;
+
+function normalizeCmsMediaUrl(rawUrl: string): string {
+  const trimmed = rawUrl.trim();
+  if (!trimmed) {
+    return "";
+  }
+
+  const withoutQuery = trimmed.split("?")[0] ?? trimmed;
+  const normalizedPath = withoutQuery.replace(/\/+$/, "");
+
+  if (cmsMediaUrlPattern.test(normalizedPath)) {
+    return normalizedPath;
+  }
+
+  try {
+    const parsed = new URL(trimmed);
+    const parsedPath = parsed.pathname.replace(/\/+$/, "");
+    if (cmsMediaUrlPattern.test(parsedPath)) {
+      return parsedPath;
+    }
+  } catch {
+    // Keep original value when it is not a valid absolute URL.
+  }
+
+  return trimmed;
+}
+
+function normalizeEntryImageUrls(input: CmsEntryInput): CmsEntryInput {
+  return {
+    ...input,
+    featuredImageUrl: normalizeCmsMediaUrl(input.featuredImageUrl),
+    content: input.content.map((block) =>
+      block.type === "image"
+        ? {
+            ...block,
+            src: normalizeCmsMediaUrl(block.src),
+          }
+        : block,
+    ),
+  };
+}
+
+function assertEntryImageUrlsManaged(input: CmsEntryInput): void {
+  if (input.featuredImageUrl && !cmsMediaUrlPattern.test(input.featuredImageUrl)) {
+    throw new CmsRepositoryError(
+      "INVALID_IMAGE_URL",
+      "Featured image must come from Media Library (/api/media/...) so it is compressed automatically.",
+    );
+  }
+
+  const nonManagedBlockImage = input.content.find(
+    (block) => block.type === "image" && block.src && !cmsMediaUrlPattern.test(block.src),
+  );
+
+  if (nonManagedBlockImage && nonManagedBlockImage.type === "image") {
+    throw new CmsRepositoryError(
+      "INVALID_IMAGE_URL",
+      "Structured image blocks must use Media Library URLs (/api/media/...) so they are compressed automatically.",
+    );
+  }
+}
+
 async function assertAuthorExists(authorId: string | null): Promise<void> {
   if (!authorId) {
     return;
@@ -553,7 +619,9 @@ export async function getCmsEntryBySlug(
 
 export async function createCmsEntry(rawInput: unknown): Promise<CmsEntry> {
   await ensureSchema();
-  const input = cmsEntryInputSchema.parse(rawInput);
+  const parsedInput = cmsEntryInputSchema.parse(rawInput);
+  const input = normalizeEntryImageUrls(parsedInput);
+  assertEntryImageUrlsManaged(input);
   const id = randomUUID();
   const publishedAt = normalizePublishedAt(input.status, input.publishedAt);
   const authorId = normalizeAuthorId(input.authorId);
@@ -617,7 +685,9 @@ export async function updateCmsEntry(id: string, rawPatch: unknown): Promise<Cms
   }
 
   const patch = cmsEntryPatchSchema.parse(rawPatch);
-  const merged = cmsEntryInputSchema.parse(buildPatchInput(existing, patch));
+  const mergedParsed = cmsEntryInputSchema.parse(buildPatchInput(existing, patch));
+  const merged = normalizeEntryImageUrls(mergedParsed);
+  assertEntryImageUrlsManaged(merged);
   const publishedAt = normalizePublishedAt(merged.status, merged.publishedAt);
   const authorId = normalizeAuthorId(merged.authorId);
 

@@ -762,7 +762,7 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry, initialAut
                   onChange={(event) =>
                     setForm((prev) => ({ ...prev, featuredImageUrl: event.target.value.trim() }))
                   }
-                  placeholder="https://... or /api/media/..."
+                  placeholder="/api/media/..."
                   className="w-full rounded-xl border border-white/20 bg-[#11142a] px-3 py-2 text-white"
                 />
                 <input
@@ -779,7 +779,7 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry, initialAut
                 <p className="text-xs text-[#8f95be]">
                   {uploadingFeatured
                     ? "Uploading featured image..."
-                    : "Upload stores image in CMS DB and fills the URL automatically."}
+                    : "Upload stores image in CMS DB and fills a /api/media/... URL automatically."}
                 </p>
               </label>
 
@@ -890,7 +890,7 @@ export default function CmsEntryEditor({ mode, entryId, initialEntry, initialAut
                                     : current,
                                 )
                               }
-                              placeholder="https://... or /api/media/..."
+                              placeholder="/api/media/..."
                               className="w-full rounded-xl border border-white/20 bg-[#151a35] px-3 py-2 text-white"
                             />
                           </label>

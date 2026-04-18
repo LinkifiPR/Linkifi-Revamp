@@ -65,7 +65,7 @@ export default function AdminMediaLibraryClient({ initialMedia, initialError = "
   }
 
   async function copyUrl(id: string) {
-    const value = `${window.location.origin}/api/media/${id}`;
+    const value = `/api/media/${id}`;
     try {
       await navigator.clipboard.writeText(value);
     } catch {

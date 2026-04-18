@@ -2771,7 +2771,7 @@ function BuildSignalsSection() {
             <SectionHeading
               label="Build The Signals"
               title="Authority flows through systems, not just media placements"
-              description="This section replaces the generic card stack with a clearer visual story: authority starts with brand credibility, then compounds through editorial citations into search and recommendation visibility."
+              description="Authority starts with clear brand credibility, expands through trusted editorial coverage, and compounds into stronger search and recommendation visibility."
             />
           </div>
 
@@ -2986,8 +2986,8 @@ function SeoLandingContent() {
         <PagePanel tone="white">
           <SectionHeading
             label="What SEO Digital PR Does"
-            title="Four reasons the model is built for authority, not noise"
-            description="The feature grid stays clean, but the cards now have clearer iconography, stronger padding, and enough visual weight to feel intentional rather than generic."
+            title="Four pillars that build authority and organic visibility"
+            description="From editorial placements to expert positioning, each pillar is designed to strengthen E-E-A-T signals, trust, and long-term ranking potential."
             align="center"
           />
           <div className="mt-10 grid gap-7 md:grid-cols-2 xl:grid-cols-4">
@@ -3003,7 +3003,7 @@ function SeoLandingContent() {
           <SectionHeading
             label="Delivery System"
             title="A process flow built for earned authority"
-            description="The delivery section now explains the system visually instead of relying on another generic card row. Each step connects directly to the next."
+            description="Each step moves from expert positioning to media monitoring to secured placements, creating a repeatable authority engine."
             align="center"
           />
           <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_auto_1fr_auto_1fr] lg:items-center">
