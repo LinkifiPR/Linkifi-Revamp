@@ -977,7 +977,7 @@ function SectionHeading({
 }: {
   label: string;
   title: string;
-  description: string;
+  description: React.ReactNode;
   align?: "left" | "center";
   inverted?: boolean;
 }) {
@@ -2987,7 +2987,12 @@ function SeoLandingContent() {
           <SectionHeading
             label="What SEO Digital PR Does"
             title="Four pillars that build authority and organic visibility"
-            description="From editorial placements to expert positioning, each pillar is designed to strengthen E\u2011E\u2011A\u2011T\u00a0signals, trust, and long-term ranking potential."
+            description={
+              <>
+                From editorial placements to expert positioning, each pillar is designed to strengthen{" "}
+                <span className="whitespace-nowrap">E-E-A-T signals</span>, trust, and long-term ranking potential.
+              </>
+            }
             align="center"
           />
           <div className="mt-10 grid gap-7 md:grid-cols-2 xl:grid-cols-4">
