@@ -4,7 +4,6 @@ import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
   BadgeCheck,
-  BarChart3,
   Building2,
   CheckCircle2,
   Crown,
@@ -261,31 +260,6 @@ const proofImages = [
     alt: "Eat This Not That editorial feature",
   },
 ] as const;
-
-function createChartGeometry(values: number[]) {
-  const chartWidth = 660;
-  const chartHeight = 300;
-  const padding = { top: 24, right: 20, bottom: 36, left: 20 };
-  const plotWidth = chartWidth - padding.left - padding.right;
-  const plotHeight = chartHeight - padding.top - padding.bottom;
-  const baselineY = padding.top + plotHeight;
-  const max = Math.max(...values) * 1.08;
-
-  const points = values.map((value, index) => ({
-    x: padding.left + (index / (values.length - 1)) * plotWidth,
-    y: padding.top + (1 - value / max) * plotHeight,
-  }));
-
-  const linePath = points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`).join(" ");
-  const areaPath = `${linePath} L ${points[points.length - 1].x} ${baselineY} L ${points[0].x} ${baselineY} Z`;
-
-  return { chartWidth, chartHeight, points, linePath, areaPath, baselineY };
-}
-
-const momentumSeries = [18, 22, 26, 32, 40, 51, 60, 71, 82, 91];
-const momentumLabels = ["Launch", "Month 2", "Month 4", "Month 6", "Month 9", "Month 12"] as const;
-const momentumTickIndices = [0, 2, 4, 6, 8, 9] as const;
-const momentumChart = createChartGeometry(momentumSeries);
 
 const pageContainerClass = "mx-auto w-full max-w-[1200px] px-6";
 const heroContainerClass = "mx-auto w-full max-w-[1280px] px-6";
@@ -773,100 +747,6 @@ export function AuthorityPrDeckPage() {
                         ) : null}
                       </div>
                     ))}
-                  </div>
-                </div>
-              </div>
-            </Panel>
-          </SectionWrap>
-
-          <SectionWrap>
-            <Panel className="bg-[linear-gradient(180deg,#fbfbff_0%,#f3f4fb_100%)]">
-              <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-                <div>
-                  <Eyebrow>Authority Momentum</Eyebrow>
-                  <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
-                    How sustained authority work compounds over time
-                  </h2>
-                  <p className="mt-4 text-[18px] leading-[1.6] text-[#5a5d79]">
-                    This is a model of the growth curve we are building toward: stronger recognition, stronger trust, and stronger category positioning.
-                  </p>
-
-                  <div className="mt-7 rounded-[20px] border border-[#e3e6f2] bg-white p-4 shadow-[0_16px_34px_rgba(24,31,62,0.08)] sm:p-5">
-                    <div className="mb-4 flex items-center justify-between gap-3 border-b border-[#ebedf5] pb-3">
-                      <div className="text-[13px] font-semibold uppercase tracking-[0.2em] text-[#6f5dff]">Authority index</div>
-                      <span className="inline-flex items-center gap-2 rounded-full border border-[#dde2ef] bg-[#f8f9ff] px-3 py-1 text-[12px] font-medium text-[#4d5474]">
-                        <BarChart3 className="h-3.5 w-3.5 text-[#6f5dff]" />
-                        Direction of travel
-                      </span>
-                    </div>
-                    <svg viewBox={`0 0 ${momentumChart.chartWidth} ${momentumChart.chartHeight}`} className="h-[17rem] w-full sm:h-[18rem]">
-                      {[0, 0.25, 0.5, 0.75, 1].map((fraction) => {
-                        const y = 24 + (momentumChart.baselineY - 24) * fraction;
-                        return (
-                          <line
-                            key={fraction}
-                            x1="20"
-                            x2={momentumChart.chartWidth - 20}
-                            y1={y}
-                            y2={y}
-                            stroke="#e8ebf4"
-                            strokeDasharray="4 6"
-                          />
-                        );
-                      })}
-
-                      <path d={momentumChart.areaPath} fill="url(#authorityArea)" opacity="0.9" />
-                      <path d={momentumChart.linePath} fill="none" stroke="#5b49d1" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-
-                      {momentumChart.points.map((point, index) => (
-                        <circle key={index} cx={point.x} cy={point.y} r="4.2" fill="#5b49d1" />
-                      ))}
-
-                      {momentumTickIndices.map((tickIndex, idx) => (
-                        <text
-                          key={tickIndex}
-                          x={momentumChart.points[tickIndex].x}
-                          y={momentumChart.baselineY + 22}
-                          textAnchor="middle"
-                          fill="#8a90a8"
-                          fontSize="11"
-                          fontWeight="500"
-                        >
-                          {momentumLabels[idx]}
-                        </text>
-                      ))}
-
-                      <defs>
-                        <linearGradient id="authorityArea" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#6f5dff" stopOpacity="0.3" />
-                          <stop offset="100%" stopColor="#6f5dff" stopOpacity="0.03" />
-                        </linearGradient>
-                      </defs>
-                    </svg>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="rounded-[18px] border border-[#e8e5f3] bg-white p-5 shadow-[0_12px_26px_rgba(24,31,62,0.06)]">
-                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6f5dff]">What moves the graph</p>
-                    <ul className="mt-4 space-y-3">
-                      {[
-                        "Consistent earned placements",
-                        "Founder and expert visibility",
-                        "Third-party trust reinforcement",
-                        "Narrative consistency in high-trust channels",
-                      ].map((item) => (
-                        <li key={item} className="flex items-start gap-3 text-[14px] leading-[1.6] text-[#58607f]">
-                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#6f5dff]" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="rounded-[18px] border border-[#e4ddf8] bg-[linear-gradient(140deg,#f8f5ff_0%,#eef2ff_100%)] p-5 shadow-[0_12px_26px_rgba(24,31,62,0.06)]">
-                    <p className="text-[15px] leading-[1.6] text-[#3f4563]">
-                      We help clients become the go-to name in their space by getting them seen, heard, and quoted in the right places.
-                    </p>
                   </div>
                 </div>
               </div>
