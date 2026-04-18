@@ -703,36 +703,80 @@ export function AuthorityPrDeckPage() {
           </SectionWrap>
 
           <SectionWrap id="flow" className="scroll-mt-8 md:scroll-mt-10">
-            <Panel>
-              <Eyebrow>How It Stacks Up</Eyebrow>
-              <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
-                A scrollable authority flow from positioning to compounding recognition
-              </h2>
-              <p className="mt-4 max-w-3xl text-[18px] leading-[1.6] text-[#5a5d79]">
-                On mobile, scroll horizontally to follow the full stack. On desktop, the full flow is visible in one sequence.
-              </p>
+            <Panel className="overflow-hidden border-[#d6dff4] bg-[linear-gradient(132deg,#f8fbff_0%,#ebf2ff_44%,#f8f2ff_100%)] p-0 sm:p-0 lg:p-0">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_8%_12%,rgba(99,150,255,0.2),transparent_32%),radial-gradient(circle_at_92%_85%,rgba(160,104,255,0.22),transparent_34%)]" />
+              <div className="pointer-events-none absolute inset-0 opacity-45 [background-image:linear-gradient(rgba(124,142,193,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(124,142,193,0.14)_1px,transparent_1px)] [background-size:24px_24px]" />
+              <div className="pointer-events-none absolute -left-10 top-10 h-24 w-24 rounded-full border border-[#baccf2]/80" />
+              <div className="pointer-events-none absolute -right-14 bottom-6 h-32 w-32 rounded-full border border-[#c4b6ff]/70" />
 
-              <div className="mt-10 overflow-x-auto pb-4">
-                <div className="flex min-w-max snap-x snap-mandatory gap-4 md:grid md:min-w-0 md:grid-cols-5 md:gap-4">
-                  {authorityFlow.map((item, index) => (
-                    <div key={item.title} className="relative w-[250px] snap-center md:w-auto">
-                      <div className="h-full rounded-[18px] border border-[#e8e5f3] bg-white p-5 shadow-[0_14px_30px_rgba(24,31,62,0.08)]">
-                        <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6f5dff]">Step {index + 1}</span>
-                        <span className="mt-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff]">
-                          <item.Icon className="h-5 w-5" />
-                        </span>
-                        <h3 className="mt-4 text-[16px] font-display font-semibold leading-[1.35] tracking-[-0.02em] text-[#171929]">{item.title}</h3>
-                        <p className="mt-3 text-[14px] leading-[1.6] text-[#61657f]">{item.description}</p>
-                      </div>
-                      {index < authorityFlow.length - 1 ? (
-                        <div className="pointer-events-none absolute -right-3 top-1/2 hidden -translate-y-1/2 md:block">
-                          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#ddd7f0] bg-white text-[#6f5dff] shadow-[0_8px_18px_rgba(24,31,62,0.08)]">
-                            <ArrowRight className="h-4 w-4" />
+              <div className="relative z-10 p-8 sm:p-10 lg:p-12">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-[#d0dbf4] bg-white/90 px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.13em] text-[#334474] shadow-[0_10px_22px_rgba(23,36,74,0.12)]">
+                    <Sparkles className="h-3.5 w-3.5 text-[#6b80ff]" />
+                    How It Stacks Up
+                  </span>
+                  <span className="inline-flex items-center rounded-full border border-[#cad7f5] bg-white/80 px-3 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-[#4f6196] shadow-[0_8px_18px_rgba(23,36,74,0.1)]">
+                    5-Stage Authority Signal Path
+                  </span>
+                </div>
+
+                <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#1b2340] sm:text-[2.125rem] md:text-[2.25rem]">
+                  A scrollable authority flow from positioning to compounding recognition
+                </h2>
+                <p className="mt-4 max-w-3xl text-[18px] leading-[1.6] text-[#505b80]">
+                  On mobile, swipe through the signal path. On desktop, the entire stack stays visible with animated progression cues.
+                </p>
+
+                <div className="relative mt-10 overflow-x-auto pb-4">
+                  <div className="pointer-events-none absolute left-8 right-8 top-[38%] hidden h-px bg-[linear-gradient(90deg,rgba(117,138,197,0.08),rgba(110,133,255,0.55),rgba(140,105,255,0.5),rgba(117,138,197,0.08))] md:block motion-safe:animate-[pulse_3.8s_ease-in-out_infinite]" />
+                  <div className="pointer-events-none absolute left-8 right-8 top-[38%] hidden h-px [background-image:repeating-linear-gradient(90deg,rgba(255,255,255,0.05)_0_10px,rgba(255,255,255,0.45)_10px_18px)] md:block opacity-70" />
+
+                  <div className="flex min-w-max snap-x snap-mandatory gap-4 md:grid md:min-w-0 md:grid-cols-5 md:gap-4">
+                    {authorityFlow.map((item, index) => (
+                      <div key={item.title} className="relative w-[258px] snap-center md:w-auto">
+                        <div className="pointer-events-none absolute -top-3 left-1/2 hidden -translate-x-1/2 md:block">
+                          <span
+                            className="relative inline-flex h-5 w-5 items-center justify-center rounded-full border border-[#ccd7f5] bg-white/90 text-[#6f5dff] shadow-[0_8px_18px_rgba(34,48,95,0.16)] motion-safe:animate-[pulse_2.8s_ease-in-out_infinite]"
+                            style={{ animationDelay: `${index * 0.22}s` }}
+                          >
+                            <span
+                              className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(112,129,255,0.32),transparent_70%)] motion-safe:animate-[ping_2.8s_ease-out_infinite]"
+                              style={{ animationDelay: `${index * 0.22}s` }}
+                            />
                           </span>
                         </div>
-                      ) : null}
-                    </div>
-                  ))}
+
+                        <div className="group relative h-full overflow-hidden border border-[#d6def2] bg-[linear-gradient(160deg,rgba(255,255,255,0.95)_0%,rgba(246,249,255,0.9)_70%,rgba(240,245,255,0.92)_100%)] p-5 shadow-[0_20px_38px_rgba(24,31,62,0.12)] transition-all duration-300 hover:-translate-y-1 hover:border-[#b8c8ef] hover:shadow-[0_28px_48px_rgba(24,31,62,0.16)] [clip-path:polygon(14px_0,calc(100%-14px)_0,100%_14px,100%_calc(100%-14px),calc(100%-14px)_100%,14px_100%,0_calc(100%-14px),0_14px)]">
+                          <div className="pointer-events-none absolute left-4 right-4 top-0 h-px bg-[linear-gradient(90deg,transparent,#8aa4e8,transparent)]" />
+                          <div className="pointer-events-none absolute right-3 top-3 h-5 w-5 border-r border-t border-[#cdd8f3]" />
+
+                          <div className="flex items-center justify-between gap-3">
+                            <span className="inline-flex items-center rounded-full border border-[#d1daf3] bg-white px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.19em] text-[#5a6b9a]">
+                              Step {index + 1}
+                            </span>
+                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-[12px] border border-[#d2dcf4] bg-[linear-gradient(145deg,#ffffff_0%,#edf3ff_100%)] text-[#6f5dff] shadow-[0_10px_22px_rgba(44,61,116,0.14)]">
+                              <item.Icon className="h-5 w-5" />
+                            </span>
+                          </div>
+
+                          <h3 className="mt-4 text-[16px] font-display font-semibold leading-[1.35] tracking-[-0.02em] text-[#1f2744]">{item.title}</h3>
+                          <p className="mt-3 text-[14px] leading-[1.6] text-[#5e6785]">{item.description}</p>
+                        </div>
+
+                        {index < authorityFlow.length - 1 ? (
+                          <div className="pointer-events-none absolute -right-3 top-[42%] hidden -translate-y-1/2 md:flex">
+                            <span
+                              className="relative inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#cfdaf6] bg-[linear-gradient(145deg,#ffffff_0%,#eef3ff_100%)] text-[#6f5dff] shadow-[0_10px_22px_rgba(33,50,102,0.16)] motion-safe:animate-[pulse_3s_ease-in-out_infinite]"
+                              style={{ animationDelay: `${index * 0.24}s` }}
+                            >
+                              <span className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(114,130,255,0.28),transparent_70%)] motion-safe:animate-[ping_3s_ease-out_infinite]" />
+                              <ArrowRight className="relative h-4 w-4" />
+                            </span>
+                          </div>
+                        ) : null}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </Panel>
