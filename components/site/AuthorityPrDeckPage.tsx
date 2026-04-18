@@ -556,23 +556,59 @@ export function AuthorityPrDeckPage() {
           </section>
 
           <SectionWrap>
-            <Panel>
-              <div className="max-w-4xl">
-                <Eyebrow>Main Promise</Eyebrow>
-                <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
-                  Authority PR helps clients become more visible, more trusted, and more recognized
-                </h2>
-              </div>
-              <div className="mt-9 grid gap-6 md:grid-cols-3">
-                {promisePillars.map((item) => (
-                  <div key={item.title} className="rounded-[18px] border border-[#e8e5f3] bg-white p-7 shadow-[0_18px_36px_rgba(24,31,62,0.08)]">
-                    <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff] shadow-[inset_0_0_0_1px_rgba(111,93,255,0.08)]">
-                      <item.Icon className="h-5 w-5" />
+            <Panel className="border-[#dce4f3] bg-[linear-gradient(145deg,#f8fbff_0%,#ecf3ff_54%,#f8f2ff_100%)]">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_8%_14%,rgba(82,143,255,0.18),transparent_32%),radial-gradient(circle_at_94%_82%,rgba(126,93,255,0.18),transparent_34%)]" />
+              <div className="pointer-events-none absolute inset-0 opacity-45 [background-image:linear-gradient(rgba(102,120,167,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(102,120,167,0.14)_1px,transparent_1px)] [background-size:22px_22px]" />
+              <div className="relative z-10">
+                <div className="max-w-4xl">
+                  <Eyebrow>Main Promise</Eyebrow>
+                  <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
+                    Authority PR helps clients become more visible, more trusted, and more recognized
+                  </h2>
+                  <p className="mt-4 max-w-3xl text-[17px] leading-[1.65] text-[#555f82]">
+                    We engineer authority signals across earned media so visibility turns into trust, and trust compounds into category recognition.
+                  </p>
+                </div>
+
+                <div className="mt-7 flex flex-wrap gap-2.5">
+                  {promisePillars.map((item, index) => (
+                    <span
+                      key={`signal-chip-${item.title}`}
+                      className="inline-flex items-center rounded-full border border-[#d6deef] bg-white/85 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#43517f] shadow-[0_8px_16px_rgba(31,46,88,0.08)] backdrop-blur-sm"
+                    >
+                      Signal {index + 1}: {item.title}
                     </span>
-                    <h3 className="mt-5 text-[20px] font-display font-semibold tracking-[-0.02em] text-[#171929]">{item.title}</h3>
-                    <p className="mt-3 text-[15px] leading-[1.6] text-[#61657f]">{item.description}</p>
-                  </div>
-                ))}
+                  ))}
+                </div>
+
+                <div className="mt-9 grid gap-6 md:grid-cols-3">
+                  {promisePillars.map((item, index) => (
+                    <div
+                      key={item.title}
+                      className="group relative overflow-hidden border border-[#d7e0f1] bg-[linear-gradient(160deg,#ffffff_0%,#f4f8ff_64%,#edf2ff_100%)] p-6 shadow-[0_20px_40px_rgba(24,31,62,0.1)] transition-all duration-300 hover:-translate-y-1 hover:border-[#b9c8ec] hover:shadow-[0_28px_50px_rgba(24,31,62,0.16)] [clip-path:polygon(14px_0,calc(100%-14px)_0,100%_14px,100%_calc(100%-14px),calc(100%-14px)_100%,14px_100%,0_calc(100%-14px),0_14px)]"
+                    >
+                      <div className="pointer-events-none absolute right-3 top-3 h-[2px] w-14 bg-[linear-gradient(90deg,transparent,#7f9dd8)]" />
+                      <div className="pointer-events-none absolute left-3 top-3 h-6 w-6 border-l border-t border-[#c8d4ef]" />
+
+                      <span className="inline-flex items-center rounded-full border border-[#d8e1f2] bg-white px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#4d5f8d]">
+                        Signal 0{index + 1}
+                      </span>
+                      <span className="mt-4 inline-flex h-12 w-12 items-center justify-center rounded-[14px] border border-[#d9e2f7] bg-[linear-gradient(145deg,#ffffff_0%,#ecf3ff_100%)] text-[#5f6ef6] shadow-[0_12px_24px_rgba(65,85,146,0.14)]">
+                        <item.Icon className="h-5 w-5" />
+                      </span>
+                      <h3 className="mt-5 text-[20px] font-display font-semibold tracking-[-0.02em] text-[#171929]">{item.title}</h3>
+                      <p className="mt-3 text-[15px] leading-[1.6] text-[#596384]">{item.description}</p>
+
+                      {index < promisePillars.length - 1 ? (
+                        <div className="pointer-events-none absolute -right-3 top-1/2 hidden -translate-y-1/2 md:block">
+                          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#d2dcf0] bg-white text-[#5f6ef6] shadow-[0_10px_22px_rgba(24,31,62,0.12)]">
+                            <ArrowRight className="h-4 w-4" />
+                          </span>
+                        </div>
+                      ) : null}
+                    </div>
+                  ))}
+                </div>
               </div>
             </Panel>
           </SectionWrap>
