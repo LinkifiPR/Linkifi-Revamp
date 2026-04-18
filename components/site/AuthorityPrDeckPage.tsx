@@ -614,21 +614,87 @@ export function AuthorityPrDeckPage() {
           </SectionWrap>
 
           <SectionWrap>
-            <Panel className="bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)]">
-              <Eyebrow>What It Helps You Do</Eyebrow>
-              <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
-                Show up like a leader and dominate more of the conversation in your space
-              </h2>
-              <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                {authorityOutcomes.map((item) => (
-                  <div key={item.title} className="rounded-[18px] border border-[#e8e5f3] bg-white p-7 shadow-[0_18px_36px_rgba(24,31,62,0.08)]">
-                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff] shadow-[inset_0_0_0_1px_rgba(111,93,255,0.08)]">
-                      <item.Icon className="h-5 w-5" />
+            <Panel className="overflow-hidden border-[#2f3f88] bg-[linear-gradient(132deg,#0f1438_0%,#22357f_46%,#5332a5_100%)] p-0 sm:p-0 lg:p-0">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_14%,rgba(130,189,255,0.22),transparent_34%),radial-gradient(circle_at_90%_88%,rgba(163,112,255,0.26),transparent_38%)]" />
+              <div className="pointer-events-none absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(193,210,255,0.26)_1px,transparent_1px),linear-gradient(90deg,rgba(193,210,255,0.26)_1px,transparent_1px)] [background-size:24px_24px]" />
+              <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full border border-white/20" />
+              <div className="pointer-events-none absolute -left-16 bottom-8 h-36 w-36 rounded-full border border-white/12" />
+
+              <div className="relative z-10 p-8 sm:p-10 lg:p-12">
+                <Eyebrow dark>What It Helps You Do</Eyebrow>
+                <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-white sm:text-[2.125rem] md:text-[2.25rem]">
+                  Show up like a leader and dominate more of the conversation in your space
+                </h2>
+                <p className="mt-4 max-w-3xl text-[17px] leading-[1.65] text-[#d7deff]">
+                  We combine strategic positioning, consistent media visibility, and credibility signals so authority compounds in every channel that shapes buyer perception.
+                </p>
+
+                <div className="mt-7 flex flex-wrap gap-2.5">
+                  {["Category leadership", "Share-of-voice expansion", "Recognition flywheel"].map((chip) => (
+                    <span
+                      key={chip}
+                      className="inline-flex items-center rounded-full border border-white/24 bg-white/12 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#e8ecff] shadow-[0_10px_20px_rgba(14,22,60,0.22)] backdrop-blur-sm"
+                    >
+                      {chip}
                     </span>
-                    <h3 className="mt-4 text-[18px] font-display font-semibold leading-[1.35] tracking-[-0.02em] text-[#171929]">{item.title}</h3>
-                    <p className="mt-3 text-[15px] leading-[1.6] text-[#61657f]">{item.description}</p>
-                  </div>
-                ))}
+                  ))}
+                </div>
+
+                <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                  {authorityOutcomes.map((item, index) => {
+                    const accent =
+                      index % 3 === 0
+                        ? {
+                            edge: "from-[#83a0ff] via-[#9aaeff] to-transparent",
+                            pill: "border-[#a8b9ff]/45 text-[#dce4ff]",
+                            iconFrame: "border-[#aab9ff]/45 text-[#aebdff]",
+                            glow: "bg-[radial-gradient(circle_at_82%_0%,rgba(126,152,255,0.24),transparent_40%)]",
+                          }
+                        : index % 3 === 1
+                          ? {
+                              edge: "from-[#9f7bff] via-[#b79aff] to-transparent",
+                              pill: "border-[#c5adff]/45 text-[#eadfff]",
+                              iconFrame: "border-[#c9b2ff]/45 text-[#c9b3ff]",
+                              glow: "bg-[radial-gradient(circle_at_82%_0%,rgba(181,137,255,0.24),transparent_40%)]",
+                            }
+                          : {
+                              edge: "from-[#5fc6ff] via-[#7acfff] to-transparent",
+                              pill: "border-[#93d8ff]/45 text-[#def5ff]",
+                              iconFrame: "border-[#9bdbff]/45 text-[#9cdcff]",
+                              glow: "bg-[radial-gradient(circle_at_82%_0%,rgba(88,198,255,0.24),transparent_40%)]",
+                            };
+
+                    return (
+                      <div
+                        key={item.title}
+                        className="group relative overflow-hidden border border-white/22 bg-[linear-gradient(160deg,rgba(255,255,255,0.2)_0%,rgba(255,255,255,0.1)_100%)] p-6 shadow-[0_24px_44px_rgba(10,14,48,0.34)] backdrop-blur-[2px] transition-all duration-300 hover:-translate-y-1 hover:border-white/36 hover:shadow-[0_34px_56px_rgba(10,14,48,0.45)] [clip-path:polygon(16px_0,calc(100%-16px)_0,100%_16px,100%_calc(100%-16px),calc(100%-16px)_100%,16px_100%,0_calc(100%-16px),0_16px)]"
+                      >
+                        <div className={cn("pointer-events-none absolute inset-0", accent.glow)} />
+                        <div className={cn("pointer-events-none absolute left-4 right-4 top-0 h-px bg-gradient-to-r", accent.edge)} />
+                        <div className="pointer-events-none absolute right-3 top-3 h-5 w-5 border-r border-t border-white/24" />
+
+                        <span
+                          className={cn(
+                            "relative inline-flex items-center rounded-full border bg-white/8 px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.2em]",
+                            accent.pill,
+                          )}
+                        >
+                          Outcome {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <span
+                          className={cn(
+                            "relative mt-4 inline-flex h-11 w-11 items-center justify-center rounded-[12px] border bg-white/10 shadow-[0_12px_26px_rgba(10,14,48,0.22)]",
+                            accent.iconFrame,
+                          )}
+                        >
+                          <item.Icon className="h-5 w-5" />
+                        </span>
+                        <h3 className="relative mt-4 text-[18px] font-display font-semibold leading-[1.35] tracking-[-0.02em] text-white">{item.title}</h3>
+                        <p className="relative mt-3 text-[15px] leading-[1.6] text-[#d6ddff]">{item.description}</p>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </Panel>
           </SectionWrap>
