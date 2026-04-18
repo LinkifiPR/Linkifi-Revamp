@@ -977,7 +977,7 @@ export function AuthorityPrDeckPage() {
             </div>
           </SectionWrap>
 
-          <SectionWrap id="included" className="scroll-mt-8 md:scroll-mt-10" containerClass="w-full">
+          <SectionWrap id="included" className="scroll-mt-8 pb-0 md:scroll-mt-10 md:pb-0" containerClass="w-full">
             <Panel className="overflow-hidden rounded-none border-x-0 border-[#d8e3f5] bg-[linear-gradient(128deg,#f7f9ff_0%,#edf2ff_50%,#f7faff_100%)] p-0 sm:p-0 lg:p-0">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_14%,rgba(118,156,255,0.16),transparent_34%),radial-gradient(circle_at_86%_82%,rgba(98,138,248,0.14),transparent_34%)]" />
               <div className="pointer-events-none absolute inset-0 opacity-35 [background-image:linear-gradient(rgba(129,151,197,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(129,151,197,0.14)_1px,transparent_1px)] [background-size:22px_22px]" />
@@ -1074,11 +1074,11 @@ export function AuthorityPrDeckPage() {
             </Panel>
           </SectionWrap>
 
-          <section id="proof" className="scroll-mt-8 py-7 md:scroll-mt-10 md:py-8">
-            <div className="relative left-1/2 w-screen -translate-x-1/2 border-y border-[#ccd8f2] bg-[linear-gradient(152deg,#edf3ff_0%,#f9f8ff_45%,#eef4ff_100%)] py-14 sm:py-16">
+          <section id="proof" className="scroll-mt-8 pb-7 pt-0 md:scroll-mt-10 md:pb-8">
+            <div className="relative left-1/2 w-screen -translate-x-1/2 border-b border-[#ccd8f2] bg-[linear-gradient(152deg,#edf3ff_0%,#f9f8ff_45%,#eef4ff_100%)] py-14 sm:py-16">
+              <div className="pointer-events-none absolute -top-12 inset-x-0 h-14 bg-[linear-gradient(180deg,#f5f8ff_0%,rgba(245,248,255,0)_100%)]" />
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_14%,rgba(111,93,255,0.16),transparent_36%),radial-gradient(circle_at_88%_82%,rgba(233,132,198,0.14),transparent_34%)]" />
               <div className="pointer-events-none absolute inset-0 opacity-50 [background-image:linear-gradient(rgba(102,124,186,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(102,124,186,0.12)_1px,transparent_1px)] [background-size:24px_24px]" />
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(84,109,188,0.54),transparent)]" />
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[linear-gradient(90deg,transparent,rgba(212,115,180,0.5),transparent)]" />
 
               <div className="relative z-10 mx-auto w-full max-w-[1640px] px-4 sm:px-6 lg:px-8">
@@ -1102,7 +1102,7 @@ export function AuthorityPrDeckPage() {
                             alt={item.alt}
                             width={1290}
                             height={2235}
-                            className="h-full w-full object-cover object-top"
+                            className="proof-phone-media"
                             sizes="(min-width: 1280px) 15vw, (min-width: 1024px) 16vw, (min-width: 640px) 29vw, 46vw"
                           />
                           <div className="proof-phone-overlay" />

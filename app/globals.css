@@ -1931,10 +1931,10 @@ img[src$=".svg"].publication-logo {
 .proof-phone-bezel {
   position: relative;
   overflow: hidden;
-  border-radius: 1.85rem;
+  border-radius: 1.72rem;
   border: 1px solid rgba(175, 191, 232, 0.42);
   background: #040919;
-  aspect-ratio: 9 / 19.5;
+  aspect-ratio: 9 / 15.6;
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.07),
     inset 0 18px 34px rgba(12, 18, 40, 0.62);
@@ -1942,19 +1942,22 @@ img[src$=".svg"].publication-logo {
 
 .proof-phone-screen {
   position: absolute;
-  inset: 0.22rem;
+  top: 0.9rem;
+  right: 0.22rem;
+  bottom: 0.22rem;
+  left: 0.22rem;
   overflow: hidden;
-  border-radius: 1.58rem;
-  background: #02050f;
+  border-radius: 1.46rem;
+  background: linear-gradient(180deg, #0a122a 0%, #0b122d 100%);
 }
 
 .proof-phone-notch {
   position: absolute;
-  top: 0.38rem;
+  top: 0.34rem;
   left: 50%;
   z-index: 15;
-  height: 1.08rem;
-  width: 42%;
+  height: 0.92rem;
+  width: 37%;
   transform: translateX(-50%);
   border-radius: 999px;
   background: linear-gradient(180deg, #212a4a 0%, #111a35 100%);
@@ -1965,7 +1968,7 @@ img[src$=".svg"].publication-logo {
 
 .proof-phone-home {
   position: absolute;
-  bottom: 0.4rem;
+  bottom: 0.32rem;
   left: 50%;
   z-index: 15;
   height: 0.17rem;
@@ -1989,6 +1992,14 @@ img[src$=".svg"].publication-logo {
   background: linear-gradient(114deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 34%);
   mix-blend-mode: screen;
   opacity: 0.32;
+}
+
+.proof-phone-media {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  object-position: center top;
+  transform: translateY(0.28rem);
 }
 
 @media (prefers-reduced-motion: reduce) {
