@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import {
+  ArrowDown,
   ArrowRight,
   BadgeCheck,
   Building2,
@@ -427,49 +428,59 @@ export function AuthorityPrDeckPage() {
                   </div>
                 </div>
 
-                <div className="relative mx-auto w-full max-w-[600px]">
-                  <div className="pointer-events-none absolute right-4 top-3 z-20 sm:right-8 sm:top-4">
-                    <div className="inline-flex items-center gap-2 rounded-full border border-[#ff9de1] bg-[linear-gradient(135deg,#fff0fb_0%,#ffe2f5_100%)] px-2 py-1.5 text-[12px] font-semibold tracking-[0.02em] text-[#c71585] shadow-[0_14px_28px_rgba(199,52,146,0.28)] sm:text-[13px]">
-                      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[linear-gradient(135deg,#ff49bf_0%,#ff8ad9_100%)] text-white shadow-[0_0_0_3px_rgba(255,73,191,0.2),0_10px_20px_rgba(199,52,146,0.35)] motion-safe:animate-[pulse_4.8s_ease-in-out_infinite]">
-                        <Tv className="h-3.5 w-3.5" />
+                <div className="relative mx-auto w-full max-w-[620px]">
+                  <div className="pointer-events-none absolute -inset-8 bg-[radial-gradient(circle,rgba(111,93,255,0.18)_0%,rgba(111,93,255,0)_68%)]" />
+                  <div className="relative overflow-hidden rounded-[28px] border border-[#dbe4f7] bg-[linear-gradient(150deg,#ffffff_0%,#f4f8ff_58%,#eef2ff_100%)] p-5 shadow-[0_34px_74px_rgba(22,34,72,0.2)] sm:p-6">
+                    <div className="pointer-events-none absolute inset-0 opacity-50 [background-image:linear-gradient(rgba(132,151,194,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(132,151,194,0.12)_1px,transparent_1px)] [background-size:18px_18px]" />
+                    <div className="relative z-10">
+                      <span className="inline-flex items-center gap-2 rounded-full border border-[#d5e1f6] bg-white/92 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#435f9c] shadow-[0_10px_20px_rgba(31,49,96,0.1)]">
+                        <Sparkles className="h-3.5 w-3.5 text-[#6d89ff]" />
+                        Authority Snapshot
                       </span>
-                      Our Client on TV
-                    </div>
-                  </div>
-                  <div className="pointer-events-none absolute -inset-8 bg-[radial-gradient(circle,rgba(111,93,255,0.2)_0%,rgba(111,93,255,0)_66%)]" />
-                  <div className="relative rounded-[32px] border border-[#ece7ff] bg-[linear-gradient(155deg,#f7f4ff_0%,#ffffff_42%,#eef7ff_100%)] p-4 shadow-[0_38px_80px_rgba(16,24,58,0.28)] sm:p-5">
-                    <div className="pointer-events-none absolute inset-x-12 top-2 h-1 rounded-full bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.85),transparent)]" />
-                    <div className="rounded-[28px] border border-[#2e3557] bg-[linear-gradient(168deg,#2a3156_0%,#1a203b_58%,#121728_100%)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.16),inset_0_-1px_0_rgba(255,255,255,0.06),0_16px_36px_rgba(8,12,34,0.52)] sm:p-5">
-                      <div className="relative aspect-[16/10] overflow-hidden rounded-[18px] border-[3px] border-[#0c1328] bg-[#02040f] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.07),0_0_0_1px_rgba(95,122,186,0.32)]">
-                        <video
-                          className="h-full w-full object-cover saturate-[1.14] contrast-[1.1] brightness-[1.03]"
-                          autoPlay
-                          loop
-                          muted
-                          playsInline
-                          preload="auto"
-                          disablePictureInPicture
-                          aria-label="Authority PR hero video"
-                        >
-                          <source src={heroVideoSrc} type="video/mp4" />
-                        </video>
-                        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_2%,rgba(255,101,197,0.22),transparent_36%),radial-gradient(circle_at_92%_100%,rgba(63,222,255,0.24),transparent_32%)] mix-blend-screen" />
-                        <div className="pointer-events-none absolute inset-y-0 left-0 w-[18%] bg-[linear-gradient(90deg,rgba(255,255,255,0.14),transparent)]" />
-                        <div className="pointer-events-none absolute inset-x-6 top-2 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.56),transparent)]" />
+                      <h3 className="mt-4 text-[1.55rem] font-display font-semibold leading-[1.2] tracking-[-0.03em] text-[#202743]">
+                        The operating system behind compounding authority
+                      </h3>
+                      <p className="mt-3 text-[15px] leading-[1.6] text-[#5f6787]">
+                        Strategic positioning, trusted placements, and validation signals working together to build category trust.
+                      </p>
+
+                      <div className="mt-5 rounded-[16px] border border-[#dde6f8] bg-white/88 p-4 shadow-[0_14px_28px_rgba(27,40,78,0.08)]">
+                        <div className="flex h-24 items-end gap-2">
+                          {[24, 38, 50, 66, 82].map((height, index) => (
+                            <span
+                              key={`authority-bar-${index}`}
+                              className="w-full rounded-t-[8px] bg-[linear-gradient(180deg,#8ba4ff_0%,#5c7df2_100%)] shadow-[0_8px_18px_rgba(70,95,184,0.22)]"
+                              style={{ height: `${height}%` }}
+                            />
+                          ))}
+                        </div>
+                        <p className="mt-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#5870a8]">Authority trajectory</p>
                       </div>
-                      <div className="mt-3 flex items-center justify-between px-2">
-                        <div className="h-1.5 w-24 rounded-full bg-[repeating-linear-gradient(90deg,rgba(156,210,255,0.75)_0_4px,rgba(81,110,174,0.24)_4px_7px)] opacity-75" />
-                        <span className="rounded-full border border-[#5f77b3] bg-[#121b37] px-2 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-[#b7d4ff]">
-                          Linkifi TV
-                        </span>
-                        <div className="flex items-center gap-1.5">
-                          <span className="h-3 w-3 rounded-full border border-[#6f85bb] bg-[#1f2b4d]" />
-                          <span className="h-3 w-3 rounded-full border border-[#6f85bb] bg-[#1f2b4d]" />
+
+                      <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                        <div className="rounded-[14px] border border-[#dce5f7] bg-white/90 p-3">
+                          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[linear-gradient(135deg,#eef3ff_0%,#e7eeff_100%)] text-[#5c79cf]">
+                            <Eye className="h-4 w-4" />
+                          </span>
+                          <p className="mt-2 text-[13px] font-semibold text-[#263154]">Visibility lift</p>
+                          <p className="mt-1 text-[12px] leading-[1.45] text-[#6a7290]">Presence across trusted media channels.</p>
+                        </div>
+                        <div className="rounded-[14px] border border-[#dce5f7] bg-white/90 p-3">
+                          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[linear-gradient(135deg,#eef3ff_0%,#e7eeff_100%)] text-[#5c79cf]">
+                            <ShieldCheck className="h-4 w-4" />
+                          </span>
+                          <p className="mt-2 text-[13px] font-semibold text-[#263154]">Trust signals</p>
+                          <p className="mt-1 text-[12px] leading-[1.45] text-[#6a7290]">Third-party validation that buyers trust.</p>
+                        </div>
+                        <div className="rounded-[14px] border border-[#dce5f7] bg-white/90 p-3">
+                          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[linear-gradient(135deg,#eef3ff_0%,#e7eeff_100%)] text-[#5c79cf]">
+                            <BadgeCheck className="h-4 w-4" />
+                          </span>
+                          <p className="mt-2 text-[13px] font-semibold text-[#263154]">Category pull</p>
+                          <p className="mt-1 text-[12px] leading-[1.45] text-[#6a7290]">Recognition that compounds over time.</p>
                         </div>
                       </div>
                     </div>
-                    <div className="mx-auto mt-3 h-3 w-14 rounded-[999px] bg-[linear-gradient(180deg,#cfd7ee_0%,#b8c4e0_100%)] shadow-[0_7px_12px_rgba(40,48,88,0.24)]" />
-                    <div className="mx-auto mt-1.5 h-4 w-44 rounded-[999px] border border-[#b7c3e4] bg-[linear-gradient(180deg,#eef3ff_0%,#c9d4ec_100%)] shadow-[0_10px_18px_rgba(26,36,78,0.26)]" />
                   </div>
                 </div>
               </div>
@@ -831,6 +842,90 @@ export function AuthorityPrDeckPage() {
                 </div>
               </div>
             </Panel>
+          </SectionWrap>
+
+          <SectionWrap containerClass="w-full" className="py-0">
+            <div className="relative left-1/2 w-screen -translate-x-1/2 border-y border-[#1b285e] bg-[linear-gradient(134deg,#0f1539_0%,#1d2f73_46%,#2d3f84_100%)] py-12 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),inset_0_-1px_0_rgba(255,255,255,0.08)] sm:py-14">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_16%,rgba(255,112,202,0.2),transparent_32%),radial-gradient(circle_at_84%_88%,rgba(110,169,255,0.18),transparent_34%)]" />
+              <div className="pointer-events-none absolute inset-0 opacity-35 [background-image:linear-gradient(rgba(175,192,241,0.2)_1px,transparent_1px),linear-gradient(90deg,rgba(175,192,241,0.2)_1px,transparent_1px)] [background-size:20px_20px]" />
+
+              <div className={`relative z-10 ${heroContainerClass}`}>
+                <div className="mx-auto max-w-4xl text-center">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-[#ffb6e8]/65 bg-[linear-gradient(135deg,rgba(255,255,255,0.18)_0%,rgba(255,255,255,0.08)_100%)] px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#ffd8f3] backdrop-blur-sm">
+                    <Tv className="h-3.5 w-3.5" />
+                    Our Client on TV
+                  </span>
+                  <h3 className="mt-4 text-balance font-display text-[2rem] font-bold tracking-[-0.04em] text-white sm:text-[2.4rem]">
+                    Real authority placements that people can see
+                  </h3>
+                  <p className="mx-auto mt-4 max-w-3xl text-[17px] leading-[1.6] text-[#d2dcff]">
+                    This is what high-trust visibility looks like in the real world, not just in a deck.
+                  </p>
+                </div>
+
+                <div className="relative mx-auto mt-8 w-full max-w-[980px]">
+                  <div className="pointer-events-none absolute -inset-8 bg-[radial-gradient(circle,rgba(111,147,255,0.28)_0%,rgba(111,147,255,0)_68%)]" />
+                  <div className="relative rounded-[34px] border border-[#d7e0fa] bg-[linear-gradient(150deg,#f5f8ff_0%,#ffffff_46%,#edf4ff_100%)] p-5 shadow-[0_42px_88px_rgba(8,16,43,0.42)] sm:p-6">
+                    <div className="rounded-[30px] border border-[#2b3866] bg-[linear-gradient(168deg,#24305a_0%,#151d38_58%,#0d1325_100%)] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.16),inset_0_-1px_0_rgba(255,255,255,0.06),0_20px_40px_rgba(7,11,27,0.56)] sm:p-6">
+                      <div className="relative aspect-[16/9] overflow-hidden rounded-[20px] border-[3px] border-[#0a1227] bg-[#02040f] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08),0_0_0_1px_rgba(121,151,218,0.4)]">
+                        <video
+                          className="h-full w-full object-cover saturate-[1.16] contrast-[1.1] brightness-[1.04]"
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          preload="auto"
+                          disablePictureInPicture
+                          aria-label="Authority PR TV showcase video"
+                        >
+                          <source src={heroVideoSrc} type="video/mp4" />
+                        </video>
+                        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_2%,rgba(255,101,197,0.22),transparent_36%),radial-gradient(circle_at_92%_100%,rgba(63,222,255,0.24),transparent_32%)] mix-blend-screen" />
+                        <div className="pointer-events-none absolute inset-y-0 left-0 w-[16%] bg-[linear-gradient(90deg,rgba(255,255,255,0.15),transparent)]" />
+                        <div className="pointer-events-none absolute inset-x-6 top-2 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.56),transparent)]" />
+                      </div>
+                      <div className="mt-4 flex items-center justify-between px-2">
+                        <div className="h-1.5 w-28 rounded-full bg-[repeating-linear-gradient(90deg,rgba(169,217,255,0.75)_0_4px,rgba(83,112,177,0.24)_4px_7px)] opacity-80" />
+                        <span className="rounded-full border border-[#6283cb] bg-[#121d3f] px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-[#bedaff]">
+                          Linkifi TV
+                        </span>
+                        <div className="flex items-center gap-1.5">
+                          <span className="h-3 w-3 rounded-full border border-[#6f85bb] bg-[#1f2b4d]" />
+                          <span className="h-3 w-3 rounded-full border border-[#6f85bb] bg-[#1f2b4d]" />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mx-auto mt-3 h-3 w-16 rounded-[999px] bg-[linear-gradient(180deg,#ccd6f0_0%,#b5c4e3_100%)] shadow-[0_7px_14px_rgba(31,40,78,0.25)]" />
+                    <div className="mx-auto mt-1.5 h-4 w-52 rounded-[999px] border border-[#b6c4e5] bg-[linear-gradient(180deg,#edf3ff_0%,#c8d5ed_100%)] shadow-[0_10px_20px_rgba(26,36,78,0.28)]" />
+                  </div>
+                </div>
+
+                <div className="mt-8 hidden items-center justify-between px-6 lg:flex">
+                  <Link
+                    href="#included"
+                    className="group inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#ffb8e9]/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.22),rgba(255,255,255,0.08))] text-[#ffd9f4] shadow-[0_12px_26px_rgba(20,32,78,0.3)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_0_6px_rgba(255,184,233,0.14),0_18px_30px_rgba(20,32,78,0.34)]"
+                  >
+                    <ArrowDown className="h-5 w-5 motion-safe:animate-[bounce_2.4s_ease-in-out_infinite]" />
+                  </Link>
+                  <Link
+                    href="#included"
+                    className="group inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#b9d2ff]/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.22),rgba(255,255,255,0.08))] text-[#d9e8ff] shadow-[0_12px_26px_rgba(20,32,78,0.3)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_0_6px_rgba(185,210,255,0.14),0_18px_30px_rgba(20,32,78,0.34)]"
+                  >
+                    <ArrowDown className="h-5 w-5 motion-safe:animate-[bounce_2.4s_ease-in-out_infinite]" />
+                  </Link>
+                </div>
+
+                <div className="mt-7 flex justify-center lg:hidden">
+                  <Link
+                    href="#included"
+                    className="inline-flex items-center gap-2 rounded-full border border-[#c4d8ff]/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.2),rgba(255,255,255,0.08))] px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#ddecff] shadow-[0_12px_26px_rgba(20,32,78,0.3)]"
+                  >
+                    Pricing below
+                    <ArrowDown className="h-4 w-4 motion-safe:animate-[bounce_2.4s_ease-in-out_infinite]" />
+                  </Link>
+                </div>
+              </div>
+            </div>
           </SectionWrap>
 
           <SectionWrap id="included" className="scroll-mt-8 md:scroll-mt-10" containerClass="w-full">
