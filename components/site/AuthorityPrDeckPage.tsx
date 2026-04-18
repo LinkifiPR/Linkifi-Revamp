@@ -816,6 +816,19 @@ export function AuthorityPrDeckPage() {
                     })}
                   </div>
                 </div>
+
+                <div className="mt-9 flex justify-center">
+                  <Button
+                    asChild
+                    variant="ghost"
+                    className="h-12 rounded-full border border-[#f4bfe5] bg-[linear-gradient(135deg,#ff4cb8_0%,#c35cff_52%,#6f92ff_100%)] px-7 text-sm font-semibold text-white shadow-[0_18px_36px_rgba(150,55,130,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_0_6px_rgba(255,76,184,0.16),0_24px_44px_rgba(111,78,204,0.32)] sm:h-14 sm:px-8 sm:text-base"
+                  >
+                    <Link href="#proof">
+                      See our work
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
               </div>
             </Panel>
           </SectionWrap>
@@ -905,7 +918,7 @@ export function AuthorityPrDeckPage() {
             </Panel>
           </SectionWrap>
 
-          <SectionWrap>
+          <SectionWrap id="proof" className="scroll-mt-8 md:scroll-mt-10">
             <Panel>
               <Eyebrow>Proof</Eyebrow>
               <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
