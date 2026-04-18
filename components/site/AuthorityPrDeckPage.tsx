@@ -236,29 +236,54 @@ const cadence = [
   "Week 4: placement consolidation and next wave setup",
 ] as const;
 
-const audienceCards = [
-  { title: "Founders", description: "Who want to raise their personal profile and be seen as leaders." },
-  { title: "Brands", description: "That want to become more trusted and recognized in their category." },
-  { title: "Experts", description: "Who want to become the go-to voice in their market." },
-  { title: "Companies", description: "That want more than mentions and need real authority growth." },
-] as const;
-
 const proofImages = [
   {
-    src: "/authority-montage/processed/entrepreneur-uk.webp",
-    alt: "Entrepreneur UK editorial feature",
+    src: "/proof%20images/IMG_0502.jpg",
+    alt: "Authority coverage example one",
   },
   {
-    src: "/authority-montage/processed/bbc-travel.webp",
-    alt: "BBC Travel editorial feature",
+    src: "/proof%20images/IMG_0503.jpg",
+    alt: "Authority coverage example two",
   },
   {
-    src: "/authority-montage/processed/fodors-travel.webp",
-    alt: "Fodor's Travel editorial feature",
+    src: "/proof%20images/IMG_0504%202.jpg",
+    alt: "Authority coverage example three",
   },
   {
-    src: "/authority-montage/processed/eat-this-not-that.webp",
-    alt: "Eat This Not That editorial feature",
+    src: "/proof%20images/IMG_0506.jpg",
+    alt: "Authority coverage example four",
+  },
+  {
+    src: "/proof%20images/IMG_0507.jpg",
+    alt: "Authority coverage example five",
+  },
+  {
+    src: "/proof%20images/IMG_0508.jpg",
+    alt: "Authority coverage example six",
+  },
+  {
+    src: "/proof%20images/IMG_0509.jpg",
+    alt: "Authority coverage example seven",
+  },
+  {
+    src: "/proof%20images/IMG_0510.jpg",
+    alt: "Authority coverage example eight",
+  },
+  {
+    src: "/proof%20images/IMG_0511.jpg",
+    alt: "Authority coverage example nine",
+  },
+  {
+    src: "/proof%20images/IMG_0513.jpg",
+    alt: "Authority coverage example ten",
+  },
+  {
+    src: "/proof%20images/IMG_0514.jpg",
+    alt: "Authority coverage example eleven",
+  },
+  {
+    src: "/proof%20images/IMG_0515.jpg",
+    alt: "Authority coverage example twelve",
   },
 ] as const;
 
@@ -1049,50 +1074,49 @@ export function AuthorityPrDeckPage() {
             </Panel>
           </SectionWrap>
 
-          <SectionWrap>
-            <Panel>
-              <Eyebrow>Who It Is For</Eyebrow>
-              <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
-                Built for brands that want real market authority
-              </h2>
-              <p className="mt-4 text-[18px] leading-[1.6] text-[#5a5d79]">
-                The brands that win are not the loudest. They are the ones people already trust.
-              </p>
+          <section id="proof" className="scroll-mt-8 py-7 md:scroll-mt-10 md:py-8">
+            <div className="relative left-1/2 w-screen -translate-x-1/2 border-y border-[#ccd8f2] bg-[linear-gradient(152deg,#edf3ff_0%,#f9f8ff_45%,#eef4ff_100%)] py-14 sm:py-16">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_14%,rgba(111,93,255,0.16),transparent_36%),radial-gradient(circle_at_88%_82%,rgba(233,132,198,0.14),transparent_34%)]" />
+              <div className="pointer-events-none absolute inset-0 opacity-50 [background-image:linear-gradient(rgba(102,124,186,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(102,124,186,0.12)_1px,transparent_1px)] [background-size:24px_24px]" />
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(84,109,188,0.54),transparent)]" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[linear-gradient(90deg,transparent,rgba(212,115,180,0.5),transparent)]" />
 
-              <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-                {audienceCards.map((item) => (
-                  <div key={item.title} className="rounded-[18px] border border-[#e8e5f3] bg-white p-6 shadow-[0_18px_36px_rgba(24,31,62,0.08)]">
-                    <h3 className="text-[20px] font-display font-semibold leading-[1.2] tracking-[-0.02em] text-[#171929]">{item.title}</h3>
-                    <p className="mt-3 text-[15px] leading-[1.6] text-[#61657f]">{item.description}</p>
-                  </div>
-                ))}
-              </div>
-            </Panel>
-          </SectionWrap>
+              <div className="relative z-10 mx-auto w-full max-w-[1640px] px-4 sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-4xl text-center">
+                  <Eyebrow>Proof</Eyebrow>
+                  <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.16] tracking-[-0.045em] text-[#171929] sm:text-[2.2rem] md:text-[2.45rem]">
+                    Real authority coverage in mega-authoritative publications
+                  </h2>
+                  <p className="mx-auto mt-4 max-w-3xl text-[17px] leading-[1.65] text-[#56607f] sm:text-[18px]">
+                    Live editorial placements presented in a premium mobile-view wall so credibility is instantly felt.
+                  </p>
+                </div>
 
-          <SectionWrap id="proof" className="scroll-mt-8 md:scroll-mt-10">
-            <Panel>
-              <Eyebrow>Proof</Eyebrow>
-              <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
-                Real authority coverage in market-facing publications
-              </h2>
-              <div className="mt-10 grid gap-4 md:grid-cols-2">
-                {proofImages.map((item) => (
-                  <div key={item.src} className="overflow-hidden rounded-[20px] border border-[#e8edf8] bg-white p-1.5 shadow-[0_12px_24px_rgba(28,39,79,0.1)]">
-                    <div className="overflow-hidden rounded-[14px] border border-[#e8edf8] bg-[#edf2fb]">
-                      <Image
-                        src={item.src}
-                        alt={item.alt}
-                        width={1244}
-                        height={1500}
-                        className="h-[13.75rem] w-full object-cover object-top sm:h-[15rem] lg:h-[16rem]"
-                      />
-                    </div>
-                  </div>
-                ))}
+                <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6 lg:gap-5">
+                  {proofImages.map((item, index) => (
+                    <article key={item.src} className={cn("proof-phone-shell", index % 2 === 0 ? "proof-phone-float" : "proof-phone-float-delayed")}>
+                      <div className="proof-phone-bezel">
+                        <div className="proof-phone-screen">
+                          <Image
+                            src={item.src}
+                            alt={item.alt}
+                            width={1290}
+                            height={2235}
+                            className="h-full w-full object-cover object-top"
+                            sizes="(min-width: 1280px) 15vw, (min-width: 1024px) 16vw, (min-width: 640px) 29vw, 46vw"
+                          />
+                          <div className="proof-phone-overlay" />
+                          <div className="proof-phone-reflection" />
+                        </div>
+                        <span className="proof-phone-notch" />
+                        <span className="proof-phone-home" />
+                      </div>
+                    </article>
+                  ))}
+                </div>
               </div>
-            </Panel>
-          </SectionWrap>
+            </div>
+          </section>
 
           <SectionWrap className="pb-12">
             <div className="relative overflow-hidden rounded-[20px] bg-[linear-gradient(130deg,#090d22_0%,#111a44_50%,#17275e_100%)] p-10 text-white shadow-[0_34px_88px_rgba(8,11,29,0.32)] sm:p-12">
