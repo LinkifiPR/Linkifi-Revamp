@@ -613,15 +613,18 @@ export function AuthorityPrDeckPage() {
             </Panel>
           </SectionWrap>
 
-          <SectionWrap>
-            <Panel className="overflow-hidden border-[#2f3f88] bg-[linear-gradient(132deg,#0f1438_0%,#22357f_46%,#5332a5_100%)] p-0 sm:p-0 lg:p-0">
+          <SectionWrap containerClass="w-full">
+            <Panel className="overflow-hidden rounded-none border-x-0 border-[#2f3f88] bg-[linear-gradient(132deg,#0f1438_0%,#22357f_46%,#5332a5_100%)] p-0 sm:p-0 lg:p-0">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_14%,rgba(130,189,255,0.22),transparent_34%),radial-gradient(circle_at_90%_88%,rgba(163,112,255,0.26),transparent_38%)]" />
               <div className="pointer-events-none absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(193,210,255,0.26)_1px,transparent_1px),linear-gradient(90deg,rgba(193,210,255,0.26)_1px,transparent_1px)] [background-size:24px_24px]" />
               <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full border border-white/20" />
               <div className="pointer-events-none absolute -left-16 bottom-8 h-36 w-36 rounded-full border border-white/12" />
 
-              <div className="relative z-10 p-8 sm:p-10 lg:p-12">
-                <Eyebrow dark>What It Helps You Do</Eyebrow>
+              <div className={cn("relative z-10 py-8 sm:py-10 lg:py-12", heroContainerClass)}>
+                <span className="inline-flex items-center gap-2 rounded-full border border-[#becbff] bg-[linear-gradient(135deg,#ffffff_0%,#edf2ff_100%)] px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#2a3f7f] shadow-[0_12px_24px_rgba(6,10,36,0.26)]">
+                  <Sparkles className="h-3.5 w-3.5 text-[#6179ff]" />
+                  What It Helps You Do
+                </span>
                 <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-white sm:text-[2.125rem] md:text-[2.25rem]">
                   Show up like a leader and dominate more of the conversation in your space
                 </h2>
