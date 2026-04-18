@@ -753,22 +753,69 @@ export function AuthorityPrDeckPage() {
             </Panel>
           </SectionWrap>
 
-          <SectionWrap>
-            <Panel>
-              <Eyebrow>How We Build Authority</Eyebrow>
-              <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
-                Earned visibility in the places that matter
-              </h2>
-              <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                {placements.map((item) => (
-                  <div key={item.title} className="rounded-[16px] border border-[#e8e5f3] bg-white p-5 shadow-[0_12px_26px_rgba(24,31,62,0.06)]">
-                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,#efe9ff_0%,#edf1ff_100%)] text-[#6f5dff]">
-                      <item.Icon className="h-5 w-5" />
-                    </span>
-                    <h3 className="mt-4 text-[16px] font-display font-semibold leading-[1.35] text-[#171929]">{item.title}</h3>
-                    <p className="mt-2 text-[14px] leading-[1.6] text-[#61657f]">{item.description}</p>
+          <SectionWrap containerClass="w-full">
+            <Panel className="overflow-hidden rounded-none border-x-0 border-[#e2d2f3] bg-[linear-gradient(126deg,#fff7fc_0%,#f1f4ff_48%,#ffeef9_100%)] p-0 sm:p-0 lg:p-0">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_14%,rgba(255,101,205,0.2),transparent_34%),radial-gradient(circle_at_84%_84%,rgba(128,152,255,0.18),transparent_34%)]" />
+              <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(149,136,188,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(149,136,188,0.14)_1px,transparent_1px)] [background-size:22px_22px]" />
+              <div className="pointer-events-none absolute -left-10 top-6 h-20 w-20 rounded-full border border-[#efb8e5]/70" />
+              <div className="pointer-events-none absolute -right-16 top-8 h-28 w-28 rounded-full border border-[#c4b8ff]/70" />
+
+              <div className={cn("relative z-10 py-8 sm:py-10 lg:py-12", heroContainerClass)}>
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-[#efc7e9] bg-[linear-gradient(135deg,#fff6fc_0%,#ffeaf7_100%)] px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#b93285] shadow-[0_10px_22px_rgba(124,45,105,0.16)]">
+                    <Sparkles className="h-3.5 w-3.5 text-[#ff4cb8]" />
+                    How We Build Authority
+                  </span>
+                  <span className="inline-flex items-center rounded-full border border-[#d8d5f7] bg-white/85 px-3 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-[#575f99] shadow-[0_8px_18px_rgba(36,47,92,0.1)]">
+                    Earned Visibility Engine
+                  </span>
+                </div>
+
+                <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#231d3a] sm:text-[2.125rem] md:text-[2.25rem]">
+                  Earned visibility in the places that matter
+                </h2>
+                <p className="mt-4 max-w-3xl text-[18px] leading-[1.6] text-[#5f5c7d]">
+                  We place your brand, founders, and experts into high-trust channels that shape perception, influence decisions, and strengthen long-term authority.
+                </p>
+
+                <div className="relative mt-10">
+                  <div className="pointer-events-none absolute left-8 right-8 top-0 hidden h-px bg-[linear-gradient(90deg,rgba(255,86,190,0.1),rgba(255,86,190,0.72),rgba(126,140,255,0.62),rgba(255,86,190,0.1))] md:block motion-safe:animate-[pulse_4s_ease-in-out_infinite]" />
+                  <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                    {placements.map((item, index) => {
+                      const accent =
+                        index % 4 === 0
+                          ? "from-[#ff5ec7] via-[#ff8cd9] to-transparent"
+                          : index % 4 === 1
+                            ? "from-[#7d94ff] via-[#a5b4ff] to-transparent"
+                            : index % 4 === 2
+                              ? "from-[#c17dff] via-[#daa9ff] to-transparent"
+                              : "from-[#ff6da8] via-[#ff8ec0] to-transparent";
+
+                      return (
+                        <div
+                          key={item.title}
+                          className="group relative overflow-hidden border border-[#eadff3] bg-[linear-gradient(160deg,rgba(255,255,255,0.95)_0%,rgba(252,247,255,0.94)_100%)] p-5 shadow-[0_16px_34px_rgba(30,29,63,0.12)] transition-all duration-300 hover:-translate-y-1 hover:border-[#d9caef] hover:shadow-[0_24px_42px_rgba(30,29,63,0.17)] [clip-path:polygon(14px_0,calc(100%-14px)_0,100%_14px,100%_calc(100%-14px),calc(100%-14px)_100%,14px_100%,0_calc(100%-14px),0_14px)]"
+                        >
+                          <div className={cn("pointer-events-none absolute left-4 right-4 top-0 h-px bg-gradient-to-r", accent)} />
+                          <div className="pointer-events-none absolute right-3 top-3 h-5 w-5 border-r border-t border-[#e5d8f0]" />
+                          <span
+                            className="pointer-events-none absolute right-4 top-4 h-2.5 w-2.5 rounded-full bg-[#ff5fc5]/80 shadow-[0_0_0_4px_rgba(255,95,197,0.18),0_0_18px_rgba(255,95,197,0.42)] motion-safe:animate-[pulse_2.8s_ease-in-out_infinite]"
+                            style={{ animationDelay: `${index * 0.18}s` }}
+                          />
+
+                          <span className="inline-flex items-center rounded-full border border-[#ead8f4] bg-white px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.19em] text-[#8d4e93]">
+                            Placement {String(index + 1).padStart(2, "0")}
+                          </span>
+                          <span className="mt-4 inline-flex h-10 w-10 items-center justify-center rounded-[12px] border border-[#f0d2e7] bg-[linear-gradient(135deg,#fff5fb_0%,#f4f0ff_100%)] text-[#d3399d] shadow-[0_10px_20px_rgba(147,53,115,0.14)]">
+                            <item.Icon className="h-5 w-5" />
+                          </span>
+                          <h3 className="mt-4 text-[16px] font-display font-semibold leading-[1.35] text-[#281f43]">{item.title}</h3>
+                          <p className="mt-2 text-[14px] leading-[1.6] text-[#675f82]">{item.description}</p>
+                        </div>
+                      );
+                    })}
                   </div>
-                ))}
+                </div>
               </div>
             </Panel>
           </SectionWrap>
