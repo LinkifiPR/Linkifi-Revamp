@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ChatWidget } from "@/components/site/ChatWidget";
+import { AuthorityProofGallery } from "@/components/site/AuthorityProofGallery";
 import { SiteFooter, SiteHeader } from "@/components/site/SiteChrome";
 import { cn } from "@/lib/utils";
 
@@ -1092,28 +1093,7 @@ export function AuthorityPrDeckPage() {
                   </p>
                 </div>
 
-                <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6 lg:gap-5">
-                  {proofImages.map((item, index) => (
-                    <article key={item.src} className={cn("proof-phone-shell", index % 2 === 0 ? "proof-phone-float" : "proof-phone-float-delayed")}>
-                      <div className="proof-phone-bezel">
-                        <div className="proof-phone-screen">
-                          <Image
-                            src={item.src}
-                            alt={item.alt}
-                            width={1290}
-                            height={2235}
-                            className="proof-phone-media"
-                            sizes="(min-width: 1280px) 15vw, (min-width: 1024px) 16vw, (min-width: 640px) 29vw, 46vw"
-                          />
-                          <div className="proof-phone-overlay" />
-                          <div className="proof-phone-reflection" />
-                        </div>
-                        <span className="proof-phone-notch" />
-                        <span className="proof-phone-home" />
-                      </div>
-                    </article>
-                  ))}
-                </div>
+                <AuthorityProofGallery images={proofImages} />
               </div>
             </div>
           </section>
