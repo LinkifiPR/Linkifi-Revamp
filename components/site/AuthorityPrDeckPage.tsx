@@ -718,10 +718,10 @@ export function AuthorityPrDeckPage() {
                 </div>
 
                 <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#1b2340] sm:text-[2.125rem] md:text-[2.25rem]">
-                  A scrollable authority flow from positioning to compounding recognition
+                  How we turn strategic PR into compounding authority
                 </h2>
                 <p className="mt-4 max-w-3xl text-[18px] leading-[1.6] text-[#505b80]">
-                  On mobile, scroll horizontally to follow the full stack. On desktop, the full flow is visible in one sequence.
+                  Each stage builds on the last: from positioning and pitching to earned validation, then into lasting recognition, trust, and category leadership.
                 </p>
 
                 <div className="relative mt-10 overflow-x-auto pb-4">
