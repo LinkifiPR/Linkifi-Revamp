@@ -3,6 +3,8 @@ import Image from "next/image";
 type ProofImage = {
   src: string;
   alt: string;
+  publication: string;
+  placementType: string;
 };
 
 function PhoneFrame({ image }: { image: ProofImage }) {
@@ -34,6 +36,10 @@ export function AuthorityProofGallery({ images }: { images: readonly ProofImage[
       {images.map((image) => (
         <article key={image.src} className="proof-phone-cell">
           <PhoneFrame image={image} />
+          <div className="mt-2 text-center">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#4f5f8b]">{image.publication}</p>
+            <p className="mt-0.5 text-[12px] text-[#5c6786]">{image.placementType}</p>
+          </div>
         </article>
       ))}
     </div>

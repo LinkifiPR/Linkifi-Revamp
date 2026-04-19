@@ -215,8 +215,6 @@ const placements: IconItem[] = [
   { title: "Expert commentary opportunities", description: "Fast-response thought leadership moments.", Icon: Megaphone },
   { title: "Quoted expert placements", description: "High-trust citations in relevant articles.", Icon: Quote },
   { title: "Bylines and contributed articles", description: "Controlled narrative in third-party media.", Icon: PenSquare },
-  { title: "Opinion pieces and op-eds", description: "Clear perspective leadership on category topics.", Icon: PenSquare },
-  { title: "Timely media opportunities", description: "Visibility tied to live industry conversations.", Icon: Sparkles },
 ];
 
 const coverageMix: IconItem[] = [
@@ -240,51 +238,114 @@ const cadence = [
 const proofImages = [
   {
     src: "/proof%20images/IMG_0502.jpg",
-    alt: "Authority coverage example one",
+    alt: "Travel publication feature placement",
+    publication: "Travel Publication",
+    placementType: "Feature placement",
   },
   {
     src: "/proof%20images/IMG_0503.jpg",
-    alt: "Authority coverage example two",
+    alt: "Healthline expert coverage placement",
+    publication: "Healthline",
+    placementType: "Expert feature",
   },
   {
     src: "/proof%20images/IMG_0504%202.jpg",
-    alt: "Authority coverage example three",
+    alt: "Forbes editorial placement",
+    publication: "Forbes",
+    placementType: "Editorial feature",
   },
   {
     src: "/proof%20images/IMG_0506.jpg",
-    alt: "Authority coverage example four",
+    alt: "Home and lifestyle publication placement",
+    publication: "Lifestyle Outlet",
+    placementType: "Brand feature",
   },
   {
     src: "/proof%20images/IMG_0507.jpg",
-    alt: "Authority coverage example five",
+    alt: "Business technology publication placement",
+    publication: "Tech Publication",
+    placementType: "Industry commentary",
   },
   {
     src: "/proof%20images/IMG_0508.jpg",
-    alt: "Authority coverage example six",
+    alt: "Technology media placement",
+    publication: "Tech Media",
+    placementType: "Editorial feature",
   },
   {
     src: "/proof%20images/IMG_0509.jpg",
-    alt: "Authority coverage example seven",
+    alt: "Lifehacker editorial placement",
+    publication: "Lifehacker",
+    placementType: "Expert mention",
   },
   {
     src: "/proof%20images/IMG_0510.jpg",
-    alt: "Authority coverage example eight",
+    alt: "Metro publication placement",
+    publication: "Metro",
+    placementType: "News feature",
   },
   {
     src: "/proof%20images/IMG_0511.jpg",
-    alt: "Authority coverage example nine",
+    alt: "HuffPost authority placement",
+    publication: "HuffPost",
+    placementType: "Expert quote",
   },
   {
     src: "/proof%20images/IMG_0513.jpg",
-    alt: "Authority coverage example ten",
+    alt: "Men's Health editorial placement",
+    publication: "Men's Health",
+    placementType: "Feature placement",
   },
   {
     src: "/proof%20images/IMG_0514.jpg",
-    alt: "Authority coverage example eleven",
+    alt: "Parenting media expert placement",
+    publication: "Parenting Outlet",
+    placementType: "Expert contribution",
   },
   {
     src: "/proof%20images/IMG_0515.jpg",
-    alt: "Authority coverage example twelve",
+    alt: "Consumer lifestyle publication placement",
+    publication: "Consumer Media",
+    placementType: "Editorial feature",
+  },
+] as const;
+
+const heroProofStats = [
+  "Targeting 3-4 earned placements per month",
+  "High-trust media and category publications",
+  "Structured authority sprint every month",
+] as const;
+
+const faqItems = [
+  {
+    question: "How quickly can we expect to see placements?",
+    answer:
+      "Most engagements start building active authority signals in the first 30-90 days. Timelines vary based on positioning strength, responsiveness, and editorial cycles.",
+  },
+  {
+    question: "Do you guarantee placements?",
+    answer:
+      "We do not guarantee editorial outcomes because publication decisions are made by third parties. We do guarantee a structured process, consistent outreach, and clear monthly execution.",
+  },
+  {
+    question: "How involved do founders or spokespeople need to be?",
+    answer:
+      "Typically 60-90 minutes per week for approvals, interview prep, and quick feedback loops. Faster response times usually improve opportunity capture.",
+  },
+  {
+    question: "What happens in the first 30 days?",
+    answer:
+      "We align on positioning, define authority angles, set priority outlets, and launch proactive pitching with a live cadence across opportunities.",
+  },
+  {
+    question: "How do you measure success?",
+    answer:
+      "Success is measured by quality and relevance of placements, consistency of earned visibility, strengthening trust signals, and category recognition momentum.",
+  },
+  {
+    question: "Is this right for every company?",
+    answer:
+      "Authority PR works best for brands with a clear offer, spokesperson access, and long-term category ambitions. It is less suitable for short-term campaign-only goals.",
   },
 ] as const;
 
@@ -436,13 +497,13 @@ export function AuthorityPrDeckPage() {
                 <div>
                   <Eyebrow>A Linkifi Service</Eyebrow>
                   <h1 className="mt-6 text-balance text-5xl font-display font-bold tracking-[-0.055em] text-[#171929] sm:text-6xl md:text-7xl">
-                    Authority PR
+                    Become the go-to authority in your category
                   </h1>
                   <p className="mt-5 max-w-2xl text-balance text-xl leading-relaxed text-[#4e526d] sm:text-2xl">
-                    Become the go-to expert and go-to brand in your market.
+                    Structured Authority PR built to turn earned media into trust, recognition, and category pull.
                   </p>
                   <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[#5b5f79]">
-                    Traditional PR for brands, founders, and spokespeople who want to dominate mindshare, strengthen trust, and build category authority through earned media.
+                    For brands, founders, and spokespeople who want measurable visibility momentum, stronger market credibility, and sustained authority signals over the next 90 days and beyond.
                   </p>
 
                   <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -450,7 +511,18 @@ export function AuthorityPrDeckPage() {
                       href="https://book.linkifi.io/widget/bookings/pr-discovery-call"
                       label="Book Discovery Call"
                     />
-                    <SecondaryButton href="#flow" label="See The Authority Flow" />
+                    <SecondaryButton href="#flow" label="See How It Works" />
+                  </div>
+
+                  <div className="mt-5 flex flex-wrap gap-2.5">
+                    {heroProofStats.map((item) => (
+                      <span
+                        key={item}
+                        className="inline-flex items-center rounded-full border border-[#d3dbed] bg-white/86 px-3 py-1.5 text-[11px] font-semibold tracking-[0.03em] text-[#48567e] shadow-[0_8px_16px_rgba(31,46,88,0.08)]"
+                      >
+                        {item}
+                      </span>
+                    ))}
                   </div>
                 </div>
 
@@ -592,16 +664,16 @@ export function AuthorityPrDeckPage() {
 
           <SectionWrap>
             <Panel className="border-[#dce4f3] bg-[linear-gradient(145deg,#f8fbff_0%,#ecf3ff_54%,#f8f2ff_100%)] p-0 sm:p-0 lg:p-0">
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_8%_14%,rgba(82,143,255,0.18),transparent_32%),radial-gradient(circle_at_94%_82%,rgba(126,93,255,0.18),transparent_34%)]" />
-              <div className="pointer-events-none absolute inset-0 opacity-45 [background-image:linear-gradient(rgba(102,120,167,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(102,120,167,0.14)_1px,transparent_1px)] [background-size:22px_22px]" />
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_8%_14%,rgba(82,143,255,0.12),transparent_32%),radial-gradient(circle_at_94%_82%,rgba(126,93,255,0.12),transparent_34%)]" />
+              <div className="pointer-events-none absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(102,120,167,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(102,120,167,0.12)_1px,transparent_1px)] [background-size:22px_22px]" />
               <div className="relative z-10 p-8 sm:p-10 lg:p-12">
                 <div className="max-w-4xl">
                   <Eyebrow>Main Promise</Eyebrow>
                   <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
-                    Authority PR helps clients become more visible, more trusted, and more recognized
+                    More visibility. More trust. More recognition.
                   </h2>
                   <p className="mt-4 max-w-3xl text-[17px] leading-[1.65] text-[#555f82]">
-                    We engineer authority signals across earned media so visibility turns into trust, and trust compounds into category recognition.
+                    We engineer authority signals across earned media so each placement strengthens market trust and compounds long-term category recognition.
                   </p>
                 </div>
 
@@ -609,7 +681,7 @@ export function AuthorityPrDeckPage() {
                   {promisePillars.map((item, index) => (
                     <span
                       key={`signal-chip-${item.title}`}
-                      className="inline-flex items-center rounded-full border border-[#d6deef] bg-white/85 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#43517f] shadow-[0_8px_16px_rgba(31,46,88,0.08)] backdrop-blur-sm"
+                      className="inline-flex items-center rounded-full border border-[#d6deef] bg-white/85 px-3 py-1.5 text-[11px] font-semibold tracking-[0.04em] text-[#43517f] shadow-[0_8px_16px_rgba(31,46,88,0.08)] backdrop-blur-sm"
                     >
                       Signal {index + 1}: {item.title}
                     </span>
@@ -636,8 +708,7 @@ export function AuthorityPrDeckPage() {
                     </div>,
                     index < promisePillars.length - 1 ? (
                       <div key={`${item.title}-arrow`} className="hidden md:flex md:items-center md:justify-center">
-                        <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#cdd9f5] bg-[linear-gradient(145deg,#ffffff_0%,#eef3ff_100%)] text-[#5f6ef6] shadow-[0_12px_24px_rgba(63,88,168,0.18)] motion-safe:animate-[pulse_2.8s_ease-in-out_infinite]">
-                          <span className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(109,129,255,0.28),transparent_70%)] motion-safe:animate-[ping_2.8s_ease-out_infinite]" />
+                        <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#cdd9f5] bg-[linear-gradient(145deg,#ffffff_0%,#eef3ff_100%)] text-[#5f6ef6] shadow-[0_12px_24px_rgba(63,88,168,0.18)]">
                           <ArrowRight className="relative h-4 w-4" />
                         </span>
                       </div>
@@ -649,11 +720,11 @@ export function AuthorityPrDeckPage() {
           </SectionWrap>
 
           <SectionWrap containerClass="w-full">
-            <Panel className="overflow-hidden rounded-none border-x-0 border-[#2f3f88] bg-[linear-gradient(132deg,#0f1438_0%,#22357f_46%,#5332a5_100%)] p-0 sm:p-0 lg:p-0">
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_14%,rgba(130,189,255,0.22),transparent_34%),radial-gradient(circle_at_90%_88%,rgba(163,112,255,0.26),transparent_38%)]" />
-              <div className="pointer-events-none absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(193,210,255,0.26)_1px,transparent_1px),linear-gradient(90deg,rgba(193,210,255,0.26)_1px,transparent_1px)] [background-size:24px_24px]" />
-              <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full border border-white/20" />
-              <div className="pointer-events-none absolute -left-16 bottom-8 h-36 w-36 rounded-full border border-white/12" />
+            <Panel className="overflow-hidden rounded-none border-x-0 border-[#2f3f88] bg-[linear-gradient(132deg,#111a45_0%,#223b86_54%,#304899_100%)] p-0 sm:p-0 lg:p-0">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_14%,rgba(130,189,255,0.16),transparent_34%),radial-gradient(circle_at_90%_88%,rgba(163,112,255,0.18),transparent_38%)]" />
+              <div className="pointer-events-none absolute inset-0 opacity-22 [background-image:linear-gradient(rgba(193,210,255,0.24)_1px,transparent_1px),linear-gradient(90deg,rgba(193,210,255,0.24)_1px,transparent_1px)] [background-size:24px_24px]" />
+              <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full border border-white/14" />
+              <div className="pointer-events-none absolute -left-16 bottom-8 h-36 w-36 rounded-full border border-white/10" />
 
               <div className={cn("relative z-10 py-8 sm:py-10 lg:py-12", heroContainerClass)}>
                 <span className="inline-flex items-center gap-2 rounded-full border border-[#becbff] bg-[linear-gradient(135deg,#ffffff_0%,#edf2ff_100%)] px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#2a3f7f] shadow-[0_12px_24px_rgba(6,10,36,0.26)]">
@@ -668,10 +739,10 @@ export function AuthorityPrDeckPage() {
                 </p>
 
                 <div className="mt-7 flex flex-wrap gap-2.5">
-                  {["Category leadership", "Share-of-voice expansion", "Recognition flywheel"].map((chip) => (
+                  {["Category leadership", "Recognition flywheel"].map((chip) => (
                     <span
                       key={chip}
-                      className="inline-flex items-center rounded-full border border-white/24 bg-white/12 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#e8ecff] shadow-[0_10px_20px_rgba(14,22,60,0.22)] backdrop-blur-sm"
+                      className="inline-flex items-center rounded-full border border-white/24 bg-white/12 px-3 py-1.5 text-[11px] font-semibold tracking-[0.04em] text-[#e8ecff] shadow-[0_10px_20px_rgba(14,22,60,0.22)] backdrop-blur-sm"
                     >
                       {chip}
                     </span>
@@ -739,8 +810,8 @@ export function AuthorityPrDeckPage() {
 
           <SectionWrap id="flow" className="scroll-mt-8 md:scroll-mt-10">
             <Panel className="overflow-hidden border-[#d6dff4] bg-[linear-gradient(132deg,#f8fbff_0%,#ebf2ff_44%,#f8f2ff_100%)] p-0 sm:p-0 lg:p-0">
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_8%_12%,rgba(99,150,255,0.2),transparent_32%),radial-gradient(circle_at_92%_85%,rgba(160,104,255,0.22),transparent_34%)]" />
-              <div className="pointer-events-none absolute inset-0 opacity-45 [background-image:linear-gradient(rgba(124,142,193,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(124,142,193,0.14)_1px,transparent_1px)] [background-size:24px_24px]" />
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_8%_12%,rgba(99,150,255,0.14),transparent_32%),radial-gradient(circle_at_92%_85%,rgba(160,104,255,0.16),transparent_34%)]" />
+              <div className="pointer-events-none absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(124,142,193,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(124,142,193,0.14)_1px,transparent_1px)] [background-size:24px_24px]" />
               <div className="pointer-events-none absolute -left-10 top-10 h-24 w-24 rounded-full border border-[#baccf2]/80" />
               <div className="pointer-events-none absolute -right-14 bottom-6 h-32 w-32 rounded-full border border-[#c4b6ff]/70" />
 
@@ -758,9 +829,12 @@ export function AuthorityPrDeckPage() {
                 <p className="mt-4 max-w-3xl text-[18px] leading-[1.6] text-[#505b80]">
                   Each stage builds on the last: from positioning and pitching to earned validation, then into lasting recognition, trust, and category leadership.
                 </p>
+                <p className="mt-3 max-w-3xl text-[14px] font-medium leading-[1.6] text-[#5d6790]">
+                  Expected output: strategic story angles, active outreach, and sustained authority momentum through monthly execution.
+                </p>
 
                 <div className="relative mt-10 overflow-x-auto pb-4">
-                  <div className="pointer-events-none absolute left-8 right-8 top-[38%] hidden h-px bg-[linear-gradient(90deg,rgba(117,138,197,0.08),rgba(110,133,255,0.55),rgba(140,105,255,0.5),rgba(117,138,197,0.08))] md:block motion-safe:animate-[pulse_3.8s_ease-in-out_infinite]" />
+                  <div className="pointer-events-none absolute left-8 right-8 top-[38%] hidden h-px bg-[linear-gradient(90deg,rgba(117,138,197,0.08),rgba(110,133,255,0.42),rgba(140,105,255,0.36),rgba(117,138,197,0.08))] md:block" />
                   <div className="pointer-events-none absolute left-8 right-8 top-[38%] hidden h-px [background-image:repeating-linear-gradient(90deg,rgba(255,255,255,0.05)_0_10px,rgba(255,255,255,0.45)_10px_18px)] md:block opacity-70" />
 
                   <div className="flex min-w-max snap-x snap-mandatory gap-4 md:grid md:min-w-0 md:grid-cols-5 md:gap-4">
@@ -768,13 +842,8 @@ export function AuthorityPrDeckPage() {
                       <div key={item.title} className="relative w-[258px] snap-center md:w-auto">
                         <div className="pointer-events-none absolute -top-3 left-1/2 hidden -translate-x-1/2 md:block">
                           <span
-                            className="relative inline-flex h-5 w-5 items-center justify-center rounded-full border border-[#ccd7f5] bg-white/90 text-[#6f5dff] shadow-[0_8px_18px_rgba(34,48,95,0.16)] motion-safe:animate-[pulse_2.8s_ease-in-out_infinite]"
-                            style={{ animationDelay: `${index * 0.22}s` }}
+                            className="relative inline-flex h-5 w-5 items-center justify-center rounded-full border border-[#ccd7f5] bg-white/90 text-[#6f5dff] shadow-[0_8px_18px_rgba(34,48,95,0.16)]"
                           >
-                            <span
-                              className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(112,129,255,0.32),transparent_70%)] motion-safe:animate-[ping_2.8s_ease-out_infinite]"
-                              style={{ animationDelay: `${index * 0.22}s` }}
-                            />
                           </span>
                         </div>
 
@@ -797,11 +866,7 @@ export function AuthorityPrDeckPage() {
 
                         {index < authorityFlow.length - 1 ? (
                           <div className="pointer-events-none absolute -right-3 top-[42%] hidden -translate-y-1/2 md:flex">
-                            <span
-                              className="relative inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#cfdaf6] bg-[linear-gradient(145deg,#ffffff_0%,#eef3ff_100%)] text-[#6f5dff] shadow-[0_10px_22px_rgba(33,50,102,0.16)] motion-safe:animate-[pulse_3s_ease-in-out_infinite]"
-                              style={{ animationDelay: `${index * 0.24}s` }}
-                            >
-                              <span className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(114,130,255,0.28),transparent_70%)] motion-safe:animate-[ping_3s_ease-out_infinite]" />
+                            <span className="relative inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#cfdaf6] bg-[linear-gradient(145deg,#ffffff_0%,#eef3ff_100%)] text-[#6f5dff] shadow-[0_10px_22px_rgba(33,50,102,0.16)]">
                               <ArrowRight className="relative h-4 w-4" />
                             </span>
                           </div>
@@ -816,8 +881,8 @@ export function AuthorityPrDeckPage() {
 
           <SectionWrap containerClass="w-full">
             <Panel className="overflow-hidden rounded-none border-x-0 border-[#e2d2f3] bg-[linear-gradient(126deg,#fff7fc_0%,#f1f4ff_48%,#ffeef9_100%)] p-0 sm:p-0 lg:p-0">
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_14%,rgba(255,101,205,0.2),transparent_34%),radial-gradient(circle_at_84%_84%,rgba(128,152,255,0.18),transparent_34%)]" />
-              <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(149,136,188,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(149,136,188,0.14)_1px,transparent_1px)] [background-size:22px_22px]" />
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_14%,rgba(255,101,205,0.16),transparent_34%),radial-gradient(circle_at_84%_84%,rgba(128,152,255,0.14),transparent_34%)]" />
+              <div className="pointer-events-none absolute inset-0 opacity-28 [background-image:linear-gradient(rgba(149,136,188,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(149,136,188,0.14)_1px,transparent_1px)] [background-size:22px_22px]" />
               <div className="pointer-events-none absolute -left-10 top-6 h-20 w-20 rounded-full border border-[#efb8e5]/70" />
               <div className="pointer-events-none absolute -right-16 top-8 h-28 w-28 rounded-full border border-[#c4b8ff]/70" />
 
@@ -840,8 +905,8 @@ export function AuthorityPrDeckPage() {
                 </p>
 
                 <div className="relative mt-10">
-                  <div className="pointer-events-none absolute left-8 right-8 top-0 hidden h-px bg-[linear-gradient(90deg,rgba(255,86,190,0.1),rgba(255,86,190,0.72),rgba(126,140,255,0.62),rgba(255,86,190,0.1))] md:block motion-safe:animate-[pulse_4s_ease-in-out_infinite]" />
-                  <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                  <div className="pointer-events-none absolute left-8 right-8 top-0 hidden h-px bg-[linear-gradient(90deg,rgba(255,86,190,0.1),rgba(255,86,190,0.52),rgba(126,140,255,0.52),rgba(255,86,190,0.1))] md:block" />
+                  <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                     {placements.map((item, index) => {
                       const accent =
                         index % 4 === 0
@@ -860,8 +925,7 @@ export function AuthorityPrDeckPage() {
                           <div className={cn("pointer-events-none absolute left-4 right-4 top-0 h-px bg-gradient-to-r", accent)} />
                           <div className="pointer-events-none absolute right-3 top-3 h-5 w-5 border-r border-t border-[#e5d8f0]" />
                           <span
-                            className="pointer-events-none absolute right-4 top-4 h-2.5 w-2.5 rounded-full bg-[#ff5fc5]/80 shadow-[0_0_0_4px_rgba(255,95,197,0.18),0_0_18px_rgba(255,95,197,0.42)] motion-safe:animate-[pulse_2.8s_ease-in-out_infinite]"
-                            style={{ animationDelay: `${index * 0.18}s` }}
+                            className="pointer-events-none absolute right-4 top-4 h-2.5 w-2.5 rounded-full bg-[#ff5fc5]/80 shadow-[0_0_0_4px_rgba(255,95,197,0.18),0_0_18px_rgba(255,95,197,0.42)]"
                           />
 
                           <span className="inline-flex items-center rounded-full border border-[#ead8f4] bg-white px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.19em] text-[#8d4e93]">
@@ -955,13 +1019,13 @@ export function AuthorityPrDeckPage() {
                     href="#included"
                     className="group inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#ffb8e9]/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.22),rgba(255,255,255,0.08))] text-[#ffd9f4] shadow-[0_12px_26px_rgba(20,32,78,0.3)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_0_6px_rgba(255,184,233,0.14),0_18px_30px_rgba(20,32,78,0.34)]"
                   >
-                    <ArrowDown className="h-5 w-5 motion-safe:animate-[bounce_2.4s_ease-in-out_infinite]" />
+                    <ArrowDown className="h-5 w-5" />
                   </Link>
                   <Link
                     href="#included"
                     className="group inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#b9d2ff]/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.22),rgba(255,255,255,0.08))] text-[#d9e8ff] shadow-[0_12px_26px_rgba(20,32,78,0.3)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_0_6px_rgba(185,210,255,0.14),0_18px_30px_rgba(20,32,78,0.34)]"
                   >
-                    <ArrowDown className="h-5 w-5 motion-safe:animate-[bounce_2.4s_ease-in-out_infinite]" />
+                    <ArrowDown className="h-5 w-5" />
                   </Link>
                 </div>
 
@@ -971,7 +1035,7 @@ export function AuthorityPrDeckPage() {
                     className="inline-flex items-center gap-2 rounded-full border border-[#c4d8ff]/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.2),rgba(255,255,255,0.08))] px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#ddecff] shadow-[0_12px_26px_rgba(20,32,78,0.3)]"
                   >
                     Pricing below
-                    <ArrowDown className="h-4 w-4 motion-safe:animate-[bounce_2.4s_ease-in-out_infinite]" />
+                    <ArrowDown className="h-4 w-4" />
                   </Link>
                 </div>
               </div>
@@ -1031,7 +1095,7 @@ export function AuthorityPrDeckPage() {
                       className="mt-6 h-12 w-full rounded-full border border-[#b9cdff] bg-[linear-gradient(135deg,#5f84ff_0%,#3d6af0_56%,#274fc0_100%)] px-6 text-sm font-semibold text-white shadow-[0_20px_38px_rgba(41,75,166,0.34)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_0_6px_rgba(95,132,255,0.16),0_26px_46px_rgba(43,74,167,0.36)] sm:h-14 sm:text-base"
                     >
                       <a href="https://book.linkifi.io/widget/bookings/pr-discovery-call" target="_blank" rel="noreferrer">
-                        Book a Call
+                        Book Discovery Call
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </a>
                     </Button>
@@ -1071,6 +1135,27 @@ export function AuthorityPrDeckPage() {
                     </div>
                   </div>
                 </div>
+
+                <div className="mt-7 grid gap-4 md:grid-cols-3">
+                  <div className="rounded-[16px] border border-[#d9e3f5] bg-white/92 p-4 shadow-[0_12px_26px_rgba(27,32,64,0.08)]">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.17em] text-[#4d6292]">Who This Is For</p>
+                    <p className="mt-2 text-[14px] leading-[1.55] text-[#58637f]">
+                      Brands with a clear offer, spokesperson access, and a goal to build category authority instead of short-term noise.
+                    </p>
+                  </div>
+                  <div className="rounded-[16px] border border-[#d9e3f5] bg-white/92 p-4 shadow-[0_12px_26px_rgba(27,32,64,0.08)]">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.17em] text-[#4d6292]">First 30 Days</p>
+                    <p className="mt-2 text-[14px] leading-[1.55] text-[#58637f]">
+                      Positioning alignment, angle development, outlet prioritization, and the first live authority sprint in-market.
+                    </p>
+                  </div>
+                  <div className="rounded-[16px] border border-[#d9e3f5] bg-white/92 p-4 shadow-[0_12px_26px_rgba(27,32,64,0.08)]">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.17em] text-[#4d6292]">What We Need</p>
+                    <p className="mt-2 text-[14px] leading-[1.55] text-[#58637f]">
+                      Quick approvals, regular spokesperson access, and timely feedback so we can capture high-trust opportunities fast.
+                    </p>
+                  </div>
+                </div>
               </div>
             </Panel>
           </SectionWrap>
@@ -1098,6 +1183,37 @@ export function AuthorityPrDeckPage() {
             </div>
           </section>
 
+          <SectionWrap>
+            <Panel className="border-[#dce4f3] bg-[linear-gradient(146deg,#f9fbff_0%,#eef3ff_52%,#f7f9ff_100%)]">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_10%,rgba(109,147,255,0.12),transparent_34%),radial-gradient(circle_at_88%_82%,rgba(149,122,255,0.1),transparent_34%)]" />
+              <div className="pointer-events-none absolute inset-0 opacity-24 [background-image:linear-gradient(rgba(120,139,190,0.13)_1px,transparent_1px),linear-gradient(90deg,rgba(120,139,190,0.13)_1px,transparent_1px)] [background-size:22px_22px]" />
+              <Eyebrow>FAQ</Eyebrow>
+              <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#1d2643] sm:text-[2.125rem] md:text-[2.25rem]">
+                Key questions before you book
+              </h2>
+              <p className="mt-4 max-w-3xl text-[17px] leading-[1.65] text-[#546182]">
+                Clear expectations on timelines, fit, and how we run authority campaigns month to month.
+              </p>
+
+              <div className="mt-8 grid gap-3">
+                {faqItems.map((item) => (
+                  <details
+                    key={item.question}
+                    className="group rounded-[14px] border border-[#d6e0f3] bg-white/92 p-4 shadow-[0_10px_20px_rgba(29,41,78,0.08)]"
+                  >
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-[15px] font-semibold text-[#273a63]">
+                      {item.question}
+                      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#d8e3f8] bg-[#f4f7ff] text-[#5671b6] transition-transform duration-200 group-open:rotate-45">
+                        +
+                      </span>
+                    </summary>
+                    <p className="mt-3 pr-6 text-[14px] leading-[1.65] text-[#5b6886]">{item.answer}</p>
+                  </details>
+                ))}
+              </div>
+            </Panel>
+          </SectionWrap>
+
           <SectionWrap className="pb-12">
             <div className="relative overflow-hidden rounded-[20px] bg-[linear-gradient(130deg,#090d22_0%,#111a44_50%,#17275e_100%)] p-10 text-white shadow-[0_34px_88px_rgba(8,11,29,0.32)] sm:p-12">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(115,93,255,0.24),transparent_30%),radial-gradient(circle_at_82%_18%,rgba(87,157,255,0.14),transparent_26%)]" />
@@ -1119,6 +1235,18 @@ export function AuthorityPrDeckPage() {
               </div>
             </div>
           </SectionWrap>
+
+          <div className="fixed inset-x-4 bottom-4 z-30 md:hidden">
+            <a
+              href="https://book.linkifi.io/widget/bookings/pr-discovery-call"
+              target="_blank"
+              rel="noreferrer"
+              className="flex h-12 items-center justify-center rounded-full border border-[#b9cdff] bg-[linear-gradient(135deg,#5f84ff_0%,#3d6af0_56%,#274fc0_100%)] px-6 text-sm font-semibold text-white shadow-[0_20px_38px_rgba(41,75,166,0.34)]"
+            >
+              Book Discovery Call
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
+          </div>
         </div>
       </main>
       <SiteFooter flushTop />
