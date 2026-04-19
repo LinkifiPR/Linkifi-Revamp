@@ -310,12 +310,6 @@ const proofImages = [
   },
 ] as const;
 
-const heroProofStats = [
-  "Targeting 3-4 earned placements per month",
-  "High-trust media and category publications",
-  "Structured authority sprint every month",
-] as const;
-
 const faqItems = [
   {
     question: "How quickly can we expect to see placements?",
@@ -503,7 +497,7 @@ export function AuthorityPrDeckPage() {
                     Structured Authority PR built to turn earned media into trust, recognition, and category pull.
                   </p>
                   <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[#5b5f79]">
-                    For brands, founders, and spokespeople who want measurable visibility momentum, stronger market credibility, and sustained authority signals over the next 90 days and beyond.
+                    For brands, founders, and spokespeople who want measurable visibility momentum, stronger market credibility, and sustained authority signals over the next 180 days and beyond.
                   </p>
 
                   <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -512,17 +506,6 @@ export function AuthorityPrDeckPage() {
                       label="Book Discovery Call"
                     />
                     <SecondaryButton href="#flow" label="See How It Works" />
-                  </div>
-
-                  <div className="mt-5 flex flex-wrap gap-2.5">
-                    {heroProofStats.map((item) => (
-                      <span
-                        key={item}
-                        className="inline-flex items-center rounded-full border border-[#d3dbed] bg-white/86 px-3 py-1.5 text-[11px] font-semibold tracking-[0.03em] text-[#48567e] shadow-[0_8px_16px_rgba(31,46,88,0.08)]"
-                      >
-                        {item}
-                      </span>
-                    ))}
                   </div>
                 </div>
 
@@ -880,16 +863,16 @@ export function AuthorityPrDeckPage() {
           </SectionWrap>
 
           <SectionWrap containerClass="w-full">
-            <Panel className="overflow-hidden rounded-none border-x-0 border-[#e2d2f3] bg-[linear-gradient(126deg,#fff7fc_0%,#f1f4ff_48%,#ffeef9_100%)] p-0 sm:p-0 lg:p-0">
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_14%,rgba(255,101,205,0.16),transparent_34%),radial-gradient(circle_at_84%_84%,rgba(128,152,255,0.14),transparent_34%)]" />
-              <div className="pointer-events-none absolute inset-0 opacity-28 [background-image:linear-gradient(rgba(149,136,188,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(149,136,188,0.14)_1px,transparent_1px)] [background-size:22px_22px]" />
-              <div className="pointer-events-none absolute -left-10 top-6 h-20 w-20 rounded-full border border-[#efb8e5]/70" />
-              <div className="pointer-events-none absolute -right-16 top-8 h-28 w-28 rounded-full border border-[#c4b8ff]/70" />
+            <Panel className="overflow-hidden rounded-none border-x-0 border-[#d4e0f6] bg-[linear-gradient(126deg,#f4f8ff_0%,#e9f1ff_52%,#f2f7ff_100%)] p-0 sm:p-0 lg:p-0">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_14%,rgba(88,145,255,0.16),transparent_34%),radial-gradient(circle_at_84%_84%,rgba(108,132,236,0.14),transparent_34%)]" />
+              <div className="pointer-events-none absolute inset-0 opacity-24 [background-image:linear-gradient(rgba(110,136,193,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(110,136,193,0.14)_1px,transparent_1px)] [background-size:22px_22px]" />
+              <div className="pointer-events-none absolute -left-10 top-6 h-20 w-20 rounded-full border border-[#b9d5ff]/70" />
+              <div className="pointer-events-none absolute -right-16 top-8 h-28 w-28 rounded-full border border-[#b9caf7]/70" />
 
               <div className={cn("relative z-10 py-8 sm:py-10 lg:py-12", heroContainerClass)}>
                 <div className="flex flex-wrap items-center gap-3">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-[#efc7e9] bg-[linear-gradient(135deg,#fff6fc_0%,#ffeaf7_100%)] px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#b93285] shadow-[0_10px_22px_rgba(124,45,105,0.16)]">
-                    <Sparkles className="h-3.5 w-3.5 text-[#ff4cb8]" />
+                  <span className="inline-flex items-center gap-2 rounded-full border border-[#c7d8f5] bg-[linear-gradient(135deg,#ffffff_0%,#edf4ff_100%)] px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#2f5d9f] shadow-[0_10px_22px_rgba(40,78,132,0.14)]">
+                    <Sparkles className="h-3.5 w-3.5 text-[#4f82eb]" />
                     How We Build Authority
                   </span>
                   <span className="inline-flex items-center rounded-full border border-[#d8d5f7] bg-white/85 px-3 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-[#575f99] shadow-[0_8px_18px_rgba(36,47,92,0.1)]">
@@ -897,45 +880,43 @@ export function AuthorityPrDeckPage() {
                   </span>
                 </div>
 
-                <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#231d3a] sm:text-[2.125rem] md:text-[2.25rem]">
+                <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#23365c] sm:text-[2.125rem] md:text-[2.25rem]">
                   Earned visibility in the places that matter
                 </h2>
-                <p className="mt-4 max-w-3xl text-[18px] leading-[1.6] text-[#5f5c7d]">
+                <p className="mt-4 max-w-3xl text-[18px] leading-[1.6] text-[#526a93]">
                   We place your brand, founders, and experts into high-trust channels that shape perception, influence decisions, and strengthen long-term authority.
                 </p>
 
                 <div className="relative mt-10">
-                  <div className="pointer-events-none absolute left-8 right-8 top-0 hidden h-px bg-[linear-gradient(90deg,rgba(255,86,190,0.1),rgba(255,86,190,0.52),rgba(126,140,255,0.52),rgba(255,86,190,0.1))] md:block" />
+                  <div className="pointer-events-none absolute left-8 right-8 top-0 hidden h-px bg-[linear-gradient(90deg,rgba(95,148,255,0.1),rgba(95,148,255,0.52),rgba(126,140,255,0.48),rgba(95,148,255,0.1))] md:block" />
                   <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                     {placements.map((item, index) => {
                       const accent =
-                        index % 4 === 0
-                          ? "from-[#ff5ec7] via-[#ff8cd9] to-transparent"
-                          : index % 4 === 1
-                            ? "from-[#7d94ff] via-[#a5b4ff] to-transparent"
-                            : index % 4 === 2
-                              ? "from-[#c17dff] via-[#daa9ff] to-transparent"
-                              : "from-[#ff6da8] via-[#ff8ec0] to-transparent";
+                        index % 3 === 0
+                          ? "from-[#6f8ef4] via-[#9eb7ff] to-transparent"
+                          : index % 3 === 1
+                            ? "from-[#5faeea] via-[#88c6ff] to-transparent"
+                            : "from-[#7b96ff] via-[#a8bbff] to-transparent";
 
                       return (
                         <div
                           key={item.title}
-                          className="group relative overflow-hidden border border-[#eadff3] bg-[linear-gradient(160deg,rgba(255,255,255,0.95)_0%,rgba(252,247,255,0.94)_100%)] p-5 shadow-[0_16px_34px_rgba(30,29,63,0.12)] transition-all duration-300 hover:-translate-y-1 hover:border-[#d9caef] hover:shadow-[0_24px_42px_rgba(30,29,63,0.17)] [clip-path:polygon(14px_0,calc(100%-14px)_0,100%_14px,100%_calc(100%-14px),calc(100%-14px)_100%,14px_100%,0_calc(100%-14px),0_14px)]"
+                          className="group relative overflow-hidden border border-[#d6e2f7] bg-[linear-gradient(160deg,rgba(255,255,255,0.95)_0%,rgba(242,248,255,0.94)_100%)] p-5 shadow-[0_16px_34px_rgba(30,46,83,0.12)] transition-all duration-300 hover:-translate-y-1 hover:border-[#c4d6f5] hover:shadow-[0_24px_42px_rgba(30,46,83,0.17)] [clip-path:polygon(14px_0,calc(100%-14px)_0,100%_14px,100%_calc(100%-14px),calc(100%-14px)_100%,14px_100%,0_calc(100%-14px),0_14px)]"
                         >
                           <div className={cn("pointer-events-none absolute left-4 right-4 top-0 h-px bg-gradient-to-r", accent)} />
-                          <div className="pointer-events-none absolute right-3 top-3 h-5 w-5 border-r border-t border-[#e5d8f0]" />
+                          <div className="pointer-events-none absolute right-3 top-3 h-5 w-5 border-r border-t border-[#d7e3f6]" />
                           <span
-                            className="pointer-events-none absolute right-4 top-4 h-2.5 w-2.5 rounded-full bg-[#ff5fc5]/80 shadow-[0_0_0_4px_rgba(255,95,197,0.18),0_0_18px_rgba(255,95,197,0.42)]"
+                            className="pointer-events-none absolute right-4 top-4 h-2.5 w-2.5 rounded-full bg-[#6b97f8]/80 shadow-[0_0_0_4px_rgba(107,151,248,0.18),0_0_18px_rgba(107,151,248,0.42)]"
                           />
 
-                          <span className="inline-flex items-center rounded-full border border-[#ead8f4] bg-white px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.19em] text-[#8d4e93]">
+                          <span className="inline-flex items-center rounded-full border border-[#d5e2f7] bg-white px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.19em] text-[#3f5f97]">
                             Placement {String(index + 1).padStart(2, "0")}
                           </span>
-                          <span className="mt-4 inline-flex h-10 w-10 items-center justify-center rounded-[12px] border border-[#f0d2e7] bg-[linear-gradient(135deg,#fff5fb_0%,#f4f0ff_100%)] text-[#d3399d] shadow-[0_10px_20px_rgba(147,53,115,0.14)]">
+                          <span className="mt-4 inline-flex h-10 w-10 items-center justify-center rounded-[12px] border border-[#d4e2f8] bg-[linear-gradient(135deg,#f5f9ff_0%,#edf3ff_100%)] text-[#486fc0] shadow-[0_10px_20px_rgba(53,94,147,0.14)]">
                             <item.Icon className="h-5 w-5" />
                           </span>
-                          <h3 className="mt-4 text-[16px] font-display font-semibold leading-[1.35] text-[#281f43]">{item.title}</h3>
-                          <p className="mt-2 text-[14px] leading-[1.6] text-[#675f82]">{item.description}</p>
+                          <h3 className="mt-4 text-[16px] font-display font-semibold leading-[1.35] text-[#24406c]">{item.title}</h3>
+                          <p className="mt-2 text-[14px] leading-[1.6] text-[#586f95]">{item.description}</p>
                         </div>
                       );
                     })}
@@ -946,10 +927,10 @@ export function AuthorityPrDeckPage() {
                   <Button
                     asChild
                     variant="ghost"
-                    className="h-12 rounded-full border border-[#f4bfe5] bg-[linear-gradient(135deg,#ff4cb8_0%,#c35cff_52%,#6f92ff_100%)] px-7 text-sm font-semibold text-white shadow-[0_18px_36px_rgba(150,55,130,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_0_6px_rgba(255,76,184,0.16),0_24px_44px_rgba(111,78,204,0.32)] sm:h-14 sm:px-8 sm:text-base"
+                    className="h-12 rounded-full border border-[#bfd4ff] bg-[linear-gradient(135deg,#5a85f5_0%,#3d6ee8_56%,#2f58c7_100%)] px-7 text-sm font-semibold text-white shadow-[0_18px_36px_rgba(52,85,168,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_0_6px_rgba(90,133,245,0.16),0_24px_44px_rgba(52,85,168,0.34)] sm:h-14 sm:px-8 sm:text-base"
                   >
                     <Link href="#proof">
-                      See our work
+                      See Our Work
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
@@ -1146,7 +1127,7 @@ export function AuthorityPrDeckPage() {
                   <div className="rounded-[16px] border border-[#d9e3f5] bg-white/92 p-4 shadow-[0_12px_26px_rgba(27,32,64,0.08)]">
                     <p className="text-[11px] font-semibold uppercase tracking-[0.17em] text-[#4d6292]">First 30 Days</p>
                     <p className="mt-2 text-[14px] leading-[1.55] text-[#58637f]">
-                      Positioning alignment, angle development, outlet prioritization, and the first live authority sprint in-market.
+                      Kickoff call, positioning alignment, angle development, outlet prioritization, and the first live authority sprint in-market.
                     </p>
                   </div>
                   <div className="rounded-[16px] border border-[#d9e3f5] bg-white/92 p-4 shadow-[0_12px_26px_rgba(27,32,64,0.08)]">
@@ -1184,32 +1165,50 @@ export function AuthorityPrDeckPage() {
           </section>
 
           <SectionWrap>
-            <Panel className="border-[#dce4f3] bg-[linear-gradient(146deg,#f9fbff_0%,#eef3ff_52%,#f7f9ff_100%)]">
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_10%,rgba(109,147,255,0.12),transparent_34%),radial-gradient(circle_at_88%_82%,rgba(149,122,255,0.1),transparent_34%)]" />
-              <div className="pointer-events-none absolute inset-0 opacity-24 [background-image:linear-gradient(rgba(120,139,190,0.13)_1px,transparent_1px),linear-gradient(90deg,rgba(120,139,190,0.13)_1px,transparent_1px)] [background-size:22px_22px]" />
-              <Eyebrow>FAQ</Eyebrow>
-              <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#1d2643] sm:text-[2.125rem] md:text-[2.25rem]">
-                Key questions before you book
-              </h2>
-              <p className="mt-4 max-w-3xl text-[17px] leading-[1.65] text-[#546182]">
-                Clear expectations on timelines, fit, and how we run authority campaigns month to month.
-              </p>
+            <Panel className="overflow-hidden border-[#cfdcf4] bg-[linear-gradient(142deg,#eef5ff_0%,#f7fbff_48%,#edf4ff_100%)] p-0 sm:p-0 lg:p-0">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_8%_14%,rgba(96,150,255,0.2),transparent_32%),radial-gradient(circle_at_92%_84%,rgba(117,146,238,0.18),transparent_34%)]" />
+              <div className="pointer-events-none absolute inset-0 opacity-35 [background-image:linear-gradient(rgba(118,142,199,0.16)_1px,transparent_1px),linear-gradient(90deg,rgba(118,142,199,0.16)_1px,transparent_1px)] [background-size:24px_24px]" />
+              <div className="pointer-events-none absolute -left-10 top-8 h-24 w-24 rounded-full border border-[#bcd4ff]/70" />
+              <div className="pointer-events-none absolute -right-14 bottom-6 h-32 w-32 rounded-full border border-[#bdd0ff]/70" />
 
-              <div className="mt-8 grid gap-3">
-                {faqItems.map((item) => (
-                  <details
-                    key={item.question}
-                    className="group rounded-[14px] border border-[#d6e0f3] bg-white/92 p-4 shadow-[0_10px_20px_rgba(29,41,78,0.08)]"
-                  >
-                    <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-[15px] font-semibold text-[#273a63]">
-                      {item.question}
-                      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#d8e3f8] bg-[#f4f7ff] text-[#5671b6] transition-transform duration-200 group-open:rotate-45">
-                        +
+              <div className={cn("relative z-10 py-8 sm:py-10 lg:py-12", heroContainerClass)}>
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-[#c6d7f6] bg-[linear-gradient(135deg,#ffffff_0%,#edf4ff_100%)] px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#315a9a] shadow-[0_10px_22px_rgba(35,67,122,0.14)]">
+                    <Sparkles className="h-3.5 w-3.5 text-[#4d7ee7]" />
+                    FAQ
+                  </span>
+                  <span className="inline-flex items-center rounded-full border border-[#d3def4] bg-white/92 px-3 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-[0.15em] text-[#4f6592] shadow-[0_8px_18px_rgba(37,52,89,0.1)]">
+                    Buyer Clarity
+                  </span>
+                </div>
+                <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#1f3258] sm:text-[2.125rem] md:text-[2.25rem]">
+                  Frequently asked questions before we start
+                </h2>
+                <p className="mt-4 max-w-3xl text-[17px] leading-[1.65] text-[#546a92]">
+                  Clear answers on timelines, fit, founder involvement, and how authority execution actually runs month to month.
+                </p>
+
+                <div className="mt-8 grid gap-4 md:grid-cols-2">
+                  {faqItems.map((item, index) => (
+                    <details
+                      key={item.question}
+                      className="group relative overflow-hidden border border-[#d2def4] bg-[linear-gradient(160deg,rgba(255,255,255,0.96)_0%,rgba(244,249,255,0.94)_100%)] p-5 shadow-[0_16px_30px_rgba(29,44,80,0.1)] transition-all duration-300 [clip-path:polygon(14px_0,calc(100%-14px)_0,100%_14px,100%_calc(100%-14px),calc(100%-14px)_100%,14px_100%,0_calc(100%-14px),0_14px)]"
+                    >
+                      <div className="pointer-events-none absolute left-4 right-4 top-0 h-px bg-[linear-gradient(90deg,transparent,#7fa2ee,transparent)]" />
+                      <div className="pointer-events-none absolute right-3 top-3 h-5 w-5 border-r border-t border-[#d3def4]" />
+                      <span className="inline-flex items-center rounded-full border border-[#d5e0f5] bg-white px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.19em] text-[#4f6798]">
+                        FAQ {String(index + 1).padStart(2, "0")}
                       </span>
-                    </summary>
-                    <p className="mt-3 pr-6 text-[14px] leading-[1.65] text-[#5b6886]">{item.answer}</p>
-                  </details>
-                ))}
+                      <summary className="mt-3 flex cursor-pointer list-none items-center justify-between gap-3 text-[16px] font-semibold leading-[1.4] text-[#243d6a]">
+                        {item.question}
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#d8e3f8] bg-[linear-gradient(145deg,#ffffff_0%,#eef4ff_100%)] text-[#5672b8] shadow-[0_10px_22px_rgba(39,59,104,0.14)] transition-transform duration-200 group-open:rotate-45">
+                          +
+                        </span>
+                      </summary>
+                      <p className="mt-3 pr-6 text-[14px] leading-[1.7] text-[#5c7097]">{item.answer}</p>
+                    </details>
+                  ))}
+                </div>
               </div>
             </Panel>
           </SectionWrap>
