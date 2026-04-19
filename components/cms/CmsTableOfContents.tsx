@@ -43,6 +43,7 @@ export function CmsTableOfContents({ items }: Props) {
   const [orderedItems, setOrderedItems] = useState(items);
   const [activeId, setActiveId] = useState(items[0]?.id ?? "");
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+  const listRef = useRef<HTMLUListElement | null>(null);
 
   useEffect(() => {
     setOrderedItems(items);
@@ -138,6 +139,17 @@ export function CmsTableOfContents({ items }: Props) {
       return;
     }
 
+    const listElement = listRef.current;
+    if (!listElement) {
+      return;
+    }
+
+    const overflowY = window.getComputedStyle(listElement).overflowY;
+    const supportsInternalScroll = overflowY === "auto" || overflowY === "scroll" || overflowY === "overlay";
+    if (!supportsInternalScroll) {
+      return;
+    }
+
     const activeItem = linkRefs.current[activeId];
     if (!activeItem) {
       return;
@@ -164,7 +176,7 @@ export function CmsTableOfContents({ items }: Props) {
           On This Page
         </p>
       </div>
-      <ul className="space-y-1.5 px-3 py-3 text-[12px] leading-[1.28] xl:min-h-0 xl:flex-1 xl:overflow-y-auto">
+      <ul ref={listRef} className="space-y-1.5 px-3 py-3 text-[12px] leading-[1.28] xl:min-h-0 xl:flex-1 xl:overflow-y-auto">
         {orderedItems.map((item) => (
           <li key={item.id} className={item.level === 2 ? "" : item.level === 3 ? "pl-3" : "pl-5"}>
             <a
