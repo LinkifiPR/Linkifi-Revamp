@@ -1121,7 +1121,7 @@ export default function Home() {
                 Trusted by Industry Leaders
               </p>
               <h2 className="text-3xl md:text-5xl font-display font-bold text-[#0F0F0F]">
-                What our clients say
+                What our clients say.
               </h2>
             </div>
 
@@ -1482,7 +1482,7 @@ export default function Home() {
 
             <div className="relative z-10 text-center mb-10 md:mb-12">
               <h2 className="text-3xl md:text-5xl font-display font-bold text-[#0F0F0F] mb-4">
-                Our Packages
+                Our Packages.
               </h2>
               <p className="max-w-3xl mx-auto text-[#535479] md:text-lg leading-relaxed">
                 Choose SEO Digital PR for ranking-focused performance, or Authority PR for broader
@@ -1615,7 +1615,7 @@ export default function Home() {
 
             <div className="relative z-10">
               <h2 className="text-center text-4xl md:text-6xl font-display font-bold text-white tracking-tight">
-                Testimonials
+                Testimonials.
               </h2>
 
               <div className="mt-10 grid md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-7">
@@ -1698,7 +1698,7 @@ export default function Home() {
                   We&apos;re proud of our results
                 </p>
                 <h2 className="mt-5 text-4xl md:text-6xl font-display font-bold tracking-tight text-white">
-                  Our work
+                  Our work.
                 </h2>
                 <p className="mt-4 text-base md:text-lg leading-relaxed text-[#B8B3D9]">
                   Three recent campaigns that show what disciplined digital PR looks like when every
@@ -1913,7 +1913,7 @@ export default function Home() {
                   Public proof
                 </p>
                 <h2 className="mt-5 text-4xl md:text-6xl font-display font-bold tracking-tight text-white">
-                  What our clients have to say
+                  What our clients have to say.
                 </h2>
                 <p className="mt-4 text-base md:text-lg leading-relaxed text-[#B8B3D9]">
                   Real public feedback from founders, operators, and site owners who have seen the

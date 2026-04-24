@@ -53,7 +53,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-inter)", "Inter", "sans-serif"],
-        display: ["var(--font-plus-jakarta)", "Plus Jakarta Sans", "sans-serif"],
+        display: ["var(--font-space-grotesk)", "Space Grotesk", "sans-serif"],
         handwritten: ["var(--font-caveat)", "Caveat", "cursive"],
       },
       borderRadius: {

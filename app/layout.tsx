@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Plus_Jakarta_Sans, Caveat } from "next/font/google";
+import { Inter, Space_Grotesk, Caveat } from "next/font/google";
 import Script from "next/script";
 import { MetaPixelPageViewTracker } from "@/components/site/MetaPixelPageViewTracker";
 import "./globals.css";
@@ -9,9 +9,10 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const plusJakarta = Plus_Jakarta_Sans({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-plus-jakarta",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-space-grotesk",
 });
 
 const caveat = Caveat({
@@ -131,7 +132,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${plusJakarta.variable} ${caveat.variable} font-sans antialiased`}
+        className={`${inter.variable} ${spaceGrotesk.variable} ${caveat.variable} font-sans antialiased`}
       >
         <noscript>
           <img
