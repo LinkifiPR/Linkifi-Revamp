@@ -1605,7 +1605,7 @@ function AuthorityProofMontageSection() {
         <div className="mx-auto max-w-4xl text-center">
           <Eyebrow>Proof</Eyebrow>
           <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
-            Results from real authority campaigns
+            Results from real authority campaigns.
           </h2>
         </div>
 
@@ -1982,7 +1982,7 @@ function SeoPerformanceStorySection() {
         <div className="mx-auto max-w-4xl text-center">
           <Eyebrow>Performance Story</Eyebrow>
           <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
-            Results you can see, not just read
+            Results you can see, not just read.
           </h2>
           <p className="mt-4 text-[18px] leading-[1.6] text-[#5a5d79]">
             Editorial authority compounds over time. Switch between case studies to see how real visibility trajectories changed after campaign launch.
@@ -2337,7 +2337,7 @@ function AuthorityPerformanceStorySection() {
         <div className="mx-auto max-w-4xl text-center">
           <Eyebrow>Authority Growth</Eyebrow>
           <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#171929] sm:text-[2.125rem] md:text-[2.25rem]">
-            Authority growth, visualised
+            Authority growth, visualised.
           </h2>
           <p className="mt-4 text-[18px] leading-[1.6] text-[#5a5d79]">
             Authority builds across editorial, search, and AI systems, and compounds into measurable traffic growth over time.
@@ -2943,7 +2943,7 @@ function SeoLandingContent() {
             <motion.div {...revealProps}>
               <Eyebrow>SEO Digital PR</Eyebrow>
               <h1 className="mt-6 text-balance text-5xl font-display font-bold tracking-[-0.055em] text-[#171929] sm:text-6xl md:text-7xl">
-                SEO Digital PR
+                SEO Digital PR.
               </h1>
               <p className="mt-5 max-w-xl text-balance text-xl leading-relaxed text-[#4e526d] sm:text-2xl">
                 Editorial media placements that build authority signals and improve organic rankings.
@@ -3050,7 +3050,7 @@ function AuthorityLandingContent() {
             <motion.div {...revealProps}>
               <Eyebrow>Authority PR</Eyebrow>
               <h1 className="mt-6 text-balance text-5xl font-display font-bold tracking-[-0.055em] text-[#171929] sm:text-6xl md:text-7xl">
-                Authority PR
+                Authority PR.
               </h1>
               <p className="mt-5 max-w-xl text-balance text-xl leading-relaxed text-[#4e526d] sm:text-2xl">
                 Build brand authority that influences search engines, AI systems, and human audiences.

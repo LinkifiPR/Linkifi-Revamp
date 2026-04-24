@@ -158,7 +158,7 @@ export function ContactPageClient({ initialContext }: ContactPageClientProps) {
                     <div>
                       <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#6f7799]">Contact form</p>
                       <h2 className="mt-2 text-3xl font-display font-bold tracking-[-0.03em] text-[#111433]">
-                        Start your enquiry
+                        Start your enquiry.
                       </h2>
                     </div>
                   </div>

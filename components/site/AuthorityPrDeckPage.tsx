@@ -491,7 +491,7 @@ export function AuthorityPrDeckPage() {
                 <div>
                   <Eyebrow>A Linkifi Service</Eyebrow>
                   <h1 className="mt-6 text-balance text-5xl font-display font-bold tracking-[-0.055em] text-[#171929] sm:text-6xl md:text-7xl">
-                    Become the go-to authority in your category
+                    Become the go-to authority in your category.
                   </h1>
                   <p className="mt-5 max-w-2xl text-balance text-xl leading-relaxed text-[#4e526d] sm:text-2xl">
                     Structured Authority PR built to turn earned media into trust, recognition, and category pull.
@@ -715,7 +715,7 @@ export function AuthorityPrDeckPage() {
                   What It Helps You Do
                 </span>
                 <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-white sm:text-[2.125rem] md:text-[2.25rem]">
-                  Show up like a leader and dominate more of the conversation in your space
+                  Show up like a leader and dominate more of the conversation in your space.
                 </h2>
                 <p className="mt-4 max-w-3xl text-[17px] leading-[1.65] text-[#d7deff]">
                   We combine strategic positioning, consistent media visibility, and credibility signals so authority compounds in every channel that shapes buyer perception.
@@ -807,7 +807,7 @@ export function AuthorityPrDeckPage() {
                 </div>
 
                 <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#1b2340] sm:text-[2.125rem] md:text-[2.25rem]">
-                  How we turn strategic PR into compounding authority
+                  How we turn strategic PR into compounding authority.
                 </h2>
                 <p className="mt-4 max-w-3xl text-[18px] leading-[1.6] text-[#505b80]">
                   Each stage builds on the last: from positioning and pitching to earned validation, then into lasting recognition, trust, and category leadership.
@@ -881,7 +881,7 @@ export function AuthorityPrDeckPage() {
                 </div>
 
                 <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#23365c] sm:text-[2.125rem] md:text-[2.25rem]">
-                  Earned visibility in the places that matter
+                  Earned visibility in the places that matter.
                 </h2>
                 <p className="mt-4 max-w-3xl text-[18px] leading-[1.6] text-[#526a93]">
                   We place your brand, founders, and experts into high-trust channels that shape perception, influence decisions, and strengthen long-term authority.
@@ -1042,7 +1042,7 @@ export function AuthorityPrDeckPage() {
                 </div>
 
                 <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#241d3d] sm:text-[2.125rem] md:text-[2.25rem]">
-                  Authority PR engagement built for sustained credibility
+                  Authority PR engagement built for sustained credibility.
                 </h2>
                 <p className="mt-4 max-w-3xl text-[18px] leading-[1.6] text-[#625c80]">
                   A focused monthly model that combines strategic positioning, proactive outreach, and credible placements to build trust that compounds.
@@ -1152,7 +1152,7 @@ export function AuthorityPrDeckPage() {
                 <div className="mx-auto max-w-4xl text-center">
                   <Eyebrow>Proof</Eyebrow>
                   <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.16] tracking-[-0.045em] text-[#171929] sm:text-[2.2rem] md:text-[2.45rem]">
-                    Real authority coverage in mega-authoritative publications
+                    Real authority coverage in mega-authoritative publications.
                   </h2>
                   <p className="mx-auto mt-4 max-w-3xl text-[17px] leading-[1.65] text-[#56607f] sm:text-[18px]">
                     Live editorial placements presented in a premium mobile-view wall so credibility is instantly felt.
@@ -1182,7 +1182,7 @@ export function AuthorityPrDeckPage() {
                   </span>
                 </div>
                 <h2 className="mt-5 max-w-4xl text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-[#1f3258] sm:text-[2.125rem] md:text-[2.25rem]">
-                  Frequently asked questions before we start
+                  Frequently asked questions before we start.
                 </h2>
                 <p className="mt-4 max-w-3xl text-[17px] leading-[1.65] text-[#546a92]">
                   Clear answers on timelines, fit, founder involvement, and how authority execution actually runs month to month.
@@ -1219,7 +1219,7 @@ export function AuthorityPrDeckPage() {
               <div className="relative z-10 mx-auto max-w-3xl text-center">
                 <Eyebrow dark>Next Step</Eyebrow>
                 <h2 className="mt-5 text-balance text-[2rem] font-display font-bold leading-[1.2] tracking-[-0.04em] text-white sm:text-[2.25rem] md:text-[2.5rem]">
-                  Let&apos;s build your authority
+                  Let&apos;s build your authority.
                 </h2>
                 <p className="mt-4 text-[18px] leading-[1.6] text-white/72">
                   If you want to become the go-to expert in your industry, let&apos;s talk about fit, positioning, and opportunities.
